@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:security="http://www.springframework.org/schema/security" xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:client.propertities</value>
+			</list>
+		</property>
+	</bean>
+
+	<security:http access-denied-page="/denied" entry-point-ref="authenticationEntryPoint" access-decision-manager-ref="accessDecisionManager">
+		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY" />
+		<security:custom-filter ref="oauthServiceFilter" position="PRE_AUTH_FILTER" />
+		<security:anonymous />
+	</security:http>
+
+	<oauth2:resource-server id="oauthServiceFilter" resource-id="my-resource" token-services-ref="tokenServices" />
+
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter">
+					<property name="scopePrefix" value="scope=" />
+				</bean>
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<security:authentication-manager />
+
+	<bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint" />
+
+	<bean id="tokenServices" class="org.personal.mason.feop.oauth.account.oauth2.RemoteTokenService">
+		<property name="checkTokenEntryPointUri" value="http://oauth.aws.af.cm/check_token" />
+		<property name="clientId" value="" />
+		<property name="clientSecret" value="" />
+	</bean>
+
+</beans>
