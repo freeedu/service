@@ -24,7 +24,7 @@
 		<jersey.version>1.14</jersey.version>
 	</properties>
 	<modules>
-		<module>FEOPOAuthClient</module>
+		<module>FEOPOAuthAccount</module>
 		<module>FEOPOAuthResource</module>
 		<module>FEOPOAuthService</module>
 		<module>FEOPOAuthService2</module>
