@@ -4,57 +4,48 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
- * The persistent class for the category database table.
+ * The persistent class for the series database table.
  * 
  */
 @Entity
-public class Category extends AbstractPersistable<Long> {
+@Table(name = "series")
+public class Sery extends AbstractPersistable<Long> {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "category_name")
-	private String categoryName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
 
 	@Lob
 	private String description;
 
+	@Column(name = "series_name")
+	private String seriesName;
+
 	// bi-directional many-to-one association to Blog
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "sery")
 	private List<Blog> blogs;
 
 	// bi-directional many-to-one association to Category
 	@ManyToOne
-	@JoinColumn(name = "parent_id")
 	private Category category;
 
-	// bi-directional many-to-one association to Category
-	@OneToMany(mappedBy = "category")
-	private List<Category> categories;
-
-	// bi-directional many-to-one association to Sery
-	@OneToMany(mappedBy = "category")
-	private List<Sery> series;
-
 	// bi-directional many-to-one association to SubscribeTopic
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "sery")
 	private List<SubscribeTopic> subscribeTopics;
 
-	public Category() {
-	}
-
-	public String getCategoryName() {
-		return this.categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public Sery() {
 	}
 
 	public String getDescription() {
@@ -63,6 +54,14 @@ public class Category extends AbstractPersistable<Long> {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getSeriesName() {
+		return this.seriesName;
+	}
+
+	public void setSeriesName(String seriesName) {
+		this.seriesName = seriesName;
 	}
 
 	public List<Blog> getBlogs() {
@@ -79,22 +78,6 @@ public class Category extends AbstractPersistable<Long> {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public List<Category> getCategories() {
-		return this.categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
-	}
-
-	public List<Sery> getSeries() {
-		return this.series;
-	}
-
-	public void setSeries(List<Sery> series) {
-		this.series = series;
 	}
 
 	public List<SubscribeTopic> getSubscribeTopics() {
