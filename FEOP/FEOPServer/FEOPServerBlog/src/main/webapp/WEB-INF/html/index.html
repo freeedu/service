@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <meta charset="utf-8" />
+        <title>Title</title>
+
+        <!-- add styles -->
+        <link href="../../resources/css/main.css" rel="stylesheet" type="text/css" />
+        <link href="../../resources/css/colorbox.css" rel="stylesheet" type="text/css" />
+
+        <!-- add scripts -->
+        <script src="../../resources/js/jquery.min.js"></script>
+        <script src="../../resources/js/jquery.colorbox-min.js"></script>
+        <script src="../../resources/js/jquery.masonry.min.js"></script>
+        <script src="../../resources/js/script.js"></script>
+    </head>
+    <body>
+
+        <!-- header panel -->
+        <div class="header_panel">
+
+            <!-- logo -->
+            <a href="#" class="logo"></a>
+
+            <!-- search form -->
+            <form action="" method="get" class="search">
+                <input autocomplete="off" name="q" size="27" placeholder="Search" type="text" />
+                <input name="search" type="submit" />
+            </form>
+
+            <!-- navigation menu -->
+            <ul class="nav">
+                <li><a href="#add_form" id="login_pop">Add +</a></li>
+                <li>
+                    <a href="#">About<span></span></a>
+                    <ul>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Pin It Button</a></li>
+                        <li><a href="#" target="_blank">For Businesses</a></li>
+                        <li class="div"><a href="#">Careers</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li class="div"><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Copyright</a></li>
+                        <li><a href="#">Trademark</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Profile<span></span></a>
+                    <ul>
+                        <li><a href="#">Invite Friends</a></li>
+                        <li><a href="#">Find Friends</a></li>
+                        <li class="div"><a href="#">Boards</a></li>
+                        <li><a href="#">Pins</a></li>
+                        <li><a href="#">Likes</a></li>
+                        <li class="div"><a href="#">Settings</a></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="http://www.script-tutorials.com/pinterest-like-script-step-2/">Back to tutorial<span></span></a>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- upload form -->
+        <a href="#x" class="overlay" id="add_form"></a>
+        <div class="popup">
+            <div class="header">
+                <a class="close" href="#close">x</a>
+                <h2>Upload a Pin</h2>
+            </div>
+            <form id="upload_form">
+                <input type="file" name="image_file" id="image_file" onchange="" />
+            </form>
+            <div id="upload_result"></div>
+        </div>
+
+        <!-- main container -->
+        <div class="main_container">
+            {images_set}
+        </div>
+    </body>
+</html>
