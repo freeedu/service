@@ -9,14 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * The persistent class for the blog database table.
  * 
  */
 @Entity
-public class Blog extends AbstractPersistable<Long> {
+public class Blog extends BlogPersistable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -65,10 +63,6 @@ public class Blog extends AbstractPersistable<Long> {
 	// bi-directional many-to-one association to Common
 	@OneToMany(mappedBy = "blog")
 	private List<Common> commons;
-
-	// bi-directional many-to-one association to SubscribeTopic
-	@OneToMany(mappedBy = "blog")
-	private List<SubscribeTopic> subscribeTopics;
 
 	public Blog() {
 	}
@@ -175,14 +169,6 @@ public class Blog extends AbstractPersistable<Long> {
 
 	public void setCommons(List<Common> commons) {
 		this.commons = commons;
-	}
-
-	public List<SubscribeTopic> getSubscribeTopics() {
-		return this.subscribeTopics;
-	}
-
-	public void setSubscribeTopics(List<SubscribeTopic> subscribeTopics) {
-		this.subscribeTopics = subscribeTopics;
 	}
 
 }

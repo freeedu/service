@@ -1,10 +1,10 @@
 package org.personal.mason.feop.server.blog.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
  * The persistent class for the media_info database table.
@@ -12,13 +12,13 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  */
 @Entity
 @Table(name = "media_info")
-public class MediaInfo extends AbstractPersistable<Long> {
+public class MediaInfo extends BlogPersistable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "media_redundant_url")
 	private String mediaRedundantUrl;
 
-	@Column(name = "media_code")
+	@Column(name = "media_code", unique = true)
 	private String mediaCode;
 
 	@Column(name = "media_name")
@@ -29,6 +29,12 @@ public class MediaInfo extends AbstractPersistable<Long> {
 
 	@Column(name = "media_url")
 	private String mediaUrl;
+
+	@Column(name = "media_owner_uid")
+	private String mediaOwnerUid;
+
+	@Column(name = "media_addtime")
+	private Date mediaAddTime;
 
 	public MediaInfo() {
 	}
@@ -73,4 +79,19 @@ public class MediaInfo extends AbstractPersistable<Long> {
 		this.mediaUrl = mediaUrl;
 	}
 
+	public String getMediaOwnerUid() {
+		return mediaOwnerUid;
+	}
+
+	public void setMediaOwnerUid(String mediaOwnerUid) {
+		this.mediaOwnerUid = mediaOwnerUid;
+	}
+
+	public void setMediaAddTime(Date mediaAddTime) {
+		this.mediaAddTime = mediaAddTime;
+	}
+
+	public Date getMediaAddTime() {
+		return mediaAddTime;
+	}
 }

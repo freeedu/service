@@ -4,15 +4,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
  * The persistent class for the series database table.
@@ -20,12 +15,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  */
 @Entity
 @Table(name = "series")
-public class Sery extends AbstractPersistable<Long> {
+public class Sery extends BlogPersistable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
 
 	@Lob
 	private String description;
@@ -40,10 +31,6 @@ public class Sery extends AbstractPersistable<Long> {
 	// bi-directional many-to-one association to Category
 	@ManyToOne
 	private Category category;
-
-	// bi-directional many-to-one association to SubscribeTopic
-	@OneToMany(mappedBy = "sery")
-	private List<SubscribeTopic> subscribeTopics;
 
 	public Sery() {
 	}
@@ -78,14 +65,6 @@ public class Sery extends AbstractPersistable<Long> {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public List<SubscribeTopic> getSubscribeTopics() {
-		return this.subscribeTopics;
-	}
-
-	public void setSubscribeTopics(List<SubscribeTopic> subscribeTopics) {
-		this.subscribeTopics = subscribeTopics;
 	}
 
 }

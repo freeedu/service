@@ -4,34 +4,34 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
  * The persistent class for the subscribe database table.
  * 
  */
 @Entity
-public class Subscribe extends AbstractPersistable<Long> {
+public class Subscribe extends BlogPersistable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "create_date")
 	private Timestamp createDate;
 
-	private byte enable;
+	private boolean enable;
 
-	@Column(name = "subscriber_uid")
+	@Column(name = "subscriber_uid", unique = true)
 	private String subscriberUid;
 
 	@Column(name = "update_time")
 	private Timestamp updateTime;
 
-	// bi-directional many-to-one association to SubscribeTopic
-	@ManyToOne
-	@JoinColumn(name = "topic_id")
-	private SubscribeTopic subscribeTopic;
+	@Column(name = "blog_ids")
+	private String blogIds;
+
+	@Column(name = "category_ids")
+	private String categoryIds;
+
+	@Column(name = "sery_ids")
+	private String seryIds;
 
 	public Subscribe() {
 	}
@@ -44,11 +44,11 @@ public class Subscribe extends AbstractPersistable<Long> {
 		this.createDate = createDate;
 	}
 
-	public byte getEnable() {
-		return this.enable;
+	public boolean isEnable() {
+		return enable;
 	}
 
-	public void setEnable(byte enable) {
+	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 
@@ -68,12 +68,28 @@ public class Subscribe extends AbstractPersistable<Long> {
 		this.updateTime = updateTime;
 	}
 
-	public SubscribeTopic getSubscribeTopic() {
-		return this.subscribeTopic;
+	public String getBlogIds() {
+		return blogIds;
 	}
 
-	public void setSubscribeTopic(SubscribeTopic subscribeTopic) {
-		this.subscribeTopic = subscribeTopic;
+	public void setBlogIds(String blogIds) {
+		this.blogIds = blogIds;
+	}
+
+	public String getCategoryIds() {
+		return categoryIds;
+	}
+
+	public void setCategoryIds(String categoryIds) {
+		this.categoryIds = categoryIds;
+	}
+
+	public String getSeryIds() {
+		return seryIds;
+	}
+
+	public void setSeryIds(String seryIds) {
+		this.seryIds = seryIds;
 	}
 
 }

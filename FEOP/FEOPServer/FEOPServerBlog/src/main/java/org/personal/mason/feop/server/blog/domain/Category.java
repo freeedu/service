@@ -9,14 +9,12 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * The persistent class for the category database table.
  * 
  */
 @Entity
-public class Category extends AbstractPersistable<Long> {
+public class Category extends BlogPersistable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "category_name")
@@ -41,10 +39,6 @@ public class Category extends AbstractPersistable<Long> {
 	// bi-directional many-to-one association to Sery
 	@OneToMany(mappedBy = "category")
 	private List<Sery> series;
-
-	// bi-directional many-to-one association to SubscribeTopic
-	@OneToMany(mappedBy = "category")
-	private List<SubscribeTopic> subscribeTopics;
 
 	public Category() {
 	}
@@ -95,14 +89,6 @@ public class Category extends AbstractPersistable<Long> {
 
 	public void setSeries(List<Sery> series) {
 		this.series = series;
-	}
-
-	public List<SubscribeTopic> getSubscribeTopics() {
-		return this.subscribeTopics;
-	}
-
-	public void setSubscribeTopics(List<SubscribeTopic> subscribeTopics) {
-		this.subscribeTopics = subscribeTopics;
 	}
 
 }

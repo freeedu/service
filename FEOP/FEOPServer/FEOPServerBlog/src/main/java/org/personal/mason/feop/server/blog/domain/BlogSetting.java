@@ -1,11 +1,11 @@
 package org.personal.mason.feop.server.blog.domain;
 
-import java.io.Serializable;
-import javax.persistence.*;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the blog_settings database table.
@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "blog_settings")
-public class BlogSetting extends AbstractPersistable<Long> {
+public class BlogSetting extends BlogPersistable {
 	private static final long serialVersionUID = 1L;
 
 	private int price;

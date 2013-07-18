@@ -4,15 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * The persistent class for the tags database table.
  * 
  */
 @Entity
 @Table(name = "tags")
-public class Tag extends AbstractPersistable<Long> {
+public class Tag extends BlogPersistable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "tag_name")

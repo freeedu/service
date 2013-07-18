@@ -9,15 +9,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * The persistent class for the blog_section database table.
  * 
  */
 @Entity
 @Table(name = "blog_section")
-public class BlogSection extends AbstractPersistable<Long> {
+public class BlogSection extends BlogPersistable {
 	private static final long serialVersionUID = 1L;
 
 	@Lob

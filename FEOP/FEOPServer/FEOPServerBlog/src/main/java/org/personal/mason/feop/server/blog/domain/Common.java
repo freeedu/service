@@ -11,15 +11,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * The persistent class for the commons database table.
  * 
  */
 @Entity
 @Table(name = "commons")
-public class Common extends AbstractPersistable<Long> {
+public class Common extends BlogPersistable {
 	private static final long serialVersionUID = 1L;
 
 	private String author;
