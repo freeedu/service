@@ -1,6 +1,5 @@
 package org.personal.mason.feop.oauth.service.mvc.model;
 
-
 public class UserForm {
 
 	private Long id;

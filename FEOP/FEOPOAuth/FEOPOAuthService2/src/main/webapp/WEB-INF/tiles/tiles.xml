@@ -1,0 +1,98 @@
+<!--?xml version="1.0" encoding="UTF-8"? -->  
+ <!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="app.template1" template="/WEB-INF/tiles/layout/template.jsp">
+		<put-attribute name="head" value="/WEB-INF/tiles/inc/header.jsp" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/inc/footer.jsp" />
+	</definition>
+	<definition name="app.template2" template="/WEB-INF/tiles/layout/template2.jsp">
+		<put-attribute name="head" value="/WEB-INF/tiles/inc/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/tiles/inc/menu.jsp" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/inc/footer.jsp" />
+	</definition>
+
+	<!-- App Index -->
+	<definition name="app.index" extends="app.template1">
+		<put-attribute name="content" value="/WEB-INF/tiles/index.jsp" />
+	</definition>
+	<definition name="app.home" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/home.jsp" />
+	</definition>
+
+	<!-- App Definition -->
+	<definition name="app.login" extends="app.template1">
+		<put-attribute name="content" value="/WEB-INF/tiles/oauth2/login.jsp" />
+	</definition>
+	<definition name="app.logout" extends="app.template1">
+		<put-attribute name="content" value="/WEB-INF/tiles/oauth2/logout.jsp" />
+	</definition>
+	<definition name="app.confirm" extends="app.template1">
+		<put-attribute name="content" value="/WEB-INF/tiles/oauth2/confirm.jsp" />
+	</definition>
+	
+	<definition name="app.regist" extends="app.template1">
+		<put-attribute name="content" value="/WEB-INF/tiles/public/account/signup.jsp" />
+	</definition>
+	<definition name="app.resetpassword" extends="app.template1">
+		<put-attribute name="content" value="/WEB-INF/tiles/public/account/resetsecret.jsp" />
+	</definition>
+	<definition name="app.findpassword" extends="app.template1">
+		<put-attribute name="content" value="/WEB-INF/tiles/public/account/updatesecret.jsp" />
+	</definition>
+	
+	<definition name="app.profile" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/user/account/profile.jsp" />
+	</definition>
+	<definition name="app.profile.update" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/user/account/updateprofile.jsp" />
+	</definition>
+	<definition name="app.profile.updatesecret" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/user/account/updatesecret.jsp" />
+	</definition>
+	<definition name="app.client.view" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/user/client/view.jsp" />
+	</definition>
+	<definition name="app.client.new" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/user/client/new.jsp" />
+	</definition>
+	<definition name="app.client.list" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/user/client/list.jsp" />
+	</definition>
+	
+	<!-- admin -->
+	<definition name="app.et.new" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/template/new.jsp" />
+	</definition>
+	<definition name="app.et.view" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/template/view.jsp" />
+	</definition>
+	<definition name="app.et.update" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/template/update.jsp" />
+	</definition>
+	<definition name="app.et.list" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/template/list.jsp" />
+	</definition>
+	<definition name="app.settings.new" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/setting/new.jsp" />
+	</definition>
+	<definition name="app.settings.view" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/setting/view.jsp" />
+	</definition>
+	<definition name="app.settings.update" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/setting/update.jsp" />
+	</definition>
+	<definition name="app.settings.list" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/setting/list.jsp" />
+	</definition>
+	<definition name="app.invite.list" extends="app.template2">
+		<put-attribute name="content" value="/WEB-INF/tiles/admin/invite/list.jsp" />
+	</definition>
+	
+	
+
+</tiles-definitions>

@@ -1,0 +1,1 @@
+<footer>Copyright &copy 2013 oauth.com. All rights reserved.</footer>

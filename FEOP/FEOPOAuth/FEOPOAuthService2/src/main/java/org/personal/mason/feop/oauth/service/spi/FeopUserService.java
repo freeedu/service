@@ -20,4 +20,6 @@ public interface FeopUserService {
 	public void update(OauthUser user);
 
 	public void updatePassword(OauthUser user, String password);
+
+	public boolean validate(String oldPassword, OauthUser ouser);
 }

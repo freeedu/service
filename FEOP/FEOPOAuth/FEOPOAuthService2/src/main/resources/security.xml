@@ -19,7 +19,45 @@
 	<security:global-method-security pre-post-annotations="enabled" proxy-target-class="true">
 		<security:expression-handler ref="oauthExpressionHandler" />
 	</security:global-method-security>
+
+	<security:http pattern="/client/**" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager">
+		<security:anonymous enabled="false" />
+		<security:intercept-url pattern="/client/**" access="IS_AUTHENTICATED_FULLY" />
+		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</security:http>
+	<security:http pattern="/account/**" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager">
+		<security:anonymous enabled="false" />
+		<security:intercept-url pattern="/account/**" access="IS_AUTHENTICATED_FULLY" />
+		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</security:http>
+	<security:http pattern="/home*" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager">
+		<security:anonymous enabled="false" />
+		<security:intercept-url pattern="/home*" access="IS_AUTHENTICATED_FULLY" />
+		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</security:http>
 	
+	<security:http pattern="/et/**" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager">
+		<security:anonymous enabled="false" />
+		<security:intercept-url pattern="/et/**" access="ROLE_ADMIN" />
+		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</security:http>
+	<security:http pattern="/settings/**" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager">
+		<security:anonymous enabled="false" />
+		<security:intercept-url pattern="/settings/**" access="ROLE_ADMIN" />
+		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</security:http>
+	<security:http pattern="/invite/**" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint"
+		access-decision-manager-ref="accessDecisionManager">
+		<security:anonymous enabled="false" />
+		<security:intercept-url pattern="/invite/**" access="ROLE_ADMIN" />
+		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</security:http>
+
 	<oauth2:expression-handler id="oauthExpressionHandler" />
 	<oauth2:web-expression-handler id="oauthWebExpressionHandler" />
 
@@ -33,42 +71,32 @@
 		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
 	</security:http>
 
-<!-- 	<security:http pattern="/oauth/(users|clients)/.*" request-matcher="regex" create-session="stateless" entry-point-ref="oauthAuthenticationEntryPoint" -->
-<!-- 		use-expressions="true"> -->
-<!-- 		<security:anonymous enabled="false" /> -->
-<!-- 		<security:intercept-url pattern="/oauth/users/([^/].*?)/tokens/.*" -->
-<!-- 			access="#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('write')" method="DELETE" /> -->
-<!-- 		<security:intercept-url pattern="/oauth/users/.*" -->
-<!-- 			access="#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('read')" method="GET" /> -->
-<!-- 		<security:intercept-url pattern="/oauth/clients/.*" -->
-<!-- 			access="#oauth2.clientHasRole('ROLE_CLIENT') and #oauth2.isClient() and #oauth2.hasScope('read')" method="GET" /> -->
-<!-- 		<security:intercept-url pattern="/**" access="denyAll()" /> -->
-<!-- 		<security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" /> -->
-<!-- 		<security:access-denied-handler ref="oauthAccessDeniedHandler" /> -->
-<!-- 		<security:expression-handler ref="oauthWebExpressionHandler" /> -->
-<!-- 	</security:http> -->
-	
+	<!-- <security:http pattern="/oauth/(users|clients)/.*" request-matcher="regex" create-session="stateless" entry-point-ref="oauthAuthenticationEntryPoint" -->
+	<!-- use-expressions="true"> -->
+	<!-- <security:anonymous enabled="false" /> -->
+	<!-- <security:intercept-url pattern="/oauth/users/([^/].*?)/tokens/.*" -->
+	<!-- access="#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('write')" method="DELETE" 
+		/> -->
+	<!-- <security:intercept-url pattern="/oauth/users/.*" -->
+	<!-- access="#oauth2.clientHasRole('ROLE_CLIENT') and (hasRole('ROLE_USER') or #oauth2.isClient()) and #oauth2.hasScope('read')" method="GET" /> -->
+	<!-- <security:intercept-url pattern="/oauth/clients/.*" -->
+	<!-- access="#oauth2.clientHasRole('ROLE_CLIENT') and #oauth2.isClient() and #oauth2.hasScope('read')" method="GET" /> -->
+	<!-- <security:intercept-url pattern="/**" access="denyAll()" /> -->
+	<!-- <security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" /> -->
+	<!-- <security:access-denied-handler ref="oauthAccessDeniedHandler" /> -->
+	<!-- <security:expression-handler ref="oauthWebExpressionHandler" /> -->
+	<!-- </security:http> -->
+
 	<security:http pattern="/token/**" create-session="stateless" authentication-manager-ref="clientAuthenticationManager">
-		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
-		<security:anonymous enabled="false"/>
-		<security:http-basic entry-point-ref="clientAuthenticationEntryPoint"/>
-		<security:access-denied-handler ref="oauthAccessDeniedHandler"/>
+		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY" />
+		<security:anonymous enabled="false" />
+		<security:http-basic entry-point-ref="clientAuthenticationEntryPoint" />
+		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
 	</security:http>
 
 	<!-- The OAuth2 protected resources are separated out into their own block so we can deal with authorization and error handling separately. This 
 		isn't mandatory, but it makes it easier to control the behaviour. -->
-	<security:http pattern="/client/**" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint"
-		access-decision-manager-ref="accessDecisionManager">
-		<security:anonymous enabled="false" />
-		<security:intercept-url pattern="/client/" access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/client/form" access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/client/info" access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/client/create" access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/client/list" access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/client/delete/**" access="IS_AUTHENTICATED_FULLY" />
 
-		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
-	</security:http>
 
 	<!-- OAuth2 Server端 用户登录验证 -->
 	<security:http>

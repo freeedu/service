@@ -18,6 +18,6 @@ public class HomeController {
 
 	@RequestMapping(method=RequestMethod.GET,value="/home")
 	public String home() {
-		return "home";
+		return "app.home";
 	}
 }

@@ -11,7 +11,7 @@ import org.personal.mason.feop.oauth.service.mvc.model.ClientForm;
 import org.personal.mason.feop.oauth.service.mvc.model.UserApplication;
 import org.personal.mason.feop.oauth.service.spi.FeopClientDetailService;
 import org.personal.mason.feop.oauth.service.spi.impl.AuthorizationType;
-import org.personal.mason.feop.oauth.service.utils.SecuriteGenerator;
+import org.personal.mason.feop.oauth.service.utils.StringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,7 +35,7 @@ public class ApplicationRegistrationController {
 	@RequestMapping(value = { "/client/", "/client/form" })
 	public String signup(@ModelAttribute ClientForm clientForm, ModelMap map) {
 		map.addAttribute("client_types", AuthorizationType.getAllTypes());
-		return "client/form";
+		return "app.client.new";
 	}
 
 	@RequestMapping(value = "/client/create", method = RequestMethod.POST)
@@ -57,14 +57,14 @@ public class ApplicationRegistrationController {
 
 		OauthClientDetail client = new OauthClientDetail();
 		client.setClientId(appName);
-		client.setClientSecret(SecuriteGenerator.generateUniqueSecret());
+		client.setClientSecret(StringGenerator.generateUniqueSecret());
 		client.setWebServerRedirectUri(clientForm.getRedirectUrl());
 		client.setOwner(principal.getName());
 		feopClientDetailService.decorateClientBy(client, clientForm.getClientType());
 
 		feopClientDetailService.createApplication(client);
 		map.addAttribute("client", client);
-		return "client/info";
+		return "app.client.view";
 	}
 
 	@RequestMapping(value = { "/client/list" }, method = RequestMethod.GET)
@@ -89,7 +89,7 @@ public class ApplicationRegistrationController {
 		}
 
 		model.addAttribute("applications", apps);
-		return "client/list";
+		return "app.client.list";
 	}
 
 	@RequestMapping(value = { "/client/delete/{clientId}" })
@@ -100,6 +100,17 @@ public class ApplicationRegistrationController {
 			feopClientDetailService.deleteApplication(client);
 		}
 
-		return "client/list";
+		return "app.client.list";
+	}
+	
+	@RequestMapping(value = { "/client/view/{clientId}" })
+	public String viewApplication(@PathVariable("clientId") String clientId, ModelMap map, Principal principal) {
+		OauthClientDetail client = feopClientDetailService.findByClientId(clientId);
+
+		if (client != null && principal.getName() != null) {
+			map.addAttribute("client", client);
+		}
+		
+		return "app.client.view";
 	}
 }

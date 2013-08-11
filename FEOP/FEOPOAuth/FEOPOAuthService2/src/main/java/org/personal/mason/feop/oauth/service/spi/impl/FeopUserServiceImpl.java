@@ -44,7 +44,7 @@ public class FeopUserServiceImpl implements FeopUserService {
 
 	@Transactional
 	public void updatePassword(OauthUser user, String password) {
-		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		String encodedPassword = passwordEncoder.encode(password);
 		user.setPassword(encodedPassword);
 		oauthUserRepository.saveAndFlush(user);
 	}
@@ -96,6 +96,11 @@ public class FeopUserServiceImpl implements FeopUserService {
 		user.setUserId(UUID.randomUUID().toString());
 		user.setUserName(String.format("%s %s", signupForm.getFirstName(), signupForm.getLastName()).trim());
 		return user;
+	}
+
+	@Override
+	public boolean validate(String oldPassword, OauthUser ouser) {
+		return passwordEncoder.matches(oldPassword, ouser.getPassword());
 	}
 
 }

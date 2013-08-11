@@ -9,11 +9,14 @@ public class SignupForm {
 	private String firstName;
 	@NotEmpty(message = "Last Name is required")
 	private String lastName;
+	private String inviteCode;
 	@Email(message = "Please provide a valid email address")
 	@NotEmpty(message = "Email is required")
 	private String email;
 	@NotEmpty(message = "Password is required")
 	private String password;
+	@NotEmpty(message = "Repeat Password is required")
+	private String repeatPassword;
 
 	public String getFirstName() {
 		return firstName;
@@ -29,6 +32,14 @@ public class SignupForm {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getInviteCode() {
+		return inviteCode;
+	}
+
+	public void setInviteCode(String inviteCode) {
+		this.inviteCode = inviteCode;
 	}
 
 	public String getEmail() {
@@ -47,4 +58,11 @@ public class SignupForm {
 		this.password = password;
 	}
 
+	public void setRepeatPassword(String repeatPassword) {
+		this.repeatPassword = repeatPassword;
+	}
+
+	public String getRepeatPassword() {
+		return repeatPassword;
+	}
 }

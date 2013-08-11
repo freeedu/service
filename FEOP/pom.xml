@@ -13,6 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.2.3.RELEASE</spring.version>
 		<spring.security.version>3.2.0.M1</spring.security.version>
+		<spring.security.oauth2.version>1.0.4.RELEASE</spring.security.oauth2.version>
 		<cglib.version>2.2.2</cglib.version>
 		<aspectjweaver.version>1.7.2</aspectjweaver.version>
 		<jackson.version>2.2.2</jackson.version>

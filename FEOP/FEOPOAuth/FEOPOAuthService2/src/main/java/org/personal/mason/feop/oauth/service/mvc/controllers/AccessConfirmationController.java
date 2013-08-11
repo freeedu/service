@@ -28,7 +28,7 @@ public class AccessConfirmationController {
 		ClientDetails client = clientDetailsService.loadClientByClientId(clientAuth.getClientId());
 		map.put("auth_request", clientAuth);
 		map.put("client", client);
-		return "oauth2/access_confirmation";
+		return "app.confirm";
 	}
 
 	@RequestMapping("/oauth/error")

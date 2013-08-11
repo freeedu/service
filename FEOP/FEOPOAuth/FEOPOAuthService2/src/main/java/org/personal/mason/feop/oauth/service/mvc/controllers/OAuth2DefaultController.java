@@ -8,17 +8,17 @@ public class OAuth2DefaultController {
 
 	@RequestMapping("login")
 	public String login() {
-		return "login";
+		return "app.login";
 	}
 
 	@RequestMapping("logout")
 	public String logout() {
-		return "logout";
+		return "app.logout";
 	}
 
 	@RequestMapping(value = { "/", "index" })
 	public String index() {
-		return "index";
+		return "app.index";
 	}
 
 }

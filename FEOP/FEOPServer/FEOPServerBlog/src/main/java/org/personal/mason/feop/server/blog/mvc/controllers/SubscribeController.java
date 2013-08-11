@@ -131,11 +131,11 @@ public class SubscribeController {
 		subscribeService.update(sub);
 	}
 
-	@RequestMapping
-	public String findMySubscribe(Principal principal, Model model) {
-		String uid = PrincipalUtils.getUid(principal);
-		Subscribe sub = subscribeService.findBySubscribe(uid);
-		model.addAttribute("subscribe", sub);
-		return "";
-	}
+//	@RequestMapping(value = "sub/m/list", method = RequestMethod.GET)
+//	public String findMySubscribe(Principal principal, Model model) {
+//		String uid = PrincipalUtils.getUid(principal);
+//		Subscribe sub = subscribeService.findBySubscribe(uid);
+//		model.addAttribute("subscribe", sub);
+//		return "";
+//	}
 }
