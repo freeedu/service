@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-<c:url value="/settings/new" var="newAction" />
+<c:url value="/admin/settings/new" var="newAction" />
 <form action="${newAction }" method="post" name="systemSettingForm" class="editable setting">
 	<h1>New Template</h1>
 	<s:hasBindErrors htmlEscape="true" name="systemSettingForm">

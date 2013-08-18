@@ -22,22 +22,22 @@ public class InvitingCodeController {
 		this.invitingCodeService = invitingCodeService;
 	}
 
-	@RequestMapping(value = { "/invite/generate" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/invite/generate" }, method = RequestMethod.GET)
 	public String generateCodes() {
 		invitingCodeService.generateInvitingCodes(DEFAULT_GENERATE_COUNT);
-		return "redirect:/invite/list";
+		return "redirect:/admin/invite/list";
 	}
 
-	@RequestMapping(value = { "/invite/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/invite/list" }, method = RequestMethod.GET)
 	public String findInvitingCodes(Model model) {
 		List<InvitingCode> codes = invitingCodeService.findAll();
 		model.addAttribute("invites", codes);
 		return "app.invite.list";
 	}
 	
-	@RequestMapping(value = { "/invite/delete" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/invite/delete" }, method = RequestMethod.GET)
 	public String findInvitingCodes(@RequestParam("id") Long id) {
 		invitingCodeService.delete(id);
-		return "redirect:/invite/list";
+		return "redirect:/admin/invite/list";
 	}
 }

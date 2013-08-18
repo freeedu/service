@@ -10,7 +10,7 @@
 <div class="viewable template">
 	<div class="widget">
 		<h1>${template.name }</h1>
-		<c:url value="/et/update?id=${template.id }" var="update" />
+		<c:url value="/admin/et/update?id=${template.id }" var="update" />
 		<div class="widget-content">
 			<div class="line">
 				<div class="left">Template Id:</div>

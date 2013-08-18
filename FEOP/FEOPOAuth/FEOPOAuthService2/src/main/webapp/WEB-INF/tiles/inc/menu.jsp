@@ -22,17 +22,17 @@
 			</ul>
 		</li>
 		<sec:authorize ifAllGranted="ROLE_USER" access="hasRole('ROLE_ADMIN')">
-			<li><a href="<c:url value="/et/list"/>">Template</a>
+			<li><a href="<c:url value="/admin/et/list"/>">Template</a>
 				<ul>
-					<li><a href="<c:url value="/et/list"/>">Templates</a></li>
-					<li><a href="<c:url value="/et/new"/>">New Template</a></li>
+					<li><a href="<c:url value="/admin/et/list"/>">Templates</a></li>
+					<li><a href="<c:url value="/admin/et/new"/>">New Template</a></li>
 				</ul>
 			</li>
-			<li><a href="<c:url value="/settings/list"/>">Settings</a>
+			<li><a href="<c:url value="/admin/settings/list"/>">Settings</a>
 				<ul>
-					<li><a href="<c:url value="/settings/list"/>">All Settings</a></li>
-					<li><a href="<c:url value="/settings/new"/>">New settings</a></li>
-					<li><a href="<c:url value="/invite/list"/>">Inviting</a></li>
+					<li><a href="<c:url value="/admin/settings/list"/>">All Settings</a></li>
+					<li><a href="<c:url value="/admin/settings/new"/>">New settings</a></li>
+					<li><a href="<c:url value="/admin/invite/list"/>">Inviting</a></li>
 				</ul>
 			</li>
 			

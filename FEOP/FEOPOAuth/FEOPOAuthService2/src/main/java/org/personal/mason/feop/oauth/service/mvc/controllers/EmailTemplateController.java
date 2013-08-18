@@ -25,12 +25,12 @@ public class EmailTemplateController {
 		this.emailTemplateService = emailTemplateService;
 	}
 
-	@RequestMapping(value = { "/et/new" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/et/new" }, method = RequestMethod.GET)
 	public String newEmailTemplate() {
 		return "app.et.new";
 	}
 
-	@RequestMapping(value = { "/et/new" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/admin/et/new" }, method = RequestMethod.POST)
 	public String saveEmailTemplate(@Valid EmailTemplateForm emailTemplateForm, BindingResult result, Model model) {
 		EmailTemplate latestTemplate = emailTemplateService.findLatestTemplateWithName(emailTemplateForm.getName());
 		EmailTemplate template;
@@ -53,7 +53,7 @@ public class EmailTemplateController {
 		return "app.et.view";
 	}
 
-	@RequestMapping(value = { "/et/update" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/et/update" }, method = RequestMethod.GET)
 	public String updateEmailTemplate(@RequestParam("id") Long id, Model model) {
 		EmailTemplate template = emailTemplateService.findById(id);
 		if(template == null){
@@ -65,7 +65,7 @@ public class EmailTemplateController {
 		return "app.et.update";
 	}
 
-	@RequestMapping(value = { "/et/update" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/admin/et/update" }, method = RequestMethod.POST)
 	public String mergeEmailTemplate(@Valid EmailTemplateForm template, BindingResult result, Model model) {
 		EmailTemplate editTemplate = emailTemplateService.findById(template.getId());
 
@@ -76,7 +76,7 @@ public class EmailTemplateController {
 		return "app.et.view";
 	}
 
-	@RequestMapping(value = { "/et/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/et/list" }, method = RequestMethod.GET)
 	public String findEmailTemplates(EmailTemplateForm emailTemplateForm, Model model) {
 		List<EmailTemplate> templates;
 		if (emailTemplateForm == null || emailTemplateForm.getName() == null) {
@@ -88,7 +88,7 @@ public class EmailTemplateController {
 		return "app.et.list";
 	}
 
-	@RequestMapping(value = { "/et/delete" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/et/delete" }, method = RequestMethod.GET)
 	public void deleteTemplate(@RequestParam("id") Long id) {
 		EmailTemplate template = emailTemplateService.findById(id);
 		if(template != null){
@@ -96,7 +96,7 @@ public class EmailTemplateController {
 		}
 	}
 	
-	@RequestMapping(value = { "/et/view" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/et/view" }, method = RequestMethod.GET)
 	public String viewTemplate(@RequestParam("id") Long id, Model model) {
 		EmailTemplate template = emailTemplateService.findById(id);
 		if(template == null){

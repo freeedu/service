@@ -39,7 +39,7 @@
 		</property>
 	</bean>
 
-	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<!-- <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="1" />
 	</bean>
 
@@ -58,5 +58,5 @@
 		<property name="defaultStatusCode" value="500" />
 		<property name="defaultErrorView" value="systemError" />
 		<property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" />
-	</bean>
+	</bean> -->
 </beans>

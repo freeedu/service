@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<import resource="spring-security-oauth2.xml" />
+
+	<oauth2:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices"
+		user-approval-handler-ref="userApprovalHandler" authorization-endpoint-url="/oauth/authorize" token-endpoint-url="/oauth/token">
+		<oauth2:authorization-code />
+		<oauth2:implicit />
+		<oauth2:refresh-token />
+		<oauth2:client-credentials />
+		<oauth2:password />
+	</oauth2:authorization-server>
+
+	<security:global-method-security pre-post-annotations="enabled">
+		<security:expression-handler ref="oauthExpressionHandler" />
+	</security:global-method-security>
+
+	<security:http pattern="/resources/**" security="none" />
+
+
+	<security:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager">
+		<security:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
+		<security:anonymous enabled="false" />
+		<security:http-basic entry-point-ref="clientAuthenticationEntryPoint" />
+		<!-- include this only if you need to authenticate clients via request parameters -->
+		<security:custom-filter ref="clientCredentialsTokenEndpointFilter" after="BASIC_AUTH_FILTER" />
+		<security:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</security:http>
+
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/client/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/account/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/home*" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/me/**" access="hasRole('ROLE_USER')" />
+
+		<security:intercept-url pattern="/oauth/**" access="hasAnyRole('ROLE_CLIENT','ROLE_USER','ROLE_ADMIN')" />
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/**" access="permitAll" />
+
+		<security:form-login authentication-failure-url="/login?error=true" default-target-url="/home" login-page="/login"
+			login-processing-url="/oauth/login.do" />
+		<security:logout logout-success-url="/logout" logout-url="/oauth/logout.do" />
+
+		<security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
+		<security:expression-handler ref="oauthWebExpressionHandler" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userDetailsService">
+			<security:password-encoder ref="passwordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:authentication-manager id="clientAuthenticationManager">
+		<security:authentication-provider user-service-ref="clientDetailsUserService" />
+	</security:authentication-manager>
+
+	<bean id="clientCredentialsTokenEndpointFilter" class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter"
+		p:authenticationManager-ref="clientAuthenticationManager" />
+
+	<bean id="clientAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint"
+		p:realmName="feop-oauth" p:typeName="Basic" />
+
+	<bean id="oauthAccessDeniedHandler" class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler" />
+
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter" />
+				<bean class="org.springframework.security.access.vote.RoleVoter" />
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</list>
+		</constructor-arg>
+	</bean>
+</beans>

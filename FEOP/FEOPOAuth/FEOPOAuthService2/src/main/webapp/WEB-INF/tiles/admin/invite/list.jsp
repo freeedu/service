@@ -6,7 +6,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <div class="invite">
-	<a id="generate" href='<c:url value="/invite/generate"/>'>Generate 10 more Code</a>
+	<a id="generate" href='<c:url value="/admin/invite/generate"/>'>Generate 10 more Code</a>
 </div>
 <c:forEach items="${invites}" var="invite">
 	<div class="viewable invite">
@@ -22,7 +22,7 @@
 					<label class="left">Used: </label> <label class="right"><c:out value="${invite.used }" /></label>
 				</div>
 				<div class="line">
-					<label class="left"><a href='<c:url value="/invite/delete?id=${invite.id }"/>'>Delete</a></label>
+					<label class="left"><a href='<c:url value="/admin/invite/delete?id=${invite.id }"/>'>Delete</a></label>
 				</div>
 			</div>
 		</div>

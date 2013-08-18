@@ -9,7 +9,7 @@
 	<div class="viewable template">
 		<div class="widget">
 			<h1>
-				<c:url value="/et/view?id=${template.id }" var="viewTarget" />
+				<c:url value="/admin/et/view?id=${template.id }" var="viewTarget" />
 				<a href="${viewTarget }"><c:out value="${template.name }" /></a>
 			</h1>
 			<div class="widget-content">
@@ -45,7 +45,7 @@
 				<textarea rows="6" disabled="disabled">${template.content }</textarea>
 
 				<div class="line">
-					<label class="left"><a href='<c:url value="/et/delete?id=${template.id }"/>'>Delete</a></label>
+					<label class="left"><a href='<c:url value="/admin/et/delete?id=${template.id }"/>'>Delete</a></label>
 				</div>
 			</div>
 		</div>

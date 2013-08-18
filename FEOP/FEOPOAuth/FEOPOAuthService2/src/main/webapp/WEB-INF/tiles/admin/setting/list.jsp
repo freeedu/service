@@ -9,7 +9,7 @@
 	<div class="viewable setting">
 		<div class="widget">
 			<h1>
-				<c:url value="/settings/view?id=${setting.id }" var="viewTarget" />
+				<c:url value="/admin/settings/view?id=${setting.id }" var="viewTarget" />
 				<a href="${viewTarget }"><c:out value="${setting.key }" /></a>
 			</h1>
 			<div class="widget-content">
@@ -29,7 +29,7 @@
 					<label class="left">Diabled: </label> <label class="right"><c:out value="${setting.disabled }" /></label>
 				</div>
 				<div class="line">
-					<label class="left"><a href='<c:url value="/settings/delete?id=${setting.id }"/>'>Delete</a></label>
+					<label class="left"><a href='<c:url value="/admin/settings/delete?id=${setting.id }"/>'>Delete</a></label>
 				</div>
 			</div>
 		</div>

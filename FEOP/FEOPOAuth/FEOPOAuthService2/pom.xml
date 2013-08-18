@@ -253,7 +253,7 @@
 				<version>2.1</version>
 				<configuration>
 					<port>8889</port>
-					<path>/oauth2</path>
+					<path>/</path>
 				</configuration>
 			</plugin>
 			<plugin>

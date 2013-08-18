@@ -8,7 +8,7 @@
 <div class="viewable setting">
 	<div class="widget">
 		<h1>${setting.key }</h1>
-		<c:url value="/settings/update?id=${setting.id }" var="update" />
+		<c:url value="/admin/settings/update?id=${setting.id }" var="update" />
 		<div class="widget-content">
 			<div class="line">
 				<label class="left">Setting Key: </label> <label class="right"><c:out value="${setting.key }" /></label>

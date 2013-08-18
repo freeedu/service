@@ -41,12 +41,12 @@ public class SystemSettingsController {
 		this.systemSettingsService = systemSettingsService;
 	}
 
-	@RequestMapping(value = { "/settings/new" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/settings/new" }, method = RequestMethod.GET)
 	public String newSystemSetting() {
 		return "app.settings.new";
 	}
 
-	@RequestMapping(value = { "/settings/new" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/admin/settings/new" }, method = RequestMethod.POST)
 	public String saveSystemSetting(@Valid SystemSettingForm systemSettingForm, BindingResult result, Model model) {
 		SystemSettings settings = new SystemSettings();
 		settings.setKey(systemSettingForm.getKey());
@@ -61,7 +61,7 @@ public class SystemSettingsController {
 		return "app.settings.view";
 	}
 
-	@RequestMapping(value = { "/settings/update" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/settings/update" }, method = RequestMethod.GET)
 	public String updateSystemSetting(@RequestParam("id") Long id, Model model) {
 		SystemSettings setting = systemSettingsService.findById(id);
 		if(setting == null){
@@ -72,7 +72,7 @@ public class SystemSettingsController {
 		return "app.settings.update";
 	}
 
-	@RequestMapping(value = { "/settings/update" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/admin/settings/update" }, method = RequestMethod.POST)
 	public String mergeSystemSetting(@Valid SystemSettingForm setting, BindingResult result, Model model) {
 		SystemSettings settings = systemSettingsService.findById(setting.getId());
 		settings.setKey(setting.getKey());
@@ -84,7 +84,7 @@ public class SystemSettingsController {
 		return "app.settings.view";
 	}
 
-	@RequestMapping(value = { "/settings/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/settings/list" }, method = RequestMethod.GET)
 	public String findSystemSettings(@RequestParam(value = "p", required = false) Integer page,
 			@RequestParam(value = "l", required = false) Integer size, Model model) {
 		if (page == null) {
@@ -98,16 +98,16 @@ public class SystemSettingsController {
 		return "app.settings.list";
 	}
 
-	@RequestMapping(value = { "/settings/delete" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/settings/delete" }, method = RequestMethod.GET)
 	public String deleteSetting(@RequestParam("id") Long id) {
 		SystemSettings setting = systemSettingsService.findById(id);
 		if (setting != null) {
 			systemSettingsService.delete(setting);
 		}
-		return "redirect:/settings/list";
+		return "redirect:/admin/settings/list";
 	}
 
-	@RequestMapping(value = { "/settings/view" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/settings/view" }, method = RequestMethod.GET)
 	public String viewSetting(@RequestParam("id") Long id, Model model) {
 		SystemSettings setting = systemSettingsService.findById(id);
 		if (setting == null) {
