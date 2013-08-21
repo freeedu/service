@@ -28,6 +28,6 @@ public class SystemSettingUtils {
 				return setting.getValue();
 			}
 		}
-		return null;
+		return "";
 	}
 }

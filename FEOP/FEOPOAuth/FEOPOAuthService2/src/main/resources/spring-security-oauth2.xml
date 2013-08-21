@@ -11,7 +11,7 @@
 
 	<oauth2:web-expression-handler id="oauthWebExpressionHandler" />
 
-	<oauth2:resource-server id="resourceServerFilter" resource-id="feop-oauth" token-services-ref="tokenServices" />
+	<oauth2:resource-server id="resourceServerFilter" resource-id="feop" token-services-ref="tokenServices" />
 
 	<bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService" c:dataSource-ref="dataSource" />
 

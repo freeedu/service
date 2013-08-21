@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Oauth2TokenController {
 
 	@RequestMapping(value = { "/me/info" })
-	public byte[] checkToken(Principal principal) {
+	public String checkToken(Principal principal) {
 		if (principal instanceof OAuth2Authentication) {
 			OAuth2Authentication authentication = (OAuth2Authentication) principal;
-			return authentication.getName().getBytes();
+			return authentication.getName();
 		}
 
-		return "mason".getBytes();
+		return principal.getName();
 	}
 
 }
