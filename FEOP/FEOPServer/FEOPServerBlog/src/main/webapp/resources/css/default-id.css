@@ -1,0 +1,24 @@
+@charset "UTF-8";
+/* CSS Document */
+
+#content {
+	margin-bottom: -100px;
+}
+
+#content:after{
+	height:100px;
+	
+}
+
+#content-left{
+	width:80%;
+	float:left;
+	margin-right:1%;
+	margin-top:5px;
+}
+
+#content-right{
+	margin-top:5px;
+	width:19%;
+	float:left;
+}

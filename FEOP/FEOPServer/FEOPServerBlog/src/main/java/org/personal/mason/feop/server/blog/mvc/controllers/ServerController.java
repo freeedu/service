@@ -14,7 +14,7 @@ public class ServerController {
 		if (principal == null || principal.getName().isEmpty()) {
 			return "redirect:/login";
 		}
-		return "home";
+		return "app.homepage";
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.GET)
@@ -29,6 +29,11 @@ public class ServerController {
 
 	@RequestMapping(value = { "/", "index" }, method = RequestMethod.GET)
 	public String index() {
-		return "index";
+		return "app.homepage";
+	}
+
+	@RequestMapping(value = {"index1" }, method = RequestMethod.GET)
+	public String index1() {
+		return "app.blog.list";
 	}
 }

@@ -1,10 +1,6 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
-import java.sql.Timestamp;
-
-import org.personal.mason.feop.server.blog.domain.Blog;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.personal.mason.feop.server.blog.domain.model.Blog;
 
 public class BlogModel {
 
@@ -14,12 +10,9 @@ public class BlogModel {
 	private String blogDesc;
 	private String blogSubtitle;
 	private String blogTitle;
-	private Timestamp createDate;
-	private Timestamp lastUpdate;
 	private String tagIds;
 	private Long seryId;
 	private Long categoryId;
-	private Long blogSettingId;
 
 	public Long getId() {
 		return id;
@@ -69,22 +62,6 @@ public class BlogModel {
 		this.blogTitle = blogTitle;
 	}
 
-	public Timestamp getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
-	}
-
-	public Timestamp getLastUpdate() {
-		return lastUpdate;
-	}
-
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-
 	public String getTagIds() {
 		return tagIds;
 	}
@@ -109,19 +86,30 @@ public class BlogModel {
 		this.categoryId = categoryId;
 	}
 
-	public Long getBlogSettingId() {
-		return blogSettingId;
-	}
-
-	public void setBlogSettingId(Long blogSettingId) {
-		this.blogSettingId = blogSettingId;
-	}
-
-	public static Blog convert(BlogModel model) {
-		throw new NotImplementedException();
+	public static void merge(Blog blog, BlogModel model) {
+		blog.setBlogTitle(model.getBlogTitle());
+		blog.setBlogSubtitle(model.getBlogSubtitle());
+		blog.setBlogDesc(model.getBlogDesc());
 	}
 
 	public static BlogModel revert(Blog blog) {
-		throw new NotImplementedException();
+		BlogModel model = new BlogModel();
+		model.setId(blog.getId());
+		model.setAuthorName(blog.getAuthorName());
+		model.setAuthorUid(blog.getAuthorUid());
+		model.setBlogTitle(blog.getBlogTitle());
+		model.setBlogSubtitle(blog.getBlogSubtitle());
+		model.setBlogDesc(blog.getBlogDesc());
+		model.setTagIds(blog.getTagIds());
+		
+		if(blog.getSery() != null){
+			model.setSeryId(blog.getSery().getId());
+		}
+		
+		if(blog.getCategory() !=null){
+			model.setCategoryId(blog.getCategory().getId());
+		}
+		
+		return model;
 	}
 }

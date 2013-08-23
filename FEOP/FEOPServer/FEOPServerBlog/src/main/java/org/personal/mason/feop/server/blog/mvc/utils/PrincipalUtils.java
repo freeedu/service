@@ -6,7 +6,7 @@ public final class PrincipalUtils {
 
 	public static String getUserName(Principal principal) {
 		return null;
-//		throw new NotImplementedException();
+		// throw new NotImplementedException();
 	}
 
 	public static String getUid(Principal principal) {

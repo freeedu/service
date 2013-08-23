@@ -28,7 +28,9 @@
 				</div>
 			</c:if>
 		</s:hasBindErrors>
-
+		<c:if test="${redirect_uri != null }">
+			<input type="hidden" name="redirecrUrl" value="${redirect_uri }">
+		</c:if>
 		<input id="name" name="firstName" type="text" class="text" value="" placeholder="First Name" /> <input id="fname" name="lastName" type="tel"
 			class="text" value="" placeholder="Last Name" />
 

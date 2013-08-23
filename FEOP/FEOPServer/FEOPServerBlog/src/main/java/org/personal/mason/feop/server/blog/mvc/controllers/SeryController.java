@@ -2,11 +2,11 @@ package org.personal.mason.feop.server.blog.mvc.controllers;
 
 import java.util.List;
 
-import org.personal.mason.feop.server.blog.domain.Category;
-import org.personal.mason.feop.server.blog.domain.Sery;
+import org.personal.mason.feop.server.blog.domain.model.Category;
+import org.personal.mason.feop.server.blog.domain.model.Sery;
+import org.personal.mason.feop.server.blog.domain.service.CategoryService;
+import org.personal.mason.feop.server.blog.domain.service.SeryService;
 import org.personal.mason.feop.server.blog.mvc.model.SeryModel;
-import org.personal.mason.feop.server.blog.spi.CategoryService;
-import org.personal.mason.feop.server.blog.spi.SeryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,14 +57,14 @@ public class SeryController {
 		seryService.delete(id);
 	}
 
-	@RequestMapping(value = "sery/query", method = RequestMethod.GET)
+	@RequestMapping(value = "sery/list", method = RequestMethod.GET)
 	public String findByName(@RequestParam("q") String query, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
 		List<Sery> series = seryService.findByName(query, page, size);
 		model.addAttribute("series", series);
 		return "";
 	}
 
-	@RequestMapping(value = "sery/query", method = RequestMethod.GET)
+	@RequestMapping(value = "sery/c/list", method = RequestMethod.GET)
 	public String findByCategory(@RequestParam("c") Long categoryId, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
 		Category cat = categoryService.findById(categoryId);
 		List<Sery> series = seryService.findByCategory(cat, page, size);

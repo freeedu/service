@@ -1,6 +1,6 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
-import org.personal.mason.feop.server.blog.domain.Sery;
+import org.personal.mason.feop.server.blog.domain.model.Sery;
 
 public class SeryModel {
 	private Long id;

@@ -18,6 +18,8 @@ public class SignupForm {
 	@NotEmpty(message = "Repeat Password is required")
 	private String repeatPassword;
 
+	private String redirecrUrl;
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -64,5 +66,13 @@ public class SignupForm {
 
 	public String getRepeatPassword() {
 		return repeatPassword;
+	}
+
+	public String getRedirecrUrl() {
+		return redirecrUrl;
+	}
+
+	public void setRedirecrUrl(String redirecrUrl) {
+		this.redirecrUrl = redirecrUrl;
 	}
 }

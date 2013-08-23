@@ -2,8 +2,8 @@ package org.personal.mason.feop.server.blog.mvc.controllers;
 
 import java.util.List;
 
-import org.personal.mason.feop.server.blog.domain.Tag;
-import org.personal.mason.feop.server.blog.spi.TagService;
+import org.personal.mason.feop.server.blog.domain.model.Tag;
+import org.personal.mason.feop.server.blog.domain.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +31,7 @@ public class TagController {
 		}
 	}
 
-	@RequestMapping
+	@RequestMapping(value="tag/list")
 	public String findTags(@RequestParam("q") String query, Model model) {
 		List<Tag> tags = tagService.findByTagNameLike(query);
 		model.addAttribute("tags", tags);

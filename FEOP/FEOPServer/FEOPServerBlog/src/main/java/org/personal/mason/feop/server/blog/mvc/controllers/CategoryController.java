@@ -1,8 +1,8 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
-import org.personal.mason.feop.server.blog.domain.Category;
+import org.personal.mason.feop.server.blog.domain.model.Category;
+import org.personal.mason.feop.server.blog.domain.service.CategoryService;
 import org.personal.mason.feop.server.blog.mvc.model.CategoryModel;
-import org.personal.mason.feop.server.blog.spi.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

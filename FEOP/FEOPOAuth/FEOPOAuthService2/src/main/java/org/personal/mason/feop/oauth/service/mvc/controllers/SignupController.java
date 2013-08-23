@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -45,7 +46,11 @@ public class SignupController {
 	}
 
 	@RequestMapping(value = { "/signup/", "/signup/form" })
-	public String signup(@ModelAttribute SignupForm signupForm, Model model) {
+	public String signup(@RequestParam(value = "redirect_uri", required = false) String redirectUri, @ModelAttribute SignupForm signupForm,
+			Model model) {
+		if (redirectUri != null) {
+			model.addAttribute("redirect_uri", redirectUri);
+		}
 		List<SystemSettings> settings = systemSettingsService.findByKey(INVITE_PERIOD_KEY);
 		if (SystemSettingUtils.getValue(settings).equals(INVITE_PERIOD_VALUE)) {
 			model.addAttribute("requireInvite", true);
@@ -67,7 +72,7 @@ public class SignupController {
 				return "app.regist";
 			}
 		}
-		
+
 		if (!signupForm.getPassword().equals(signupForm.getRepeatPassword())) {
 			result.rejectValue("repeatPassword", "errors.changesecret.repeatPassword", "New Password does not match.");
 			return "app.regist";
@@ -81,6 +86,10 @@ public class SignupController {
 
 		OauthUser user = feopUserService.createUser(signupForm);
 		feopUserService.regist(user);
+
+		if (signupForm.getRedirecrUrl() != null) {
+			return String.format("redirect:%s", signupForm.getRedirecrUrl());
+		}
 
 		redirectAttributes.addFlashAttribute("message", "You have successfully signed up and logged in.");
 		return "redirect:/";

@@ -1,8 +1,8 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
-import org.personal.mason.feop.server.blog.domain.BlogSetting;
+import org.personal.mason.feop.server.blog.domain.model.BlogSetting;
+import org.personal.mason.feop.server.blog.domain.service.BlogSettingService;
 import org.personal.mason.feop.server.blog.mvc.model.BlogSettingModel;
-import org.personal.mason.feop.server.blog.spi.BlogSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +31,7 @@ public class BlogSettingController {
 		return "";
 	}
 
-	@RequestMapping(value = "setting/update", method = RequestMethod.PUT)
+	@RequestMapping(value = "setting/update", method = RequestMethod.GET)
 	public String update(@RequestParam("id") Long id, Model model) {
 		BlogSetting setting = blogSettingService.findById(id);
 		BlogSettingModel updatedSettingModel = BlogSettingModel.revert(setting);

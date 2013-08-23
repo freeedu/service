@@ -1,6 +1,6 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
-import org.personal.mason.feop.server.blog.domain.BlogSection;
+import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 

@@ -2,10 +2,10 @@ package org.personal.mason.feop.server.blog.mvc.controllers;
 
 import java.security.Principal;
 
-import org.personal.mason.feop.server.blog.domain.Subscribe;
+import org.personal.mason.feop.server.blog.domain.model.Subscribe;
+import org.personal.mason.feop.server.blog.domain.service.SubscribeService;
 import org.personal.mason.feop.server.blog.mvc.utils.CollectionUtils;
 import org.personal.mason.feop.server.blog.mvc.utils.PrincipalUtils;
-import org.personal.mason.feop.server.blog.spi.SubscribeService;
 import org.personal.mason.feop.server.blog.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -131,11 +131,11 @@ public class SubscribeController {
 		subscribeService.update(sub);
 	}
 
-//	@RequestMapping(value = "sub/m/list", method = RequestMethod.GET)
-//	public String findMySubscribe(Principal principal, Model model) {
-//		String uid = PrincipalUtils.getUid(principal);
-//		Subscribe sub = subscribeService.findBySubscribe(uid);
-//		model.addAttribute("subscribe", sub);
-//		return "";
-//	}
+	@RequestMapping(value = "sub/m/list", method = RequestMethod.GET)
+	public String findMySubscribe(Principal principal, Model model) {
+		String uid = PrincipalUtils.getUid(principal);
+		Subscribe sub = subscribeService.findBySubscribe(uid);
+		model.addAttribute("subscribe", sub);
+		return "";
+	}
 }

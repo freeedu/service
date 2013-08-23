@@ -3,10 +3,10 @@ package org.personal.mason.feop.server.blog.mvc.controllers;
 import java.security.Principal;
 import java.util.List;
 
-import org.personal.mason.feop.server.blog.domain.MediaInfo;
+import org.personal.mason.feop.server.blog.domain.model.MediaInfo;
+import org.personal.mason.feop.server.blog.domain.service.MediaInfoService;
 import org.personal.mason.feop.server.blog.mvc.model.MediaInfoModel;
 import org.personal.mason.feop.server.blog.mvc.utils.PrincipalUtils;
-import org.personal.mason.feop.server.blog.spi.MediaInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,7 +64,7 @@ public class MediaInfoController {
 		return "";
 	}
 
-	@RequestMapping(value = "media/query", method = RequestMethod.GET)
+	@RequestMapping(value = "media/m/list", method = RequestMethod.GET)
 	public String findMyMedia(@RequestParam("p") Integer page, @RequestParam("s") Integer size, Principal principal, Model model) {
 		String uid = PrincipalUtils.getUid(principal);
 		List<MediaInfo> mediaInfos = mediaInfoService.findByUid(uid, page, size);
@@ -72,7 +72,7 @@ public class MediaInfoController {
 		return "";
 	}
 
-	@RequestMapping(value = "media/query", method = RequestMethod.GET)
+	@RequestMapping(value = "media/list", method = RequestMethod.GET)
 	public String findMyMediaByType(@RequestParam("t") String type, @RequestParam("p") Integer page, @RequestParam("s") Integer size,
 			Principal principal, Model model) {
 		String uid = PrincipalUtils.getUid(principal);

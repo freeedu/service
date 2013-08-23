@@ -1,6 +1,6 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
-import org.personal.mason.feop.server.blog.domain.BlogSetting;
+import org.personal.mason.feop.server.blog.domain.model.BlogSetting;
 
 public class BlogSettingModel {
 

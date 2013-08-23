@@ -1,6 +1,6 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
-import org.personal.mason.feop.server.blog.domain.Category;
+import org.personal.mason.feop.server.blog.domain.model.Category;
 
 public class CategoryModel {
 

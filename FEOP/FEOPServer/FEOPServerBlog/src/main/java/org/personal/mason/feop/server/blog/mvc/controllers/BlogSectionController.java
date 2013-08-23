@@ -3,11 +3,11 @@ package org.personal.mason.feop.server.blog.mvc.controllers;
 import java.security.Principal;
 import java.util.List;
 
-import org.personal.mason.feop.server.blog.domain.Blog;
-import org.personal.mason.feop.server.blog.domain.BlogSection;
+import org.personal.mason.feop.server.blog.domain.model.Blog;
+import org.personal.mason.feop.server.blog.domain.model.BlogSection;
+import org.personal.mason.feop.server.blog.domain.service.BlogSectionService;
+import org.personal.mason.feop.server.blog.domain.service.BlogService;
 import org.personal.mason.feop.server.blog.mvc.model.BlogSectionModel;
-import org.personal.mason.feop.server.blog.spi.BlogSectionService;
-import org.personal.mason.feop.server.blog.spi.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

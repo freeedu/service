@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,7 +14,12 @@ public class OAuth2DefaultController {
 	}
 
 	@RequestMapping("logout")
-	public String logout() {
+	public String logout(HttpServletRequest request) {
+		String redirectUri = request.getParameter("redirect_uri");
+
+		if (redirectUri != null) {
+			return String.format("redirect:%s", redirectUri);
+		}
 		return "app.logout";
 	}
 
