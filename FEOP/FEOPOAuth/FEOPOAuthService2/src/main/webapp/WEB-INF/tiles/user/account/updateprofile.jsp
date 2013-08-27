@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-<c:url value="/profile/update" var="update" />
+<c:url value="/account/update" var="update" />
 <form action="${update }" method="post" class="editable" id="profile" name="userForm">
 	<h1>Edit Profile</h1>
 	<fieldset class="inputs">

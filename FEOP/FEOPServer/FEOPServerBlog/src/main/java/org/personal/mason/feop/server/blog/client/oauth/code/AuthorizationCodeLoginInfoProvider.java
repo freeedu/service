@@ -15,11 +15,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.http.client.ClientProtocolException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.personal.mason.feop.server.blog.client.oauth.OAuthLoginInfoProvider;
+import org.personal.mason.feop.server.blog.utils.Constrains;
 
 public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
 
 	@Override
-	public String getAuthorizationRequestUrl(String callback) {
+	public String getAuthorizationRequestUrl(HttpServletRequest request) {
 
 		StringBuilder urlPattern = new StringBuilder();
 		List<String> params = new LinkedList<>();
@@ -30,6 +31,7 @@ public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
 
 		urlPattern.append("&response_type=code");
 
+		String callback = request.getRequestURL().toString();
 		if (callback != null) {
 			try {
 				params.add(URLEncoder.encode(callback, "UTF-8"));
@@ -43,10 +45,12 @@ public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
 			params.add(getConfiguration().getScope());
 		}
 
-		// if(getConfiguration().isEnableCSRF()){
-		// urlPattern.append("&state=%s");
-		// //TODO:
-		// }
+		if (getConfiguration().isEnableCSRF()) {
+			urlPattern.append("&state=%s");
+			String stateKey = stateKeyGenerator.generateKey();
+			params.add(stateKey);
+			request.getSession(true).setAttribute(STATE, stateKey);
+		}
 
 		return String.format(urlPattern.toString(), params.toArray());
 	}
@@ -59,10 +63,12 @@ public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
 
 	@Override
 	public void processAccessToken(HttpServletRequest request, HttpServletResponse response) {
-		if (request.getParameter("error") == null) {
+		String error = request.getParameter("error");
+		if (error == null) {
 			requestAccessToken(request, response);
 		} else {
-			// TODO:
+			String errorDesc = request.getParameter("error_description");
+			System.out.println(errorDesc);
 		}
 	}
 
@@ -97,24 +103,28 @@ public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
 			urlPattern.append("&code=%s");
 			params.add(code);
 
-			// if(getConfiguration().isEnableCSRF()){
-			// urlPattern.append("&state=%s");
-			// //TODO:
-			// }
+			if (getConfiguration().isEnableCSRF()) {
+				urlPattern.append("&state=%s");
+				params.add(request.getParameter(STATE));
+			}
 
 			try {
 				String uri = String.format(urlPattern.toString(), params.toArray());
 				ObjectMapper mapper = new ObjectMapper();
-				
+
 				@SuppressWarnings("unchecked")
 				Map<String, Object> properties = mapper.readValue(new URL(uri), Map.class);
 				HttpSession session = request.getSession(true);
 
-				session.setAttribute(AUTHENTICATIOIN, new AuthorizationCodeAuthentication(properties));
+				session.setAttribute(Constrains.AUTHENTICATIOIN, new AuthorizationCodeAuthentication(properties));
 
 				retrieveUserInfo(request);
 
-				response.sendRedirect(request.getRequestURI());
+				if (getConfiguration().getLoginSuccessUri() != null) {
+					response.sendRedirect(getConfiguration().getLoginSuccessUri());
+				} else {
+					response.sendRedirect(request.getRequestURI());
+				}
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

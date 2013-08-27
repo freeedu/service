@@ -29,18 +29,33 @@
 			</c:if>
 		</s:hasBindErrors>
 		<c:if test="${redirect_uri != null }">
-			<input type="hidden" name="redirecrUrl" value="${redirect_uri }">
+			<input type="hidden" name="redirectUrl" value="${redirect_uri }">
 		</c:if>
-		<input id="name" name="firstName" type="text" class="text" value="" placeholder="First Name" /> <input id="fname" name="lastName" type="tel"
-			class="text" value="" placeholder="Last Name" />
-
+		<input id="name" name="firstName" type="text" class="text" value="" placeholder="First Name" required="required"/> 
+		<input id="fname" name="lastName" type="text" class="text" value="" placeholder="Last Name" required="required"/>
+		
 		<c:if test="${requireInvite eq true}">
-			<input id="inviteCode" type="text" placeholder="Inviting Code" name="inviteCode" />
+			<input id="inviteCode" type="text" placeholder="Inviting Code" name="inviteCode" required="required"/>
 		</c:if>
 
-		<input id="email" name="email" type="email" class="text" value="" placeholder="Email" /> <input class="password" name="password" class="text"
-			type="password" placeholder="Password" /> <input class="password" name="re-password" class="text" type="password"
-			placeholder="Password Again" /> <input id="acceptTerms" name="acceptTerms" type="checkbox" required /> <label for="acceptTerms"> I
+		<input class="password" name="password" class="text" type="password" placeholder="Password" required="required"/>
+		<input class="password" name="repeatPassword" class="text" type="password" placeholder="Password Again" required="required"/> 
+
+		<input id="name" name="userName" type="text" class="text" value="" placeholder="Screen Name" />
+	
+		<input id="email" name="email" type="email" class="text" value="" placeholder="Email" required="required"/> 
+		<input id="tel" name="phone" type="tel" class="text" value="" placeholder="Phone" /> 
+		
+		<select id="gender" name="gender" title="Gender" >
+			<option value="" selected="selected">Choose ...</option>
+			<option value="m">Male</option>
+			<option value="f">Female</option>
+		</select>
+		
+		<input id="birth" name="birth" type="date" class="text" value="" placeholder="Birthday"  >
+		<input id="location" name="location" type="text" class="" value="" placeholder="Location">
+		
+		<input id="acceptTerms" name="acceptTerms" type="checkbox" required /> <label for="acceptTerms"> I
 			agree to the <a href="">Terms and Conditions</a> and <a href="">Privacy Policy</a>
 		</label>
 	</fieldset>

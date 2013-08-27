@@ -11,7 +11,7 @@
 
 	<context:annotation-config />
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-	<context:component-scan base-package="org.personal.mason.feop.server.blog.mvc" />
+	<context:component-scan base-package="org.personal.mason.feop.server.blog" />
 
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
@@ -29,13 +29,14 @@
 
 	<context:property-placeholder location="classpath:META-INF/spring/*.properties" />
 
-	<bean id="configuration" class="org.personal.mason.feop.server.blog.client.oauth.ClientConfiguration" p:responseType="${response.type}"
-		p:clientId="${client.id}" p:clientSecret="${client.secret}" p:authUrl="${user.authorization.uri}" p:tokenAccessUrl="${access.token.uri}"
-		p:userInfoUri="${user.info.uri}" />
+	<!-- <bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.client.XmlClientConfiguration" p:responseType="${response.type}" 
+		p:clientId="${client.id}" p:clientSecret="${client.secret}" p:authUrl="${user.authorization.uri}" p:tokenAccessUrl="${access.token.uri}" p:userInfoUri="${user.info.uri}" 
+		p:oauthLogoutUri="${oauth.logout.uri}" p:oauthRegisterUri="${oauth.register.uri}" p:loginSuccessUri="${login.success.uri}" /> -->
+	<bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.client.JDBCClientConfiguration" />
 
 	<bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.code.AuthorizationCodeLoginInfoProvider"
-		p:configuration-ref="configuration" />
-	<!-- <bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.implicit.ImplicitLoginInfoProvider" p:configuration-ref="configuration" 
+		p:configuration-ref="clientConfiguration" />
+	<!-- <bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.implicit.ImplicitLoginInfoProvider" p:configuration-ref="clientConfiguration" 
 		/> -->
 
 	<bean id="processor" class="org.personal.mason.feop.server.blog.client.HTTPAuthorityProcessor">
@@ -43,7 +44,12 @@
 			<list>
 				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/resources/.*" p:security="false" />
 				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/.*.ico" p:security="false" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/m.*" p:access="ROLE_USER" />
+				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/user/.*" p:access="ROLE_USER" />
+				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/my/.*" p:access="ROLE_USER" />
+
+
+				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/syssetting/.*" p:access="ROLE_ADMIN" />
+
 				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/.*" p:access="allow" />
 			</list>
 		</constructor-arg>
@@ -77,10 +83,13 @@
 		<property name="mediaTypes">
 			<map>
 				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
 			</map>
 		</property>
 		<property name="defaultViews">
-			<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+			</list>
 		</property>
 	</bean>
 	<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> <property name="order" value="1" /> <property name="exceptionMappings"> 

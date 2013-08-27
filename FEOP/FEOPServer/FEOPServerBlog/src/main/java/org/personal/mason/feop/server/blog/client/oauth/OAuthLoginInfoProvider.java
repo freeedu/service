@@ -1,28 +1,29 @@
 package org.personal.mason.feop.server.blog.client.oauth;
 
-import java.io.IOException;
-import java.net.URL;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.client.ClientProtocolException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.personal.mason.feop.oauth.common.model.UserInfo;
-import org.personal.mason.feop.server.blog.client.oauth.code.RestClient;
+import org.personal.mason.feop.server.blog.client.ClientConfiguration;
+import org.personal.mason.feop.server.blog.utils.Constrains;
 import org.springframework.http.MediaType;
 
 public abstract class OAuthLoginInfoProvider {
-	protected static final String AUTHENTICATIOIN = "authentication";
+	protected static final String STATE = "state";
 
 	private ClientConfiguration configuration;
+	protected StateKeyGenerator stateKeyGenerator = new DefaultStateKeyGenerator();
 
 	public void setConfiguration(ClientConfiguration configuration) {
 		this.configuration = configuration;
 	}
 
-	public abstract String getAuthorizationRequestUrl(String callback);
+	public void setStateKeyGenerator(StateKeyGenerator stateKeyGenerator) {
+		this.stateKeyGenerator = stateKeyGenerator;
+	}
+
+	public abstract String getAuthorizationRequestUrl(HttpServletRequest request);
 
 	public abstract void processAccessToken(HttpServletRequest request, HttpServletResponse response);
 
@@ -32,7 +33,7 @@ public abstract class OAuthLoginInfoProvider {
 
 	public void retrieveUserInfo(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		FEOPAuthentication auth = (FEOPAuthentication) session.getAttribute(AUTHENTICATIOIN);
+		FEOPAuthentication auth = (FEOPAuthentication) session.getAttribute(Constrains.AUTHENTICATIOIN);
 
 		if (auth != null) {
 			StringBuilder urlPattern = new StringBuilder(configuration.getUserInfoUri());
@@ -60,7 +61,7 @@ public abstract class OAuthLoginInfoProvider {
 		if (session == null) {
 			return false;
 		}
-		FEOPAuthentication authentication = (FEOPAuthentication) session.getAttribute(AUTHENTICATIOIN);
+		FEOPAuthentication authentication = (FEOPAuthentication) session.getAttribute(Constrains.AUTHENTICATIOIN);
 		if (authentication != null && authentication.hasValidToken()) {
 			return true;
 		}

@@ -14,6 +14,13 @@
 		<div class="left">User Id:</div><div class="right"><c:out value="${userForm.userId }" /></div>
 	</div>
 	<div class="line">
+		<div class="left">First Name:</div><div class="right"><c:out value="${userForm.firstName }" /></div>
+	</div>
+	<div class="line">
+		<div class="left">Last Name:</div><div class="right"><c:out value="${userForm.lastName }" /></div>
+	</div>
+	
+	<div class="line">
 		<div class="left">User Name:</div><div class="right"><c:out value="${userForm.userName }" /></div>
 	</div>
 	<div class="line">

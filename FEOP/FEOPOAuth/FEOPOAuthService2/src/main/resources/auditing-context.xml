@@ -6,8 +6,8 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd">
 
 	<import resource="infrastructure.xml" />
-	
-	<bean id="auditorAware" class="org.personal.mason.feop.oauth.service.audit.AuditorAwareImpl"></bean>
+
+	<bean id="auditorAware" class="org.personal.mason.feop.oauth.service.audit.AuditorAwareImpl" />
 
 	<jpa:auditing auditor-aware-ref="auditorAware" />
 	<jpa:repositories base-package="org.personal.mason.feop.oauth.service.repository" />

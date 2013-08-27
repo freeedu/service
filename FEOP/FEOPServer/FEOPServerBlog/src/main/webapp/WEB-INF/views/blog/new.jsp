@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<form id="new-blog" class="editable" action='<c:url value="/blog/create"/>' method="post">
+<form id="new-blog" class="editable" action='<c:url value="/my/blog/create"/>' method="post">
     <h1>New Blog</h1>
     <fieldset class="inputs">
     	<label class="input-title" for="blogTitle">Title</label>

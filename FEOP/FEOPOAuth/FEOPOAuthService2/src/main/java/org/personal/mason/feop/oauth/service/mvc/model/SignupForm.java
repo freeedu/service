@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.service.mvc.model;
 
+import java.util.Date;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -9,6 +11,7 @@ public class SignupForm {
 	private String firstName;
 	@NotEmpty(message = "Last Name is required")
 	private String lastName;
+	private String userName;
 	private String inviteCode;
 	@Email(message = "Please provide a valid email address")
 	@NotEmpty(message = "Email is required")
@@ -18,7 +21,13 @@ public class SignupForm {
 	@NotEmpty(message = "Repeat Password is required")
 	private String repeatPassword;
 
-	private String redirecrUrl;
+	private String gender;
+	private Date birth;
+	private String profileImageUri;
+	private String location;
+	private String phone;
+
+	private String redirectUrl;
 
 	public String getFirstName() {
 		return firstName;
@@ -68,11 +77,60 @@ public class SignupForm {
 		return repeatPassword;
 	}
 
-	public String getRedirecrUrl() {
-		return redirecrUrl;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setRedirecrUrl(String redirecrUrl) {
-		this.redirecrUrl = redirecrUrl;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Date getBirth() {
+		return birth;
+	}
+
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+
+	public String getProfileImageUri() {
+		return profileImageUri;
+	}
+
+	public void setProfileImageUri(String profileImageUri) {
+		this.profileImageUri = profileImageUri;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getRedirectUrl() {
+		return redirectUrl;
+	}
+
+	public void setRedirectUrl(String redirectUrl) {
+		this.redirectUrl = redirectUrl;
+	}
+
 }

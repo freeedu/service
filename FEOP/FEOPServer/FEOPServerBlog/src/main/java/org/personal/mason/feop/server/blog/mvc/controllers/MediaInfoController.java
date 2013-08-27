@@ -25,13 +25,13 @@ public class MediaInfoController {
 		this.mediaInfoService = mediaInfoService;
 	}
 
-	@RequestMapping(value = "media/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/media/create", method = RequestMethod.GET)
 	public String createMedia(Model model) {
 		model.addAttribute("mediaInfoModel", new MediaInfoModel());
 		return "";
 	}
 
-	@RequestMapping(value = "media/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/media/save", method = RequestMethod.POST)
 	public String saveMedia(@Validated MediaInfoModel mediaInfoModel, BindingResult result, Principal principal) {
 		if (result.hasErrors()) {
 			return null;
@@ -44,7 +44,7 @@ public class MediaInfoController {
 		return "";
 	}
 
-	@RequestMapping(value = "media/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/media/update", method = RequestMethod.GET)
 	public String updateMedia(@RequestParam("id") Long id, Model model) {
 		MediaInfo mediaInfo = mediaInfoService.findById(id);
 		MediaInfoModel modelInfo = MediaInfoModel.revert(mediaInfo);
@@ -52,7 +52,7 @@ public class MediaInfoController {
 		return "";
 	}
 
-	@RequestMapping(value = "media/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/media/update", method = RequestMethod.POST)
 	public String updateMedia(@Validated MediaInfoModel mediaInfoModel, BindingResult result) {
 		if (result.hasErrors()) {
 			return null;
@@ -64,7 +64,7 @@ public class MediaInfoController {
 		return "";
 	}
 
-	@RequestMapping(value = "media/m/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/media/m/list", method = RequestMethod.GET)
 	public String findMyMedia(@RequestParam("p") Integer page, @RequestParam("s") Integer size, Principal principal, Model model) {
 		String uid = PrincipalUtils.getUid(principal);
 		List<MediaInfo> mediaInfos = mediaInfoService.findByUid(uid, page, size);
@@ -72,7 +72,7 @@ public class MediaInfoController {
 		return "";
 	}
 
-	@RequestMapping(value = "media/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/media/list", method = RequestMethod.GET)
 	public String findMyMediaByType(@RequestParam("t") String type, @RequestParam("p") Integer page, @RequestParam("s") Integer size,
 			Principal principal, Model model) {
 		String uid = PrincipalUtils.getUid(principal);
@@ -81,7 +81,7 @@ public class MediaInfoController {
 		return "";
 	}
 
-	@RequestMapping(value = "media/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/media/delete", method = RequestMethod.DELETE)
 	public void delete(@RequestParam("id") Long id) {
 		mediaInfoService.delete(id);
 	}

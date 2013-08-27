@@ -1,9 +1,14 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.personal.mason.feop.oauth.service.domain.InvitingCode;
 import org.personal.mason.feop.oauth.service.domain.OauthUser;
 import org.personal.mason.feop.oauth.service.domain.SystemSettings;
 import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
@@ -12,9 +17,12 @@ import org.personal.mason.feop.oauth.service.spi.InvitingCodeService;
 import org.personal.mason.feop.oauth.service.spi.SystemSettingsService;
 import org.personal.mason.feop.oauth.service.utils.SystemSettingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +37,15 @@ public class SignupController {
 	private FeopUserService feopUserService;
 	private SystemSettingsService systemSettingsService;
 	private InvitingCodeService invitingCodeService;
+	
+	@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		// binder.registerCustomEditor(Date.class, new DateEditor());
+		// DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		CustomDateEditor editor = new CustomDateEditor(df, false);
+		binder.registerCustomEditor(Date.class, editor);
+	}
 
 	@Autowired
 	public void setFeopUserService(FeopUserService feopUserService) {
@@ -63,15 +80,6 @@ public class SignupController {
 		if (result.hasErrors()) {
 			return "app.regist";
 		}
-		List<SystemSettings> settings = systemSettingsService.findByKey(INVITE_PERIOD_KEY);
-		if (SystemSettingUtils.getValue(settings).equals(INVITE_PERIOD_VALUE)) {
-			String inviteCode = signupForm.getInviteCode();
-			if (inviteCode != null && invitingCodeService.findWithCode(inviteCode) != null) {
-			} else {
-				result.rejectValue("inviteCode", "errors.signup.inviteCode", "Invilad Inviting Code.");
-				return "app.regist";
-			}
-		}
 
 		if (!signupForm.getPassword().equals(signupForm.getRepeatPassword())) {
 			result.rejectValue("repeatPassword", "errors.changesecret.repeatPassword", "New Password does not match.");
@@ -83,12 +91,24 @@ public class SignupController {
 			result.rejectValue("email", "errors.signup.email", "Account with this email address already exist.");
 			return "app.regist";
 		}
+		
+		List<SystemSettings> settings = systemSettingsService.findByKey(INVITE_PERIOD_KEY);
+		if (SystemSettingUtils.getValue(settings).equals(INVITE_PERIOD_VALUE)) {
+			String inviteCode = signupForm.getInviteCode();
+			InvitingCode invitingCode = invitingCodeService.findWithCode(inviteCode);
+			if (inviteCode != null && invitingCode != null) {
+				invitingCodeService.delete(invitingCode);
+			} else {
+				result.rejectValue("inviteCode", "errors.signup.inviteCode", "Invilad Inviting Code.");
+				return "app.regist";
+			}
+		}
 
 		OauthUser user = feopUserService.createUser(signupForm);
 		feopUserService.regist(user);
 
-		if (signupForm.getRedirecrUrl() != null) {
-			return String.format("redirect:%s", signupForm.getRedirecrUrl());
+		if (signupForm.getRedirectUrl() != null) {
+			return String.format("redirect:%s", signupForm.getRedirectUrl());
 		}
 
 		redirectAttributes.addFlashAttribute("message", "You have successfully signed up and logged in.");

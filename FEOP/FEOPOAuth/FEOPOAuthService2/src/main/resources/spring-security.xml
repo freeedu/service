@@ -23,6 +23,8 @@
 	</security:global-method-security>
 
 	<security:http pattern="/resources/**" security="none" />
+	<security:http pattern="/account/findpassword" security="none" />
+	<security:http pattern="/account/resetpassword" security="none" />
 
 
 	<security:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager">

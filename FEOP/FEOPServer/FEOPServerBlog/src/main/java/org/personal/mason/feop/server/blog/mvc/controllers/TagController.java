@@ -21,7 +21,7 @@ public class TagController {
 		this.tagService = tagService;
 	}
 
-	@RequestMapping(value = "tag/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/tag/create", method = RequestMethod.GET)
 	public void createTag(@RequestParam("n") String tagName) {
 		Tag tag = tagService.findByTagName(tagName);
 		if (tag == null) {
@@ -31,7 +31,7 @@ public class TagController {
 		}
 	}
 
-	@RequestMapping(value="tag/list")
+	@RequestMapping(value = "/tag/list")
 	public String findTags(@RequestParam("q") String query, Model model) {
 		List<Tag> tags = tagService.findByTagNameLike(query);
 		model.addAttribute("tags", tags);

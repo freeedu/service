@@ -22,24 +22,24 @@ public class BlogSettingController {
 		this.blogSettingService = blogSettingService;
 	}
 
-	@RequestMapping(value = "setting", method = RequestMethod.GET)
+	@RequestMapping(value = "/setting", method = RequestMethod.GET)
 	public String findSettingWithId(@RequestParam("id") Long id, Model model) {
 		BlogSetting setting = blogSettingService.findById(id);
 
 		BlogSettingModel settingModel = BlogSettingModel.revert(setting);
-		model.addAttribute("setting", settingModel);
-		return "";
+		model.addAttribute("/setting", settingModel);
+		return "blog.setting.view";
 	}
 
-	@RequestMapping(value = "setting/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/setting/update", method = RequestMethod.GET)
 	public String update(@RequestParam("id") Long id, Model model) {
 		BlogSetting setting = blogSettingService.findById(id);
 		BlogSettingModel updatedSettingModel = BlogSettingModel.revert(setting);
-		model.addAttribute("setting", updatedSettingModel);
-		return "";
+		model.addAttribute("/setting", updatedSettingModel);
+		return "blog.setting.update";
 	}
 
-	@RequestMapping(value = "setting/update", method = RequestMethod.PUT)
+	@RequestMapping(value = "/setting/update", method = RequestMethod.PUT)
 	public String update(@Validated BlogSettingModel blogSettingModel, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return null;
@@ -50,6 +50,6 @@ public class BlogSettingController {
 
 		BlogSettingModel updatedSettingModel = BlogSettingModel.revert(updatedSetting);
 		model.addAttribute("setting", updatedSettingModel);
-		return "";
+		return "blog.setting.view";
 	}
 }

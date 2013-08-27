@@ -25,22 +25,25 @@ public class OAuthAuthorityInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		String requestURI = request.getRequestURI();
 
-		if (processor.needProcess(requestURI)) {
-			if (loginProcessor.isLogin(request)) {
-				return true;
+		switch (processor.checkStatus(request)) {
+		case Access:
+			return true;
+		case Denied:
+			response.sendRedirect("/errorPage?error=AccessDenied");
+			break;
+		case NotLogin:
+			if (loginProcessor.isDirectlyRequestToken(request)) {
+				loginProcessor.processAccessToken(request, response);
 			} else {
-				if (loginProcessor.isDirectlyRequestToken(request)) {
-					loginProcessor.processAccessToken(request, response);
-				} else {
-					response.sendRedirect(loginProcessor.getAuthorizationRequestUrl(request.getRequestURL().toString()));
-				}
+				response.sendRedirect(loginProcessor.getAuthorizationRequestUrl(request));
 			}
-			return false;
+			break;
+		default:
+			response.sendRedirect("/errorPage?error=AccessDenied");
+			break;
 		}
-
-		return true;
+		return false;
 	}
 
 	@Override

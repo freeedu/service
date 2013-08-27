@@ -1,16 +1,15 @@
 package org.personal.mason.feop.server.blog.domain.repository;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 import org.personal.mason.feop.server.blog.domain.model.Comment;
-
-import java.lang.String;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
@@ -39,12 +38,12 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	List<Comment> findByComment(Comment comment, Sort sort);
 
 	@Query("select count(id) from Comment where blog=:blog")
-	long countByBlog(Blog blog);
+	long countByBlog(@Param("blog") Blog blog);
 
 	@Query("select count(id) from Comment where common=:comment")
-	long countByComment(Comment comment);
+	long countByComment(@Param("comment") Comment comment);
 
 	@Query("select count(id) from Comment where blogSection=:section")
-	long countByBlogSection(BlogSection section);
+	long countByBlogSection(@Param("section") BlogSection section);
 
 }

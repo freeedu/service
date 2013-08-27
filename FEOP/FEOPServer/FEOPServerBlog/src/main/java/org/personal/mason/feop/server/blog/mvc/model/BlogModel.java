@@ -1,5 +1,7 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
+import java.util.Date;
+
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 
 public class BlogModel {
@@ -12,7 +14,9 @@ public class BlogModel {
 	private String blogTitle;
 	private String tagIds;
 	private Long seryId;
-	private Long categoryId;
+	private CategoryModel category;
+	private BlogSettingModel setting;
+	private Date createDate;
 
 	public Long getId() {
 		return id;
@@ -78,12 +82,28 @@ public class BlogModel {
 		this.seryId = seryId;
 	}
 
-	public Long getCategoryId() {
-		return categoryId;
+	public CategoryModel getCategory() {
+		return category;
 	}
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(CategoryModel category) {
+		this.category = category;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public BlogSettingModel getSetting() {
+		return setting;
+	}
+
+	public void setSetting(BlogSettingModel setting) {
+		this.setting = setting;
 	}
 
 	public static void merge(Blog blog, BlogModel model) {
@@ -101,15 +121,15 @@ public class BlogModel {
 		model.setBlogSubtitle(blog.getBlogSubtitle());
 		model.setBlogDesc(blog.getBlogDesc());
 		model.setTagIds(blog.getTagIds());
-		
-		if(blog.getSery() != null){
+
+		if (blog.getSery() != null) {
 			model.setSeryId(blog.getSery().getId());
 		}
-		
-		if(blog.getCategory() !=null){
-			model.setCategoryId(blog.getCategory().getId());
+
+		if (blog.getCategory() != null) {
+			model.setCategory(CategoryModel.revert(blog.getCategory()));
 		}
-		
+
 		return model;
 	}
 }

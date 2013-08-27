@@ -40,12 +40,12 @@ public class CommentController {
 		this.blogService = blogService;
 	}
 
-	@RequestMapping(value = "comment/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/comment/create", method = RequestMethod.GET)
 	public void createComment(Model model) {
 		model.addAttribute("newcomment", new CommentModel());
 	}
 
-	@RequestMapping(value = "comment/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/comment/save", method = RequestMethod.POST)
 	public void saveComment(@Validated CommentModel commentModel, BindingResult result) {
 		if (result.hasErrors()) {
 			return;
@@ -78,7 +78,7 @@ public class CommentController {
 		commentService.save(comment);
 	}
 
-	@RequestMapping(value = "comment/b/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/comment/b/list", method = RequestMethod.GET)
 	public void findBlogComments(@RequestParam("bid") Long blogId, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
 		Blog blog = blogService.findById(blogId);
 		List<Comment> comments = commentService.findByBlog(blog, page, size);
@@ -88,7 +88,7 @@ public class CommentController {
 		model.addAttribute("cpage", page);
 	}
 
-	@RequestMapping(value = "comment/s/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/comment/s/list", method = RequestMethod.GET)
 	public void findBlogSectionComments(@RequestParam("sid") Long sectionId, @RequestParam("p") Integer page, @RequestParam("s") Integer size,
 			Model model) {
 		BlogSection section = blogSectionService.findById(sectionId);
@@ -99,7 +99,7 @@ public class CommentController {
 		model.addAttribute("cpage", page);
 	}
 
-	@RequestMapping(value = "comment/c/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/comment/c/list", method = RequestMethod.GET)
 	public void findCommentComments(@RequestParam("cid") Long commentId, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
 		Comment pc = commentService.findById(commentId);
 		List<Comment> comments = commentService.findByComment(pc, page, size);

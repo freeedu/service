@@ -297,6 +297,13 @@
 			<version>${javax.servlet.jstl.version}</version>
 		</dependency>
 
+		<!-- Cloud -->
+		<dependency>
+			<groupId>org.cloudfoundry</groupId>
+			<artifactId>cloudfoundry-runtime</artifactId>
+			<version>0.8.4</version>
+		</dependency>
+
 		<!-- == Begin Unit Test == -->
 		<dependency>
 			<groupId>junit</groupId>

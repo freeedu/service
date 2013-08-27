@@ -1,6 +1,6 @@
-package org.personal.mason.feop.server.blog.client.oauth;
+package org.personal.mason.feop.server.blog.client;
 
-public class ClientConfiguration {
+public class XmlClientConfiguration implements ClientConfiguration {
 	private String responseType;
 	private String clientId;
 	private String clientSecret;
@@ -9,6 +9,9 @@ public class ClientConfiguration {
 	private String tokenAccessUrl;
 	private String scope;
 	private String userInfoUri;
+	private String oauthRegisterUri;
+	private String oauthLogoutUri;
+	private String loginSuccessUri;
 
 	private boolean enableCSRF = true;
 
@@ -84,4 +87,31 @@ public class ClientConfiguration {
 		return userInfoUri;
 	}
 
+	public String getOauthLogoutUri() {
+		return oauthLogoutUri;
+	}
+
+	public void setOauthLogoutUri(String oauthLogoutUri) {
+		this.oauthLogoutUri = oauthLogoutUri;
+	}
+
+	public String getOauthRegisterUri() {
+		return oauthRegisterUri;
+	}
+
+	public void setOauthRegisterUri(String oauthRegisterUri) {
+		this.oauthRegisterUri = oauthRegisterUri;
+	}
+
+	public void setLoginSuccessUri(String loginSuccessUri) {
+		this.loginSuccessUri = loginSuccessUri;
+	}
+
+	public String getLoginSuccessUri() {
+		return loginSuccessUri;
+	}
+
+	@Override
+	public void reloadConfiguration() {// DO Nothing
+	}
 }

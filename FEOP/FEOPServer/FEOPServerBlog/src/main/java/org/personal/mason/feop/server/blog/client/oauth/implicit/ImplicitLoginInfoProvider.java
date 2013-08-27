@@ -2,29 +2,20 @@ package org.personal.mason.feop.server.blog.client.oauth.implicit;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.personal.mason.feop.server.blog.client.oauth.OAuthLoginInfoProvider;
-import org.personal.mason.feop.server.blog.client.oauth.code.AuthorizationCodeAuthentication;
 
 public class ImplicitLoginInfoProvider extends OAuthLoginInfoProvider {
 
 	@Override
-	public String getAuthorizationRequestUrl(String callback) {
+	public String getAuthorizationRequestUrl(HttpServletRequest request) {
 		throw new UnsupportedOperationException("Not support this kind operation in implicit login.");
 	}
 
@@ -34,7 +25,7 @@ public class ImplicitLoginInfoProvider extends OAuthLoginInfoProvider {
 			if (!isFromOServer(request)) {
 				String uri = getAccessTokenRequestUrl(request.getRequestURL().toString());
 				response.sendRedirect(uri);
-			} else{
+			} else {
 				request.getAttributeNames();
 			}
 

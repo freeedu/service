@@ -12,17 +12,17 @@
 
 	<logger name="org.hibernate.type">
 
-		<level value="debug" />
+		<level value="error" />
 	</logger>
 
 	<logger name="org.hibernate.tool.hbm2ddl">
 
-		<level value="debug" />
+		<level value="error" />
 	</logger>
 
 	<logger name="org.personal.mason.feop.oauth.service">
 
-		<level value="debug" />
+		<level value="infoe" />
 	</logger>
 
 	<!-- for all other loggers log only warn and above log messages -->

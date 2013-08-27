@@ -22,13 +22,13 @@ public class CategoryController {
 		this.categoryService = categoryService;
 	}
 
-	@RequestMapping(value = "cat/form", method = RequestMethod.GET)
+	@RequestMapping(value = "/cat/form", method = RequestMethod.GET)
 	public String createCategory(Model model) {
 		model.addAttribute("cat", new CategoryModel());
 		return "";
 	}
 
-	@RequestMapping(value = "cat/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/cat/save", method = RequestMethod.POST)
 	public String saveCategory(@Validated CategoryModel categoryModel, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return null;
@@ -50,7 +50,7 @@ public class CategoryController {
 		return "";
 	}
 
-	@RequestMapping(value = "cat/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/cat/delete", method = RequestMethod.DELETE)
 	public void deleteCategory(@RequestParam("id") Long id) {
 		categoryService.delete(id);
 	}

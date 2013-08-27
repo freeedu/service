@@ -1,61 +1,62 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.personal.mason.feop.server.blog.client.ClientConfiguration;
+import org.personal.mason.feop.server.blog.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.server.blog.utils.Constrains;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
 
-	@RequestMapping(value = { "/me/info" }, method = RequestMethod.GET)
-	public String myInfo(Model model) {
+	private ClientConfiguration clientConfiguration;
 
-		model.addAttribute("errormsg", "login failed");
 
+	public void setClientConfiguration(ClientConfiguration clientConfiguration) {
+		this.clientConfiguration = clientConfiguration;
+	}
+
+	@RequestMapping(value = { "/user/login" }, method = RequestMethod.GET)
+	public String login(HttpServletRequest request, HttpServletResponse response) {
+		FEOPAuthentication authentication = (FEOPAuthentication) request.getAttribute(Constrains.AUTHENTICATIOIN);
+		authentication.getUserInfo();
 		return "app.homepage";
 	}
 
-	@RequestMapping(value = { "/signin/oauth" })
-	public String oauthUserAuthorized(@RequestParam("code") String code) {
-		String tokenAccessUri = buildAccessTokenUrl(code);
-		if (tokenAccessUri != null) {
-			System.out.println(tokenAccessUri);
-
-			return String.format("redirect:", tokenAccessUri);
+	@RequestMapping(value = { "/user/logout" })
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		StringBuilder logoutUri = new StringBuilder(clientConfiguration.getOauthLogoutUri());
+		if (logoutUri.indexOf("?") > 0) {
+			logoutUri.append("&redirect_uri=%s");
+		} else {
+			logoutUri.append("?redirect_uri=%s");
 		}
-		return null;
+		String registerUrl = String.format(logoutUri.toString(), getSiteRoot(request));
+		request.getSession().removeAttribute(Constrains.AUTHENTICATIOIN);
+		return String.format("redirect:%s", registerUrl);
 	}
 
-	private String buildAccessTokenUrl(String code) {
-		try {
-			String grantType = "authorization_code";
-			String orignalRedirectUrl = "http://localhost:8888/blog/";// TODO
-			String redirectUri = URLEncoder.encode(orignalRedirectUrl, "UTF-8");
-			String tokenAccessUrl = "http://localhost:8889/oauth2/oauth/token";
-			return String.format("%s?grant_type=%s&code=%s&redirect_uri=%s", tokenAccessUrl, grantType, code, redirectUri);
-		} catch (UnsupportedEncodingException e) {
+	@RequestMapping(value = { "/signup" })
+	public String signup(HttpServletRequest request, HttpServletResponse response) {
+		StringBuilder registerUri = new StringBuilder(clientConfiguration.getOauthRegisterUri());
+		if (registerUri.indexOf("?") > 0) {
+			registerUri.append("&redirect_uri=%s");
+		} else {
+			registerUri.append("?redirect_uri=%s");
 		}
-		return null;
+		String registerUrl = String.format(registerUri.toString(), getSiteRoot(request));
+		return String.format("redirect:%s", registerUrl);
 	}
 
-	private String getAuthenticationUrl(String type) {
-		if (type.equals("feop")) {
-			try {
-				String clientId = "mason4mei";
-				String orignalRedirectUrl = "http://localhost:8888/signin/oauth";// TODO
-				String redirectUrl = URLEncoder.encode(orignalRedirectUrl, "UTF-8");
-				String responseType = "code";
-				String authenticationServerUrl = "http://localhost:8889/oauth2/oauth/authorize";
-				return String
-						.format("%s?client_id=%s&redirect_uri=%s&response_type=%s", authenticationServerUrl, clientId, redirectUrl, responseType);
-			} catch (UnsupportedEncodingException e) {
-			}
-		}
-		return null;
+	static String getSiteRoot(HttpServletRequest request) {
+		String requestUrl = request.getRequestURL().toString();
+		String requestUri = request.getRequestURI();
+		return requestUrl.substring(0, requestUrl.lastIndexOf(requestUri));
 	}
+
 }

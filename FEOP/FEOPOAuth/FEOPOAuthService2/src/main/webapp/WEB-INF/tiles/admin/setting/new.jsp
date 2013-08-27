@@ -19,16 +19,15 @@
 		</c:if>
 	</s:hasBindErrors>
 	<fieldset class="inputs">
-		<label class="left" for="key">Key</label> <input type="text" name="key" class="right" required/>
-		<label class="left" for="value">Value</label> <input type="text" name="value" class="right" required/>
-		<label class="left" for="startDate">Effect Start Time</label> <input type="datetime" name="startDate" class="right" required/>
-		<label class="left" for="endDate">Effect End Time</label> <input type="datetime" name="endDate" class="right" />
-		<input id="checkbox" type="checkbox" name="diabled" class="left" checked="checked">
-		<label for="diabled" class="checkbox-label"> Diable </label>
+		<label class="left" for="key">Key</label> <input type="text" name="key" class="right" required /> <label class="left" for="value">Value</label>
+		<input type="text" name="value" class="right" required /> <label class="left" for="startDate">Effect Start Time</label> <input type="date"
+			name="startDate" class="right" required /> <label class="left" for="endDate">Effect End Time</label> <input type="date" name="endDate"
+			class="right" /> <input id="checkbox" type="checkbox" name="diabled" class="left" checked="checked"> <label for="diabled"
+			class="checkbox-label"> Diable </label>
 	</fieldset>
 	<fieldset id="actions">
 		<input id="submit" type="submit" value="Save Template" class="left" />
 	</fieldset>
-	
+
 
 </form>

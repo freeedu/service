@@ -9,6 +9,8 @@
 	<configs>
 		<config>src/main/resources/spring-security.xml</config>
 		<config>src/main/resources/spring-security-oauth2.xml</config>
+		<config>src/main/webapp/WEB-INF/oauth2-servlet.xml</config>
+		<config>src/main/resources/spring-mail.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

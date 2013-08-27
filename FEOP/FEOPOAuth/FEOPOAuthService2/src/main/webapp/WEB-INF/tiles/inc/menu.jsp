@@ -13,29 +13,28 @@
 				<li><a href="<c:url value="/account/changepwd"/>">Change Password</a></li>
 				<li><a href="<c:url value="/account/"/>">Profile</a></li>
 				<li><a href="<c:url value="/account/update"/>">Update Profile</a></li>
-			</ul>
-		</li>
-		<li><a href="<c:url value="/client/list"/>">Applications</a>
-			<ul>
-				<li><a href="<c:url value="/client/list"/>">My Application</a></li>
-				<li><a href="<c:url value="/client/"/>">New Application</a></li>
-			</ul>
-		</li>
+			</ul></li>
+
+		<sec:authorize ifAllGranted="ROLE_USER" access="hasRole('ROLE_DEV')">
+			<li><a href="<c:url value="/client/list"/>">Applications</a>
+				<ul>
+					<li><a href="<c:url value="/client/list"/>">My Application</a></li>
+					<li><a href="<c:url value="/client/"/>">New Application</a></li>
+				</ul></li>
+		</sec:authorize>
 		<sec:authorize ifAllGranted="ROLE_USER" access="hasRole('ROLE_ADMIN')">
 			<li><a href="<c:url value="/admin/et/list"/>">Template</a>
 				<ul>
 					<li><a href="<c:url value="/admin/et/list"/>">Templates</a></li>
 					<li><a href="<c:url value="/admin/et/new"/>">New Template</a></li>
-				</ul>
-			</li>
+				</ul></li>
 			<li><a href="<c:url value="/admin/settings/list"/>">Settings</a>
 				<ul>
 					<li><a href="<c:url value="/admin/settings/list"/>">All Settings</a></li>
 					<li><a href="<c:url value="/admin/settings/new"/>">New settings</a></li>
 					<li><a href="<c:url value="/admin/invite/list"/>">Inviting</a></li>
-				</ul>
-			</li>
-			
+				</ul></li>
+
 		</sec:authorize>
 	</ul>
 </nav>

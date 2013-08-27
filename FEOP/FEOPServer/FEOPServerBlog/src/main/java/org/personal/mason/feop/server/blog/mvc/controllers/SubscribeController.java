@@ -24,7 +24,7 @@ public class SubscribeController {
 		this.subscribeService = subscribeService;
 	}
 
-	@RequestMapping(value = "sub/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/sub/create", method = RequestMethod.GET)
 	public String createSubscribe(Principal principal) {
 		if (principal == null || principal.getName().isEmpty()) {
 			return null;
@@ -38,7 +38,7 @@ public class SubscribeController {
 		return "";
 	}
 
-	@RequestMapping(value = "sub/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/sub/add", method = RequestMethod.GET)
 	public void subscribeBlog(@RequestParam("bid") Long blogId, @RequestParam("cid") Long catId, @RequestParam("sid") Long seryId, Principal principal) {
 		if (principal == null || principal.getName().isEmpty()) {
 			return;
@@ -87,7 +87,7 @@ public class SubscribeController {
 		subscribeService.update(sub);
 	}
 
-	@RequestMapping(value = "sub/del", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/sub/del", method = RequestMethod.DELETE)
 	public void unsubscribeBlog(@RequestParam("bid") Long blogId, @RequestParam("cid") Long catId, @RequestParam("sid") Long seryId,
 			Principal principal) {
 		if (principal == null || principal.getName().isEmpty()) {
@@ -131,7 +131,7 @@ public class SubscribeController {
 		subscribeService.update(sub);
 	}
 
-	@RequestMapping(value = "sub/m/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/sub/m/list", method = RequestMethod.GET)
 	public String findMySubscribe(Principal principal, Model model) {
 		String uid = PrincipalUtils.getUid(principal);
 		Subscribe sub = subscribeService.findBySubscribe(uid);

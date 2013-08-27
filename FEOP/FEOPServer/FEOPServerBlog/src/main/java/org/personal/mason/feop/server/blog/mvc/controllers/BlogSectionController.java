@@ -33,15 +33,15 @@ public class BlogSectionController {
 		this.blogService = blogService;
 	}
 
-	@RequestMapping(value = "section/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/section/create", method = RequestMethod.GET)
 	public String createSection(@RequestParam("id") Long blogId, Model model) {
 		BlogSectionModel blogSectionModel = new BlogSectionModel();
 		blogSectionModel.setBlogId(blogId);
-		model.addAttribute("section", blogSectionModel);
-		return "section/form";
+		model.addAttribute("/section", blogSectionModel);
+		return "/section/form";
 	}
 
-	@RequestMapping(value = "section/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/section/save", method = RequestMethod.POST)
 	public String createSection(@Validated BlogSectionModel section, BindingResult result) {
 		if (result.hasErrors()) {
 			return null;
@@ -54,7 +54,7 @@ public class BlogSectionController {
 		return "";
 	}
 
-	@RequestMapping(value = "section/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/section/update", method = RequestMethod.GET)
 	public String updateSection(@RequestParam("id") Long id, Model model) {
 		BlogSection section = blogSectionService.findById(id);
 		BlogSectionModel blogSectionModel = BlogSectionModel.revert(section);
@@ -62,10 +62,10 @@ public class BlogSectionController {
 		return "";
 	}
 
-	@RequestMapping(value = "section/update", method = RequestMethod.PUT)
+	@RequestMapping(value = "/section/update", method = RequestMethod.PUT)
 	public String updateBlog(@Validated BlogSectionModel sectionModel, BindingResult result, Principal principal, Model model) {
 		if (principal == null || principal.getName().isEmpty()) {
-			return "redirect:/login";
+			return "redirect:/user/login";
 		}
 
 		if (result.hasErrors()) {
@@ -80,12 +80,12 @@ public class BlogSectionController {
 		return "section/view";
 	}
 
-	@RequestMapping(value = "section/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/section/delete", method = RequestMethod.DELETE)
 	public void deleteSection(@RequestParam("id") Long id) {
 		blogSectionService.delete(id);
 	}
 
-	@RequestMapping(value = "section/query", method = RequestMethod.GET)
+	@RequestMapping(value = "/section/query", method = RequestMethod.GET)
 	public String findBlogSection(@RequestParam("bid") Long blogId, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
 		Blog blog = blogService.findById(blogId);
 		List<BlogSection> sections = blogSectionService.findByBlog(blog, page, size);

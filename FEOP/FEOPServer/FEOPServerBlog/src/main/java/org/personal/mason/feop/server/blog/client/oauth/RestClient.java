@@ -1,4 +1,4 @@
-package org.personal.mason.feop.server.blog.client.oauth.code;
+package org.personal.mason.feop.server.blog.client.oauth;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;

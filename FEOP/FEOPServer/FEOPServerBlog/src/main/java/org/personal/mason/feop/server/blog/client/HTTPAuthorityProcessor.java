@@ -1,21 +1,80 @@
 package org.personal.mason.feop.server.blog.client;
 
+import java.util.List;
 import java.util.Set;
 
-public class HTTPAuthorityProcessor {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.personal.mason.feop.oauth.common.model.UserRole;
+import org.personal.mason.feop.server.blog.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.server.blog.utils.Constrains;
+
+public class HTTPAuthorityProcessor {
 	private final Set<AuthorityInterceptor> interceptors;
 
 	public HTTPAuthorityProcessor(Set<AuthorityInterceptor> interceptors) {
 		this.interceptors = interceptors;
 	}
 
+	@Deprecated
 	public boolean needProcess(String uri) {
 		if (interceptors != null) {
 			for (AuthorityInterceptor interceptor : interceptors) {
 				if (interceptor.needProcess(uri)) {
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+
+	private AuthorityInterceptor findProcessUrl(String uri) {
+		if (interceptors != null) {
+			for (AuthorityInterceptor interceptor : interceptors) {
+				if (interceptor.canProcess(uri)) {
+					return interceptor;
+				}
+			}
+		}
+		return AuthorityInterceptor.defaultInterceptor;
+	}
+
+	public AuthenticationStatus checkStatus(HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+		AuthorityInterceptor processor = findProcessUrl(requestURI);
+		if (processor != null) {
+			if (processor.hasRoleControl()) {
+				HttpSession session = request.getSession(true);
+				FEOPAuthentication authentication = (FEOPAuthentication) session.getAttribute(Constrains.AUTHENTICATIOIN);
+				if (authentication == null || !authentication.hasValidToken()) {
+					return AuthenticationStatus.NotLogin;
+				}
+
+				if (checkRoles(authentication.getUserInfo().getRoles(), processor.getRequiredRoles())) {
+					return AuthenticationStatus.Access;
+				} else {
+					return AuthenticationStatus.Denied;
+				}
+			} else {
+				return AuthenticationStatus.Access;
+			}
+		}
+		return AuthenticationStatus.Denied;
+	}
+
+	private static boolean checkRoles(List<UserRole> roles, List<String> checkRoles) {
+		if (checkRoles == null || checkRoles.isEmpty()) {
+			return true;
+		}
+
+		if (roles == null || roles.isEmpty()) {
+			return false;
+		}
+
+		for (UserRole userRole : roles) {
+			if (checkRoles.contains(userRole.getRoleName())) {
+				return true;
 			}
 		}
 		return false;

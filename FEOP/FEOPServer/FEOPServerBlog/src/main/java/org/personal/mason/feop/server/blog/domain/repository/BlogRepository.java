@@ -3,6 +3,7 @@ package org.personal.mason.feop.server.blog.domain.repository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.lang.String;
 import java.util.List;
@@ -34,17 +35,17 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
 	List<Blog> findBySery(Sery sery, Pageable pageable);
 
 	@Query("select count(id) from Blog where authorUid = :authorUid")
-	long countByAuthorUid(String authorUid);
+	long countByAuthorUid(@Param("authorUid") String authorUid);
 
 	@Query("select count(id) from Blog where category = :category")
-	long countByCategory(Category category);
+	long countByCategory(@Param("category") Category category);
 
 	@Query("select count(id) from Blog where sery = :sery")
-	long countBySery(Sery sery);
+	long countBySery(@Param("sery") Sery sery);
 
 	@Query("select count(id) from Blog where blogDesc like %:blogdesc%")
-	long countByBlogDescLike(String blogdesc);
+	long countByBlogDescLike(@Param("blogdesc") String blogdesc);
 
 	@Query("select count(id) from Blog where blogTitle like %:blogtitle%")
-	long countByBlogTitleLike(String blogtitle);
+	long countByBlogTitleLike(@Param("blogtitle") String blogtitle);
 }

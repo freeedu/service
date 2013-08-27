@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 
@@ -17,5 +18,5 @@ public interface BlogSectionRepository extends JpaRepository<BlogSection, Long> 
 	List<BlogSection> findByBlog(Blog blog, Sort sort);
 
 	@Query("select count(id) from BlogSection where blog = :blog")
-	long countByBlog(Blog blog);
+	long countByBlog(@Param("blog") Blog blog);
 }

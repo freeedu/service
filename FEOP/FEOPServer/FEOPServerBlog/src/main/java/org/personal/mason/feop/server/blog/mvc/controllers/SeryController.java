@@ -32,13 +32,13 @@ public class SeryController {
 		this.categoryService = categoryService;
 	}
 
-	@RequestMapping(value = "sery/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/sery/create", method = RequestMethod.GET)
 	public String createSery(Model model) {
 		model.addAttribute("seryModel", new SeryModel());
 		return "";
 	}
 
-	@RequestMapping(value = "sery/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/sery/save", method = RequestMethod.POST)
 	public String saveSery(@Validated SeryModel seryModel, BindingResult result) {
 		if (result.hasErrors()) {
 			return null;
@@ -52,19 +52,19 @@ public class SeryController {
 		return "";
 	}
 
-	@RequestMapping(value = "sery/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/sery/delete", method = RequestMethod.DELETE)
 	public void deleteSery(@RequestParam("id") Long id) {
 		seryService.delete(id);
 	}
 
-	@RequestMapping(value = "sery/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/sery/list", method = RequestMethod.GET)
 	public String findByName(@RequestParam("q") String query, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
 		List<Sery> series = seryService.findByName(query, page, size);
 		model.addAttribute("series", series);
 		return "";
 	}
 
-	@RequestMapping(value = "sery/c/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/sery/c/list", method = RequestMethod.GET)
 	public String findByCategory(@RequestParam("c") Long categoryId, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
 		Category cat = categoryService.findById(categoryId);
 		List<Sery> series = seryService.findByCategory(cat, page, size);

@@ -1,6 +1,9 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +26,13 @@ import org.personal.mason.feop.oauth.service.spi.PasswordResetService;
 import org.personal.mason.feop.oauth.service.utils.StringGenerator;
 import org.personal.mason.feop.oauth.service.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,9 +45,18 @@ public class ProfileController {
 	private PasswordResetService passwordResetService;
 	private EmailTemplateService emailTemplateService;
 	private EmailSender emailSender;
-	
+
+	@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		// binder.registerCustomEditor(Date.class, new DateEditor());
+		// DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		CustomDateEditor editor = new CustomDateEditor(df, false);
+		binder.registerCustomEditor(Date.class, editor);
+	}
+
 	@Autowired
-    private ServletContext servletContext;
+	private ServletContext servletContext;
 
 	@Autowired
 	public void setEmailTemplateService(EmailTemplateService emailTemplateService) {
@@ -57,7 +72,7 @@ public class ProfileController {
 	public void setPasswordResetService(PasswordResetService passwordResetService) {
 		this.passwordResetService = passwordResetService;
 	}
-	
+
 	@Autowired
 	public void setEmailSender(EmailSender emailSender) {
 		this.emailSender = emailSender;
@@ -69,7 +84,7 @@ public class ProfileController {
 	}
 
 	@RequestMapping(value = { "/account/resetpassword" }, method = RequestMethod.POST)
-	public String resetPassword(@ModelAttribute ResetPasswordForm resetPasswordForm,HttpServletRequest request, Model model) {
+	public String resetPassword(@ModelAttribute ResetPasswordForm resetPasswordForm, HttpServletRequest request, Model model) {
 		String email = resetPasswordForm.getEmail();
 		OauthUser user = feopUserService.findByEmailOrUsername(email);
 		if (user == null) {
@@ -85,12 +100,12 @@ public class ProfileController {
 		// TODO: mail
 		final String RESET_PASSWORD_TEMPLATE = "RESET_PASSWORD_TEMPLATE";
 		EmailTemplate template = emailTemplateService.findLatestTemplateWithName(RESET_PASSWORD_TEMPLATE);
-		if(template != null){
+		if (template != null) {
 			Map<String, String> props = new HashMap<String, String>();
 			String servletPath = "/account/findpassword";
 			String resetPasswordUrl = String.format("%s?token=%s", buildUrlWithRequest(request, servletPath), reset.getToken());
-			props.put("resetPasswordUrl", resetPasswordUrl );
-			
+			props.put("resetPasswordUrl", resetPasswordUrl);
+
 			String body = MailBodyGenerator.buildEmailBody(template.getContent(), props);
 			emailSender.sendEmail(reset.getEmail(), template.getSubject(), body);
 		}
@@ -146,11 +161,11 @@ public class ProfileController {
 		String email = principal.getName();
 		OauthUser ouser = feopUserService.findByEmailOrUsername(email);
 		String oldPassword = changePasswordForm.getOldPassword();
-		if(!feopUserService.validate(oldPassword, ouser)){
+		if (!feopUserService.validate(oldPassword, ouser)) {
 			result.rejectValue("oldPassword", "errors.changesecret.oldPassowrd", "Your password is not correct.");
 			return "app.profile.updatesecret";
 		}
-		
+
 		if (ouser == null) {
 			result.rejectValue("", "errors.changesecret", "You do not have privilege for this operation.");
 			return "app.profile.updatesecret";
@@ -178,7 +193,13 @@ public class ProfileController {
 		uf.setPhone(ouser.getPhone());
 		uf.setUserId(ouser.getUserId());
 		uf.setActivated(ouser.getActivated());
-
+		uf.setFirstName(ouser.getFirstName());
+		uf.setLastName(ouser.getLastName());
+		uf.setGender(ouser.getGender());
+		uf.setLocation(ouser.getLocation());
+		uf.setBirth(ouser.getBirth());
+		uf.setProfileImageUri(ouser.getProfileImageUri());
+		
 		map.addAttribute("userForm", uf);
 
 		return "app.profile";
@@ -199,6 +220,12 @@ public class ProfileController {
 		uf.setPhone(ouser.getPhone());
 		uf.setUserId(ouser.getUserId());
 		uf.setActivated(ouser.getActivated());
+		uf.setFirstName(ouser.getFirstName());
+		uf.setLastName(ouser.getLastName());
+		uf.setGender(ouser.getGender());
+		uf.setLocation(ouser.getLocation());
+		uf.setBirth(ouser.getBirth());
+		uf.setProfileImageUri(ouser.getProfileImageUri());
 		map.addAttribute("userForm", uf);
 
 		return "app.profile.update";
@@ -224,8 +251,8 @@ public class ProfileController {
 
 		return "redirect:/account/profile";
 	}
-	
-	private String buildUrlWithRequest(HttpServletRequest request, String servletPath){
+
+	private String buildUrlWithRequest(HttpServletRequest request, String servletPath) {
 		String url = request.getRequestURL().toString();
 		String oldServletPath = request.getServletPath();
 		return url.replace(oldServletPath, servletPath);
