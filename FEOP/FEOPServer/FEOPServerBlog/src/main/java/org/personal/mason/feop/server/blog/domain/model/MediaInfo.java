@@ -37,6 +37,11 @@ public class MediaInfo extends BlogPersistable {
 	@Column(name = "media_addtime")
 	private Date mediaAddTime;
 
+	private Boolean script = false;
+
+	@Column(name = "script_content", length = 1000)
+	private String scriptContent;
+
 	public MediaInfo() {
 	}
 
@@ -94,5 +99,21 @@ public class MediaInfo extends BlogPersistable {
 
 	public Date getMediaAddTime() {
 		return mediaAddTime;
+	}
+
+	public Boolean getScript() {
+		return script;
+	}
+
+	public void setScript(Boolean script) {
+		this.script = script;
+	}
+
+	public String getScriptContent() {
+		return scriptContent;
+	}
+
+	public void setScriptContent(String scriptContent) {
+		this.scriptContent = scriptContent;
 	}
 }

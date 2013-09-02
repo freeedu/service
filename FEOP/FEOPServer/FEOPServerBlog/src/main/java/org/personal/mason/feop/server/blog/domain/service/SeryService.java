@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.model.Sery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 public interface SeryService {
@@ -20,9 +22,11 @@ public interface SeryService {
 
 	List<Sery> findByCategory(Category category);
 
-	List<Sery> findByCategory(Category category, int page, int size);
+	Page<Sery> findByCategory(Category category, Pageable pageable);
 
 	List<Sery> findByCategory(Category category, Sort sort);
 
-	List<Sery> findByName(String name, int page, int size);
+	List<Sery> findByName(String name);
+
+	Page<Sery> findByName(String name, Pageable pageable);
 }

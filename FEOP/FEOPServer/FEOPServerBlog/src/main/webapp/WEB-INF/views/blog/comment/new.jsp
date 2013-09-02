@@ -1,14 +1,45 @@
-<form method="post" id="comment" class="editable">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-	<fieldset class="inputs">
-		<label for="author"><span>Name</span>(*)</label> <input type="text" name="author" id="author" tabindex="1" /> <label for="email"><span>Email</span>(*)</label>
-		<input type="text" name="email" id="email" tabindex="2" /> <label for="url"><span>Website</span></label> <input type="text" name="url"
-			id="site" tabindex="3" />
+<div class="page-header"">
+	<h3>New Comment</h3>
+</div>
 
-		<textarea name="comment" rows="6" tabindex="4"></textarea>
-	</fieldset>
+<c:if test="${newcomment != null }">
+	<form method="post" role="form" class="form-horizontal" action="<c:url value="/comment/save"/>">
+		<div class="form-group">
+			<input class="form-control" name="blogId" type="hidden" value="${newcomment.blogId }"> <input class="form-control"
+				name="blogSectionId" type="hidden" value="${newcomment.blogSectionId}"> <input class="form-control" name="commentId" type="hidden"
+				value="${newcomment.commentId}">
+		</div>
+		<div class="form-group">
+			<label for="author" class="col-lg-2 control-label"><span>Name</span>(*)</label>
+			<div class="col-lg-10">
+				<input class="form-control" name="author" type="text" placeholder="Author" autofocus required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="email" class="col-lg-2 control-label"><span>Email</span>(*)</label>
+			<div class="col-lg-10">
+				<input class="form-control" name="email" type="text" placeholder="Email" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="site" class="col-lg-2 control-label"><span>Name</span>(*)</label>
+			<div class="col-lg-10">
+				<input class="form-control" name="site" type="text" placeholder="Site (Optional)">
+			</div>
+		</div>
 
-	<fieldset class="actions">
-		<input name="submit" type="submit" id="submit" tabindex="5" value="Comment" title="Comment" alt="Comment" />
-	</fieldset>
-</form>
+		<div class="form-group">
+			<label class="col-lg-2 control-label" for="sectionContent">Content</label>
+			<div class="col-lg-10">
+				<textarea class="form-control" name="commentContent" placeholder="Comment Content" rows="10"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+				<input type="submit" class="btn btn-primary" value="Comment">
+			</div>
+		</div>
+	</form>
+</c:if>

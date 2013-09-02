@@ -1,117 +1,86 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
 <c:if test="${blog != null }">
 	<c:url value="/blog/view?id=${blog.id }" var="viewblog" />
-
-	<div class="blog">
-		<div class="blog-title">
-			<h1>
-				<a><c:out value="${blog.blogTitle }" /></a>
-			</h1>
-			<h2>
-				<a><c:out value="${blog.blogSubtitle }" /></a>
-			</h2>
-		</div>
-
-		<c:if test="${empty authentication }">
-			<div class="blog-action">
-				<div>
-					<a>Edit</a>
+	<div class="page-header">
+		<h3>
+			<c:out value="${blog.blogTitle }" />
+			<c:if test="${authentication != null}">
+				<div class="btn-group">
+					<button class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+						Action <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="<c:url value="/my/blog/update?id=${blog.id }"/>">Update</a></li>
+						<li><a>Setting</a></li>
+						<li><a href="<c:url value="/my/blog/delete?id=${blog.id }"/>">Delete</a></li>
+					</ul>
 				</div>
-				<div>
-					<a href="<c:url value="/my/blog/update?id=${blog.id }"/>">Update</a>
-				</div>
-				<div>
-					<a >Setting</a>
-				</div>
-				<div>
-					<a href="<c:url value="/my/blog/delete?id=${blog.id }"/>">Delete</a>
-				</div>
-			</div>
-		</c:if>
-		<div class="blog-details">
-			<ul>
-				<li><span><c:out value="${blog.createDate }" /></span></li>
-				<li>By <a href="#"><span><c:out value="${blog.authorName }" /></span></a>
-				</li>
-				<c:if test="${blog.category != null}">
-					<c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog" />
-					<li><a href="${viewCategoryBlog }"><c:out value="${blog.category.categoryName }" /></a></li>
-				</c:if>
-				<li><a href="#"> 100 Commons </a></li>
-			</ul>
-
-			<div class="blog-tags">
-				<label>Tags:</label>
-				<ul>
-					<li><a href="#" class="blog-label">Label1</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="blog-content">
-			<c:out value="${blog.blogDesc }" />
-		</div>
-		<div>
-			<a>Common</a>
-		</div>
+			</c:if>
+		</h3>
 	</div>
-</c:if>
-
-<div class="blog">
-	<div class="blog-title">
-		<h1>
-			<a href="">Blog Title for the template using</a>
-		</h1>
-		<h2>
-			<a href="">Sub title of the blog and can be empty if there is no sub title</a>
-		</h2>
-	</div>
-	<div class="blog-details">
-		<ul>
-			<li><span>Jun 1st, 2013</span></li>
-			<li>By <a href="#"><span>Mason Mei</span></a>
-			</li>
-			<li><a href="#">Category1</a></li>
-			<li><a href="#"> 100 Commons </a></li>
+	<c:if test="${blog.blogSubtitle != null}">
+		<ul class="list-inline">
+		<li><strong>Subtitle:</strong></li>
+		<li><a class="inline"><c:out value="${blog.blogSubtitle }" /></a></li>
 		</ul>
+	</c:if>
+	<ul class="list-inline">
+		<li><span><c:out value="${blog.createDate }" /></span></li>
+		<li>By <a href="#"><span><c:out value="${blog.authorName }" /></span></a>
+		</li>
+		<c:if test="${blog.category != null}">
+			<c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog" />
+			<li><a href="${viewCategoryBlog }"><c:out value="${blog.category.categoryName }" /></a></li>
+		</c:if>
 
-		<div class="blog-tags">
-			<label>Tags:</label>
-			<ul>
-				<li><a href="#" class="blog-label">Label1</a></li>
-				<li><a href="#" class="blog-label">Label2</a></li>
-				<li><a href="#" class="blog-label">Label3</a></li>
-				<li><a href="#" class="blog-label">Label1</a></li>
-				<li><a href="#" class="blog-label">Label2</a></li>
-				<li><a href="#" class="blog-label">Label3</a></li>
-				<li><a href="#" class="blog-label">Label1</a></li>
-				<li><a href="#" class="blog-label">Label2</a></li>
-				<li><a href="#" class="blog-label">Label3</a></li>
-				<li><a href="#" class="blog-label">Label1</a></li>
-				<li><a href="#" class="blog-label">Label2</a></li>
-				<li><a href="#" class="blog-label">Label3</a></li>
-				<li><a href="#" class="blog-label">Label1</a></li>
-				<li><a href="#" class="blog-label">Label2</a></li>
-				<li><a href="#" class="blog-label">Label3</a></li>
-				<li><a href="#" class="blog-label">Label1</a></li>
-				<li><a href="#" class="blog-label">Label2</a></li>
-				<li><a href="#" class="blog-label">Label3</a></li>
-			</ul>
+		<c:if test="${blog.sery != null}">
+			<c:url value="/blog/list?s=${blog.sery.id }" var="viewSeryBlog" />
+			<li><a href="${viewSeryBlog }"><c:out value="${blog.sery.seriesName }" /></a></li>
+		</c:if>
+
+		<li><a><b><c:out value="${blog.comments }" /></b> Commons </a></li>
+	</ul>
+
+	<ul class="list-inline">
+		<li><strong>Labels:</strong></li>
+		<c:if test="${not empty blog.tags }">
+			<c:forEach items="${blog.tags }" var="tag">
+				<li><a href="#"><span class="label label-info"><c:out value="${tag.tagName }" /></span></a></li>
+			</c:forEach>
+		</c:if>
+	</ul>
+	<ul class="list-inline">
+		<li><strong>Description:</strong></li>
+		<li><div>${blog.blogDesc }</div></li>
+	</ul>
+	
+	<br>
+
+
+	<c:if test="${not empty blog.sections }">
+		<div class="panel-group" id="accordion">
+			<c:forEach var="section" items="${blog.sections }">
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a href="#collapse${section.sequence }" class="accordion-toggle" data-toggle="collapse"> <c:out value="${section.sectionTitle }" />
+							</a> <small><a class="btn btn-link btn-xs" href="/comment/create?s=${section.id }">Comment</a></small>
+						</h4>
+					</div>
+					<div id="collapse${section.sequence }" class="panel-collapse collapse in">
+						<div class="panel-body">${section.sectionContent}</div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
-	</div>
-	<div class="blog-content">
-		<p>A year ago, we wrote a short tutorial to show you how to send email using MessageUI framework. Some asked how to attach a photo, PDF
-			document or Powerpoint in the email. Instead of replying every email individually, we think it’s better to write another short how-to
-			tutorial.</p>
-		<p>The MessageUI framework has made it really easy to send email in your apps. If you’ve read the official document of MessageUI
-			framework, you know the MFMailComposeViewController class already provides a method called “addAttachmentData:” to add any types of files
-			as an attachment. In this short tutorial, like other articles of our iOS Programming 101 series, we’ll write a simple app and demonstrate
-			the usage of the method.</p>
-		<p>
-			<img src="http://www.appcoda.com/wp-content/uploads/2013/07/Email-Attachment-Featured.jpg" alt="Email Attachment Featured"
-				style="width: NaN%;">
-		</p>
-		<a href="" class="blog-more">Read More</a>
+	</c:if>
+
+
+	<div>
+		<a class="btn" href="<c:url value="/comment/create?b=${blog.id }"/>">Common</a>
 	</div>
 
-</div>
+</c:if>
+<br>

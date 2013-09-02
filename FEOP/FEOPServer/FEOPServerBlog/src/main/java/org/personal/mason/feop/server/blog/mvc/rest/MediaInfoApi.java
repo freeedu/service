@@ -10,6 +10,8 @@ import org.personal.mason.feop.server.blog.domain.service.MediaInfoService;
 import org.personal.mason.feop.server.blog.mvc.model.MediaInfoModel;
 import org.personal.mason.feop.server.blog.mvc.utils.AuthenticationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,24 +66,16 @@ public class MediaInfoApi {
 	 */
 	@RequestMapping(value = "/media/list", method = RequestMethod.GET)
 	@ResponseBody
-	public List<MediaInfoModel> findMyMedia(@RequestParam(value = "p", required = false) Integer page,
-			@RequestParam(value = "s", required = false) Integer size, @RequestParam(value = "t", required = false) String type,
-			HttpServletRequest request) {
-		if (page == null || page < 0) {
-			page = 0;
-		}
-		if (size == null || size <= 0) {
-			size = 10;
-		}
+	public List<MediaInfoModel> findMyMedia(Pageable pageable, @RequestParam(value = "t", required = false) String type, HttpServletRequest request) {
 
 		String uid = AuthenticationUtils.getUid(request);
 
-		List<MediaInfo> mediaInfos = null;
+		Page<MediaInfo> mediaInfos = null;
 		if (type == null || type.isEmpty()) {
-			mediaInfos = mediaInfoService.findByUidAndType(uid, type, page, size);
+			mediaInfos = mediaInfoService.findByUidAndType(uid, type, pageable);
 		} else {
 
-			mediaInfos = mediaInfoService.findByUid(uid, page, size);
+			mediaInfos = mediaInfoService.findByUid(uid, pageable);
 		}
 		List<MediaInfoModel> models = new ArrayList<>();
 		if (mediaInfos != null) {

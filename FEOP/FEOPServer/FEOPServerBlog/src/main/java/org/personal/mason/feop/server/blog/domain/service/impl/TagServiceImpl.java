@@ -1,6 +1,10 @@
 package org.personal.mason.feop.server.blog.domain.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.personal.mason.feop.server.blog.domain.model.Tag;
 import org.personal.mason.feop.server.blog.domain.repository.TagRepository;
@@ -59,5 +63,25 @@ public class TagServiceImpl implements TagService {
 	public Tag findByTagName(String tagname) {
 		List<Tag> tags = tagRepository.findByTagName(tagname);
 		return tags.isEmpty() ? null : tags.get(0);
+	}
+
+	@Override
+	public List<Tag> findOrCreateWithNames(String[] names) {
+		if (names.length > 0) {
+			Set<Tag> utags = new HashSet<>();
+			for (String name : names) {
+				List<Tag> tags = tagRepository.findByTagName(name);
+				if (tags.isEmpty()) {
+					Tag tag = new Tag();
+					tag.setTagName(name);
+					tagRepository.save(tag);
+					utags.add(tag);
+				} else {
+					utags.addAll(tags);
+				}
+			}
+			return new ArrayList<>(utags);
+		}
+		return Collections.emptyList();
 	}
 }

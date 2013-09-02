@@ -1,7 +1,6 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
@@ -9,6 +8,8 @@ import org.personal.mason.feop.server.blog.domain.service.BlogSectionService;
 import org.personal.mason.feop.server.blog.domain.service.BlogService;
 import org.personal.mason.feop.server.blog.mvc.model.BlogSectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -86,13 +87,13 @@ public class BlogSectionController {
 	}
 
 	@RequestMapping(value = "/section/query", method = RequestMethod.GET)
-	public String findBlogSection(@RequestParam("bid") Long blogId, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
+	public String findBlogSection(@RequestParam("bid") Long blogId, Pageable pageable, Model model) {
 		Blog blog = blogService.findById(blogId);
-		List<BlogSection> sections = blogSectionService.findByBlog(blog, page, size);
+		Page<BlogSection> sections = blogSectionService.findByBlog(blog, pageable);
 		Long count = blogSectionService.count(blog);
 		model.addAttribute("sections", sections);
 		model.addAttribute("count", count);
-		model.addAttribute("cpage", page);
+		model.addAttribute("cpage", pageable.getPageNumber());
 		return "";
 	}
 }

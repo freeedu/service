@@ -1,7 +1,12 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.personal.mason.feop.server.blog.domain.model.BlogSetting;
 
+@XmlRootElement(name = "setting")
+@JsonRootName("setting")
 public class BlogSettingModel {
 
 	private Long id;

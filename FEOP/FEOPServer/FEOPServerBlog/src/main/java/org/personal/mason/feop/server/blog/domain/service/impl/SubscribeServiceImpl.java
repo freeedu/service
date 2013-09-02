@@ -6,6 +6,8 @@ import org.personal.mason.feop.server.blog.domain.model.Subscribe;
 import org.personal.mason.feop.server.blog.domain.repository.SubscribeRepository;
 import org.personal.mason.feop.server.blog.domain.service.SubscribeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,5 +56,15 @@ public class SubscribeServiceImpl implements SubscribeService {
 	public Subscribe findBySubscribe(String uid) {
 		List<Subscribe> subscribes = subscribeRepository.findBySubscriberUid(uid);
 		return subscribes.isEmpty() ? null : subscribes.get(0);
+	}
+
+	@Override
+	public List<Subscribe> findAll() {
+		return subscribeRepository.findAll();
+	}
+
+	@Override
+	public Page<Subscribe> findAll(Pageable pageable) {
+		return subscribeRepository.findAll(pageable);
 	}
 }

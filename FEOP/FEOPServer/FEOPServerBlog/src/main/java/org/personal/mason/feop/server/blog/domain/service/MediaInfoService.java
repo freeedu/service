@@ -3,6 +3,8 @@ package org.personal.mason.feop.server.blog.domain.service;
 import java.util.List;
 
 import org.personal.mason.feop.server.blog.domain.model.MediaInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface MediaInfoService {
 
@@ -18,7 +20,9 @@ public interface MediaInfoService {
 
 	MediaInfo findByMediaCode(String mediacode);
 
-	List<MediaInfo> findByUid(String uid, int page, int size);
+	Page<MediaInfo> findByUid(String uid, Pageable pageable);
 
-	List<MediaInfo> findByUidAndType(String uid, String type, int page, int size);
+	Page<MediaInfo> findByUidAndType(String uid, String type, Pageable pageable);
+
+	List<MediaInfo> findByUidAndType(String uid, String type);
 }

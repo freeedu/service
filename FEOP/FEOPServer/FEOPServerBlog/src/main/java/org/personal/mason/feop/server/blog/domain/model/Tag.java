@@ -1,7 +1,10 @@
 package org.personal.mason.feop.server.blog.domain.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,6 +19,9 @@ public class Tag extends BlogPersistable {
 	@Column(name = "tag_name")
 	private String tagName;
 
+	@ManyToMany(mappedBy = "tags")
+	private List<Blog> blogs;
+
 	public Tag() {
 	}
 
@@ -25,6 +31,14 @@ public class Tag extends BlogPersistable {
 
 	public void setTagName(String tagName) {
 		this.tagName = tagName;
+	}
+
+	public List<Blog> getBlogs() {
+		return blogs;
+	}
+
+	public void setBlogs(List<Blog> blogs) {
+		this.blogs = blogs;
 	}
 
 }

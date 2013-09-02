@@ -1,7 +1,12 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.personal.mason.feop.server.blog.domain.model.Category;
 
+@XmlRootElement(name = "category")
+@JsonRootName("category")
 public class CategoryModel {
 
 	private Long id;
@@ -55,7 +60,9 @@ public class CategoryModel {
 		model.setId(category.getId());
 		model.setCategoryName(category.getCategoryName());
 		model.setDescription(category.getDescription());
-		model.setParentCategoryId(category.getCategory().getId());
+		if (category.getCategory() != null) {
+			model.setParentCategoryId(category.getCategory().getId());
+		}
 		return model;
 	}
 }

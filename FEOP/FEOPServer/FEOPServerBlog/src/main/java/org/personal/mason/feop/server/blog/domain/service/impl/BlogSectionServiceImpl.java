@@ -9,9 +9,10 @@ import org.personal.mason.feop.server.blog.domain.service.BlogSectionService;
 import org.personal.mason.feop.server.blog.utils.PageableUtils;
 import org.personal.mason.feop.server.blog.utils.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 @Service
 public class BlogSectionServiceImpl implements BlogSectionService {
@@ -31,8 +32,8 @@ public class BlogSectionServiceImpl implements BlogSectionService {
 
 	@Override
 	@Transactional
-	public List<BlogSection> findByBlog(Blog blog, int page, int size) {
-		return blogSectionRepository.findByBlog(blog, PageableUtils.getPageable(page, size, SortUtils.getSortASC("sequence")));
+	public Page<BlogSection> findByBlog(Blog blog, Pageable pageable) {
+		return blogSectionRepository.findByBlog(blog, PageableUtils.getPageable(pageable, SortUtils.getSortASC("sequence")));
 	}
 
 	@Override
@@ -69,6 +70,11 @@ public class BlogSectionServiceImpl implements BlogSectionService {
 	@Override
 	public Long count(Blog blog) {
 		return blogSectionRepository.countByBlog(blog);
+	}
+
+	@Override
+	public Long getMaxSequence(Blog blog) {
+		return blogSectionRepository.getMaxSequenceOfBlog(blog);
 	}
 
 }

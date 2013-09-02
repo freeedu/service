@@ -1,5 +1,6 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,14 +9,19 @@ import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.BlogSetting;
 import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.model.Sery;
+import org.personal.mason.feop.server.blog.domain.model.Tag;
 import org.personal.mason.feop.server.blog.domain.service.BlogService;
 import org.personal.mason.feop.server.blog.domain.service.CategoryService;
 import org.personal.mason.feop.server.blog.domain.service.SeryService;
+import org.personal.mason.feop.server.blog.domain.service.TagService;
 import org.personal.mason.feop.server.blog.mvc.model.BlogModel;
 import org.personal.mason.feop.server.blog.mvc.utils.AuthenticationUtils;
+import org.personal.mason.feop.server.blog.mvc.utils.Pager;
 import org.personal.mason.feop.server.blog.mvc.utils.ViewMapper;
 import org.personal.mason.feop.server.blog.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +37,7 @@ public class BlogController {
 	private BlogService blogService;
 	private CategoryService categoryService;
 	private SeryService seryService;
+	private TagService tagService;
 
 	@Autowired
 	public void setBlogService(BlogService blogService) {
@@ -47,76 +54,82 @@ public class BlogController {
 		this.seryService = seryService;
 	}
 
+	@Autowired
+	public void setTagService(TagService tagService) {
+		this.tagService = tagService;
+	}
+
 	/* Public Section of Blog operations */
 	@RequestMapping(value = "/blog/view", method = RequestMethod.GET)
 	public String viewBlog(@RequestParam("id") Long id, Model model) {
 		Blog blog = blogService.findById(id);
 		BlogModel blogModel = BlogModel.revert(blog);
-
 		model.addAttribute("blog", blogModel);
 		return ViewMapper.Blog_View.getViewName();
 	}
 
 	@RequestMapping(value = "/blog/newest")
-	public String getNewestBlogs(@RequestParam(value = "p", required = false) Integer page,
-			@RequestParam(value = "l", required = false) Integer size, Model model) {
-		if (page == null || page < 0) {
-			page = 0;
+	public String getNewestBlogs(Pageable pageable, Model model, HttpServletRequest request) {
+		Page<Blog> blogs = blogService.findAll(pageable);
+
+		List<BlogModel> models = new ArrayList<>();
+		if (blogs != null) {
+			for (Blog blog : blogs) {
+				BlogModel blogModel = BlogModel.revert(blog);
+				models.add(blogModel);
+			}
 		}
 
-		if (size == null || size < 0) {
-			size = 10;
-		}
+		model.addAttribute("blogs", models);
+		model.addAttribute("pager", Pager.getPager(blogs.getNumber(), blogs.getTotalPages(), request));
 
-		List<Blog> blogs = blogService.findAll(page, size);
-		Long bcounts = blogService.getCount();
-		model.addAttribute("blogs", blogs);
-		model.addAttribute("count", bcounts);
 		return ViewMapper.Index.getViewName();
 	}
 
 	@RequestMapping(value = "/blog/search")
-	public String searchBlogs(@RequestParam("q") String query, @RequestParam(value = "p", required = false) Integer page,
-			@RequestParam(value = "l", required = false) Integer size, Model model) {
-		if (page == null || page < 0) {
-			page = 0;
+	public String searchBlogs(@RequestParam("q") String query, Pageable pageable, Model model, HttpServletRequest request) {
+
+		Page<Blog> blogs = blogService.findAll(pageable);
+
+		List<BlogModel> models = new ArrayList<>();
+		if (blogs != null) {
+			for (Blog blog : blogs) {
+				BlogModel blogModel = BlogModel.revert(blog);
+				models.add(blogModel);
+			}
 		}
 
-		if (size == null || size < 0) {
-			size = 10;
-		}
+		model.addAttribute("blogs", models);
+		model.addAttribute("pager", Pager.getPager(blogs.getNumber(), blogs.getTotalPages(), request));
 
-		List<Blog> blogs = blogService.findAll(page, size);
-		Long bcounts = blogService.getCount();
-		model.addAttribute("blogs", blogs);
-		model.addAttribute("count", bcounts);
 		return ViewMapper.Blog_List.getViewName();
 	}
 
 	@RequestMapping(value = { "/blog", "/blog/list" }, method = RequestMethod.GET)
-	public String findBlog(@RequestParam(value = "p", required = false) Integer page, @RequestParam(value = "l", required = false) Integer size,
-			@RequestParam(value = "c", required = false) Long categoryId, @RequestParam(value = "s", required = false) Long seryId, Model model) {
-		if (page == null || page < 0) {
-			page = 0;
-		}
-
-		if (size == null || size < 0) {
-			size = 10;
-		}
-		List<Blog> blogs = null;
+	public String findBlog(Pageable pageable, @RequestParam(value = "c", required = false) Long categoryId,
+			@RequestParam(value = "s", required = false) Long seryId, Model model, HttpServletRequest request) {
+		Page<Blog> blogs = null;
 		if (categoryId != null) {
 			Category cat = categoryService.findById(categoryId);
-			blogs = blogService.findByCategory(cat, page, size);
+			blogs = blogService.findByCategory(cat, pageable);
 		} else if (seryId != null) {
 			Sery sery = seryService.findById(seryId);
-			blogs = blogService.findBySery(sery, page, size);
+			blogs = blogService.findBySery(sery, pageable);
 		} else {
-			blogs = blogService.findAll(page, size);
+			blogs = blogService.findAll(pageable);
 		}
-		Long bcounts = blogService.getCount();
-		model.addAttribute("blogs", blogs);
-		model.addAttribute("count", bcounts);
-		model.addAttribute("cpage", page);
+
+		List<BlogModel> models = new ArrayList<>();
+		if (blogs != null) {
+			for (Blog blog : blogs) {
+				BlogModel blogModel = BlogModel.revert(blog);
+				models.add(blogModel);
+			}
+		}
+
+		model.addAttribute("blogs", models);
+		model.addAttribute("pager", Pager.getPager(blogs.getNumber(), blogs.getTotalPages(), request));
+
 		return ViewMapper.Blog_List.getViewName();
 	}
 
@@ -141,14 +154,20 @@ public class BlogController {
 		blog.setCreateDate(TimeUtils.getCurrentTimestamp());
 		BlogModel.merge(blog, blogModel);
 		blog.setBlogSetting(new BlogSetting());
-		if (blogModel.getCategory() != null) {
+		if (blogModel.getCategory() != null && blogModel.getCategory().getId() != null) {
 			Category category = categoryService.findById(blogModel.getCategory().getId());
 			blog.setCategory(category);
 		}
 
-		if (blogModel.getSeryId() != null) {
-			Sery sery = seryService.findById(blogModel.getSeryId());
+		if (blogModel.getSery() != null && blogModel.getSery().getId() != null) {
+			Sery sery = seryService.findById(blogModel.getSery().getId());
 			blog.setSery(sery);
+		}
+		if (blogModel.getTagNames() != null) {
+			String tagNames = blogModel.getTagNames().trim();
+			String[] names = tagNames.split(",\\s*");
+			List<Tag> tags = tagService.findOrCreateWithNames(names);
+			blog.setTags(tags);
 		}
 
 		blog.setAuthorName(AuthenticationUtils.getUserName(request));
@@ -163,7 +182,7 @@ public class BlogController {
 		Blog blog = blogService.findById(id);
 
 		BlogModel blogModel = BlogModel.revert(blog);
-		model.addAttribute("blogModel", blogModel);
+		model.addAttribute("blog", blogModel);
 		return ViewMapper.Blog_Edit.getViewName();
 	}
 
@@ -196,22 +215,21 @@ public class BlogController {
 	}
 
 	@RequestMapping(value = { "/my/blog/list" }, method = RequestMethod.GET)
-	public String findMyBlog(HttpServletRequest request, @RequestParam(value = "p", required = false) Integer page,
-			@RequestParam(value = "l", required = false) Integer size, Model model) {
-		if (page == null || page < 0) {
-			page = 0;
-		}
-
-		if (size == null || size < 0) {
-			size = 10;
-		}
+	public String findMyBlog(HttpServletRequest request, Model model, Pageable pageable) {
 
 		String uid = AuthenticationUtils.getUid(request);
-		List<Blog> blogs = blogService.findByAuthorUid(uid, page, size);
-		Long bcounts = blogService.getCount(uid);
-		model.addAttribute("blogs", blogs);
-		model.addAttribute("count", bcounts);
-		model.addAttribute("cpage", page);
+		Page<Blog> blogs = blogService.findByAuthorUid(uid, pageable);
+		List<BlogModel> models = new ArrayList<>();
+		if (blogs != null) {
+			for (Blog blog : blogs) {
+				BlogModel blogModel = BlogModel.revert(blog);
+				models.add(blogModel);
+			}
+		}
+
+		model.addAttribute("blogs", models);
+		model.addAttribute("pager", Pager.getPager(blogs.getNumber(), blogs.getTotalPages(), request));
+
 		return ViewMapper.Blog_My_List.getViewName();
 	}
 

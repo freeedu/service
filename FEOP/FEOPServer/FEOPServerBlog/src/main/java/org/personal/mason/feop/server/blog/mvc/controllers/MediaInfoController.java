@@ -1,13 +1,14 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.personal.mason.feop.server.blog.domain.model.MediaInfo;
 import org.personal.mason.feop.server.blog.domain.service.MediaInfoService;
 import org.personal.mason.feop.server.blog.mvc.model.MediaInfoModel;
 import org.personal.mason.feop.server.blog.mvc.utils.PrincipalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -65,18 +66,17 @@ public class MediaInfoController {
 	}
 
 	@RequestMapping(value = "/media/m/list", method = RequestMethod.GET)
-	public String findMyMedia(@RequestParam("p") Integer page, @RequestParam("s") Integer size, Principal principal, Model model) {
+	public String findMyMedia(Pageable pageable, Principal principal, Model model) {
 		String uid = PrincipalUtils.getUid(principal);
-		List<MediaInfo> mediaInfos = mediaInfoService.findByUid(uid, page, size);
+		Page<MediaInfo> mediaInfos = mediaInfoService.findByUid(uid, pageable);
 		model.addAttribute("mediaInfos", mediaInfos);
 		return "";
 	}
 
 	@RequestMapping(value = "/media/list", method = RequestMethod.GET)
-	public String findMyMediaByType(@RequestParam("t") String type, @RequestParam("p") Integer page, @RequestParam("s") Integer size,
-			Principal principal, Model model) {
+	public String findMyMediaByType(@RequestParam("t") String type, Pageable pageable, Principal principal, Model model) {
 		String uid = PrincipalUtils.getUid(principal);
-		List<MediaInfo> mediaInfos = mediaInfoService.findByUidAndType(uid, type, page, size);
+		Page<MediaInfo> mediaInfos = mediaInfoService.findByUidAndType(uid, type, pageable);
 		model.addAttribute("mediaInfos", mediaInfos);
 		return "";
 	}

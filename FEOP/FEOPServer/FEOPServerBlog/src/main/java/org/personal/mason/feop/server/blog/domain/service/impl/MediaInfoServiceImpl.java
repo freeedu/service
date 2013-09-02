@@ -8,9 +8,10 @@ import org.personal.mason.feop.server.blog.domain.service.MediaInfoService;
 import org.personal.mason.feop.server.blog.utils.PageableUtils;
 import org.personal.mason.feop.server.blog.utils.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 @Service
 public class MediaInfoServiceImpl implements MediaInfoService {
@@ -60,13 +61,18 @@ public class MediaInfoServiceImpl implements MediaInfoService {
 	}
 
 	@Override
-	public List<MediaInfo> findByUid(String uid, int page, int size) {
-		return mediaInfoRepository.findByMediaOwnerUid(uid, PageableUtils.getPageable(page, size, SortUtils.getSortDESC("mediaAddTime")));
+	public Page<MediaInfo> findByUid(String uid, Pageable pageable) {
+		return mediaInfoRepository.findByMediaOwnerUid(uid, PageableUtils.getPageable(pageable, SortUtils.getSortDESC("mediaAddTime")));
 	}
 
 	@Override
-	public List<MediaInfo> findByUidAndType(String uid, String type, int page, int size) {
+	public List<MediaInfo> findByUidAndType(String uid, String type) {
+		return mediaInfoRepository.findByMediaOwnerUidAndMediaType(uid, type);
+	}
+
+	@Override
+	public Page<MediaInfo> findByUidAndType(String uid, String type, Pageable pageable) {
 		return mediaInfoRepository.findByMediaOwnerUidAndMediaType(uid, type,
-				PageableUtils.getPageable(page, size, SortUtils.getSortDESC("mediaAddTime")));
+				PageableUtils.getPageable(pageable, SortUtils.getSortDESC("mediaAddTime")));
 	}
 }

@@ -6,12 +6,12 @@ import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.model.Sery;
 import org.personal.mason.feop.server.blog.domain.repository.SeryRepository;
 import org.personal.mason.feop.server.blog.domain.service.SeryService;
-import org.personal.mason.feop.server.blog.utils.PageableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 @Service
 public class SeryServiceImpl implements SeryService {
@@ -61,8 +61,8 @@ public class SeryServiceImpl implements SeryService {
 
 	@Override
 	@Transactional
-	public List<Sery> findByCategory(Category category, int page, int size) {
-		return seryRepository.findByCategory(category, PageableUtils.getPageable(page, size));
+	public Page<Sery> findByCategory(Category category, Pageable pageable) {
+		return seryRepository.findByCategory(category, pageable);
 	}
 
 	@Override
@@ -72,7 +72,12 @@ public class SeryServiceImpl implements SeryService {
 	}
 
 	@Override
-	public List<Sery> findByName(String name, int page, int size) {
-		return seryRepository.findBySeriesNameLike(name, PageableUtils.getPageable(page, size));
+	public Page<Sery> findByName(String name, Pageable pageable) {
+		return seryRepository.findBySeriesNameLike(name, pageable);
+	}
+
+	@Override
+	public List<Sery> findByName(String name) {
+		return seryRepository.findBySeriesName(name);
 	}
 }

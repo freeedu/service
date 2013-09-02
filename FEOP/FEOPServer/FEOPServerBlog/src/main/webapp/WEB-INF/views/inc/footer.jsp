@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <footer>
-<h4>This is the footer</h4>
+<p>© Company 2013</p>
 </footer>

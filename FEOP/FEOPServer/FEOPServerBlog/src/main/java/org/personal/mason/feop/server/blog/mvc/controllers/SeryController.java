@@ -1,13 +1,13 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
-import java.util.List;
-
 import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.model.Sery;
 import org.personal.mason.feop.server.blog.domain.service.CategoryService;
 import org.personal.mason.feop.server.blog.domain.service.SeryService;
 import org.personal.mason.feop.server.blog.mvc.model.SeryModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,16 +58,16 @@ public class SeryController {
 	}
 
 	@RequestMapping(value = "/sery/list", method = RequestMethod.GET)
-	public String findByName(@RequestParam("q") String query, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
-		List<Sery> series = seryService.findByName(query, page, size);
+	public String findByName(@RequestParam("q") String query, Pageable pageable, Model model) {
+		Page<Sery> series = seryService.findByName(query, pageable);
 		model.addAttribute("series", series);
 		return "";
 	}
 
 	@RequestMapping(value = "/sery/c/list", method = RequestMethod.GET)
-	public String findByCategory(@RequestParam("c") Long categoryId, @RequestParam("p") Integer page, @RequestParam("s") Integer size, Model model) {
+	public String findByCategory(@RequestParam("c") Long categoryId, Pageable pageable, Model model) {
 		Category cat = categoryService.findById(categoryId);
-		List<Sery> series = seryService.findByCategory(cat, page, size);
+		Page<Sery> series = seryService.findByCategory(cat, pageable);
 		model.addAttribute("series", series);
 		return "";
 	}

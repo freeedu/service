@@ -1,9 +1,14 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+@XmlRootElement(name = "section")
+@JsonRootName("section")
 public class BlogSectionModel {
 
 	private Long id;
@@ -52,11 +57,22 @@ public class BlogSectionModel {
 		this.blogId = blogId;
 	}
 
+	public static void merge(BlogSection section, BlogSectionModel model) {
+		section.setSectionTitle(model.getSectionTitle());
+		section.setSectionContent(model.getSectionContent());
+	}
+
 	public static BlogSection convert(BlogSectionModel model) {
 		throw new NotImplementedException();
 	}
 
 	public static BlogSectionModel revert(BlogSection section) {
-		throw new NotImplementedException();
+		BlogSectionModel model = new BlogSectionModel();
+		model.setBlogId(section.getBlog().getId());
+		model.setId(section.getId());
+		model.setSectionContent(section.getSectionContent());
+		model.setSectionTitle(section.getSectionTitle());
+		model.setSequence(section.getSequence());
+		return model;
 	}
 }

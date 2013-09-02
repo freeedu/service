@@ -34,6 +34,8 @@ public class Comment extends BlogPersistable {
 
 	private String email;
 
+	private String site;
+
 	private int status;
 
 	// bi-directional many-to-one association to BlogSection
@@ -135,6 +137,14 @@ public class Comment extends BlogPersistable {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
 	}
 
 }

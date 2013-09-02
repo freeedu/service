@@ -15,7 +15,7 @@
 
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
-			<bean class="org.springframework.data.web.PageableArgumentResolver" />
+			<bean class="org.springframework.data.web.PageableArgumentResolver" p:prefix="p" p:separator="_"/>
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
@@ -92,6 +92,7 @@
 			</list>
 		</property>
 	</bean>
+
 	<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> <property name="order" value="1" /> <property name="exceptionMappings"> 
 		<util:map> <entry key="ResourceNotFoundException" value="notFoundError" /> </util:map> </property> <property name="statusCodes"> <util:map> <entry 
 		key="notFoundError" value="404" /> </util:map> </property> <property name="defaultStatusCode" value="500" /> <property name="defaultErrorView" value="systemError" 

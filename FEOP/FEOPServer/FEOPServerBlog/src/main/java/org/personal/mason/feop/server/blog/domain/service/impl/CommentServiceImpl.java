@@ -10,10 +10,11 @@ import org.personal.mason.feop.server.blog.domain.service.CommentService;
 import org.personal.mason.feop.server.blog.utils.PageableUtils;
 import org.personal.mason.feop.server.blog.utils.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -57,8 +58,8 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional
-	public List<Comment> findByBlog(Blog blog, int page, int size) {
-		return commentRepository.findByBlog(blog, PageableUtils.getPageable(page, size, SortUtils.getSortASC("createTime")));
+	public Page<Comment> findByBlog(Blog blog, Pageable pageable) {
+		return commentRepository.findByBlog(blog, PageableUtils.getPageable(pageable, SortUtils.getSortASC("createTime")));
 	}
 
 	@Override
@@ -78,8 +79,8 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional
-	public List<Comment> findByBlogSection(BlogSection blogsection, int page, int size) {
-		return commentRepository.findByBlogSection(blogsection, PageableUtils.getPageable(page, size, SortUtils.getSortASC("createTime")));
+	public Page<Comment> findByBlogSection(BlogSection blogsection, Pageable pageable) {
+		return commentRepository.findByBlogSection(blogsection, PageableUtils.getPageable(pageable, SortUtils.getSortASC("createTime")));
 	}
 
 	@Override
@@ -99,8 +100,8 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional
-	public List<Comment> findByAuthor(String author, int page, int size) {
-		return commentRepository.findByAuthor(author, PageableUtils.getPageable(page, size, SortUtils.getSortASC("createTime")));
+	public Page<Comment> findByAuthor(String author, Pageable pageable) {
+		return commentRepository.findByAuthor(author, PageableUtils.getPageable(pageable, SortUtils.getSortASC("createTime")));
 	}
 
 	@Override
@@ -120,8 +121,8 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional
-	public List<Comment> findByComment(Comment comment, int page, int size) {
-		return commentRepository.findByComment(comment, PageableUtils.getPageable(page, size, SortUtils.getSortASC("createTime")));
+	public Page<Comment> findByComment(Comment comment, Pageable pageable) {
+		return commentRepository.findByComment(comment, PageableUtils.getPageable(pageable, SortUtils.getSortASC("createTime")));
 	}
 
 	@Override

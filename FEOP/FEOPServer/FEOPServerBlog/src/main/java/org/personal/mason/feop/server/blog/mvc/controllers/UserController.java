@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.personal.mason.feop.server.blog.client.ClientConfiguration;
 import org.personal.mason.feop.server.blog.client.oauth.FEOPAuthentication;
 import org.personal.mason.feop.server.blog.utils.Constrains;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -5,6 +5,8 @@ import java.util.List;
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 import org.personal.mason.feop.server.blog.domain.model.Comment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 public interface CommentService {
@@ -19,25 +21,25 @@ public interface CommentService {
 
 	List<Comment> findByBlog(Blog blog);
 
-	List<Comment> findByBlog(Blog blog, int page, int size);
+	Page<Comment> findByBlog(Blog blog, Pageable pageable);
 
 	List<Comment> findByBlog(Blog blog, Sort sort);
 
 	List<Comment> findByBlogSection(BlogSection blogsection);
 
-	List<Comment> findByBlogSection(BlogSection blogsection, int page, int size);
+	Page<Comment> findByBlogSection(BlogSection blogsection, Pageable pageable);
 
 	List<Comment> findByBlogSection(BlogSection blogsection, Sort sort);
 
 	List<Comment> findByAuthor(String author);
 
-	List<Comment> findByAuthor(String author, int page, int size);
+	Page<Comment> findByAuthor(String author, Pageable pageable);
 
 	List<Comment> findByAuthor(String author, Sort sort);
 
 	List<Comment> findByComment(Comment comment);
 
-	List<Comment> findByComment(Comment comment, int page, int size);
+	Page<Comment> findByComment(Comment comment, Pageable pageable);
 
 	List<Comment> findByComment(Comment comment, Sort sort);
 

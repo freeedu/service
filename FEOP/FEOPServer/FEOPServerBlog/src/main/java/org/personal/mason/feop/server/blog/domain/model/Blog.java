@@ -6,9 +6,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,7 +31,7 @@ public class Blog extends BlogPersistable {
 	@Column(name = "author_uid")
 	private String authorUid;
 
-	@Column(name = "blog_desc")
+	@Column(name = "blog_desc", length = 1000)
 	private String blogDesc;
 
 	@Column(name = "blog_subtitle")
@@ -44,8 +46,14 @@ public class Blog extends BlogPersistable {
 	@Column(name = "last_update")
 	private Timestamp lastUpdate;
 
-	@Column(name = "tag_ids")
-	private String tagIds;
+	@Column(name = "read_count")
+	private Long read = 0l;
+
+	@Column(name = "praised")
+	private Long praised = 0l;
+
+	@Column(name = "criticized")
+	private Long criticized = 0l;
 
 	// bi-directional many-to-one association to Sery
 	@ManyToOne
@@ -56,8 +64,7 @@ public class Blog extends BlogPersistable {
 	@ManyToOne
 	private Category category;
 
-	@OneToOne(cascade={CascadeType.ALL})
-	@MapsId
+	@OneToOne(cascade = { CascadeType.ALL })
 	private BlogSetting blogSetting;
 
 	// bi-directional many-to-one association to BlogSection
@@ -68,11 +75,15 @@ public class Blog extends BlogPersistable {
 	@OneToMany(mappedBy = "blog")
 	private List<Comment> comments;
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "blog_tags", joinColumns = { @JoinColumn(name = "blog_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
+	private List<Tag> tags;
+
 	public Blog() {
 	}
 
 	public String getAuthorName() {
-		return this.authorName;
+		return authorName;
 	}
 
 	public void setAuthorName(String authorName) {
@@ -80,7 +91,7 @@ public class Blog extends BlogPersistable {
 	}
 
 	public String getAuthorUid() {
-		return this.authorUid;
+		return authorUid;
 	}
 
 	public void setAuthorUid(String authorUid) {
@@ -88,7 +99,7 @@ public class Blog extends BlogPersistable {
 	}
 
 	public String getBlogDesc() {
-		return this.blogDesc;
+		return blogDesc;
 	}
 
 	public void setBlogDesc(String blogDesc) {
@@ -96,7 +107,7 @@ public class Blog extends BlogPersistable {
 	}
 
 	public String getBlogSubtitle() {
-		return this.blogSubtitle;
+		return blogSubtitle;
 	}
 
 	public void setBlogSubtitle(String blogSubtitle) {
@@ -104,7 +115,7 @@ public class Blog extends BlogPersistable {
 	}
 
 	public String getBlogTitle() {
-		return this.blogTitle;
+		return blogTitle;
 	}
 
 	public void setBlogTitle(String blogTitle) {
@@ -112,7 +123,7 @@ public class Blog extends BlogPersistable {
 	}
 
 	public Timestamp getCreateDate() {
-		return this.createDate;
+		return createDate;
 	}
 
 	public void setCreateDate(Timestamp createDate) {
@@ -120,23 +131,39 @@ public class Blog extends BlogPersistable {
 	}
 
 	public Timestamp getLastUpdate() {
-		return this.lastUpdate;
+		return lastUpdate;
 	}
 
 	public void setLastUpdate(Timestamp lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 
-	public String getTagIds() {
-		return this.tagIds;
+	public Long getRead() {
+		return read;
 	}
 
-	public void setTagIds(String tagIds) {
-		this.tagIds = tagIds;
+	public void setRead(Long read) {
+		this.read = read;
+	}
+
+	public Long getPraised() {
+		return praised;
+	}
+
+	public void setPraised(Long praised) {
+		this.praised = praised;
+	}
+
+	public Long getCriticized() {
+		return criticized;
+	}
+
+	public void setCriticized(Long criticized) {
+		this.criticized = criticized;
 	}
 
 	public Sery getSery() {
-		return this.sery;
+		return sery;
 	}
 
 	public void setSery(Sery sery) {
@@ -144,7 +171,7 @@ public class Blog extends BlogPersistable {
 	}
 
 	public Category getCategory() {
-		return this.category;
+		return category;
 	}
 
 	public void setCategory(Category category) {
@@ -152,7 +179,7 @@ public class Blog extends BlogPersistable {
 	}
 
 	public BlogSetting getBlogSetting() {
-		return this.blogSetting;
+		return blogSetting;
 	}
 
 	public void setBlogSetting(BlogSetting blogSetting) {
@@ -160,7 +187,7 @@ public class Blog extends BlogPersistable {
 	}
 
 	public List<BlogSection> getBlogSections() {
-		return this.blogSections;
+		return blogSections;
 	}
 
 	public void setBlogSections(List<BlogSection> blogSections) {
@@ -168,11 +195,18 @@ public class Blog extends BlogPersistable {
 	}
 
 	public List<Comment> getComments() {
-		return this.comments;
+		return comments;
 	}
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
 }

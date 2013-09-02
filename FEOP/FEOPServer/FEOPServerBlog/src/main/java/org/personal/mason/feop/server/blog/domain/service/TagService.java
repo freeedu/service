@@ -19,4 +19,6 @@ public interface TagService {
 	List<Tag> findByTagNameLike(String tagname);
 
 	Tag findByTagName(String tagname);
+
+	List<Tag> findOrCreateWithNames(String[] names);
 }

@@ -1,28 +1,5 @@
 @charset "utf-8";
 
-html {
-	background-color: rgba(0,0,0,0.1);
-}
-
-body{
-	
-}
-
-#container{
-	height: 100%;
-	min-height: 800px;
-	margin-bottom: -100px;
-}
-
-footer{
-	background-color:orange;
-	display:block;
-   	height: 100px;
-	overflow:auto;
-	width:100%;
-	bottom: 0;
-}
-
 
 header{
 	background-color:#CCC;
@@ -954,7 +931,7 @@ nav{
 	font-size:small;
 }
 
-.editable .inputs select {
+.editable .inputs select1 {
 	width:200px;
 
 	padding: 10px 15px 10px 15px;

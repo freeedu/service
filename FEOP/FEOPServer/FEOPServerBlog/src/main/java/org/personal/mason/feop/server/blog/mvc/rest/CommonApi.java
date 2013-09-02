@@ -11,6 +11,8 @@ import org.personal.mason.feop.server.blog.domain.service.BlogService;
 import org.personal.mason.feop.server.blog.domain.service.CommentService;
 import org.personal.mason.feop.server.blog.mvc.model.CommentModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,25 +86,19 @@ public class CommonApi {
 	@ResponseBody
 	public List<CommentModel> findCommonts(@RequestParam(value = "bid", required = false) Long blogId,
 			@RequestParam(value = "sid", required = false) Long sectionId, @RequestParam(value = "cid", required = false) Long commentId,
-			@RequestParam(value = "p", required = false) Integer page, @RequestParam(value = "s", required = false) Integer size) {
-		if (page == null || page < 0) {
-			page = 0;
-		}
-		if (size == null || size <= 0) {
-			size = 10;
-		}
+			Pageable pageable) {
 
-		List<Comment> comments = null;
+		Page<Comment> comments = null;
 
 		if (blogId != null) {
 			Blog blog = blogService.findById(blogId);
-			comments = commentService.findByBlog(blog, page, size);
+			comments = commentService.findByBlog(blog, pageable);
 		} else if (sectionId != null) {
 			BlogSection section = blogSectionService.findById(sectionId);
-			comments = commentService.findByBlogSection(section, page, size);
+			comments = commentService.findByBlogSection(section, pageable);
 		} else if (commentId != null) {
 			Comment pc = commentService.findById(commentId);
-			comments = commentService.findByComment(pc, page, size);
+			comments = commentService.findByComment(pc, pageable);
 		}
 
 		List<CommentModel> models = new ArrayList<>();

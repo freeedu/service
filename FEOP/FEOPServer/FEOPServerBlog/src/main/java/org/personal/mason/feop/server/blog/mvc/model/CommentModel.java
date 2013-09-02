@@ -1,20 +1,28 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.personal.mason.feop.server.blog.domain.model.Comment;
+import org.personal.mason.feop.server.blog.utils.TimeUtils;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+@XmlRootElement(name = "comment")
+@JsonRootName("comment")
 public class CommentModel {
 	private Long id;
 	private String author;
 	private String authorUid;
 
 	private String commentContent;
-	private Timestamp createTime;
+	private Date createTime;
 	private String email;
+	private String site;
 	private int status;
+
 	private Long blogSectionId;
 	private Long blogId;
 	private Long commentId;
@@ -51,11 +59,11 @@ public class CommentModel {
 		this.commentContent = commentContent;
 	}
 
-	public Timestamp getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 
@@ -65,6 +73,14 @@ public class CommentModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
 	}
 
 	public int getStatus() {
@@ -100,7 +116,13 @@ public class CommentModel {
 	}
 
 	public static Comment convert(CommentModel model) {
-		throw new NotImplementedException();
+		Comment comment = new Comment();
+		comment.setAuthor(model.getAuthor());
+		comment.setCreateTime(TimeUtils.getCurrentTimestamp());
+		comment.setEmail(model.getEmail());
+		comment.setSite(model.getSite());
+		comment.setCommentContent(model.getCommentContent());
+		return comment;
 	}
 
 	public static CommentModel revert(Comment comment) {

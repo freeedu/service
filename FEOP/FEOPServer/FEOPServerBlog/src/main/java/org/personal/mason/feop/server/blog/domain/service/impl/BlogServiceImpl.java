@@ -10,9 +10,10 @@ import org.personal.mason.feop.server.blog.domain.service.BlogService;
 import org.personal.mason.feop.server.blog.utils.PageableUtils;
 import org.personal.mason.feop.server.blog.utils.SortUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -26,9 +27,9 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	@Transactional
-	public List<Blog> findAll(int page, int size) {
-		return blogRepository.findAll(
-				PageableUtils.getPageable(page, size, SortUtils.appendSortDESC(SortUtils.getSortDESC("lastUpdate"), "createDate"))).getContent();
+	public Page<Blog> findAll(Pageable pageable) {
+		return blogRepository
+				.findAll(PageableUtils.getPageable(pageable, SortUtils.appendSortDESC(SortUtils.getSortDESC("lastUpdate"), "createDate")));
 	}
 
 	@Override
@@ -69,32 +70,32 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	@Transactional
-	public List<Blog> findByAuthorUid(String authoruid, int page, int size) {
-		return blogRepository.findByAuthorUid(authoruid, PageableUtils.getPageable(page, size, SortUtils.getSortDESC("lastUpdate")));
+	public Page<Blog> findByAuthorUid(String authoruid, Pageable pageable) {
+		return blogRepository.findByAuthorUid(authoruid, PageableUtils.getPageable(pageable, SortUtils.getSortDESC("lastUpdate")));
 	}
 
 	@Override
 	@Transactional
-	public List<Blog> findByCategory(Category category, int page, int size) {
-		return blogRepository.findByCategory(category, PageableUtils.getPageable(page, size, SortUtils.getSortDESC("lastUpdate")));
+	public Page<Blog> findByCategory(Category category, Pageable pageable) {
+		return blogRepository.findByCategory(category, PageableUtils.getPageable(pageable, SortUtils.getSortDESC("lastUpdate")));
 	}
 
 	@Override
 	@Transactional
-	public List<Blog> findByBlogDescLike(String blogdesc, int page, int size) {
-		return blogRepository.findByBlogDescLike(blogdesc, PageableUtils.getPageable(page, size, SortUtils.getSortDESC("lastUpdate")));
+	public Page<Blog> findByBlogDescLike(String blogdesc, Pageable pageable) {
+		return blogRepository.findByBlogDescLike(blogdesc, PageableUtils.getPageable(pageable, SortUtils.getSortDESC("lastUpdate")));
 	}
 
 	@Override
 	@Transactional
-	public List<Blog> findByBlogTitleLike(String blogtitle, int page, int size) {
-		return blogRepository.findByBlogTitleLike(blogtitle, PageableUtils.getPageable(page, size, SortUtils.getSortDESC("lastUpdate")));
+	public Page<Blog> findByBlogTitleLike(String blogtitle, Pageable pageable) {
+		return blogRepository.findByBlogTitleLike(blogtitle, PageableUtils.getPageable(pageable, SortUtils.getSortDESC("lastUpdate")));
 	}
 
 	@Override
 	@Transactional
-	public List<Blog> findBySery(Sery sery, int page, int size) {
-		return blogRepository.findBySery(sery, PageableUtils.getPageable(page, size, SortUtils.getSortDESC("lastUpdate")));
+	public Page<Blog> findBySery(Sery sery, Pageable pageable) {
+		return blogRepository.findBySery(sery, PageableUtils.getPageable(pageable, SortUtils.getSortDESC("lastUpdate")));
 	}
 
 	@Override

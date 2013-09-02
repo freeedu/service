@@ -5,11 +5,11 @@ import java.util.List;
 import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.repository.CategoryRepository;
 import org.personal.mason.feop.server.blog.domain.service.CategoryService;
-import org.personal.mason.feop.server.blog.utils.PageableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -47,14 +47,14 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	@Transactional
-	public List<Category> findByCategory(Category category, int page, int size) {
-		return categoryRepository.findByCategory(category, PageableUtils.getPageable(page, size));
+	public Page<Category> findByCategory(Category category, Pageable pageable) {
+		return categoryRepository.findByCategory(category, pageable);
 	}
 
 	@Override
 	@Transactional
-	public List<Category> findByCategoryIsNull(int page, int size) {
-		return categoryRepository.findByCategoryIsNull(PageableUtils.getPageable(page, size));
+	public Page<Category> findByCategoryIsNull(Pageable pageable) {
+		return categoryRepository.findByCategoryIsNull(pageable);
 	}
 
 	@Override

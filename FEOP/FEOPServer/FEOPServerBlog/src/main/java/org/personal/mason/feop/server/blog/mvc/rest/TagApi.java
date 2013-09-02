@@ -48,6 +48,9 @@ public class TagApi {
 	@RequestMapping(value = "/tag/list", method = RequestMethod.GET)
 	@ResponseBody
 	public List<TagModel> findTags(@RequestParam("q") String query) {
+		if(query!= null && !query.contains("%")){
+			query = query + "%";
+		}
 		List<Tag> tags = tagService.findByTagNameLike(query);
 		List<TagModel> models = new ArrayList<>();
 		if (tags != null) {

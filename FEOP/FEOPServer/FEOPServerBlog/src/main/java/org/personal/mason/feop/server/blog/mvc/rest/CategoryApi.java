@@ -93,20 +93,7 @@ public class CategoryApi {
 	@RequestMapping(value = "/cat/sub", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CategoryModel> findSubCategories(@RequestParam("cid") Long cid) {
-		// , @RequestParam(value = "p", required = false) Integer p,
-		// @RequestParam(value = "l", required = false) Integer l) {
 		Category category = categoryService.findById(cid);
-		//
-		// if (p == null || p < 0) {
-		// p = 0;
-		// }
-		//
-		// if (l == null || l <= 0) {
-		// l = 10;
-		// }
-		//
-		// List<Category> categories = categoryService.findByCategory(category,
-		// p, l);
 
 		List<Category> categories = categoryService.findByCategory(category);
 		List<CategoryModel> models = new ArrayList<>();

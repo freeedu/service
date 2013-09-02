@@ -5,12 +5,14 @@ import java.util.List;
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.model.Sery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface BlogService {
-	
-	List<Blog> findAll(int page, int size);
-	
-	long getCount() ;
+
+	Page<Blog> findAll(Pageable pageable);
+
+	long getCount();
 
 	List<Blog> findByAuthorUid(String authoruid);
 
@@ -22,15 +24,15 @@ public interface BlogService {
 
 	List<Blog> findBySery(Sery sery);
 
-	List<Blog> findByAuthorUid(String authoruid, int page, int size);
+	Page<Blog> findByAuthorUid(String authoruid, Pageable pageable);
 
-	List<Blog> findByCategory(Category category, int page, int size);
+	Page<Blog> findByCategory(Category category, Pageable pageable);
 
-	List<Blog> findByBlogDescLike(String blogdesc, int page, int size);
+	Page<Blog> findByBlogDescLike(String blogdesc, Pageable pageable);
 
-	List<Blog> findByBlogTitleLike(String blogtitle, int page, int size);
+	Page<Blog> findByBlogTitleLike(String blogtitle, Pageable pageable);
 
-	List<Blog> findBySery(Sery sery, int page, int size);
+	Page<Blog> findBySery(Sery sery, Pageable pageable);
 
 	Blog update(Blog blog);
 

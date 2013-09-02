@@ -9,6 +9,8 @@ import org.personal.mason.feop.server.blog.domain.service.CategoryService;
 import org.personal.mason.feop.server.blog.domain.service.SeryService;
 import org.personal.mason.feop.server.blog.mvc.model.SeryModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,16 +70,23 @@ public class SeryApi {
 	@RequestMapping(value = "/sery/list", method = RequestMethod.GET)
 	@ResponseBody
 	public List<SeryModel> findByName(@RequestParam(value = "q", required = false) String query,
-			@RequestParam(value = "c", required = false) Long categoryId, @RequestParam(value = "p", required = false) Integer page,
-			@RequestParam(value = "s", required = false) Integer size) {
-		List<Sery> series = seryService.findByName(query, page, size);
-		Category cat = categoryService.findById(categoryId);
-		series = seryService.findByCategory(cat, page, size);
+			@RequestParam(value = "c", required = false) Long categoryId, Pageable pageable) {
+
+		Page<Sery> series = null;
+
+		if (query != null && !query.isEmpty()) {
+			series = seryService.findByName(query, pageable);
+		} else if (categoryId != null) {
+			Category cat = categoryService.findById(categoryId);
+			series = seryService.findByCategory(cat, pageable);
+		}
 
 		List<SeryModel> models = new ArrayList<>();
-		for (Sery sery : series) {
-			SeryModel model = SeryModel.revert(sery);
-			models.add(model);
+		if (series != null) {
+			for (Sery sery : series) {
+				SeryModel model = SeryModel.revert(sery);
+				models.add(model);
+			}
 		}
 
 		return models;

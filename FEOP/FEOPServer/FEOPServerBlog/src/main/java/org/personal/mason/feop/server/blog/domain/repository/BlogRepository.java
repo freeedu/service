@@ -1,16 +1,15 @@
 package org.personal.mason.feop.server.blog.domain.repository;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import java.lang.String;
 import java.util.List;
 
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.model.Sery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface BlogRepository extends JpaRepository<Blog, Long> {
 
@@ -24,15 +23,15 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
 
 	List<Blog> findBySery(Sery sery);
 
-	List<Blog> findByAuthorUid(String authoruid, Pageable pageable);
+	Page<Blog> findByAuthorUid(String authoruid, Pageable pageable);
 
-	List<Blog> findByCategory(Category category, Pageable pageable);
+	Page<Blog> findByCategory(Category category, Pageable pageable);
 
-	List<Blog> findByBlogDescLike(String blogdesc, Pageable pageable);
+	Page<Blog> findByBlogDescLike(String blogdesc, Pageable pageable);
 
-	List<Blog> findByBlogTitleLike(String blogtitle, Pageable pageable);
+	Page<Blog> findByBlogTitleLike(String blogtitle, Pageable pageable);
 
-	List<Blog> findBySery(Sery sery, Pageable pageable);
+	Page<Blog> findBySery(Sery sery, Pageable pageable);
 
 	@Query("select count(id) from Blog where authorUid = :authorUid")
 	long countByAuthorUid(@Param("authorUid") String authorUid);
