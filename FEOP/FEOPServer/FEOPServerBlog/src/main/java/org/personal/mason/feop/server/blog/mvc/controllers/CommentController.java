@@ -1,5 +1,10 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 import org.personal.mason.feop.server.blog.domain.model.Comment;
@@ -7,6 +12,7 @@ import org.personal.mason.feop.server.blog.domain.service.BlogSectionService;
 import org.personal.mason.feop.server.blog.domain.service.BlogService;
 import org.personal.mason.feop.server.blog.domain.service.CommentService;
 import org.personal.mason.feop.server.blog.mvc.model.CommentModel;
+import org.personal.mason.feop.server.blog.mvc.utils.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -97,33 +103,69 @@ public class CommentController {
 		return String.format(builder.toString(), "/blog/view", comment.getBlog().getId());
 	}
 
-	@RequestMapping(value = "/comment/b/list", method = RequestMethod.GET)
-	public void findBlogComments(@RequestParam("bid") Long blogId, Pageable pageable, Model model) {
-		Blog blog = blogService.findById(blogId);
-		Page<Comment> comments = commentService.findByBlog(blog, pageable);
-		Long count = commentService.count(blog);
-		model.addAttribute("comments", comments);
-		model.addAttribute("count", count);
-		model.addAttribute("cpage", pageable.getPageNumber());
+	@RequestMapping(value = "/comment/list", method = RequestMethod.GET)
+	public String findComments(@RequestParam(value = "b", required = false) Long blogId, @RequestParam(value = "s", required = false) Long sectionId,
+			@RequestParam(value = "c", required = false) Long commentId, Pageable pageable, Model model, HttpServletRequest request) {
+		Page<Comment> comments = null;
+
+		if (blogId != null) {
+			Blog blog = blogService.findById(blogId);
+			comments = commentService.findByBlog(blog, pageable);
+		} else if (sectionId != null) {
+			BlogSection section = blogSectionService.findById(sectionId);
+			comments = commentService.findByBlogSection(section, pageable);
+		} else if (commentId != null) {
+			Comment pc = commentService.findById(commentId);
+			comments = commentService.findByComment(pc, pageable);
+		}
+
+		List<CommentModel> models = new ArrayList<>();
+
+		if (comments != null) {
+			for (Comment comment : comments) {
+				CommentModel cm = CommentModel.revert(comment);
+				models.add(cm);
+			}
+
+			model.addAttribute("pager", Pager.getPager(comments.getNumber(), comments.getTotalPages(), request));
+
+		}
+		model.addAttribute("comments", models);
+
+		return "app.blog.comment.list";
 	}
 
-	@RequestMapping(value = "/comment/s/list", method = RequestMethod.GET)
-	public void findBlogSectionComments(@RequestParam("sid") Long sectionId, Pageable pageable, Model model) {
-		BlogSection section = blogSectionService.findById(sectionId);
-		Page<Comment> comments = commentService.findByBlogSection(section, pageable);
-		Long count = commentService.count(section);
-		model.addAttribute("comments", comments);
-		model.addAttribute("count", count);
-		model.addAttribute("cpage", pageable.getPageNumber());
-	}
-
-	@RequestMapping(value = "/comment/c/list", method = RequestMethod.GET)
-	public void findCommentComments(@RequestParam("cid") Long commentId, Pageable pageable, Model model) {
-		Comment pc = commentService.findById(commentId);
-		Page<Comment> comments = commentService.findByComment(pc, pageable);
-		Long count = commentService.count(pc);
-		model.addAttribute("comments", comments);
-		model.addAttribute("count", count);
-		model.addAttribute("cpage", pageable.getPageNumber());
-	}
+	// @RequestMapping(value = "/comment/b/list", method = RequestMethod.GET)
+	// public void findBlogComments(@RequestParam("bid") Long blogId, Pageable
+	// pageable, Model model) {
+	// Blog blog = blogService.findById(blogId);
+	// Page<Comment> comments = commentService.findByBlog(blog, pageable);
+	// Long count = commentService.count(blog);
+	// model.addAttribute("comments", comments);
+	// model.addAttribute("count", count);
+	// model.addAttribute("cpage", pageable.getPageNumber());
+	// }
+	//
+	// @RequestMapping(value = "/comment/s/list", method = RequestMethod.GET)
+	// public void findBlogSectionComments(@RequestParam("sid") Long sectionId,
+	// Pageable pageable, Model model) {
+	// BlogSection section = blogSectionService.findById(sectionId);
+	// Page<Comment> comments = commentService.findByBlogSection(section,
+	// pageable);
+	// Long count = commentService.count(section);
+	// model.addAttribute("comments", comments);
+	// model.addAttribute("count", count);
+	// model.addAttribute("cpage", pageable.getPageNumber());
+	// }
+	//
+	// @RequestMapping(value = "/comment/c/list", method = RequestMethod.GET)
+	// public void findCommentComments(@RequestParam("cid") Long commentId,
+	// Pageable pageable, Model model) {
+	// Comment pc = commentService.findById(commentId);
+	// Page<Comment> comments = commentService.findByComment(pc, pageable);
+	// Long count = commentService.count(pc);
+	// model.addAttribute("comments", comments);
+	// model.addAttribute("count", count);
+	// model.addAttribute("cpage", pageable.getPageNumber());
+	// }
 }

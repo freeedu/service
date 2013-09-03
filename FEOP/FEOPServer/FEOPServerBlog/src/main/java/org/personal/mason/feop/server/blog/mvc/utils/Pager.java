@@ -1,5 +1,8 @@
 package org.personal.mason.feop.server.blog.mvc.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class Pager {
@@ -16,10 +19,30 @@ public class Pager {
 		this.page = page + 1;
 		this.count = count;
 		this.uri = uri;
+		this.queryString = reconstructQueryString(queryString);
+	}
+
+	private String reconstructQueryString(String queryString) {
 		if (queryString == null || queryString.isEmpty()) {
-			queryString = "p_page=1";
+			return "";
 		}
-		this.queryString = queryString.replaceFirst("p_page=[\\d]*", "");
+
+		String[] pvs = queryString.split("&");
+		List<String> pvlist = new ArrayList<>();
+		if (pvs != null) {
+			for (String pv : pvs) {
+				if (pv.matches("p_page=[\\d]*")) {
+					continue;
+				}
+				pvlist.add(pv);
+			}
+		}
+
+		StringBuilder builder = new StringBuilder();
+		for (String pv : pvlist) {
+			builder.append("&").append(pv);
+		}
+		return builder.toString();
 	}
 
 	public int getPage() {

@@ -19,6 +19,7 @@
 <link href="<c:url value="/resources/css/jquery-ui-1.9.2.custom.css"/>" rel="stylesheet">
 
 <script src="<c:url value="/resources/js/jquery-1.8.2.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap.js" />"></script>
 <script src="<c:url value="/resources/js/jquery-ui-1.9.2.custom.js" />"></script>
 <script src="<c:url value="/resources/js/default.js" />" type="text/javascript" lang="javascript"></script>
 
@@ -61,8 +62,6 @@ body {
 		<hr>
 		<tiles:insertAttribute name="footer" />
 	</div>
-
-	<script src="<c:url value="/resources/js/bootstrap.js" />"></script>
 
 </body>
 </html>

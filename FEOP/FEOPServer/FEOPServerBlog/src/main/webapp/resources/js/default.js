@@ -25,14 +25,10 @@ function retrieveCategories(categoriesUrl) {
 	});
 }
 
-function changeCategory() {
-	$('#category-value').val($('#category').val());
-}
 
-
-//sery section
+// sery section
 function retrieveSeries(seryUrl) {
-	
+
 	$.getJSON(seryUrl, {
 		ajax : 'true',
 		c : $('#category-value').val()
@@ -55,8 +51,16 @@ function retrieveSeries(seryUrl) {
 	});
 }
 
-function changeSery() {
-	$('#sery-value').val($('#sery').val());
-}
-//label section
+// label section
 
+// blog modal section
+function openCommentModal(commentType, identity) {
+	if (commentType == 'blog') {
+		$('#blog-id-holder').val(identity);
+	} else if (commentType == 'section') {
+		$('#section-id-holder').val(identity);
+	} else if (commentType == 'comment') {
+		$('#comment-id-holer').val(identity);
+	}
+	$('#new-comment').modal("show");
+}

@@ -8,8 +8,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.personal.mason.feop.server.blog.domain.model.Comment;
 import org.personal.mason.feop.server.blog.utils.TimeUtils;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 @XmlRootElement(name = "comment")
 @JsonRootName("comment")
 public class CommentModel {
@@ -126,6 +124,15 @@ public class CommentModel {
 	}
 
 	public static CommentModel revert(Comment comment) {
-		throw new NotImplementedException();
+		CommentModel model = new CommentModel();
+		model.setAuthor(comment.getAuthor());
+		model.setAuthorUid(comment.getAuthorUid());
+		model.setCreateTime(comment.getCreateTime());
+		model.setId(comment.getId());
+		model.setCommentContent(comment.getCommentContent());
+		model.setEmail(comment.getEmail());
+		model.setSite(comment.getSite());
+		model.setStatus(comment.getStatus());
+		return model;
 	}
 }

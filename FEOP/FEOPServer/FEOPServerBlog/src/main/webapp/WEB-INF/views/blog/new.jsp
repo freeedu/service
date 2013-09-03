@@ -43,6 +43,21 @@
 							.appendTo(ul);
 				};
 			});
+	$(document).ready(function() {
+		retrieveCategories("${categoriesUrl}");
+	})
+	$(document).ready(function() {
+		retrieveSeries("${catSeriesUrl}");
+	})
+
+	function changeCategory() {
+		$('#category-value').val($('#category').val());
+		retrieveSeries('${catSeriesUrl}');
+	}
+
+	function changeSery() {
+		$('#sery-value').val($('#sery').val());
+	}
 </script>
 <div class="page-header">
 	<h3>New Blog</h3>
@@ -63,9 +78,7 @@
 	<div class="form-group">
 		<label for="category.id" class="col-lg-2 control-label">Category</label>
 		<div class="col-lg-10">
-			<input name="category.id" id="category-value" type="hidden">
-			 <select class="form-control" id="category"
-				onclick="retrieveCategories('${categoriesUrl}')" onchange="changeCategory()">
+			<input name="category.id" id="category-value" type="hidden"> <select class="form-control" id="category" onchange="changeCategory()">
 			</select>
 		</div>
 	</div>
@@ -73,8 +86,7 @@
 	<div class="form-group">
 		<label for="sery.id" class="col-lg-2 control-label">Sery</label>
 		<div class="col-lg-10">
-			<input name="sery.id" id="sery-value" type="hidden"> <select class="form-control" id="sery" onclick="retrieveSeries('${catSeriesUrl}');"
-				onchange="changeSery();">
+			<input name="sery.id" id="sery-value" type="hidden"> <select class="form-control" id="sery" onchange="changeSery();">
 			</select>
 		</div>
 	</div>
@@ -82,7 +94,8 @@
 	<div class="form-group">
 		<label for="tagNames" class="col-lg-2 control-label">Labels</label>
 		<div class="col-lg-10">
-			<input id="cat-labels" class="form-control" name="tagNames" placeholder="Create or Search tag" onclick="labelautocomplete('${autocompleteUrl}');">
+			<input id="cat-labels" class="form-control" name="tagNames" placeholder="Create or Search tag"
+				onclick="labelautocomplete('${autocompleteUrl}');">
 			<div class="dropdown">
 				<ul class="dropdown-menu" id="ui-autocomplete" role="menu"></ul>
 			</div>
