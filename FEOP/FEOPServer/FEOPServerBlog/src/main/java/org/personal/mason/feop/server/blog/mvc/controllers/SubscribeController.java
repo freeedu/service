@@ -87,7 +87,7 @@ public class SubscribeController {
 		subscribeService.update(sub);
 	}
 
-	@RequestMapping(value = "/sub/del", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/sub/delete", method = RequestMethod.DELETE)
 	public void unsubscribeBlog(@RequestParam("bid") Long blogId, @RequestParam("cid") Long catId, @RequestParam("sid") Long seryId,
 			Principal principal) {
 		if (principal == null || principal.getName().isEmpty()) {

@@ -47,7 +47,7 @@
 		<h3>
 			<c:out value="${blog.blogTitle }" />
 			<c:if test="${authentication != null}">
-				<div class="btn-group">
+				<div class="btn-group pull-right">
 					<button class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
 						Action <span class="caret"></span>
 					</button>
@@ -61,27 +61,37 @@
 		</h3>
 	</div>
 
-	<ul class="list-inline">
-		<c:if test="${not empty blog.tags }">
-			Tags:
-			<c:forEach items="${blog.tags }" var="tag">
-				<li><a href="#"><span class="label label-info"><c:out value="${tag.tagName }" /></span></a></li>
-			</c:forEach>
-		</c:if>
-		<li><i class="glyphicon glyphicon-user"></i><a href="#"><span><c:out value="${blog.authorName }" /></span></a> at <i
-			class="glyphicon glyphicon-calendar"></i><span><c:out value="${blog.createDate }" /></span></li>
-		<c:if test="${blog.category != null}">
-			<c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog" />
-			<li><a href="${viewCategoryBlog }"><c:out value="${blog.category.categoryName }" /></a></li>
-		</c:if>
+	<div>
+		<c:choose>
+			<c:when test="${not empty blog.tags }">
+				<c:forEach items="${blog.tags }" var="tag">
+					<span class="label label-default"><c:out value="${tag.tagName }" /></span>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<span class="label "> </span>
+			</c:otherwise>
+		</c:choose>
+		<div class="pull-right">
+			<span class="label label-primary"><i class="glyphicon glyphicon-user"></i> <c:out value="${blog.authorName }" /></span> <span
+				class="label label-primary"><i class="glyphicon glyphicon-calendar"></i> <c:out value="${blog.createDate }" /></span>
 
-		<c:if test="${blog.sery != null}">
-			<c:url value="/blog/list?s=${blog.sery.id }" var="viewSeryBlog" />
-			<li><a href="${viewSeryBlog }"><c:out value="${blog.sery.seriesName }" /></a></li>
-		</c:if>
+			<c:if test="${blog.category != null}">
+				<c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog" />
+				<a href="${viewCategoryBlog }" class="label label-primary"><i class="glyphicon glyphicon-list"></i> <c:out
+						value="${blog.category.categoryName }" /></a>
+			</c:if>
 
-		<li><i class="glyphicon glyphicon-comment"></i><a><b><c:out value="${blog.comments }" /></b> Commons </a></li>
-	</ul>
+			<c:if test="${blog.sery != null}">
+				<c:url value="/blog/list?s=${blog.sery.id }" var="viewSeryBlog" />
+				<span><a href="${viewSeryBlog }" class="label label-primary"><i class="glyphicon glyphicon-book"></i> <c:out
+							value="${blog.sery.seriesName }" /></a></span>
+			</c:if>
+			<span class="label label-primary"><i class="glyphicon glyphicon-comment"></i> <c:out value="${blog.comments }" /> Commons</span>
+		</div>
+	</div>
+	<hr>
+
 	<ul class="list-inline">
 		<li><div>${blog.blogDesc }</div></li>
 	</ul>
@@ -95,7 +105,7 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a href="#collapse${section.sequence }" class="accordion-toggle" data-toggle="collapse"> <c:out value="${section.sectionTitle }" />
-							</a> <small><button class="btn btn-link btn-xs" onclick="openCommentModal('section', '${section.id }');">Common</button></small>
+							</a> <small><button class="btn btn-link btn-xs pull-right" onclick="openCommentModal('section', '${section.id }');">Common</button></small>
 						</h4>
 					</div>
 					<div id="collapse${section.sequence }" class="panel-collapse collapse in">

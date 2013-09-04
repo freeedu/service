@@ -8,8 +8,6 @@ import org.personal.mason.feop.server.blog.domain.service.BlogSectionService;
 import org.personal.mason.feop.server.blog.domain.service.BlogService;
 import org.personal.mason.feop.server.blog.mvc.model.BlogSectionModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -84,16 +82,5 @@ public class BlogSectionController {
 	@RequestMapping(value = "/section/delete", method = RequestMethod.DELETE)
 	public void deleteSection(@RequestParam("id") Long id) {
 		blogSectionService.delete(id);
-	}
-
-	@RequestMapping(value = "/section/query", method = RequestMethod.GET)
-	public String findBlogSection(@RequestParam("bid") Long blogId, Pageable pageable, Model model) {
-		Blog blog = blogService.findById(blogId);
-		Page<BlogSection> sections = blogSectionService.findByBlog(blog, pageable);
-		Long count = blogSectionService.count(blog);
-		model.addAttribute("sections", sections);
-		model.addAttribute("count", count);
-		model.addAttribute("cpage", pageable.getPageNumber());
-		return "";
 	}
 }

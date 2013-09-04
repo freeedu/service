@@ -1,49 +1,51 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<jsp:include page="inc/pagination.jsp"/>
 <c:forEach items="${blogs }" var="blog">
 	<c:if test="${blog != null }">
 		<c:url value="/blog/view?id=${blog.id }" var="viewblog" />
+		<div class="row-fluid">
+			<h3>
+				<a href="${viewblog }" class="page-header"><c:out value="${blog.blogTitle }" /></a>
+			</h3>
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<a href="${viewblog }"><c:out value="${blog.blogTitle }" /></a> <br> <small><c:out value="${blog.blogSubtitle }" /></small>
-			</div>
-			<div class="panel-body">
-				<ul class="list-inline">
-					<li><span><c:out value="${blog.createDate }" /></span></li>
-					<li>By <a href="#"><span><c:out value="${blog.authorName }" /></span></a>
-					</li>
+			<div>
+				<c:choose>
+					<c:when test="${not empty blog.tags }">
+						<c:forEach items="${blog.tags }" var="tag">
+							<span class="label label-default"><c:out value="${tag.tagName }" /></span>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<span class="label "> </span>
+					</c:otherwise>
+				</c:choose>
+				<div class="pull-right">
+					<span class="label label-primary"><i class="glyphicon glyphicon-user"></i> <c:out value="${blog.authorName }" /></span> <span
+						class="label label-primary"><i class="glyphicon glyphicon-calendar"></i> <c:out value="${blog.createDate }" /></span>
+
 					<c:if test="${blog.category != null}">
 						<c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog" />
-						<li><a href="${viewCategoryBlog }"><c:out value="${blog.category.categoryName }" /></a></li>
+						<a href="${viewCategoryBlog }" class="label label-primary"><i class="glyphicon glyphicon-list"></i> <c:out
+								value="${blog.category.categoryName }" /></a>
 					</c:if>
 
 					<c:if test="${blog.sery != null}">
 						<c:url value="/blog/list?s=${blog.sery.id }" var="viewSeryBlog" />
-						<li><a href="${viewSeryBlog }"><c:out value="${blog.sery.seriesName }" /></a></li>
+						<span><a href="${viewSeryBlog }" class="label label-primary"><i class="glyphicon glyphicon-book"></i> <c:out
+									value="${blog.sery.seriesName }" /></a></span>
 					</c:if>
-
-					<li><a><b><c:out value="${blog.comments }" /></b> Commons </a></li>
-				</ul>
-
-				<ul class="list-inline">
-					<c:if test="${not empty blog.tags }">
-						<c:forEach items="${blog.tags }" var="tag">
-							<li><a href="#"><span class="label label-info"><c:out value="${tag.tagName }" /></span></a></li>
-						</c:forEach>
-					</c:if>
-				</ul>
-
-				<div>${blog.blogDesc }</div>
-
-				<div>
-					<a href="${viewblog }" class="btn btn-link btn-sm">Read More</a>
+					<span class="label label-primary"><i class="glyphicon glyphicon-comment"></i> <c:out value="${blog.comments }" /> Commons</span>
 				</div>
 			</div>
-		</div>
-	</c:if>
-</c:forEach>
+			<hr>
 
-<jsp:include page="inc/pagination.jsp"/>
+			<p>${blog.blogDesc }</p>
+			<div>
+				<a href="${viewblog }" class="btn btn-link btn-sm">Read More</a>
+			</div>
+		</div>
+		<hr>
+	</c:if>
+
+</c:forEach>
