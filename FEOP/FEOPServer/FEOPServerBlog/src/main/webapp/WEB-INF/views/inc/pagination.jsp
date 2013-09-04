@@ -5,7 +5,7 @@
 		<div class="">
 			<ul class="pagination">
 				<c:choose>
-					<c:when test="${pager.getPage() > 1 }">
+					<c:when test="${pager.page > 1 }">
 						<li><a href='<c:url value="${pager.uri }?p_page=1${pager.queryString }"/>'><small>&lt;&lt;</small></a></li>
 						<li><a href="<c:url value="${pager.uri }?p_page=${pager.page - 1}${pager.queryString }"/>"><small>&lt;</small></a></li>
 					</c:when>
@@ -81,7 +81,7 @@
 				</c:choose>
 
 				<c:choose>
-					<c:when test="${pager.getPage() < pager.count }">
+					<c:when test="${pager.page < pager.count }">
 						<li><a href="<c:url value="${pager.uri }?p_page=${pager.page + 1}${pager.queryString }"/>"><small>&gt;</small></a></li>
 						<li><a href='<c:url value="${pager.uri }?p_page=${pager.count}${pager.queryString }"/>'><small>&gt;&gt;</small></a></li>
 					</c:when>
