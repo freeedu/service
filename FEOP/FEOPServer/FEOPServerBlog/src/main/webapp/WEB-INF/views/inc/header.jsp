@@ -25,8 +25,8 @@
 							<li><a href="${createblog }">Write a Blog</a></li>
 						</ul></li>
 				</c:if>
-				<li><a href="#">Contact</a></li>
-				<li><a href="#">About</a></li>
+				<li><a href="<c:url value="/contactus"/>">Contact</a></li>
+				<li><a href="<c:url value="/aboutme"/>">About</a></li>
 			</ul>
 
 			<c:url value="/blog/search" var="search" />

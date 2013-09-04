@@ -62,4 +62,14 @@ public class ServerController {
 		model.addAttribute("error", error);
 		return "app.error";
 	}
+
+	@RequestMapping(value = { "contactus" })
+	public String contactUs() {
+		return "app.contact";
+	}
+
+	@RequestMapping(value = { "aboutme" })
+	public String aboutMe() {
+		return "app.aboutme";
+	}
 }

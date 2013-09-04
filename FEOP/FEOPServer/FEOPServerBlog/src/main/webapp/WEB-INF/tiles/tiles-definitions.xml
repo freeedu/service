@@ -42,6 +42,14 @@
 		<put-attribute name="content" value="/WEB-INF/views/error/error.jsp" />
 	</definition>
 
+	<definition name="app.aboutme" extends="app.template.head.content.foot">
+		<put-attribute name="content" value="/WEB-INF/views/about.jsp" />
+	</definition>
+
+	<definition name="app.contact" extends="app.template.head.content.foot">
+		<put-attribute name="content" value="/WEB-INF/views/contact.jsp" />
+	</definition>
+
 	<!-- Blog Definition -->
 	<definition name="app.blog.list" extends="app.template.head.content.detail.foot">
 		<put-attribute name="content-left" value="/WEB-INF/views/blog/list.jsp" />
