@@ -1,7 +1,6 @@
 package org.personal.mason.feop.server.blog.client;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,9 +10,9 @@ import org.personal.mason.feop.server.blog.client.oauth.FEOPAuthentication;
 import org.personal.mason.feop.server.blog.utils.Constrains;
 
 public class HTTPAuthorityProcessor {
-	private final Set<AuthorityInterceptor> interceptors;
+	private final List<AuthorityInterceptor> interceptors;
 
-	public HTTPAuthorityProcessor(Set<AuthorityInterceptor> interceptors) {
+	public HTTPAuthorityProcessor(List<AuthorityInterceptor> interceptors) {
 		this.interceptors = interceptors;
 	}
 
@@ -31,9 +30,9 @@ public class HTTPAuthorityProcessor {
 
 	private AuthorityInterceptor findProcessUrl(String uri) {
 		if (interceptors != null) {
-			for (AuthorityInterceptor interceptor : interceptors) {
-				if (interceptor.canProcess(uri)) {
-					return interceptor;
+			for (int i = 0; i < interceptors.size(); i++) {
+				if (interceptors.get(i).canProcess(uri)) {
+					return interceptors.get(i);
 				}
 			}
 		}

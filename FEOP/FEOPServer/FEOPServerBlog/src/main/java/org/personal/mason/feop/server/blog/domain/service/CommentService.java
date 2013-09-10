@@ -43,10 +43,10 @@ public interface CommentService {
 
 	List<Comment> findByComment(Comment comment, Sort sort);
 
-	Long count(Blog blog);
+	Integer count(Blog blog);
 
-	Long count(BlogSection section);
+	Integer count(BlogSection section);
 
-	Long count(Comment pc);
+	Integer count(Comment pc);
 
 }

@@ -26,16 +26,16 @@
 						</ul></li>
 				</c:if>
 				<li><a href="<c:url value="/contactus"/>">Contact</a></li>
-				<li><a href="<c:url value="/aboutme"/>">About</a></li>
+				<li><a href="<c:url value="/aboutme"/>">About Me</a></li>
 			</ul>
 
 			<c:url value="/blog/search" var="search" />
 			<form class="navbar-form navbar-left" action="${search }" method="get">
 				<div class="form-group">
-					<input type="text" class="form-control" name="q" placeholder="Search Site..." required>
+					<input type="text" class="form-control input-sm" name="q" placeholder="Search Site..." required>
 				</div>
 				<div class="form-group">
-					<input type="submit" value="Go!" class="btn btn-default">
+					<input type="submit" value="Go!" class="btn btn-default  btn-sm">
 				</div>
 			</form>
 			<%-- <form action="${search }" method="get" class="navbar-form navbar-left" role="search">
@@ -50,22 +50,22 @@
 				<c:choose>
 					<c:when test="${empty authentication }">
 						<div class="btn-group">
-							<a class="btn btn-primary" href='<c:url value="/user/login"/>'><i class="glyphicon glyphicon-log-in"></i> Login</a> <a type="button"
-								class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span>
+							<a class="btn btn-default btn-sm" href='<c:url value="/user/login"/>'><i class="glyphicon glyphicon-log-in"></i> Login</a> <a
+								type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a class="btn btn-link" href="/signup"><i class="glyphicon glyphicon-registration-mark"></i> Regist</a></li>
+								<li><a href="/signup"><i class="glyphicon glyphicon-registration-mark"></i> Regist</a></li>
 							</ul>
 						</div>
 
 					</c:when>
 					<c:otherwise>
 						<div class="btn-group">
-							<a class="btn btn-link"><c:out value="${authentication.userInfo.screenName }" /> </a> <a type="button"
-								class="btn btn-link dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span>
+							<a class="btn btn-default btn-sm"><c:out value="${authentication.userInfo.screenName }" /> </a> <a type="button"
+								class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a class="btn btn-link" href="/user/logout">Logout <i class="glyphicon glyphicon-log-out"></i></a></li>
+								<li><a href="/user/logout">Logout <i class="glyphicon glyphicon-log-out"></i></a></li>
 							</ul>
 						</div>
 					</c:otherwise>

@@ -22,7 +22,7 @@ public interface BlogSectionService {
 
 	BlogSection findById(Long id);
 
-	Long count(Blog blog);
+	Integer count(Blog blog);
 
-	Long getMaxSequence(Blog blog);
+	Integer getMaxSequence(Blog blog);
 }

@@ -48,20 +48,27 @@ public class BlogSectionController {
 
 		BlogSection blogSection = BlogSectionModel.convert(section);
 		Blog blog = blogService.findById(section.getBlogId());
+		Integer maxSequence = blogSectionService.getMaxSequence(blog);
+		if (maxSequence != null && maxSequence >= 1) {
+			blogSection.setSequence(maxSequence + 1);
+		} else {
+			blogSection.setSequence(1);
+		}
 		blogSectionService.save(blog, blogSection);
 
-		return "";
+		return "redirect:/my/blog/update?id=" + blog.getId();
 	}
 
 	@RequestMapping(value = "/section/update", method = RequestMethod.GET)
 	public String updateSection(@RequestParam("id") Long id, Model model) {
 		BlogSection section = blogSectionService.findById(id);
+		Long blogId = section.getBlog().getId();
 		BlogSectionModel blogSectionModel = BlogSectionModel.revert(section);
 		model.addAttribute("section", blogSectionModel);
-		return "";
+		return "redirect:/my/blog/update?id=" + blogId;
 	}
 
-	@RequestMapping(value = "/section/update", method = RequestMethod.PUT)
+	@RequestMapping(value = "/section/update", method = RequestMethod.POST)
 	public String updateBlog(@Validated BlogSectionModel sectionModel, BindingResult result, Principal principal, Model model) {
 		if (principal == null || principal.getName().isEmpty()) {
 			return "redirect:/user/login";
@@ -76,11 +83,14 @@ public class BlogSectionController {
 
 		BlogSectionModel updatedBlogSectionModel = BlogSectionModel.revert(updatedBlogSection);
 		model.addAttribute("section", updatedBlogSectionModel);
-		return "section/view";
+		return "redirect:/my/blog/update?id=" + updatedBlogSection.getBlog().getId();
 	}
 
-	@RequestMapping(value = "/section/delete", method = RequestMethod.DELETE)
-	public void deleteSection(@RequestParam("id") Long id) {
-		blogSectionService.delete(id);
+	@RequestMapping(value = "/section/delete")
+	public String deleteSection(@RequestParam("id") Long id) {
+		BlogSection section = blogSectionService.findById(id);
+		Long blogId = section.getBlog().getId();
+		blogSectionService.delete(section);
+		return "redirect:/my/blog/update?id=" + blogId;
 	}
 }

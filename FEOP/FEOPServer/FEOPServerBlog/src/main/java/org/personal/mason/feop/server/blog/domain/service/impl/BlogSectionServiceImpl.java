@@ -68,12 +68,12 @@ public class BlogSectionServiceImpl implements BlogSectionService {
 	}
 
 	@Override
-	public Long count(Blog blog) {
+	public Integer count(Blog blog) {
 		return blogSectionRepository.countByBlog(blog);
 	}
 
 	@Override
-	public Long getMaxSequence(Blog blog) {
+	public Integer getMaxSequence(Blog blog) {
 		return blogSectionRepository.getMaxSequenceOfBlog(blog);
 	}
 

@@ -4,27 +4,37 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-
-<div class="invite">
-	<a id="generate" href='<c:url value="/admin/invite/generate"/>'>Generate 10 more Code</a>
-</div>
-<c:forEach items="${invites}" var="invite">
-	<div class="viewable invite">
-		<div class="widget">
-			<h1>
-				<a><c:out value="${invite.inviteCode }" /></a>
-			</h1>
-			<div class="widget-content">
-				<div class="line">
-					<label class="left">Invide Code: </label> <label class="right"><c:out value="${invite.inviteCode }" /></label>
+<div class=" col-md-8 col-md-offset-2">
+	<div class="row">
+		<div>
+			<h3>
+				Inviting Codes<small><a href='<c:url value="/admin/invite/generate"/>' class="btn btn-primary btn-sm pull-right">Generate 10 more
+						Codes</a></small>
+			</h3>
+		</div>
+		<hr>
+	</div>
+	<div class=""></div>
+	<c:forEach items="${invites}" var="invite">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<b><c:out value="${invite.inviteCode }" /></b> <a href='<c:url value="/admin/invite/delete?id=${invite.id }"/>'
+					class="btn btn-link btn-sm pull-right">Delete</a>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-3">Invide Code:</div>
+					<div class="col-md-9">
+						<c:out value="${invite.inviteCode }" />
+					</div>
 				</div>
-				<div class="line">
-					<label class="left">Used: </label> <label class="right"><c:out value="${invite.used }" /></label>
-				</div>
-				<div class="line">
-					<label class="left"><a href='<c:url value="/admin/invite/delete?id=${invite.id }"/>'>Delete</a></label>
+				<div class="row">
+					<div class="col-md-3">Used:</div>
+					<div class="col-md-9">
+						<c:out value="${invite.used }" />
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</c:forEach>
+	</c:forEach>
+</div>

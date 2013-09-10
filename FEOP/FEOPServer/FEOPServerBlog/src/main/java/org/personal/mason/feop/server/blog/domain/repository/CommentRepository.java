@@ -39,12 +39,12 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	List<Comment> findByComment(Comment comment, Sort sort);
 
 	@Query("select count(id) from Comment where blog=:blog")
-	long countByBlog(@Param("blog") Blog blog);
+	Integer countByBlog(@Param("blog") Blog blog);
 
 	@Query("select count(id) from Comment where common=:comment")
-	long countByComment(@Param("comment") Comment comment);
+	Integer countByComment(@Param("comment") Comment comment);
 
 	@Query("select count(id) from Comment where blogSection=:section")
-	long countByBlogSection(@Param("section") BlogSection section);
+	Integer countByBlogSection(@Param("section") BlogSection section);
 
 }

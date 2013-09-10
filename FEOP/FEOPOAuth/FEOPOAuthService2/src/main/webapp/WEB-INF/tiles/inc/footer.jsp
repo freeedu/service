@@ -1,1 +1,3 @@
-<footer>Copyright &copy 2013 oauth.com. All rights reserved.</footer>
+<footer class="footer">
+	<p>Copyright &copy 2013 oauth.feop.org. All rights reserved.</p>
+</footer>

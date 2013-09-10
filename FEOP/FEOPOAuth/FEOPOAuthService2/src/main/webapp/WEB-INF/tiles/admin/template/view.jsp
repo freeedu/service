@@ -5,47 +5,51 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-
-<c:if test="${template != null}"></c:if>
-<div class="viewable template">
-	<div class="widget">
-		<h1>${template.name }</h1>
-		<c:url value="/admin/et/update?id=${template.id }" var="update" />
-		<div class="widget-content">
-			<div class="line">
-				<div class="left">Template Id:</div>
-				<div class="right">
+<div class=" col-md-8 col-md-offset-2">
+	<div class="row">
+		<div>
+			<h3>View Template</h3>
+		</div>
+		<hr>
+	</div>
+	<c:if test="${template != null}"></c:if>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			${template.name }
+			<c:url value="/admin/et/update?id=${template.id }" var="update" />
+			<a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-3">Template Id:</div>
+				<div class="col-md-9">
 					<c:out value="${template.id }" />
 				</div>
 			</div>
-			<div class="line">
-				<div class="left">Name:</div>
-				<div class="right">
+			<div class="row">
+				<div class="col-md-3">Name:</div>
+				<div class="col-md-9">
 					<c:out value="${template.name }" />
 				</div>
 			</div>
-			<div class="line">
-				<div class="left">Subject:</div>
-				<div class="right">
+			<div class="row">
+				<div class="col-md-3">Subject:</div>
+				<div class="col-md-9">
 					<c:out value="${template.subject }" />
 				</div>
 			</div>
-			<div class="line">
-				<div class="left">Version:</div>
-				<div class="right">
+			<div class="row">
+				<div class="col-md-3">Version:</div>
+				<div class="col-md-9">
 					<c:out value="${template.version }" />
 				</div>
 			</div>
-			<div class="line">
-				<div class="left">Content:</div>
-				<div class="right"></div>
+			<div class="row">
+				<div class="col-md-3">Content:</div>
+				<textarea rows="6" disabled="disabled" class="col-md-9">${template.content }</textarea>
+
 			</div>
-			<textarea rows="6" disabled="disabled">${template.content }</textarea>
-			<div class="line">
-				<div class="left">
-					<a href="${update }">Edit Template</a>
-				</div>
-			</div>
+
 		</div>
 	</div>
 </div>

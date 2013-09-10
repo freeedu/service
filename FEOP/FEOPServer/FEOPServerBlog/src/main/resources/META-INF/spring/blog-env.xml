@@ -19,7 +19,7 @@
 		<property name="defaultAutoCommit" value="false" />
 	</bean> -->
 
-	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${database.driverClassName}" p:url="${database.url}"
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" p:driverClassName="${database.driverClassName}" p:url="${database.url}"
 		p:username="${database.username}" p:password="${database.password}" destroy-method="close" />
 
 

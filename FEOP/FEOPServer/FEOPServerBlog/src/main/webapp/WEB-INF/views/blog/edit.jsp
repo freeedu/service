@@ -52,7 +52,9 @@
 </script>
 
 <div class="page-header"">
-	<h3>Update Blog</h3>
+	<h3>
+		Update Blog<span> <a class="btn btn-link btn-sm pull-right" href="<c:url value="/blog/view?id=${blog.id }"/>">View</a></span>
+	</h3>
 </div>
 
 <c:if test="${blog != null }">
@@ -119,8 +121,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-lg-offset-2 col-lg-10">
-				<input type="submit" class="btn btn-primary" value="Update">
-				<a class="btn btn-default" href="#new-section">Create Section</a>
+				<input type="submit" class="btn btn-primary" value="Update"> <a class="btn btn-link btn-sm" href="#new-section">Create Section</a>
 			</div>
 		</div>
 	</form>
@@ -132,9 +133,9 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a href="#collapse${section.sequence }" class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion"> <c:out
+							<a href="#collapse${section.sequence }" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"> <c:out
 									value="${section.sectionTitle }" />
-							</a>
+							</a> <a href='<c:url value="/section/delete?id=${section.id }"></c:url>' class="btn btn-link btn-sm pull-right">Delete</a>
 						</h4>
 					</div>
 					<div id="collapse${section.sequence }" class="panel-collapse collapse" style="height: 0px;">

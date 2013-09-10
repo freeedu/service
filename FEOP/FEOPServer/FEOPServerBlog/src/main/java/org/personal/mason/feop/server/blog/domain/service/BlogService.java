@@ -44,9 +44,9 @@ public interface BlogService {
 
 	Blog findById(Long id);
 
-	Long getCount(String uid);
+	Integer getCount(String uid);
 
-	Long getCount(Category cat);
+	Integer getCount(Category cat);
 
-	Long getCount(Sery sery);
+	Integer getCount(Sery sery);
 }

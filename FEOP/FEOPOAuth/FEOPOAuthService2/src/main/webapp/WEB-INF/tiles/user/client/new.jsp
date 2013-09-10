@@ -6,34 +6,46 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <c:url value="/client/create" var="newAction" />
-<form action="${newAction }" method="post" name="clientForm" class="editable client2">
-	<h1>Create Application</h1>
-	<s:hasBindErrors htmlEscape="true" name="clientForm">
-		<c:if test="${errors.errorCount gt 0}">
-			<h4>Errors:</h4>
-			<font color="red"> <c:forEach items="${errors.allErrors}" var="error">
-					<s:message code="${error.code}" arguments="${error.arguments}" text="${error.defaultMessage}" />
-					<br />
-				</c:forEach>
-			</font>
-		</c:if>
-	</s:hasBindErrors>
-	<fieldset class="inputs">
 
-		<label class="left">Client Name</label> <input name="clientName" class="right" required/>
-		<div class="left">
-			<label>Client Type</label>
-			<c:forEach items="${client_types}" var="type">
-				<input class="radio" type="radio" name="clientType" value="${type }">
-				<label><c:out value="${type }" /></label>
-				<br />
-			</c:forEach>
-		</div>
-		<label class="left">Redirect Url</label> <input name="redirectUrl" id="redirectUrl" class="right" required/>
-	</fieldset>
-	<fieldset id="actions">
-		<input id="submit" type="submit" value="Create Account" class="left" />
-	</fieldset>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<form action="${newAction }" method="post" name="clientForm" class="form-horizontal">
+			<div class="form-group">
+				<h3>Create Application</h3>
+				<hr>
+			</div>
+			<s:hasBindErrors htmlEscape="true" name="clientForm">
+				<c:if test="${errors.errorCount gt 0}">
+					<div class="form-group">
+						<div class="alert alert-danger">
+							<h4>Errors:</h4>
+							<font color="red"> <c:forEach items="${errors.allErrors}" var="error">
+									<s:message code="${error.code}" arguments="${error.arguments}" text="${error.defaultMessage}" />
+									<br />
+								</c:forEach>
+							</font>
+						</div>
+					</div>
+				</c:if>
+			</s:hasBindErrors>
+			<div class="form-group">
+				<label class="left">Client Name</label> <input name="clientName" class="form-control" required />
+			</div>
+			<div class="form-group ">
+				<label>Client Type</label>
+				<div class="col-sm-offset-3">
+					<c:forEach items="${client_types}" var="type">
+						<label><input type="radio" name="clientType" value="${type }"> <c:out value="${type }" /></label>
+						<br />
+					</c:forEach>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="left">Redirect Url</label> <input name="redirectUrl" class="form-control" required />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create Account" class="btn btn-primary btn-sm" />
+			</div>
+		</form>
 	</div>
-
-</form>
+</div>

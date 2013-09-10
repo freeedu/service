@@ -8,32 +8,58 @@
 
 <c:url value="/account/changesecret" var="updateAction" />
 
-<form id="change-password" class="editable" action="${updateAction }" method="post" name="changePasswordForm">
-	<h1>Change Password</h1>
-	<c:if test="${msg != null }">
-		<div class="success">
-			<c:out value="${msg }" />
-		</div>
-	</c:if>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
 
-	<s:hasBindErrors name="changePasswordForm">
-		<c:if test="${errors.errorCount gt 0}">
-			<div class="error">
-				<b>Errors:</b><br />
-				<c:forEach items="${errors.allErrors}" var="error">
-					<s:message code="${error.code}" arguments="${error.arguments}" text="${error.defaultMessage}" />
-					<br />
-				</c:forEach>
+		<form class="editable" action="${updateAction }" method="post" name="changePasswordForm">
+			<div class="form-group">
+				<h3>Change Password</h3>
+				<hr>
 			</div>
-		</c:if>
-	</s:hasBindErrors>
 
-	<fieldset class="inputs">
-		<input class="password" type="password" placeholder="Old Password" name="oldPassword" required> <input class="password"
-			type="password" placeholder="New Password" name="newPassword" required> <input class="password" type="password"
-			placeholder="Re Enter Password" name="repeatPassword" required>
-	</fieldset>
-	<fieldset class="actions">
-		<input type="submit" id="submit" value="Change">
-	</fieldset>
-</form>
+			<c:if test="${msg != null }">
+				<div class="form-group">
+					<div class="alert alert-success">
+						<c:out value="${msg }" />
+					</div>
+				</div>
+			</c:if>
+
+			<s:hasBindErrors name="changePasswordForm">
+				<c:if test="${errors.errorCount gt 0}">
+					<div class="form-group">
+						<div class="alert alert-danger">
+							<b>Errors:</b><br />
+							<c:forEach items="${errors.allErrors}" var="error">
+								<s:message code="${error.code}" arguments="${error.arguments}" text="${error.defaultMessage}" />
+								<br />
+							</c:forEach>
+						</div>
+					</div>
+				</c:if>
+			</s:hasBindErrors>
+
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon "><i class="glyphicon glyphicon-lock"></i></span><input class="form-control" type="password"
+						placeholder="Old Password" name="oldPassword" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon "><i class="glyphicon glyphicon-lock"></i></span><input class="form-control" type="password"
+						placeholder="New Password" name="newPassword" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon "><i class="glyphicon glyphicon-lock"></i></span><input class="form-control" type="password"
+						placeholder="Re Enter Password" name="repeatPassword" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="submit" class="btn btn-primary btn-sm" value="Change Password">
+			</div>
+		</form>
+	</div>
+</div>

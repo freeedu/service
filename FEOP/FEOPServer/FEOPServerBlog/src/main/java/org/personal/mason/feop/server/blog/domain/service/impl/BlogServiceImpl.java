@@ -129,17 +129,17 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public Long getCount(String uid) {
+	public Integer getCount(String uid) {
 		return blogRepository.countByAuthorUid(uid);
 	}
 
 	@Override
-	public Long getCount(Category cat) {
+	public Integer getCount(Category cat) {
 		return blogRepository.countByCategory(cat);
 	}
 
 	@Override
-	public Long getCount(Sery sery) {
+	public Integer getCount(Sery sery) {
 		return blogRepository.countBySery(sery);
 	}
 

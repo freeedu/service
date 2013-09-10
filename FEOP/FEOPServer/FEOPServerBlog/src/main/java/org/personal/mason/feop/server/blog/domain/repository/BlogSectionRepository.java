@@ -19,8 +19,8 @@ public interface BlogSectionRepository extends JpaRepository<BlogSection, Long> 
 	List<BlogSection> findByBlog(Blog blog, Sort sort);
 
 	@Query("select count(id) from BlogSection where blog = :blog")
-	long countByBlog(@Param("blog") Blog blog);
+	Integer countByBlog(@Param("blog") Blog blog);
 
 	@Query("select max(sequence) from BlogSection where blog = :blog")
-	long getMaxSequenceOfBlog(@Param("blog") Blog blog);
+	Integer getMaxSequenceOfBlog(@Param("blog") Blog blog);
 }

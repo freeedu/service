@@ -4,30 +4,49 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<div class=" col-md-8 col-md-offset-2">
+	<div class="row">
+		<div>
+			<h3>View Setting</h3>
+		</div>
+		<hr>
+	</div>
 
-<div class="viewable setting">
-	<div class="widget">
-		<h1>${setting.key }</h1>
-		<c:url value="/admin/settings/update?id=${setting.id }" var="update" />
-		<div class="widget-content">
-			<div class="line">
-				<label class="left">Setting Key: </label> <label class="right"><c:out value="${setting.key }" /></label>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<strong>${setting.key }</strong>
+			<c:url value="/admin/settings/update?id=${setting.id }" var="update" />
+			<a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-3">Setting Key:</div>
+				<div class="col-md-9">
+					<c:out value="${setting.key }" />
+				</div>
 			</div>
-			<div class="line">
-				<label class="left">Setting Value: </label> <label class="right"><c:out value="${setting.value }" /></label>
+			<div class="row">
+				<div class="col-md-3">Setting Value:</div>
+				<div class="col-md-9">
+					<c:out value="${setting.value }" />
+				</div>
 			</div>
-			<div class="line">
-				<label class="left">Effect Start Date: </label> <label class="right"><c:out value="${setting.startDate }" /></label>
+			<div class="row">
+				<div class="col-md-3">Effect Start Date:</div>
+				<div class="col-md-9">
+					<c:out value="${setting.startDate }" />
+				</div>
 			</div>
-			<div class="line">
-				<label class="left">Effect End Date: </label> <label class="right"><c:out value="${setting.endDate }" /></label>
+			<div class="row">
+				<div class="col-md-3">Effect End Date:</div>
+				<div class="col-md-9">
+					<c:out value="${setting.endDate }" />
+				</div>
 			</div>
-			<div class="line">
-				<label class="left">Diabled: </label> <label class="right"><c:out value="${setting.disabled }" /></label>
-			</div>
-			<div class="line">
-				<div class="left">
-					<a href="${update }">Edit Setting</a>
+			<div class="row">
+				<div class="col-md-3">Diabled:</div>
+				<div class="col-md-9">
+					<c:out value="${setting.disabled }" />
 				</div>
 			</div>
 		</div>

@@ -135,17 +135,17 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public Long count(Blog blog) {
+	public Integer count(Blog blog) {
 		return commentRepository.countByBlog(blog);
 	}
 
 	@Override
-	public Long count(BlogSection section) {
+	public Integer count(BlogSection section) {
 		return commentRepository.countByBlogSection(section);
 	}
 
 	@Override
-	public Long count(Comment pc) {
+	public Integer count(Comment pc) {
 		return commentRepository.countByComment(pc);
 	}
 }

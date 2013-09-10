@@ -34,17 +34,17 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
 	Page<Blog> findBySery(Sery sery, Pageable pageable);
 
 	@Query("select count(id) from Blog where authorUid = :authorUid")
-	long countByAuthorUid(@Param("authorUid") String authorUid);
+	Integer countByAuthorUid(@Param("authorUid") String authorUid);
 
 	@Query("select count(id) from Blog where category = :category")
-	long countByCategory(@Param("category") Category category);
+	Integer countByCategory(@Param("category") Category category);
 
 	@Query("select count(id) from Blog where sery = :sery")
-	long countBySery(@Param("sery") Sery sery);
+	Integer countBySery(@Param("sery") Sery sery);
 
 	@Query("select count(id) from Blog where blogDesc like %:blogdesc%")
-	long countByBlogDescLike(@Param("blogdesc") String blogdesc);
+	Integer countByBlogDescLike(@Param("blogdesc") String blogdesc);
 
 	@Query("select count(id) from Blog where blogTitle like %:blogtitle%")
-	long countByBlogTitleLike(@Param("blogtitle") String blogtitle);
+	Integer countByBlogTitleLike(@Param("blogtitle") String blogtitle);
 }

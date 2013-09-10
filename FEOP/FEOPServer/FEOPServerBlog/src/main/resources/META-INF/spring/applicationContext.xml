@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
@@ -64,7 +62,7 @@
 				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/resources/.*" p:security="false" />
 				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/.*.ico" p:security="false" />
 
-
+				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/api/.*" p:access="ROLE_USER" />
 				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/user/.*" p:access="ROLE_USER" />
 				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="(/setting)|(/section)|(/cat).*" p:access="ROLE_USER" />
 				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern=".*(create)|(save)|(update)|(add)|(delete).*"

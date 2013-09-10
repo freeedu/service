@@ -5,8 +5,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 @XmlRootElement(name = "section")
 @JsonRootName("section")
 public class BlogSectionModel {
@@ -63,7 +61,11 @@ public class BlogSectionModel {
 	}
 
 	public static BlogSection convert(BlogSectionModel model) {
-		throw new NotImplementedException();
+		BlogSection section = new BlogSection();
+		section.setId(model.getId());
+		section.setSectionTitle(model.getSectionTitle());
+		section.setSectionContent(model.getSectionContent());
+		return section;
 	}
 
 	public static BlogSectionModel revert(BlogSection section) {

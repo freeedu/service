@@ -5,33 +5,55 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-<c:forEach items="${settings}" var="setting">
-	<div class="viewable setting">
-		<div class="widget">
-			<h1>
+<div class=" col-md-8 col-md-offset-2">
+	<div class="row">
+		<div>
+			<h3>System Settings</h3>
+		</div>
+
+		<hr>
+	</div>
+	<c:forEach items="${settings}" var="setting">
+		<div class="panel panel-info">
+			<div class="panel-heading">
 				<c:url value="/admin/settings/view?id=${setting.id }" var="viewTarget" />
-				<a href="${viewTarget }"><c:out value="${setting.key }" /></a>
-			</h1>
-			<div class="widget-content">
-				<div class="line">
-					<label class="left">Setting Key: </label> <label class="right"><c:out value="${setting.key }" /></label>
+				<a href="${viewTarget }" class="btn btn-link btn-sm"><c:out value="${setting.key }" /></a> <a
+					href='<c:url value="/admin/settings/delete?id=${setting.id }"/>' class="btn btn-link btn-sm pull-right">Delete</a>
+				<c:url value="/admin/settings/update?id=${setting.id }" var="update" />
+				<a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-3">Setting Key:</div>
+					<div class="col-md-9">
+						<c:out value="${setting.key }" />
+					</div>
 				</div>
-				<div class="line">
-					<label class="left">Setting Value: </label> <label class="right"><c:out value="${setting.value }" /></label>
+				<div class="row">
+					<div class="col-md-3">Setting Value:</div>
+					<div class="col-md-9">
+						<c:out value="${setting.value }" />
+					</div>
 				</div>
-				<div class="line">
-					<label class="left">Effect Start Date: </label> <label class="right"><c:out value="${setting.startDate }" /></label>
+				<div class="row">
+					<div class="col-md-3">Effect Start Date:</div>
+					<div class="col-md-9">
+						<c:out value="${setting.startDate }" />
+					</div>
 				</div>
-				<div class="line">
-					<label class="left">Effect End Date: </label> <label class="right"><c:out value="${setting.endDate }" /></label>
+				<div class="row">
+					<div class="col-md-3">Effect End Date:</div>
+					<div class="col-md-9">
+						<c:out value="${setting.endDate }" />
+					</div>
 				</div>
-				<div class="line">
-					<label class="left">Diabled: </label> <label class="right"><c:out value="${setting.disabled }" /></label>
-				</div>
-				<div class="line">
-					<label class="left"><a href='<c:url value="/admin/settings/delete?id=${setting.id }"/>'>Delete</a></label>
+				<div class="row">
+					<div class="col-md-3">Diabled:</div>
+					<div class="col-md-9">
+						<c:out value="${setting.disabled }" />
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</c:forEach>
+	</c:forEach>
+</div>

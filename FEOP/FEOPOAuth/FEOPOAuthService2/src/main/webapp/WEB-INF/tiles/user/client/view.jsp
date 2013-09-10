@@ -4,19 +4,25 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<div class="col-md-8 col-md-offset-2">
 
-<div class="viewable widget setting">
-	<h1>Your Application Information</h1>
-	<div class="widget-content">
-		<div class="info-box alert small-box">
-			<div class="msg">Please remember the following information for using.</div>
+	<div class="row">
+		<div>
+			<h3>Your Application Information</h3>
 		</div>
 
-		<div class="line">
-			<label class="left">Client Id: </label> <label class="right"><c:out value="${client.clientId }" /></label>
+		<hr>
+	</div>
+	<div class="row">
+		<div class="alert alert-info">Please remember the following information for using.</div>
+
+		<div class="col-md-3">Client Id:</div>
+		<div class="col-md-9">
+			<c:out value="${client.clientId }" />
 		</div>
-		<div class="line">
-			<label class="left">Secret: </label> <label class="right"><c:out value="${client.clientSecret }" /></label>
+		<div class="col-md-3">Secret:</div>
+		<div class="col-md-9">
+			<c:out value="${client.clientSecret }" />
 		</div>
 	</div>
 </div>
