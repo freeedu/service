@@ -16,6 +16,7 @@
 <link href="<c:url value="/resources/css/bootstrap-responsive.css"/>" rel="stylesheet">
 <link href="<c:url value="/resources/css/bootstrap-theme.css"/>" rel="stylesheet">
 <link href="<c:url value="/resources/css/jquery-ui-1.9.2.custom.css"/>" rel="stylesheet">
+<link href="<c:url value="/resources/css/default.css"/>" rel="stylesheet">
 
 <script src="<c:url value="/resources/js/jquery-1.8.2.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
@@ -31,11 +32,14 @@ body {
 <body>
 	<tiles:insertAttribute name="head" />
 	<div class="container">
-		<div class="row row-offcanvas row-offcanvas-right">
-			<tiles:insertAttribute name="content" />
+		<div class="content">
+			<div class="row row-offcanvas row-offcanvas-right">
+				<tiles:insertAttribute name="content" />
+			</div>
 		</div>
-		<hr>
-		<tiles:insertAttribute name="footer" />
+		<div class="private-footer">
+			<tiles:insertAttribute name="footer" />
+		</div>
 	</div>
 </body>
 </html>
