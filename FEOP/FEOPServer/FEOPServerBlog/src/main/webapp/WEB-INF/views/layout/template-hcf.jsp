@@ -24,21 +24,25 @@
 <style type="text/css">
 body {
 	padding-top: 60px;
-	padding-bottom: 40px;
+	padding-bottom: 60px;
 }
 </style>
 
 </head>
 <body>
 	<tiles:insertAttribute name="head" />
-	<div class="container">
-		<div class="content">
-			<div class="row row-offcanvas row-offcanvas-right">
-				<tiles:insertAttribute name="content" />
+	<div class="container-wrapper">
+		<div class="container">
+			<div class="content-wrapper">
+				<div class="content">
+					<div class="row row-offcanvas row-offcanvas-right">
+						<tiles:insertAttribute name="content" />
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="private-footer">
-			<tiles:insertAttribute name="footer" />
+			<div class="private-footer">
+				<tiles:insertAttribute name="footer" />
+			</div>
 		</div>
 	</div>
 </body>

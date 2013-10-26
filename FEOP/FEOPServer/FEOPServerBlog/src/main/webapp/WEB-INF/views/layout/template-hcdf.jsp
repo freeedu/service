@@ -27,7 +27,7 @@
 <style type="text/css">
 body {
 	padding-top: 60px;
-	padding-bottom: 40px;
+	padding-bottom:60px;
 }
 </style>
 <script type="text/javascript" src="<c:url value="/resources/plugins/tinymce/tinymce.min.js"/>"></script>
@@ -50,20 +50,24 @@ body {
 	<tiles:insertAttribute name="head" />
 	<%-- <tiles:insertAttribute name="breadcrumb" /> --%>
 	<div class="container">
-		<div class="content">
-			<div class="row row-offcanvas row-offcanvas-right">
-				<div class="col-sm-9">
-					<tiles:insertAttribute name="content-left" />
-				</div>
-				<div class="col-sm-3 sidebar-offcanvas">
-					<div class="well sidebar-nav">
-						<tiles:insertAttribute name="content-right" />
+		<div class="container-wrapper">
+			<div class="content-wrapper">
+				<div class="content">
+					<div class="row row-offcanvas row-offcanvas-right">
+						<div class="col-sm-9">
+							<tiles:insertAttribute name="content-left" />
+						</div>
+						<div class="col-sm-3 sidebar-offcanvas">
+							<div class="well sidebar-nav">
+								<tiles:insertAttribute name="content-right" />
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="private-footer">
-			<tiles:insertAttribute name="footer" />
+			<div class="private-footer">
+				<tiles:insertAttribute name="footer" />
+			</div>
 		</div>
 	</div>
 

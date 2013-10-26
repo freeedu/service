@@ -1,3 +1,7 @@
+* {
+	margin:0;
+}
+
 html,body,.container,.content {
 	height: 100%;
 }
@@ -7,7 +11,7 @@ html,body,.container,.content {
 }
 
 .proper-content {
-	padding-top: 60px; /* >= navbar height */
+	padding-top: 50px; /* >= navbar height */
 }
 
 .wrapper {
@@ -31,4 +35,5 @@ html,body,.container,.content {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	margin-top: 10px;
+	height:40px;
 }

@@ -1,14 +1,20 @@
 @charset "UTF-8";
+
+* {
+	margin:0;
+}
+
 html, body{
 	height:100%;
 }
 
-.container, .content{
+.container-wrapper, .content-wrapper, .container, .content{
 	height:100%;
 }
 
-.content{
+.content-wrapper{
 	min-height:100%;
+	height:auto;
 }
 
 header {
@@ -143,4 +149,5 @@ footer{
 	padding-top: 10px;
 	padding-bottom: 10px;
 	margin-top: 10px;
+	height:50;
 }
