@@ -2,7 +2,7 @@ package org.personal.mason.feop.oauth.service.mvc.model;
 
 import java.util.Date;
 
-import org.personal.mason.feop.oauth.service.domain.SystemSettings;
+import org.personal.mason.feop.oauth.service.domain.model.common.SystemSettings;
 
 public class SystemSettingForm {
 

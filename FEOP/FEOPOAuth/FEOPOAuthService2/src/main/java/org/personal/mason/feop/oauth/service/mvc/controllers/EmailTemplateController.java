@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.personal.mason.feop.oauth.service.domain.EmailTemplate;
+import org.personal.mason.feop.oauth.service.domain.model.common.EmailTemplate;
+import org.personal.mason.feop.oauth.service.domain.service.common.EmailTemplateService;
 import org.personal.mason.feop.oauth.service.mvc.model.EmailTemplateForm;
-import org.personal.mason.feop.oauth.service.spi.EmailTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -3,7 +3,7 @@ package org.personal.mason.feop.oauth.service.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.personal.mason.feop.oauth.service.domain.InvitingCode;
+import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
 
 public class InvitingCodeGenerator {
 

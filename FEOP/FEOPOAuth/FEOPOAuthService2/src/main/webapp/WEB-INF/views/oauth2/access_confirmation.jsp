@@ -75,7 +75,7 @@ form input {
 			</authz:authorize>
 		</div>
 	</div>
-	<div id="footer">Copyright &copy 2013 oauth.com. All rights
+	<div id="footer">Copyright &copy; 2013 oauth.com. All rights
 		reserved.</div>
 </body>
 </html>

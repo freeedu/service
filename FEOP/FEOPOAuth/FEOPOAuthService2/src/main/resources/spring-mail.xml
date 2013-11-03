@@ -19,5 +19,5 @@
 		</property>
 	</bean>
 
-	<bean id="emailSender" class="org.personal.mason.feop.oauth.service.mail.EmailSender" p:javaMailSender-ref="javaMailSender" p:sender="${mail.username}" />
+	<bean id="emailSender" class="org.personal.mason.feop.oauth.service.common.mail.EmailSender" p:javaMailSender-ref="javaMailSender" p:sender="${mail.username}" />
 </beans>

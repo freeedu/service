@@ -3,7 +3,7 @@ package org.personal.mason.feop.oauth.service.utils;
 import java.util.Date;
 import java.util.List;
 
-import org.personal.mason.feop.oauth.service.domain.SystemSettings;
+import org.personal.mason.feop.oauth.service.domain.model.common.SystemSettings;
 
 public class SystemSettingUtils {
 

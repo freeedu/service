@@ -10,5 +10,5 @@
 
 	<import resource="infrastructure.xml" />
 	
-	<jpa:repositories base-package="org.personal.mason.feop.oauth.account.repository" />
+	<jpa:repositories base-package="org.personal.mason.feop.oauth.account.domain.repository" />
 </beans>

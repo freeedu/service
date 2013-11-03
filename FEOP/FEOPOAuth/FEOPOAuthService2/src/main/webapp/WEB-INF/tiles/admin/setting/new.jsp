@@ -7,7 +7,7 @@
 <div class=" col-md-8 col-md-offset-2">
 	<div class="row">
 		<div>
-			<h3>Edit Setting</h3>
+			<h3>New Setting</h3>
 		</div>
 		<hr>
 	</div>

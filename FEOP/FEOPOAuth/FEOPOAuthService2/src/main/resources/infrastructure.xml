@@ -11,7 +11,8 @@
 	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${oauth2.jdbc.driverClassName}" p:url="${oauth2.jdbc.url}"
 		p:username="${oauth2.jdbc.username}" p:password="${oauth2.jdbc.password}" />
 
-
+	<bean id="contactDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${contact.jdbc.driverClassName}" p:url="${contact.jdbc.url}"
+		p:username="${contact.jdbc.username}" p:password="${contact.jdbc.password}" />
 
 	<jdbc:initialize-database data-source="dataSource">
 		<jdbc:script location="classpath:db/initialDB.sql" />
@@ -29,10 +30,29 @@
 		<property name="persistenceUnitName" value="oauth2" />
 		<property name="packagesToScan" value="org.personal.mason.feop.oauth.service" />
 	</bean>
+	
+	<bean id="contactEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="contactDataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+				<property name="showSql" value="${jpa.showSql}" />
+				<property name="databasePlatform" value="${hibernate.dialect}" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="contact" />
+		<property name="packagesToScan" value="org.personal.mason.feop.oauth.common" />
+	</bean>
+	
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	
+	<bean id="contactTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="contactEntityManagerFactory" />
+	</bean>
+	
 
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 

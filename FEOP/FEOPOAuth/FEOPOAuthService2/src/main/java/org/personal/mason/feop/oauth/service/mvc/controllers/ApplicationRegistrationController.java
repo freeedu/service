@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.personal.mason.feop.oauth.service.domain.OauthClientDetail;
+import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthClientDetail;
+import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopClientDetailService;
+import org.personal.mason.feop.oauth.service.domain.service.oauth.impl.AuthorizationType;
 import org.personal.mason.feop.oauth.service.mvc.model.ClientForm;
 import org.personal.mason.feop.oauth.service.mvc.model.UserApplication;
-import org.personal.mason.feop.oauth.service.spi.FeopClientDetailService;
-import org.personal.mason.feop.oauth.service.spi.impl.AuthorizationType;
 import org.personal.mason.feop.oauth.service.utils.StringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -7,9 +7,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.personal.mason.feop.oauth.service.domain.SystemSettings;
+import org.personal.mason.feop.oauth.service.domain.model.common.SystemSettings;
+import org.personal.mason.feop.oauth.service.domain.service.common.SystemSettingsService;
 import org.personal.mason.feop.oauth.service.mvc.model.SystemSettingForm;
-import org.personal.mason.feop.oauth.service.spi.SystemSettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;

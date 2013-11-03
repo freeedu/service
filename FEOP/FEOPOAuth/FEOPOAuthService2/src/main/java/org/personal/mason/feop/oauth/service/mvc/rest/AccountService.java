@@ -4,9 +4,9 @@ import java.security.Principal;
 
 import org.personal.mason.feop.oauth.common.model.UserInfo;
 import org.personal.mason.feop.oauth.common.model.UserRole;
-import org.personal.mason.feop.oauth.service.domain.OauthRole;
-import org.personal.mason.feop.oauth.service.domain.OauthUser;
-import org.personal.mason.feop.oauth.service.spi.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthRole;
+import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
+import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

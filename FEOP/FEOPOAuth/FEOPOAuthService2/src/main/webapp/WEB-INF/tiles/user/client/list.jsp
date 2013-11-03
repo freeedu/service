@@ -56,7 +56,7 @@
 						<div class="row">
 							<div class="col-md-3">Scope:</div>
 							<div class="col-md-9">
-								<c:out value="${app.clientId }" />
+								<c:out value="${app.scope }" />
 							</div>
 						</div>
 						<div class="row">

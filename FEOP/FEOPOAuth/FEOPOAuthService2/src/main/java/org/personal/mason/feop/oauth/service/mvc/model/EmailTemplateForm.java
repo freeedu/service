@@ -1,6 +1,6 @@
 package org.personal.mason.feop.oauth.service.mvc.model;
 
-import org.personal.mason.feop.oauth.service.domain.EmailTemplate;
+import org.personal.mason.feop.oauth.service.domain.model.common.EmailTemplate;
 
 public class EmailTemplateForm {
 

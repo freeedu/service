@@ -34,7 +34,7 @@
 					</div>
 				</c:if>
 			</s:hasBindErrors>
-			<input type="text" placeholder="token" name="token" value="${tkn }" required hidden>
+			<input type="text" placeholder="token" name="token" value="${tkn }" required hidden="true">
 			<div class="form-group">
 				<span class="input-group-addon "><i class="glyphicon glyphicon-lock"></i></span><input class="form-control" type="password" placeholder="New Password" name="newPassword" required>
 			</div>

@@ -79,7 +79,7 @@
 		<security:expression-handler ref="oauthWebExpressionHandler" />
 	</security:http>
 
-	<bean id="logoutSuccessHandler" class="org.personal.mason.feop.oauth.service.security.FEOPLogoutSuccessHandler">
+	<bean id="logoutSuccessHandler" class="org.personal.mason.feop.oauth.service.common.security.FEOPLogoutSuccessHandler">
 	</bean>
 
 	<security:authentication-manager alias="authenticationManager">

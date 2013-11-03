@@ -4,5 +4,7 @@
 	xsi:schemaLocation="http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.8.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
+	<cloud:data-source id="dataSource" service-name="foep-db-oauth2"/>
+	<cloud:data-source id="contactDataSource" service-name="foep-db-contact"/>
+	
 </beans>

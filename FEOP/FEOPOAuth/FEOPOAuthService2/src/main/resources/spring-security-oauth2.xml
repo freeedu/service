@@ -24,7 +24,7 @@
 		p:tokenServices-ref="tokenServices">
 	</bean>
 
-	<bean id="userDetailsService" class="org.personal.mason.feop.oauth.service.oauth2.OAuth2UserDetailsServiceImpl" />
+	<bean id="userDetailsService" class="org.personal.mason.feop.oauth.service.common.oauth2.OAuth2UserDetailsServiceImpl" />
 
 	<bean id="clientDetailsUserService" class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService"
 		c:clientDetailsService-ref="clientDetails" />

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.personal.mason.feop.oauth.service.domain.OauthRole;
-import org.personal.mason.feop.oauth.service.repository.OauthRoleRepository;
+import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthRole;
+import org.personal.mason.feop.oauth.service.domain.repository.oauth.OauthRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
