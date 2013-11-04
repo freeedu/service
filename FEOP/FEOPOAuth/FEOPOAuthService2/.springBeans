@@ -14,6 +14,7 @@
 		<config>src/main/resources/infrastructure.xml</config>
 		<config>src/main/resources/beans.xml</config>
 		<config>src/main/resources/auditing-context.xml</config>
+		<config>src/main/resources/datasource.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

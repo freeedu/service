@@ -13,12 +13,12 @@
 
 	<oauth2:resource-server id="resourceServerFilter" resource-id="feop" token-services-ref="tokenServices" />
 
-	<bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService" c:dataSource-ref="dataSource" />
+	<bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService" c:dataSource-ref="foep-db-oauth2" />
 
 	<bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices" p:tokenStore-ref="tokenStore"
 		p:supportRefreshToken="true" p:clientDetailsService-ref="clientDetails" />
 
-	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore" c:dataSource-ref="dataSource" />
+	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore" c:dataSource-ref="foep-db-oauth2" />
 
 	<bean id="userApprovalHandler" class="org.springframework.security.oauth2.provider.approval.TokenServicesUserApprovalHandler"
 		p:tokenServices-ref="tokenServices">

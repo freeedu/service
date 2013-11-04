@@ -7,19 +7,15 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<context:property-placeholder location="classpath:app.properties" />
+	
+	<import resource="datasource.xml"/>
 
-	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${oauth2.jdbc.driverClassName}" p:url="${oauth2.jdbc.url}"
-		p:username="${oauth2.jdbc.username}" p:password="${oauth2.jdbc.password}" />
-
-	<bean id="contactDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${contact.jdbc.driverClassName}" p:url="${contact.jdbc.url}"
-		p:username="${contact.jdbc.username}" p:password="${contact.jdbc.password}" />
-
-	<jdbc:initialize-database data-source="dataSource">
+	<jdbc:initialize-database data-source="foep-db-oauth2">
 		<jdbc:script location="classpath:db/initialDB.sql" />
 	</jdbc:initialize-database>
 
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="foep-db-oauth2" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="generateDdl" value="true" />
@@ -32,7 +28,7 @@
 	</bean>
 	
 	<bean id="contactEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="contactDataSource" />
+		<property name="dataSource" ref="foep-db-contact" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="generateDdl" value="true" />

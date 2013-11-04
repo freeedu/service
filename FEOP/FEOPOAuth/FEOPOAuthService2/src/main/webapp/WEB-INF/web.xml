@@ -7,7 +7,6 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath:cloudfoundry.xml
         	classpath:spring-security.xml
         	classpath:spring-mail.xml
         </param-value>

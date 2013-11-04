@@ -285,6 +285,38 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.cloudfoundry</groupId>
+				<artifactId>cf-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<server>mycloudfoundry-instance</server>
+					<target>http://api.run.pivotal.io</target>
+					<org>mason</org>
+					<space>development</space>
+					<appname>oauth2</appname>
+					<url>oauth2.cfapps.io</url>
+					<memory>512</memory>
+					<username>mason4mei@gmail.com</username>
+					<password>Stxaivj1986</password>
+					<services>
+						<service>
+							<name>foep-db-oauth2</name>
+							<label>cleardb</label>
+							<provider>cleardb</provider>
+							<version>n/a</version>
+							<plan>spark</plan>
+						</service>
+						<service>
+							<name>foep-db-contact</name>
+							<label>cleardb</label>
+							<provider>cleardb</provider>
+							<version>n/a</version>
+							<plan>spark</plan>
+						</service>
+					</services>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
