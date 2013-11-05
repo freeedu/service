@@ -9,13 +9,11 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class AppFogServiceUtils {
-	private static final String VCAP_SERVICES = "VCAP_SERVICES";
 
-	public static Map<String, AppFogServiceConfiguration> parse(String serviceString) {
+	public static Map<String, AppFogServiceConfiguration> parse(String servicesString) {
 		Map<String, AppFogServiceConfiguration> serviceConfigurations = new HashMap<String, AppFogServiceConfiguration>();
 
 		try {
-			String servicesString = System.getenv(VCAP_SERVICES);
 			ObjectMapper mapper = new ObjectMapper();
 			AppFogServicesConfiguration config = mapper.readValue(servicesString, AppFogServicesConfiguration.class);
 

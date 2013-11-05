@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security" xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:c="http://www.springframework.org/schema/c"
 	xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
@@ -9,8 +10,9 @@
 
 	<import resource="spring-security-oauth2.xml" />
 
-	<oauth2:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices"
-		user-approval-handler-ref="userApprovalHandler" authorization-endpoint-url="/oauth/authorize" token-endpoint-url="/oauth/token">
+	<oauth2:authorization-server client-details-service-ref="clientDetails"
+		token-services-ref="tokenServices" user-approval-handler-ref="userApprovalHandler"
+		authorization-endpoint-url="/oauth/authorize" token-endpoint-url="/oauth/token">
 		<oauth2:authorization-code />
 		<oauth2:implicit />
 		<oauth2:refresh-token />
@@ -27,7 +29,8 @@
 	<security:http pattern="/account/resetpassword" security="none" />
 
 
-	<security:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager">
+	<security:http pattern="/oauth/token" create-session="stateless"
+		authentication-manager-ref="clientAuthenticationManager">
 		<security:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
 		<security:anonymous enabled="false" />
 		<security:http-basic />
@@ -36,7 +39,8 @@
 		<security:access-denied-handler error-page="/login" />
 	</security:http>
 
-	<security:http pattern="/userinfo" entry-point-ref="oauthAuthenticationEntryPoint" access-denied-page="/login">
+	<security:http pattern="/userinfo" entry-point-ref="oauthAuthenticationEntryPoint"
+		access-denied-page="/login">
 		<security:intercept-url pattern="/userinfo" access="IS_AUTHENTICATED_FULLY" />
 		<security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 	</security:http>
@@ -67,13 +71,15 @@
 	<security:http auto-config="true" use-expressions="true">
 		<security:intercept-url pattern="/home*" access="hasRole('ROLE_USER')" />
 
-		<security:intercept-url pattern="/oauth/**" access="hasAnyRole('ROLE_CLIENT','ROLE_USER','ROLE_ADMIN')" />
+		<security:intercept-url pattern="/oauth/**"
+			access="hasAnyRole('ROLE_CLIENT','ROLE_USER','ROLE_ADMIN')" />
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/**" access="permitAll" />
 
-		<security:form-login authentication-failure-url="/login?error=true" default-target-url="/home" login-page="/login"
-			login-processing-url="/oauth/login.do" />
-		<security:logout logout-url="/oauth/logout.do" invalidate-session="true" success-handler-ref="logoutSuccessHandler" />
+		<security:form-login authentication-failure-url="/login?error=true"
+			default-target-url="/home" login-page="/login" login-processing-url="/oauth/login.do" />
+		<security:logout logout-url="/oauth/logout.do" invalidate-session="true"
+			success-handler-ref="logoutSuccessHandler" />
 
 		<security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<security:expression-handler ref="oauthWebExpressionHandler" />
@@ -92,7 +98,8 @@
 		<security:authentication-provider user-service-ref="clientDetailsUserService" />
 	</security:authentication-manager>
 
-	<bean id="clientCredentialsTokenEndpointFilter" class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter"
+	<bean id="clientCredentialsTokenEndpointFilter"
+		class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter"
 		p:authenticationManager-ref="clientAuthenticationManager" />
 
 	<bean id="oauthAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint"

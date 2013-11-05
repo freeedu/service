@@ -180,17 +180,11 @@
 			<version>${mysql.connector.java.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.9.1.2</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-jdbc</artifactId>
 			<version>${tomcat.jdbc.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<!-- Log -->
 		<dependency>

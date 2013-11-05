@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cloud="http://schema.cloudfoundry.org/spring"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.8.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<beans profile="cloud">
-		<cloud:properties id="cloudProperties" />
-		<context:property-placeholder properties-ref="cloudProperties" />
-
-		<bean id="foep-db-oauth2" class="com.mchange.v2.c3p0.ComboPooledDataSource" p:driverClassName="${oauth2.jdbc.driverClassName}"
-			p:url="jdbc:mysql://${cloud.services.foep-db-oauth2.connection.host}:${cloud.services.foep-db-oauth2.connection.port}/${cloud.services.foep-db-oauth2.connection.name}"
-			p:username="${cloud.services.foep-db-oauth2.connection.username}" p:password="${cloud.services.foep-db-oauth2.connection.password}" />
-
-		<bean id="foep-db-contact" class="com.mchange.v2.c3p0.ComboPooledDataSource" p:driverClassName="${contact.jdbc.driverClassName}"
-			p:url="jdbc:mysql://${cloud.services.foep-db-contact.connection.host}:${cloud.services.foep-db-contact.connection.port}/${cloud.services.foep-db-contact.connection.name}"
-			p:username="${cloud.services.foep-db-contact.connection.username}" p:password="${cloud.services.foep-db-contact.connection.password}" />
-
-		<!-- <cloud:data-source id="foep-db-oauth2" service-name="foep-db-oauth2" /> -->
-		<!-- <cloud:data-source id="foep-db-contact" service-name="foep-db-contact" /> -->
-		<!-- <cloud:service-scan /> -->
-	</beans>
 	<beans profile="default">
-		<bean id="foep-db-oauth2" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${oauth2.jdbc.driverClassName}" p:url="${oauth2.jdbc.url}"
-			p:username="${oauth2.jdbc.username}" p:password="${oauth2.jdbc.password}" />
+		<bean id="oauthDataSource" class="org.personal.mason.feop.oauth.service.common.db.AppFogMysqlDataSource"
+			p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-oauth2" />
+		<bean id="contactDataSource" class="org.personal.mason.feop.oauth.service.common.db.AppFogMysqlDataSource"
+			p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-contact" />
+	</beans>
+	<beans profile="development">
+		<bean id="oauthDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${mysql.jdbc.driverClassName}"
+			p:url="${oauth2.jdbc.url}" p:username="${oauth2.jdbc.username}" p:password="${oauth2.jdbc.password}" />
 
-		<bean id="foep-db-contact" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${contact.jdbc.driverClassName}" p:url="${contact.jdbc.url}"
-			p:username="${contact.jdbc.username}" p:password="${contact.jdbc.password}" />
+		<bean id="contactDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+			p:driverClassName="${mysql.jdbc.driverClassName}" p:url="${contact.jdbc.url}" p:username="${contact.jdbc.username}"
+			p:password="${contact.jdbc.password}" />
 	</beans>
 </beans>

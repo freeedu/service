@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<import resource="infrastructure.xml" />
 
-	<bean id="auditorAware"
-		class="org.personal.mason.feop.oauth.service.audit.AuditorAwareImpl" />
+	<bean id="auditorAware" class="org.personal.mason.feop.oauth.service.audit.AuditorAwareImpl" />
 
 	<jpa:auditing auditor-aware-ref="auditorAware" />
-	<jpa:repositories base-package="org.personal.mason.feop.oauth.service.domain.repository" entity-manager-factory-ref="entityManagerFactory" />
-	<jpa:repositories
-		base-package="org.personal.mason.feop.oauth.common.domain.repository" entity-manager-factory-ref="contactEntityManagerFactory"/>
+	<jpa:repositories base-package="org.personal.mason.feop.oauth.service.domain.repository"
+		entity-manager-factory-ref="entityManagerFactory" />
+	<jpa:repositories base-package="org.personal.mason.feop.oauth.common.domain.repository"
+		entity-manager-factory-ref="contactEntityManagerFactory" />
 
 </beans>

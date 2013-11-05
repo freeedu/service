@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
 	xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
@@ -11,16 +12,20 @@
 
 	<oauth2:web-expression-handler id="oauthWebExpressionHandler" />
 
-	<oauth2:resource-server id="resourceServerFilter" resource-id="feop" token-services-ref="tokenServices" />
+	<oauth2:resource-server id="resourceServerFilter" resource-id="feop"
+		token-services-ref="tokenServices" />
 
-	<bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService" c:dataSource-ref="foep-db-oauth2" />
+	<bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService"
+		c:dataSource-ref="oauthDataSource" />
 
-	<bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices" p:tokenStore-ref="tokenStore"
-		p:supportRefreshToken="true" p:clientDetailsService-ref="clientDetails" />
+	<bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices"
+		p:tokenStore-ref="tokenStore" p:supportRefreshToken="true" p:clientDetailsService-ref="clientDetails" />
 
-	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore" c:dataSource-ref="foep-db-oauth2" />
+	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore"
+		c:dataSource-ref="oauthDataSource" />
 
-	<bean id="userApprovalHandler" class="org.springframework.security.oauth2.provider.approval.TokenServicesUserApprovalHandler"
+	<bean id="userApprovalHandler"
+		class="org.springframework.security.oauth2.provider.approval.TokenServicesUserApprovalHandler"
 		p:tokenServices-ref="tokenServices">
 	</bean>
 
