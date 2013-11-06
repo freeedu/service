@@ -7,8 +7,8 @@
 		<version>1.0</version>
 		<relativePath>..</relativePath>
 	</parent>
-	<groupId>org.personal.mason.feop.oauth.account</groupId>
-	<artifactId>feopoauthaccount</artifactId>
+	<groupId>org.personal.mason.feop.oauth.contact</groupId>
+	<artifactId>feopoauthcontact</artifactId>
 	<packaging>war</packaging>
 
 	<dependencies>

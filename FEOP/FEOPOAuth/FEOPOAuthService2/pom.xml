@@ -6,7 +6,7 @@
 		<artifactId>feopoauth</artifactId>
 		<version>1.0</version>
 	</parent>
-	<artifactId>feopoauthservice2</artifactId>
+	<artifactId>feopoauthservice</artifactId>
 	<packaging>war</packaging>
 	<description>This will be using the spring-data-jpa instead.</description>
 

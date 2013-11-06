@@ -11,10 +11,9 @@
 	<artifactId>feopoauth</artifactId>
 	<packaging>pom</packaging>
 	<modules>
+		<module>FEOPOAuthCommon</module>
 		<module>FEOPOAuthAccount</module>
 		<module>FEOPOAuthResource</module>
-		
 		<module>FEOPOAuthService2</module>
-		<module>FEOPOAuthCommon</module>
 	</modules>
 </project>
