@@ -11,10 +11,13 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="org.personal.mason.feop.oauth.service" />
-	
+
 	<!-- import the commons -->
 	<context:component-scan base-package="org.personal.mason.feop.oauth.common" />
-	
+
+	<!-- import the contact -->
+	<context:component-scan base-package="org.personal.mason.feop.oauth.contact" />
+
 	<!-- PasswordEncoder for encode password -->
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder" />
 
@@ -22,10 +25,12 @@
 
 
 	<!-- Configure the Services -->
-	<!-- <bean id="userService" class="org.personal.mason.feop.oauth.service.spi.impl.OUserServiceImpl" p: p:passwordEncoder-ref="passwordEncoder" p:roleDao-ref="roleDao" 
-		/> <bean id="clientDetailService" class="org.personal.mason.feop.oauth.service.spi.impl.OClientDetailServiceImpl" p:oauthClientDetailDao-ref="clientDetailDao" 
-		/> <bean id="authCodeService" class="org.personal.mason.feop.oauth.service.spi.impl.OAuthCodeServiceImpl" p:codeDao-ref="oauthCodeDao" /> <bean id="roleService" 
-		class="org.personal.mason.feop.oauth.service.spi.impl.ORoleServiceImpl" p:roleDao-ref="roleDao" /> <bean id="accessTokenService" class="org.personal.mason.feop.oauth.service.spi.impl.OAccessTokenServiceImpl" 
+	<!-- <bean id="userService" class="org.personal.mason.feop.oauth.service.spi.impl.OUserServiceImpl" 
+		p: p:passwordEncoder-ref="passwordEncoder" p:roleDao-ref="roleDao" /> <bean id="clientDetailService" 
+		class="org.personal.mason.feop.oauth.service.spi.impl.OClientDetailServiceImpl" p:oauthClientDetailDao-ref="clientDetailDao" 
+		/> <bean id="authCodeService" class="org.personal.mason.feop.oauth.service.spi.impl.OAuthCodeServiceImpl" 
+		p:codeDao-ref="oauthCodeDao" /> <bean id="roleService" class="org.personal.mason.feop.oauth.service.spi.impl.ORoleServiceImpl" 
+		p:roleDao-ref="roleDao" /> <bean id="accessTokenService" class="org.personal.mason.feop.oauth.service.spi.impl.OAccessTokenServiceImpl" 
 		p:accessTokenDao-ref="accessTokenDao" /> <bean id="refreshTokenService" class="org.personal.mason.feop.oauth.service.spi.impl.ORefreshTokenServiceImpl" 
 		p:refreshTokenDao-ref="refreshTokenDao" /> -->
 </beans>

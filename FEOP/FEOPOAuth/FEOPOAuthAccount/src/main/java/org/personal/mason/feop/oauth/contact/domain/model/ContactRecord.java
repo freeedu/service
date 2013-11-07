@@ -1,4 +1,4 @@
-package org.personal.mason.feop.oauth.contact.domain.model.contacts;
+package org.personal.mason.feop.oauth.contact.domain.model;
 
 import java.util.Date;
 
@@ -12,8 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 /**
  * The persistent class for the contact_record database table.
  * 
@@ -21,41 +19,30 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 @Table(name = "contact_record")
 @NamedQuery(name = "ContactRecord.findAll", query = "SELECT c FROM ContactRecord c")
-public class ContactRecord extends AbstractPersistable<Long> {
+public class ContactRecord extends FOEPPersistable<Long> {
 
 private static final long serialVersionUID = -3829838155744166550L;
 
 @Lob
 private String accomplishment;
 
-@Temporal(TemporalType.TIMESTAMP)
-@Column(name="create_time", nullable=false)
-private Date createTime;
-
-@Column(length=255)
+@Column(length = 255)
 private String description;
 
 @Temporal(TemporalType.TIMESTAMP)
-@Column(name="end_date")
+@Column(name = "end_date")
 private Date endDate;
 
 @Temporal(TemporalType.TIMESTAMP)
-@Column(name="last_update_time")
-private Date lastUpdateTime;
-
-@Temporal(TemporalType.TIMESTAMP)
-@Column(name="start_date")
+@Column(name = "start_date")
 private Date startDate;
 
-@Column(length=255)
+@Column(length = 255)
 private String type;
 
-@Column(nullable=false)
-private int version;
-
-//bi-directional many-to-one association to Contact
+// bi-directional many-to-one association to Contact
 @ManyToOne
-@JoinColumn(name="contact_id")
+@JoinColumn(name = "contact_id")
 private Contact contact;
 
 public ContactRecord() {
@@ -67,14 +54,6 @@ public String getAccomplishment() {
 
 public void setAccomplishment(String accomplishment) {
 	this.accomplishment = accomplishment;
-}
-
-public Date getCreateTime() {
-	return this.createTime;
-}
-
-public void setCreateTime(Date createTime) {
-	this.createTime = createTime;
 }
 
 public String getDescription() {
@@ -93,14 +72,6 @@ public void setEndDate(Date endDate) {
 	this.endDate = endDate;
 }
 
-public Date getLastUpdateTime() {
-	return this.lastUpdateTime;
-}
-
-public void setLastUpdateTime(Date lastUpdateTime) {
-	this.lastUpdateTime = lastUpdateTime;
-}
-
 public Date getStartDate() {
 	return this.startDate;
 }
@@ -115,14 +86,6 @@ public String getType() {
 
 public void setType(String type) {
 	this.type = type;
-}
-
-public int getVersion() {
-	return this.version;
-}
-
-public void setVersion(int version) {
-	this.version = version;
 }
 
 public Contact getContact() {

@@ -1,20 +1,16 @@
-package org.personal.mason.feop.oauth.contact.domain.model.contacts;
+package org.personal.mason.feop.oauth.contact.domain.model;
 
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
  * The persistent class for the contacts database table.
@@ -23,7 +19,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 @Table(name = "contacts")
 @NamedQuery(name = "Contact.findAll", query = "SELECT c FROM Contact c")
-public class Contact extends AbstractPersistable<Long> {
+public class Contact extends FOEPPersistable<Long> {
 
 private static final long serialVersionUID = 7754986492566919598L;
 
@@ -32,10 +28,6 @@ private String companyName;
 
 @Column(name = "contact_name", length = 255)
 private String contactName;
-
-@Temporal(TemporalType.TIMESTAMP)
-@Column(name = "create_time", nullable = false)
-private Date createTime;
 
 @Column(name = "department_name", length = 255)
 private String departmentName;
@@ -49,10 +41,6 @@ private String jobTitleName;
 @Column(name = "last_name", length = 80)
 private String lastName;
 
-@Temporal(TemporalType.TIMESTAMP)
-@Column(name = "last_update_time")
-private Date lastUpdateTime;
-
 @Column(name = "link_to_contact_id")
 private BigInteger linkToContactId;
 
@@ -62,13 +50,11 @@ private String middleName;
 @Column(name = "nick_name", length = 80)
 private String nickName;
 
-private Object note;
+@Lob
+private String note;
 
 @Column(name = "photo_url", length = 255)
 private String photoUrl;
-
-@Column(nullable = false)
-private int version;
 
 // bi-directional many-to-one association to AccountBasic
 @OneToMany(mappedBy = "contact")
@@ -134,14 +120,6 @@ public void setContactName(String contactName) {
 	this.contactName = contactName;
 }
 
-public Date getCreateTime() {
-	return this.createTime;
-}
-
-public void setCreateTime(Date createTime) {
-	this.createTime = createTime;
-}
-
 public String getDepartmentName() {
 	return this.departmentName;
 }
@@ -174,14 +152,6 @@ public void setLastName(String lastName) {
 	this.lastName = lastName;
 }
 
-public Date getLastUpdateTime() {
-	return this.lastUpdateTime;
-}
-
-public void setLastUpdateTime(Date lastUpdateTime) {
-	this.lastUpdateTime = lastUpdateTime;
-}
-
 public BigInteger getLinkToContactId() {
 	return this.linkToContactId;
 }
@@ -206,11 +176,11 @@ public void setNickName(String nickName) {
 	this.nickName = nickName;
 }
 
-public Object getNote() {
+public String getNote() {
 	return this.note;
 }
 
-public void setNote(Object note) {
+public void setNote(String note) {
 	this.note = note;
 }
 
@@ -220,14 +190,6 @@ public String getPhotoUrl() {
 
 public void setPhotoUrl(String photoUrl) {
 	this.photoUrl = photoUrl;
-}
-
-public int getVersion() {
-	return this.version;
-}
-
-public void setVersion(int version) {
-	this.version = version;
 }
 
 public List<AccountBasic> getAccountBasics() {

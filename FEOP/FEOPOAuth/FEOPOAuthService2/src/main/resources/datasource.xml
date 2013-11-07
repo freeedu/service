@@ -7,12 +7,17 @@
 	<beans profile="default">
 		<bean id="oauthDataSource" class="org.personal.mason.feop.oauth.service.common.db.AppFogMysqlDataSource"
 			p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-oauth2" />
+		<bean id="commonDataSource" class="org.personal.mason.feop.oauth.service.common.db.AppFogMysqlDataSource"
+			p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-common" />
 		<bean id="contactDataSource" class="org.personal.mason.feop.oauth.service.common.db.AppFogMysqlDataSource"
 			p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-contact" />
 	</beans>
 	<beans profile="development">
 		<bean id="oauthDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${mysql.jdbc.driverClassName}"
 			p:url="${oauth2.jdbc.url}" p:username="${oauth2.jdbc.username}" p:password="${oauth2.jdbc.password}" />
+
+		<bean id="commonDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${mysql.jdbc.driverClassName}"
+			p:url="${common.jdbc.url}" p:username="${common.jdbc.username}" p:password="${common.jdbc.password}" />
 
 		<bean id="contactDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
 			p:driverClassName="${mysql.jdbc.driverClassName}" p:url="${contact.jdbc.url}" p:username="${contact.jdbc.username}"

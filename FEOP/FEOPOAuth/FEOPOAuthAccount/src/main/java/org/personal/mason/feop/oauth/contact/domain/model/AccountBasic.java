@@ -1,6 +1,5 @@
-package org.personal.mason.feop.oauth.contact.domain.model.contacts;
+package org.personal.mason.feop.oauth.contact.domain.model;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,10 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
  * The persistent class for the account_basic database table.
@@ -22,26 +17,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 @Table(name = "account_basic")
 @NamedQuery(name = "AccountBasic.findAll", query = "SELECT a FROM AccountBasic a")
-public class AccountBasic extends AbstractPersistable<Long> {
+public class AccountBasic extends FOEPPersistable<Long> {
 
 private static final long serialVersionUID = 7792142130051760205L;
 
 @Column(name = "account_uid", nullable = false, length = 64)
 private String accountUid;
 
-@Temporal(TemporalType.TIMESTAMP)
-@Column(name = "create_time", nullable = false)
-private Date createTime;
-
-@Temporal(TemporalType.TIMESTAMP)
-@Column(name = "last_update_time")
-private Date lastUpdateTime;
-
 @Column(name = "oauth_uid", nullable = false, length = 64)
 private String oauthUid;
-
-@Column(nullable = false)
-private int version;
 
 // bi-directional many-to-one association to Contact
 @ManyToOne
@@ -63,36 +47,12 @@ public void setAccountUid(String accountUid) {
 	this.accountUid = accountUid;
 }
 
-public Date getCreateTime() {
-	return this.createTime;
-}
-
-public void setCreateTime(Date createTime) {
-	this.createTime = createTime;
-}
-
-public Date getLastUpdateTime() {
-	return this.lastUpdateTime;
-}
-
-public void setLastUpdateTime(Date lastUpdateTime) {
-	this.lastUpdateTime = lastUpdateTime;
-}
-
 public String getOauthUid() {
 	return this.oauthUid;
 }
 
 public void setOauthUid(String oauthUid) {
 	this.oauthUid = oauthUid;
-}
-
-public int getVersion() {
-	return this.version;
-}
-
-public void setVersion(int version) {
-	this.version = version;
 }
 
 public Contact getContact() {
