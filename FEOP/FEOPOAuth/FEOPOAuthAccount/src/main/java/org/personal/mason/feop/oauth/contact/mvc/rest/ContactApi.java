@@ -6,6 +6,8 @@ import org.personal.mason.feop.oauth.contact.mvc.model.Contact;
 import org.personal.mason.feop.oauth.contact.mvc.model.Device;
 import org.personal.mason.feop.oauth.contact.mvc.model.Email;
 import org.personal.mason.feop.oauth.contact.mvc.model.IM;
+import org.personal.mason.feop.oauth.contact.mvc.model.InfoCommon;
+import org.personal.mason.feop.oauth.contact.mvc.model.InfoType;
 import org.personal.mason.feop.oauth.contact.mvc.model.Phone;
 import org.personal.mason.feop.oauth.contact.mvc.model.Record;
 import org.personal.mason.feop.oauth.contact.mvc.model.RemindDate;
@@ -216,6 +218,36 @@ public Setting updateContactSetting(Long accountId, Long contactId, Setting sett
 @ResponseBody
 @RequestMapping(value = { "setting/delete" }, method = RequestMethod.DELETE)
 public Setting deleteContactSetting(Long accountId, Long contactId, Setting setting) {
+	throw new RuntimeException("Not Implemented Exception");
+}
+
+@ResponseBody
+@RequestMapping(value = { "common/add" }, method = RequestMethod.POST)
+public InfoCommon addContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
+	throw new RuntimeException("Not Implemented Exception");
+}
+
+@ResponseBody
+@RequestMapping(value = { "common/update" }, method = RequestMethod.PUT)
+public InfoCommon updateContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
+	throw new RuntimeException("Not Implemented Exception");
+}
+
+@ResponseBody
+@RequestMapping(value = { "common/delete" }, method = RequestMethod.DELETE)
+public InfoCommon deleteContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
+	throw new RuntimeException("Not Implemented Exception");
+}
+
+@ResponseBody
+@RequestMapping(value = { "info/type/add" }, method = RequestMethod.POST)
+public InfoType addContactInfoType(Long accountId, Long contactId, InfoType infoType) {
+	throw new RuntimeException("Not Implemented Exception");
+}
+
+@ResponseBody
+@RequestMapping(value = { "info/type/delete" }, method = RequestMethod.DELETE)
+public InfoType deleteContactInfoType(Long accountId, Long contactId, InfoType infoType) {
 	throw new RuntimeException("Not Implemented Exception");
 }
 
