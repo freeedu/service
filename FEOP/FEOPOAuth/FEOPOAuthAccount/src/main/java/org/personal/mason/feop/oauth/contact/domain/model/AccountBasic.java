@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -16,7 +15,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "account_basic")
-@NamedQuery(name = "AccountBasic.findAll", query = "SELECT a FROM AccountBasic a")
 public class AccountBasic extends FOEPPersistable<Long> {
 
 private static final long serialVersionUID = 7792142130051760205L;

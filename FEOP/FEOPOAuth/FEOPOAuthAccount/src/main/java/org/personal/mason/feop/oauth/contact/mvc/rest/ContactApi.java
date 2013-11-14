@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.contact.mvc.rest;
 
+import org.personal.mason.feop.oauth.contact.exception.BindDeviceException;
+import org.personal.mason.feop.oauth.contact.exception.RegistrationException;
 import org.personal.mason.feop.oauth.contact.mvc.model.Account;
 import org.personal.mason.feop.oauth.contact.mvc.model.Address;
 import org.personal.mason.feop.oauth.contact.mvc.model.Contact;
@@ -13,6 +15,21 @@ import org.personal.mason.feop.oauth.contact.mvc.model.Record;
 import org.personal.mason.feop.oauth.contact.mvc.model.RemindDate;
 import org.personal.mason.feop.oauth.contact.mvc.model.Resource;
 import org.personal.mason.feop.oauth.contact.mvc.model.Setting;
+import org.personal.mason.feop.oauth.contact.protocol.AccountInterface;
+import org.personal.mason.feop.oauth.contact.protocol.AccountModel;
+import org.personal.mason.feop.oauth.contact.spi.AccountBasicService;
+import org.personal.mason.feop.oauth.contact.spi.BindDeviceService;
+import org.personal.mason.feop.oauth.contact.spi.ContactAddressService;
+import org.personal.mason.feop.oauth.contact.spi.ContactEmailService;
+import org.personal.mason.feop.oauth.contact.spi.ContactInfoCommonService;
+import org.personal.mason.feop.oauth.contact.spi.ContactInfoTypeService;
+import org.personal.mason.feop.oauth.contact.spi.ContactInstantMessageService;
+import org.personal.mason.feop.oauth.contact.spi.ContactPhoneService;
+import org.personal.mason.feop.oauth.contact.spi.ContactRecordService;
+import org.personal.mason.feop.oauth.contact.spi.ContactRemindDateService;
+import org.personal.mason.feop.oauth.contact.spi.ContactResourceService;
+import org.personal.mason.feop.oauth.contact.spi.ContactService;
+import org.personal.mason.feop.oauth.contact.spi.ContactSettingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,19 +46,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("contact")
 public class ContactApi {
 
+private AccountInterface accountInterface;
+
+private AccountBasicService accountBasicService;
+private BindDeviceService bindDeviceService;
+private ContactService contactService;
+private ContactSettingService contactSettingService;
+private ContactAddressService contactAddressService;
+private ContactEmailService contactEmailService;
+private ContactInstantMessageService contactInstantMessageService;
+private ContactPhoneService contactPhoneService;
+private ContactRecordService contactRecordService;
+private ContactRemindDateService contactRemindDateService;
+private ContactResourceService contactResourceService;
+private ContactInfoCommonService contactInfoCommonService;
+private ContactInfoTypeService contactInfoTypeService;
+
 /**
  * This method will be invoke from the mobile device endpoint. Required props:
- * 	name			the device name (such as 'abc's iphone')
- * 	identifier		the device identifier (usually is the device uuid)
- *  machineAddress	the device mac-address
- *  type			the device type (such as android-phone, iPhone, iPad etc.)
- *  oauthUser		the user oauth username
- *  oauthSecret		the user oauth password
- *  
- *  System use username and password to verify information and retrieve account 
- *  oauth_id, use oauth_id to get the account or create a new account. One identifier
- *  can bind only one account, if it bind to one exist account, it cannot bind to a 
- *  new account until it is unbind to the exist account.
+ * name the device name (such as 'abc's iphone') identifier the device
+ * identifier (usually is the device uuid) machineAddress the device mac-address
+ * type the device type (such as android-phone, iPhone, iPad etc.) oauthUser the
+ * user oauth username oauthSecret the user oauth password
+ * 
+ * System use username and password to verify information and retrieve account
+ * oauth_id, use oauth_id to get the account or create a new account. One
+ * identifier can bind only one account, if it bind to one exist account, it
+ * cannot bind to a new account until it is unbind to the exist account.
  * 
  * @param device
  * @return
@@ -49,29 +80,55 @@ public class ContactApi {
 @ResponseBody
 @RequestMapping(value = { "regist" }, method = RequestMethod.POST)
 public Account registWithDevice(Device device) {
-	throw new RuntimeException("Not Implemented Exception");
+	if (device.getOauthUser().isEmpty() || device.getOauthSecret().isEmpty()) {
+		throw new RegistrationException("no authention info provided");
+	}
+	
+	AccountModel am = accountInterface.register(device.getOauthUser(), device.getOauthSecret(),
+			device.getPhoneNumber());
+	
+	if (!am.isSuccess()) {
+		throw new RegistrationException(am.getMessage());
+	}
+	
+	if (accountBasicService.isExistAccountWithOauthUid(am.getAccountUid())) {
+		throw new RegistrationException("unknow data error");
+	}
+	
+	Account account = accountBasicService.registAccount(device, am.getAccountUid());
+	
+	return account;
 }
 
 /**
- * this is used for web base registration. Use this method to create an 
- * account from the web interface. User first login to the oauth system
- *  and then get the information access token, use the token and the 
- * oauth_uid to create an account. 
+ * this is used for web base registration. Use this method to create an account
+ * from the web interface. User first login to the oauth system and then get the
+ * information access token, use the token and the oauth_uid to create an
+ * account.
  * 
  * @param oauthuid
  * @param token
  * @return
  */
 @ResponseBody
-@RequestMapping(value = { "regist" }, method = RequestMethod.GET)
-public Account registWithOauth(String oauthuid, String token) {
-	throw new RuntimeException("Not Implemented Exception");
+@RequestMapping(value = { "web/regist" }, method = RequestMethod.POST)
+public Account registWithOauth(String oauthuid, String token, Device device) {
+	if (!accountInterface.validate(oauthuid, token)) {
+		throw new RegistrationException("invalid registration information");
+	}
+	
+	if (accountBasicService.isExistAccountWithOauthUid(oauthuid)) {
+		throw new RegistrationException("unknow data error");
+	}
+	
+	Account account = accountBasicService.registAccount(device, oauthuid);
+	return account;
 }
 
 /**
- * After the account login success, use can use the bind this device to
- * my account operation to bind the device and account, then user can 
- * synthonize different device through bind different to one account.
+ * After the account login success, use can use the bind this device to my
+ * account operation to bind the device and account, then user can synthonize
+ * different device through bind different to one account.
  * 
  * @param device
  * @return
@@ -79,12 +136,24 @@ public Account registWithOauth(String oauthuid, String token) {
 @ResponseBody
 @RequestMapping(value = { "device/bind" }, method = RequestMethod.POST)
 public Account bindDevice(Device device) {
-	throw new RuntimeException("Not Implemented Exception");
+	if (device.getAccountId() == null || device.getOauthUid().isEmpty()) {
+		throw new BindDeviceException("require binding information");
+	}
+	
+	Account account = accountBasicService.findAccountWithOauthUidAndId(device.getOauthUid(),
+			device.getAccountId());
+	
+	if (account == null) {
+		throw new BindDeviceException("invalid binding information");
+	}
+	
+	Device d = bindDeviceService.createOrUpdateDevice(device);
+	return accountBasicService.findAccountWithId(d.getAccountId());
 }
 
 /**
- * Unbind the current device to the login account, after this operation 
- * the Data is not longer synthonize any more.
+ * Unbind the current device to the login account, after this operation the Data
+ * is not longer synthonize any more.
  * 
  * @param device
  * @return
@@ -92,11 +161,22 @@ public Account bindDevice(Device device) {
 @ResponseBody
 @RequestMapping(value = { "device/unbind" }, method = RequestMethod.POST)
 public Account unbindDevice(Device device) {
-	throw new RuntimeException("Not Implemented Exception");
+	boolean validated = accountInterface.validateSecret(device.getOauthUid(),
+			device.getOauthSecret());
+	
+	if (device.getAccountId() == null) {
+		throw new BindDeviceException("invalid unbinding information");
+	}
+	
+	if (validated) {
+		bindDeviceService.unbindAccount(device);
+	}
+	
+	return accountBasicService.findAccountWithId(device.getAccountId());
 }
 
 /**
- * Find my Contact with accountId 
+ * Find my Contact with accountId
  * 
  * @param accountId
  * @param ismine
@@ -104,8 +184,9 @@ public Account unbindDevice(Device device) {
  */
 @ResponseBody
 @RequestMapping(value = { "relation/get" }, method = RequestMethod.GET)
-public Account getContact(String accountId) {
-	throw new RuntimeException("Not Implemented Exception");
+public Contact getContact(Long accountId) {
+	Contact contact = accountBasicService.findMyContact(accountId);
+	return contact;
 }
 
 /**
@@ -116,8 +197,8 @@ public Account getContact(String accountId) {
  */
 @ResponseBody
 @RequestMapping(value = { "relation/delete" }, method = RequestMethod.DELETE)
-public void deleteRelation(String accountId, Contact contact) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteRelation(Long accountId, Contact contact) {
+	contactService.deleteContact(accountId, contact);
 }
 
 /**
@@ -129,8 +210,9 @@ public void deleteRelation(String accountId, Contact contact) {
  */
 @ResponseBody
 @RequestMapping(value = { "relation/add" }, method = RequestMethod.POST)
-public Contact newRelation(String accountId, Contact contact) {
-	throw new RuntimeException("Not Implemented Exception");
+public Contact newRelation(Long accountId, Contact contact) {
+	Contact c = contactService.createContact(accountId, contact);
+	return c;
 }
 
 /**
@@ -142,8 +224,9 @@ public Contact newRelation(String accountId, Contact contact) {
  */
 @ResponseBody
 @RequestMapping(value = { "relation/update" }, method = RequestMethod.PUT)
-public Contact updateRelation(String accountId, Contact contact) {
-	throw new RuntimeException("Not Implemented Exception");
+public Contact updateRelation(Long accountId, Contact contact) {
+	Contact c = contactService.updateContact(accountId, contact);
+	return c;
 }
 
 /**
@@ -157,7 +240,8 @@ public Contact updateRelation(String accountId, Contact contact) {
 @ResponseBody
 @RequestMapping(value = { "address/add" }, method = RequestMethod.POST)
 public Address addContactAddress(Long accountId, Long contactId, Address address) {
-	throw new RuntimeException("Not Implemented Exception");
+	Address a = contactAddressService.createAddress(accountId, contactId, address);
+	return a;
 }
 
 /**
@@ -171,7 +255,8 @@ public Address addContactAddress(Long accountId, Long contactId, Address address
 @ResponseBody
 @RequestMapping(value = { "address/update" }, method = RequestMethod.PUT)
 public Address updateContactAddress(Long accountId, Long contactId, Address address) {
-	throw new RuntimeException("Not Implemented Exception");
+	Address a = contactAddressService.updateAddress(accountId, contactId, address);
+	return a;
 }
 
 /**
@@ -184,8 +269,8 @@ public Address updateContactAddress(Long accountId, Long contactId, Address addr
  */
 @ResponseBody
 @RequestMapping(value = { "address/delete" }, method = RequestMethod.DELETE)
-public Address deleteContactAddress(Long accountId, Long contactId, Address address) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactAddress(Long accountId, Long contactId, Address address) {
+	contactAddressService.deleteAddress(accountId, contactId, address);
 }
 
 /**
@@ -199,7 +284,8 @@ public Address deleteContactAddress(Long accountId, Long contactId, Address addr
 @ResponseBody
 @RequestMapping(value = { "email/add" }, method = RequestMethod.POST)
 public Email addContactEmail(Long accountId, Long contactId, Email email) {
-	throw new RuntimeException("Not Implemented Exception");
+	Email e = contactEmailService.createEmail(accountId, contactId, email);
+	return e;
 }
 
 /**
@@ -212,8 +298,9 @@ public Email addContactEmail(Long accountId, Long contactId, Email email) {
  */
 @ResponseBody
 @RequestMapping(value = { "email/update" }, method = RequestMethod.PUT)
-public Email updateContactEmail(Long accountId, Long contactId, Email Email) {
-	throw new RuntimeException("Not Implemented Exception");
+public Email updateContactEmail(Long accountId, Long contactId, Email email) {
+	Email e = contactEmailService.updateEmail(accountId, contactId, email);
+	return e;
 }
 
 /**
@@ -226,8 +313,8 @@ public Email updateContactEmail(Long accountId, Long contactId, Email Email) {
  */
 @ResponseBody
 @RequestMapping(value = { "email/delete" }, method = RequestMethod.DELETE)
-public Email deleteContactEmail(Long accountId, Long contactId, Email email) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactEmail(Long accountId, Long contactId, Email email) {
+	contactEmailService.deleteEmail(accountId, contactId, email);
 }
 
 /**
@@ -241,7 +328,8 @@ public Email deleteContactEmail(Long accountId, Long contactId, Email email) {
 @ResponseBody
 @RequestMapping(value = { "im/add" }, method = RequestMethod.POST)
 public IM addContactIM(Long accountId, Long contactId, IM im) {
-	throw new RuntimeException("Not Implemented Exception");
+	IM i = contactInstantMessageService.createIM(accountId, contactId, im);
+	return i;
 }
 
 /**
@@ -255,7 +343,8 @@ public IM addContactIM(Long accountId, Long contactId, IM im) {
 @ResponseBody
 @RequestMapping(value = { "im/update" }, method = RequestMethod.PUT)
 public IM updateContactIM(Long accountId, Long contactId, IM im) {
-	throw new RuntimeException("Not Implemented Exception");
+	IM i = contactInstantMessageService.updateIM(accountId, contactId, im);
+	return i;
 }
 
 /**
@@ -268,8 +357,8 @@ public IM updateContactIM(Long accountId, Long contactId, IM im) {
  */
 @ResponseBody
 @RequestMapping(value = { "im/delete" }, method = RequestMethod.DELETE)
-public IM deleteContactIM(Long accountId, Long contactId, IM im) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactIM(Long accountId, Long contactId, IM im) {
+	contactInstantMessageService.deleteIM(accountId, contactId, im);
 }
 
 /**
@@ -283,7 +372,8 @@ public IM deleteContactIM(Long accountId, Long contactId, IM im) {
 @ResponseBody
 @RequestMapping(value = { "phone/add" }, method = RequestMethod.POST)
 public Phone addContactPhone(Long accountId, Long contactId, Phone phone) {
-	throw new RuntimeException("Not Implemented Exception");
+	Phone p = contactPhoneService.createPhone(accountId, contactId, phone);
+	return p;
 }
 
 /**
@@ -297,7 +387,8 @@ public Phone addContactPhone(Long accountId, Long contactId, Phone phone) {
 @ResponseBody
 @RequestMapping(value = { "phone/update" }, method = RequestMethod.PUT)
 public Phone updateContactPhone(Long accountId, Long contactId, Phone phone) {
-	throw new RuntimeException("Not Implemented Exception");
+	Phone p = contactPhoneService.updatePhone(accountId, contactId, phone);
+	return p;
 }
 
 /**
@@ -310,8 +401,8 @@ public Phone updateContactPhone(Long accountId, Long contactId, Phone phone) {
  */
 @ResponseBody
 @RequestMapping(value = { "phone/delete" }, method = RequestMethod.DELETE)
-public Phone deleteContactPhone(Long accountId, Long contactId, Phone phone) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactPhone(Long accountId, Long contactId, Phone phone) {
+	contactPhoneService.deletePhone(accountId, contactId, phone);
 }
 
 /**
@@ -325,7 +416,8 @@ public Phone deleteContactPhone(Long accountId, Long contactId, Phone phone) {
 @ResponseBody
 @RequestMapping(value = { "record/add" }, method = RequestMethod.POST)
 public Record addContactRecord(Long accountId, Long contactId, Record record) {
-	throw new RuntimeException("Not Implemented Exception");
+	Record r = contactRecordService.createRecord(accountId, contactId, record);
+	return r;
 }
 
 /**
@@ -339,7 +431,8 @@ public Record addContactRecord(Long accountId, Long contactId, Record record) {
 @ResponseBody
 @RequestMapping(value = { "record/update" }, method = RequestMethod.PUT)
 public Record updateContactRecord(Long accountId, Long contactId, Record record) {
-	throw new RuntimeException("Not Implemented Exception");
+	Record r = contactRecordService.updateRecord(accountId, contactId, record);
+	return r;
 }
 
 /**
@@ -352,8 +445,8 @@ public Record updateContactRecord(Long accountId, Long contactId, Record record)
  */
 @ResponseBody
 @RequestMapping(value = { "record/delete" }, method = RequestMethod.DELETE)
-public Record deleteContactRecord(Long accountId, Long contactId, Record record) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactRecord(Long accountId, Long contactId, Record record) {
+	contactRecordService.deleteRecord(accountId, contactId, record);
 }
 
 /**
@@ -367,7 +460,8 @@ public Record deleteContactRecord(Long accountId, Long contactId, Record record)
 @ResponseBody
 @RequestMapping(value = { "remind/add" }, method = RequestMethod.POST)
 public RemindDate addContactRemindDate(Long accountId, Long contactId, RemindDate remindDate) {
-	throw new RuntimeException("Not Implemented Exception");
+	RemindDate r = contactRemindDateService.createRemindDate(accountId, contactId, remindDate);
+	return r;
 }
 
 /**
@@ -381,7 +475,8 @@ public RemindDate addContactRemindDate(Long accountId, Long contactId, RemindDat
 @ResponseBody
 @RequestMapping(value = { "remind/update" }, method = RequestMethod.PUT)
 public RemindDate updateContactRemindDate(Long accountId, Long contactId, RemindDate remindDate) {
-	throw new RuntimeException("Not Implemented Exception");
+	RemindDate r = contactRemindDateService.updateRemindDate(accountId, contactId, remindDate);
+	return r;
 }
 
 /**
@@ -394,8 +489,8 @@ public RemindDate updateContactRemindDate(Long accountId, Long contactId, Remind
  */
 @ResponseBody
 @RequestMapping(value = { "remind/delete" }, method = RequestMethod.DELETE)
-public RemindDate deleteContactRemindDate(Long accountId, Long contactId, RemindDate remindDate) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactRemindDate(Long accountId, Long contactId, RemindDate remindDate) {
+	contactRemindDateService.deleteRemindDate(accountId, contactId, remindDate);
 }
 
 /**
@@ -409,7 +504,8 @@ public RemindDate deleteContactRemindDate(Long accountId, Long contactId, Remind
 @ResponseBody
 @RequestMapping(value = { "resource/add" }, method = RequestMethod.POST)
 public Resource addContactResource(Long accountId, Long contactId, Resource resource) {
-	throw new RuntimeException("Not Implemented Exception");
+	Resource r = contactResourceService.createResource(accountId, contactId, resource);
+	return r;
 }
 
 /**
@@ -423,7 +519,8 @@ public Resource addContactResource(Long accountId, Long contactId, Resource reso
 @ResponseBody
 @RequestMapping(value = { "resource/update" }, method = RequestMethod.PUT)
 public Resource updateContactResource(Long accountId, Long contactId, Resource resource) {
-	throw new RuntimeException("Not Implemented Exception");
+	Resource r = contactResourceService.updateResource(accountId, contactId, resource);
+	return r;
 }
 
 /**
@@ -436,8 +533,8 @@ public Resource updateContactResource(Long accountId, Long contactId, Resource r
  */
 @ResponseBody
 @RequestMapping(value = { "resource/delete" }, method = RequestMethod.DELETE)
-public Resource deleteContactResource(Long accountId, Long contactId, Resource resource) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactResource(Long accountId, Long contactId, Resource resource) {
+	contactResourceService.deleteResource(accountId, contactId, resource);
 }
 
 /**
@@ -451,7 +548,8 @@ public Resource deleteContactResource(Long accountId, Long contactId, Resource r
 @ResponseBody
 @RequestMapping(value = { "setting/add" }, method = RequestMethod.POST)
 public Setting addContactSetting(Long accountId, Long contactId, Setting setting) {
-	throw new RuntimeException("Not Implemented Exception");
+	Setting s = contactSettingService.createSetting(accountId, contactId, setting);
+	return s;
 }
 
 /**
@@ -465,7 +563,8 @@ public Setting addContactSetting(Long accountId, Long contactId, Setting setting
 @ResponseBody
 @RequestMapping(value = { "setting/update" }, method = RequestMethod.PUT)
 public Setting updateContactSetting(Long accountId, Long contactId, Setting setting) {
-	throw new RuntimeException("Not Implemented Exception");
+	Setting s = contactSettingService.updateSetting(accountId, contactId, setting);
+	return s;
 }
 
 /**
@@ -478,8 +577,8 @@ public Setting updateContactSetting(Long accountId, Long contactId, Setting sett
  */
 @ResponseBody
 @RequestMapping(value = { "setting/delete" }, method = RequestMethod.DELETE)
-public Setting deleteContactSetting(Long accountId, Long contactId, Setting setting) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactSetting(Long accountId, Long contactId, Setting setting) {
+	contactSettingService.deleteSetting(accountId, contactId, setting);
 }
 
 /**
@@ -493,7 +592,8 @@ public Setting deleteContactSetting(Long accountId, Long contactId, Setting sett
 @ResponseBody
 @RequestMapping(value = { "common/add" }, method = RequestMethod.POST)
 public InfoCommon addContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
-	throw new RuntimeException("Not Implemented Exception");
+	InfoCommon i = contactInfoCommonService.createInfoCommon(accountId, contactId, infoCommon);
+	return i;
 }
 
 /**
@@ -507,7 +607,8 @@ public InfoCommon addContactInfoCommon(Long accountId, Long contactId, InfoCommo
 @ResponseBody
 @RequestMapping(value = { "common/update" }, method = RequestMethod.PUT)
 public InfoCommon updateContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
-	throw new RuntimeException("Not Implemented Exception");
+	InfoCommon i = contactInfoCommonService.updateInfoCommon(accountId, contactId, infoCommon);
+	return i;
 }
 
 /**
@@ -520,8 +621,8 @@ public InfoCommon updateContactInfoCommon(Long accountId, Long contactId, InfoCo
  */
 @ResponseBody
 @RequestMapping(value = { "common/delete" }, method = RequestMethod.DELETE)
-public InfoCommon deleteContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
+	contactInfoCommonService.deleteInfoCommon(accountId, contactId, infoCommon);
 }
 
 /**
@@ -535,7 +636,8 @@ public InfoCommon deleteContactInfoCommon(Long accountId, Long contactId, InfoCo
 @ResponseBody
 @RequestMapping(value = { "info/type/add" }, method = RequestMethod.POST)
 public InfoType addContactInfoType(Long accountId, Long contactId, InfoType infoType) {
-	throw new RuntimeException("Not Implemented Exception");
+	InfoType it = contactInfoTypeService.createInfoType(accountId, contactId, infoType);
+	return it;
 }
 
 /**
@@ -548,8 +650,8 @@ public InfoType addContactInfoType(Long accountId, Long contactId, InfoType info
  */
 @ResponseBody
 @RequestMapping(value = { "info/type/delete" }, method = RequestMethod.DELETE)
-public InfoType deleteContactInfoType(Long accountId, Long contactId, InfoType infoType) {
-	throw new RuntimeException("Not Implemented Exception");
+public void deleteContactInfoType(Long accountId, Long contactId, InfoType infoType) {
+	contactInfoTypeService.deleteInfoType(accountId, contactId, infoType);
 }
 
 }

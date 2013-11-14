@@ -14,6 +14,8 @@ private Long accountId;
 private int version;
 private String oauthUser;
 private String oauthSecret;
+private String phoneNumber;
+private String oauthUid;
 
 public Long getId() {
 	return id;
@@ -85,6 +87,22 @@ public String getOauthSecret() {
 
 public void setOauthSecret(String oauthSecret) {
 	this.oauthSecret = oauthSecret;
+}
+
+public String getPhoneNumber() {
+	return phoneNumber;
+}
+
+public void setPhoneNumber(String phoneNumber) {
+	this.phoneNumber = phoneNumber;
+}
+
+public String getOauthUid() {
+	return oauthUid;
+}
+
+public void setOauthUid(String oauthUid) {
+	this.oauthUid = oauthUid;
 }
 
 }
