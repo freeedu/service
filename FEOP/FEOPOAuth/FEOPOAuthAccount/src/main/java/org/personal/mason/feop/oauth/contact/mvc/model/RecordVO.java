@@ -5,7 +5,7 @@ import java.util.Date;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("record")
-public class Record {
+public class RecordVO {
 
 private Long id;
 private String description;

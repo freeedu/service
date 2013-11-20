@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.Email;
+import org.personal.mason.feop.oauth.contact.domain.model.ContactEmail;
+import org.personal.mason.feop.oauth.contact.mvc.model.EmailVO;
 
-public interface ContactEmailService {
+public interface ContactEmailService extends BaseService<EmailVO, ContactEmail> {
 
-	Email createEmail(Long accountId, Long contactId, Email email);
+EmailVO createEmail(EmailVO view);
 
-	Email updateEmail(Long accountId, Long contactId, Email email);
+EmailVO updateEmail(EmailVO view);
 
-	void deleteEmail(Long accountId, Long contactId, Email email);
+void deleteEmail(EmailVO view);
+
+EmailVO findWithId(Long id);
 
 }

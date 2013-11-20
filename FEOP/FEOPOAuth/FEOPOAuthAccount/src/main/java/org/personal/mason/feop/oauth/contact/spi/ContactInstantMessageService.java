@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.IM;
+import org.personal.mason.feop.oauth.contact.domain.model.ContactInstantMessage;
+import org.personal.mason.feop.oauth.contact.mvc.model.IMVO;
 
-public interface ContactInstantMessageService {
+public interface ContactInstantMessageService extends BaseService<IMVO, ContactInstantMessage> {
 
-	IM createIM(Long accountId, Long contactId, IM im);
+IMVO createIM(IMVO view);
 
-	IM updateIM(Long accountId, Long contactId, IM im);
+IMVO updateIM(IMVO view);
 
-	void deleteIM(Long accountId, Long contactId, IM im);
+void deleteIM(IMVO view);
+
+IMVO findWithId(Long id);
 
 }

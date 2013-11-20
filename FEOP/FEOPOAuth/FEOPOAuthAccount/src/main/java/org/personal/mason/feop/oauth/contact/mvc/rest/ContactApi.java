@@ -1,20 +1,24 @@
 package org.personal.mason.feop.oauth.contact.mvc.rest;
 
+import java.security.Principal;
+
+import javax.ws.rs.PathParam;
+
 import org.personal.mason.feop.oauth.contact.exception.BindDeviceException;
 import org.personal.mason.feop.oauth.contact.exception.RegistrationException;
-import org.personal.mason.feop.oauth.contact.mvc.model.Account;
-import org.personal.mason.feop.oauth.contact.mvc.model.Address;
-import org.personal.mason.feop.oauth.contact.mvc.model.Contact;
-import org.personal.mason.feop.oauth.contact.mvc.model.Device;
-import org.personal.mason.feop.oauth.contact.mvc.model.Email;
-import org.personal.mason.feop.oauth.contact.mvc.model.IM;
-import org.personal.mason.feop.oauth.contact.mvc.model.InfoCommon;
-import org.personal.mason.feop.oauth.contact.mvc.model.InfoType;
-import org.personal.mason.feop.oauth.contact.mvc.model.Phone;
-import org.personal.mason.feop.oauth.contact.mvc.model.Record;
-import org.personal.mason.feop.oauth.contact.mvc.model.RemindDate;
-import org.personal.mason.feop.oauth.contact.mvc.model.Resource;
-import org.personal.mason.feop.oauth.contact.mvc.model.Setting;
+import org.personal.mason.feop.oauth.contact.mvc.model.AccountVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.AddressVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.ContactVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.DeviceVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.EmailVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.IMVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.InfoCommonVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.InfoTypeVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.PhoneVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.RecordVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.RemindDateVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.ResourceVO;
+import org.personal.mason.feop.oauth.contact.mvc.model.SettingVO;
 import org.personal.mason.feop.oauth.contact.protocol.AccountInterface;
 import org.personal.mason.feop.oauth.contact.protocol.AccountModel;
 import org.personal.mason.feop.oauth.contact.spi.AccountBasicService;
@@ -30,9 +34,12 @@ import org.personal.mason.feop.oauth.contact.spi.ContactRemindDateService;
 import org.personal.mason.feop.oauth.contact.spi.ContactResourceService;
 import org.personal.mason.feop.oauth.contact.spi.ContactService;
 import org.personal.mason.feop.oauth.contact.spi.ContactSettingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -62,6 +69,77 @@ private ContactResourceService contactResourceService;
 private ContactInfoCommonService contactInfoCommonService;
 private ContactInfoTypeService contactInfoTypeService;
 
+@Autowired
+public void setAccountBasicService(AccountBasicService accountBasicService) {
+	this.accountBasicService = accountBasicService;
+}
+
+@Autowired
+public void setAccountInterface(AccountInterface accountInterface) {
+	this.accountInterface = accountInterface;
+}
+
+@Autowired
+public void setBindDeviceService(BindDeviceService bindDeviceService) {
+	this.bindDeviceService = bindDeviceService;
+}
+
+@Autowired
+public void setContactAddressService(ContactAddressService contactAddressService) {
+	this.contactAddressService = contactAddressService;
+}
+
+@Autowired
+public void setContactEmailService(ContactEmailService contactEmailService) {
+	this.contactEmailService = contactEmailService;
+}
+
+@Autowired
+public void setContactInfoCommonService(ContactInfoCommonService contactInfoCommonService) {
+	this.contactInfoCommonService = contactInfoCommonService;
+}
+
+@Autowired
+public void setContactInfoTypeService(ContactInfoTypeService contactInfoTypeService) {
+	this.contactInfoTypeService = contactInfoTypeService;
+}
+
+@Autowired
+public void setContactInstantMessageService(
+		ContactInstantMessageService contactInstantMessageService) {
+	this.contactInstantMessageService = contactInstantMessageService;
+}
+
+@Autowired
+public void setContactPhoneService(ContactPhoneService contactPhoneService) {
+	this.contactPhoneService = contactPhoneService;
+}
+
+@Autowired
+public void setContactRecordService(ContactRecordService contactRecordService) {
+	this.contactRecordService = contactRecordService;
+}
+
+@Autowired
+public void setContactRemindDateService(ContactRemindDateService contactRemindDateService) {
+	this.contactRemindDateService = contactRemindDateService;
+}
+
+@Autowired
+public void setContactResourceService(ContactResourceService contactResourceService) {
+	this.contactResourceService = contactResourceService;
+}
+
+@Autowired
+public void setContactSettingService(ContactSettingService contactSettingService) {
+	this.contactSettingService = contactSettingService;
+}
+
+@Autowired
+public void setContactService(ContactService contactService) {
+	this.contactService = contactService;
+}
+
 /**
  * This method will be invoke from the mobile device endpoint. Required props:
  * name the device name (such as 'abc's iphone') identifier the device
@@ -79,7 +157,7 @@ private ContactInfoTypeService contactInfoTypeService;
  */
 @ResponseBody
 @RequestMapping(value = { "regist" }, method = RequestMethod.POST)
-public Account registWithDevice(Device device) {
+public AccountVO registWithDevice(@RequestBody DeviceVO device) {
 	if (device.getOauthUser().isEmpty() || device.getOauthSecret().isEmpty()) {
 		throw new RegistrationException("no authention info provided");
 	}
@@ -95,7 +173,7 @@ public Account registWithDevice(Device device) {
 		throw new RegistrationException("unknow data error");
 	}
 	
-	Account account = accountBasicService.registAccount(device, am.getAccountUid());
+	AccountVO account = accountBasicService.registAccount(device, am.getAccountUid());
 	
 	return account;
 }
@@ -110,18 +188,19 @@ public Account registWithDevice(Device device) {
  * @param token
  * @return
  */
-@ResponseBody
 @RequestMapping(value = { "web/regist" }, method = RequestMethod.POST)
-public Account registWithOauth(String oauthuid, String token, Device device) {
-	if (!accountInterface.validate(oauthuid, token)) {
-		throw new RegistrationException("invalid registration information");
+public AccountVO registWithOauth(DeviceVO device, Principal principal) {
+	AccountModel am = accountInterface.findAccount(principal.getName());
+	
+	if (!am.isSuccess()) {
+		throw new RegistrationException("invalid user status");
 	}
 	
-	if (accountBasicService.isExistAccountWithOauthUid(oauthuid)) {
+	if (accountBasicService.isExistAccountWithOauthUid(am.getAccountUid())) {
 		throw new RegistrationException("unknow data error");
 	}
 	
-	Account account = accountBasicService.registAccount(device, oauthuid);
+	AccountVO account = accountBasicService.registAccount(device, am.getAccountUid());
 	return account;
 }
 
@@ -135,19 +214,19 @@ public Account registWithOauth(String oauthuid, String token, Device device) {
  */
 @ResponseBody
 @RequestMapping(value = { "device/bind" }, method = RequestMethod.POST)
-public Account bindDevice(Device device) {
+public AccountVO bindDevice(@RequestBody DeviceVO device) {
 	if (device.getAccountId() == null || device.getOauthUid().isEmpty()) {
 		throw new BindDeviceException("require binding information");
 	}
 	
-	Account account = accountBasicService.findAccountWithOauthUidAndId(device.getOauthUid(),
+	AccountVO account = accountBasicService.findAccountWithOauthUidAndId(device.getOauthUid(),
 			device.getAccountId());
 	
 	if (account == null) {
 		throw new BindDeviceException("invalid binding information");
 	}
 	
-	Device d = bindDeviceService.createOrUpdateDevice(device);
+	DeviceVO d = bindDeviceService.createOrUpdateDevice(device);
 	return accountBasicService.findAccountWithId(d.getAccountId());
 }
 
@@ -160,7 +239,7 @@ public Account bindDevice(Device device) {
  */
 @ResponseBody
 @RequestMapping(value = { "device/unbind" }, method = RequestMethod.POST)
-public Account unbindDevice(Device device) {
+public AccountVO unbindDevice(@RequestBody DeviceVO device) {
 	boolean validated = accountInterface.validateSecret(device.getOauthUid(),
 			device.getOauthSecret());
 	
@@ -183,10 +262,22 @@ public Account unbindDevice(Device device) {
  * @return
  */
 @ResponseBody
-@RequestMapping(value = { "relation/get" }, method = RequestMethod.GET)
-public Contact getContact(Long accountId) {
-	Contact contact = accountBasicService.findMyContact(accountId);
+@RequestMapping(value = { "relation/me" }, method = RequestMethod.GET)
+public ContactVO getContact(@RequestParam("id") Long accountId) {
+	ContactVO contact = accountBasicService.findMyContact(accountId);
 	return contact;
+}
+
+/**
+ * Find the contact with contact id
+ * 
+ * @param contactId
+ * @return
+ */
+@RequestMapping(value = { "relation/find" }, method = RequestMethod.GET)
+@ResponseBody
+public ContactVO findContact(@PathParam("id") Long contactId) {
+	return contactService.findWithId(contactId);
 }
 
 /**
@@ -197,8 +288,8 @@ public Contact getContact(Long accountId) {
  */
 @ResponseBody
 @RequestMapping(value = { "relation/delete" }, method = RequestMethod.DELETE)
-public void deleteRelation(Long accountId, Contact contact) {
-	contactService.deleteContact(accountId, contact);
+public void deleteRelation(@RequestBody ContactVO contact) {
+	contactService.deleteContact(contact);
 }
 
 /**
@@ -210,8 +301,8 @@ public void deleteRelation(Long accountId, Contact contact) {
  */
 @ResponseBody
 @RequestMapping(value = { "relation/add" }, method = RequestMethod.POST)
-public Contact newRelation(Long accountId, Contact contact) {
-	Contact c = contactService.createContact(accountId, contact);
+public ContactVO newRelation(@RequestBody ContactVO contact) {
+	ContactVO c = contactService.createContact(contact);
 	return c;
 }
 
@@ -224,8 +315,8 @@ public Contact newRelation(Long accountId, Contact contact) {
  */
 @ResponseBody
 @RequestMapping(value = { "relation/update" }, method = RequestMethod.PUT)
-public Contact updateRelation(Long accountId, Contact contact) {
-	Contact c = contactService.updateContact(accountId, contact);
+public ContactVO updateRelation(@RequestBody ContactVO contact) {
+	ContactVO c = contactService.updateContact(contact);
 	return c;
 }
 
@@ -239,8 +330,8 @@ public Contact updateRelation(Long accountId, Contact contact) {
  */
 @ResponseBody
 @RequestMapping(value = { "address/add" }, method = RequestMethod.POST)
-public Address addContactAddress(Long accountId, Long contactId, Address address) {
-	Address a = contactAddressService.createAddress(accountId, contactId, address);
+public AddressVO addContactAddress(@RequestBody AddressVO address) {
+	AddressVO a = contactAddressService.createAddress(address);
 	return a;
 }
 
@@ -254,8 +345,8 @@ public Address addContactAddress(Long accountId, Long contactId, Address address
  */
 @ResponseBody
 @RequestMapping(value = { "address/update" }, method = RequestMethod.PUT)
-public Address updateContactAddress(Long accountId, Long contactId, Address address) {
-	Address a = contactAddressService.updateAddress(accountId, contactId, address);
+public AddressVO updateContactAddress(@RequestBody AddressVO address) {
+	AddressVO a = contactAddressService.updateAddress(address);
 	return a;
 }
 
@@ -269,8 +360,20 @@ public Address updateContactAddress(Long accountId, Long contactId, Address addr
  */
 @ResponseBody
 @RequestMapping(value = { "address/delete" }, method = RequestMethod.DELETE)
-public void deleteContactAddress(Long accountId, Long contactId, Address address) {
-	contactAddressService.deleteAddress(accountId, contactId, address);
+public void deleteContactAddress(@RequestBody AddressVO address) {
+	contactAddressService.deleteAddress(address);
+}
+
+/**
+ * Find Contact Address with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "address/find" }, method = RequestMethod.GET)
+public AddressVO findContactAddress(@RequestParam("id") Long id) {
+	return contactAddressService.findWithId(id);
 }
 
 /**
@@ -283,8 +386,8 @@ public void deleteContactAddress(Long accountId, Long contactId, Address address
  */
 @ResponseBody
 @RequestMapping(value = { "email/add" }, method = RequestMethod.POST)
-public Email addContactEmail(Long accountId, Long contactId, Email email) {
-	Email e = contactEmailService.createEmail(accountId, contactId, email);
+public EmailVO addContactEmail(@RequestBody EmailVO email) {
+	EmailVO e = contactEmailService.createEmail(email);
 	return e;
 }
 
@@ -293,13 +396,13 @@ public Email addContactEmail(Long accountId, Long contactId, Email email) {
  * 
  * @param accountId
  * @param contactId
- * @param Email
+ * @param EmailVO
  * @return
  */
 @ResponseBody
 @RequestMapping(value = { "email/update" }, method = RequestMethod.PUT)
-public Email updateContactEmail(Long accountId, Long contactId, Email email) {
-	Email e = contactEmailService.updateEmail(accountId, contactId, email);
+public EmailVO updateContactEmail(@RequestBody EmailVO email) {
+	EmailVO e = contactEmailService.updateEmail(email);
 	return e;
 }
 
@@ -313,8 +416,20 @@ public Email updateContactEmail(Long accountId, Long contactId, Email email) {
  */
 @ResponseBody
 @RequestMapping(value = { "email/delete" }, method = RequestMethod.DELETE)
-public void deleteContactEmail(Long accountId, Long contactId, Email email) {
-	contactEmailService.deleteEmail(accountId, contactId, email);
+public void deleteContactEmail(@RequestBody EmailVO email) {
+	contactEmailService.deleteEmail(email);
+}
+
+/**
+ * Find Contact Email with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "email/find" }, method = RequestMethod.GET)
+public EmailVO findContactEmail(@RequestParam("id") Long id) {
+	return contactEmailService.findWithId(id);
 }
 
 /**
@@ -327,8 +442,8 @@ public void deleteContactEmail(Long accountId, Long contactId, Email email) {
  */
 @ResponseBody
 @RequestMapping(value = { "im/add" }, method = RequestMethod.POST)
-public IM addContactIM(Long accountId, Long contactId, IM im) {
-	IM i = contactInstantMessageService.createIM(accountId, contactId, im);
+public IMVO addContactIM(@RequestBody IMVO im) {
+	IMVO i = contactInstantMessageService.createIM(im);
 	return i;
 }
 
@@ -342,8 +457,8 @@ public IM addContactIM(Long accountId, Long contactId, IM im) {
  */
 @ResponseBody
 @RequestMapping(value = { "im/update" }, method = RequestMethod.PUT)
-public IM updateContactIM(Long accountId, Long contactId, IM im) {
-	IM i = contactInstantMessageService.updateIM(accountId, contactId, im);
+public IMVO updateContactIM(@RequestBody IMVO im) {
+	IMVO i = contactInstantMessageService.updateIM(im);
 	return i;
 }
 
@@ -357,8 +472,20 @@ public IM updateContactIM(Long accountId, Long contactId, IM im) {
  */
 @ResponseBody
 @RequestMapping(value = { "im/delete" }, method = RequestMethod.DELETE)
-public void deleteContactIM(Long accountId, Long contactId, IM im) {
-	contactInstantMessageService.deleteIM(accountId, contactId, im);
+public void deleteContactIM(@RequestBody IMVO im) {
+	contactInstantMessageService.deleteIM(im);
+}
+
+/**
+ * Find Contact IM with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "im/find" }, method = RequestMethod.GET)
+public IMVO findContactIM(@RequestParam("id") Long id) {
+	return contactInstantMessageService.findWithId(id);
 }
 
 /**
@@ -371,8 +498,8 @@ public void deleteContactIM(Long accountId, Long contactId, IM im) {
  */
 @ResponseBody
 @RequestMapping(value = { "phone/add" }, method = RequestMethod.POST)
-public Phone addContactPhone(Long accountId, Long contactId, Phone phone) {
-	Phone p = contactPhoneService.createPhone(accountId, contactId, phone);
+public PhoneVO addContactPhone(@RequestBody PhoneVO phone) {
+	PhoneVO p = contactPhoneService.createPhone(phone);
 	return p;
 }
 
@@ -386,8 +513,8 @@ public Phone addContactPhone(Long accountId, Long contactId, Phone phone) {
  */
 @ResponseBody
 @RequestMapping(value = { "phone/update" }, method = RequestMethod.PUT)
-public Phone updateContactPhone(Long accountId, Long contactId, Phone phone) {
-	Phone p = contactPhoneService.updatePhone(accountId, contactId, phone);
+public PhoneVO updateContactPhone(@RequestBody PhoneVO phone) {
+	PhoneVO p = contactPhoneService.updatePhone(phone);
 	return p;
 }
 
@@ -401,8 +528,20 @@ public Phone updateContactPhone(Long accountId, Long contactId, Phone phone) {
  */
 @ResponseBody
 @RequestMapping(value = { "phone/delete" }, method = RequestMethod.DELETE)
-public void deleteContactPhone(Long accountId, Long contactId, Phone phone) {
-	contactPhoneService.deletePhone(accountId, contactId, phone);
+public void deleteContactPhone(@RequestBody PhoneVO phone) {
+	contactPhoneService.deletePhone(phone);
+}
+
+/**
+ * Find Contact Phone with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "phone/find" }, method = RequestMethod.GET)
+public PhoneVO findContactPhone(@RequestParam("id") Long id) {
+	return contactPhoneService.findWithId(id);
 }
 
 /**
@@ -415,8 +554,8 @@ public void deleteContactPhone(Long accountId, Long contactId, Phone phone) {
  */
 @ResponseBody
 @RequestMapping(value = { "record/add" }, method = RequestMethod.POST)
-public Record addContactRecord(Long accountId, Long contactId, Record record) {
-	Record r = contactRecordService.createRecord(accountId, contactId, record);
+public RecordVO addContactRecord(@RequestBody RecordVO record) {
+	RecordVO r = contactRecordService.createRecord(record);
 	return r;
 }
 
@@ -430,8 +569,8 @@ public Record addContactRecord(Long accountId, Long contactId, Record record) {
  */
 @ResponseBody
 @RequestMapping(value = { "record/update" }, method = RequestMethod.PUT)
-public Record updateContactRecord(Long accountId, Long contactId, Record record) {
-	Record r = contactRecordService.updateRecord(accountId, contactId, record);
+public RecordVO updateContactRecord(@RequestBody RecordVO record) {
+	RecordVO r = contactRecordService.updateRecord(record);
 	return r;
 }
 
@@ -445,8 +584,20 @@ public Record updateContactRecord(Long accountId, Long contactId, Record record)
  */
 @ResponseBody
 @RequestMapping(value = { "record/delete" }, method = RequestMethod.DELETE)
-public void deleteContactRecord(Long accountId, Long contactId, Record record) {
-	contactRecordService.deleteRecord(accountId, contactId, record);
+public void deleteContactRecord(@RequestBody RecordVO record) {
+	contactRecordService.deleteRecord(record);
+}
+
+/**
+ * Find Contact Record with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "record/find" }, method = RequestMethod.GET)
+public RecordVO findContactRecord(@RequestParam("id") Long id) {
+	return contactRecordService.findWithId(id);
 }
 
 /**
@@ -459,8 +610,8 @@ public void deleteContactRecord(Long accountId, Long contactId, Record record) {
  */
 @ResponseBody
 @RequestMapping(value = { "remind/add" }, method = RequestMethod.POST)
-public RemindDate addContactRemindDate(Long accountId, Long contactId, RemindDate remindDate) {
-	RemindDate r = contactRemindDateService.createRemindDate(accountId, contactId, remindDate);
+public RemindDateVO addContactRemindDate(@RequestBody RemindDateVO remindDate) {
+	RemindDateVO r = contactRemindDateService.createRemindDate(remindDate);
 	return r;
 }
 
@@ -474,8 +625,8 @@ public RemindDate addContactRemindDate(Long accountId, Long contactId, RemindDat
  */
 @ResponseBody
 @RequestMapping(value = { "remind/update" }, method = RequestMethod.PUT)
-public RemindDate updateContactRemindDate(Long accountId, Long contactId, RemindDate remindDate) {
-	RemindDate r = contactRemindDateService.updateRemindDate(accountId, contactId, remindDate);
+public RemindDateVO updateContactRemindDate(@RequestBody RemindDateVO remindDate) {
+	RemindDateVO r = contactRemindDateService.updateRemindDate(remindDate);
 	return r;
 }
 
@@ -489,8 +640,20 @@ public RemindDate updateContactRemindDate(Long accountId, Long contactId, Remind
  */
 @ResponseBody
 @RequestMapping(value = { "remind/delete" }, method = RequestMethod.DELETE)
-public void deleteContactRemindDate(Long accountId, Long contactId, RemindDate remindDate) {
-	contactRemindDateService.deleteRemindDate(accountId, contactId, remindDate);
+public void deleteContactRemindDate(@RequestBody RemindDateVO remindDate) {
+	contactRemindDateService.deleteRemindDate(remindDate);
+}
+
+/**
+ * Find Contact Remind Date with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "remind/find" }, method = RequestMethod.GET)
+public RemindDateVO findContactRemindDate(@RequestParam("id") Long id) {
+	return contactRemindDateService.findWithId(id);
 }
 
 /**
@@ -503,8 +666,8 @@ public void deleteContactRemindDate(Long accountId, Long contactId, RemindDate r
  */
 @ResponseBody
 @RequestMapping(value = { "resource/add" }, method = RequestMethod.POST)
-public Resource addContactResource(Long accountId, Long contactId, Resource resource) {
-	Resource r = contactResourceService.createResource(accountId, contactId, resource);
+public ResourceVO addContactResource(@RequestBody ResourceVO resource) {
+	ResourceVO r = contactResourceService.createResource(resource);
 	return r;
 }
 
@@ -518,8 +681,8 @@ public Resource addContactResource(Long accountId, Long contactId, Resource reso
  */
 @ResponseBody
 @RequestMapping(value = { "resource/update" }, method = RequestMethod.PUT)
-public Resource updateContactResource(Long accountId, Long contactId, Resource resource) {
-	Resource r = contactResourceService.updateResource(accountId, contactId, resource);
+public ResourceVO updateContactResource(@RequestBody ResourceVO resource) {
+	ResourceVO r = contactResourceService.updateResource(resource);
 	return r;
 }
 
@@ -533,8 +696,20 @@ public Resource updateContactResource(Long accountId, Long contactId, Resource r
  */
 @ResponseBody
 @RequestMapping(value = { "resource/delete" }, method = RequestMethod.DELETE)
-public void deleteContactResource(Long accountId, Long contactId, Resource resource) {
-	contactResourceService.deleteResource(accountId, contactId, resource);
+public void deleteContactResource(@RequestBody ResourceVO resource) {
+	contactResourceService.deleteResource(resource);
+}
+
+/**
+ * Find Contact Resource with id.
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "resource/find" }, method = RequestMethod.GET)
+public ResourceVO findContactResouce(@RequestParam("id") Long id) {
+	return contactResourceService.findWithId(id);
 }
 
 /**
@@ -547,8 +722,8 @@ public void deleteContactResource(Long accountId, Long contactId, Resource resou
  */
 @ResponseBody
 @RequestMapping(value = { "setting/add" }, method = RequestMethod.POST)
-public Setting addContactSetting(Long accountId, Long contactId, Setting setting) {
-	Setting s = contactSettingService.createSetting(accountId, contactId, setting);
+public SettingVO addContactSetting(@RequestBody SettingVO setting) {
+	SettingVO s = contactSettingService.createSetting(setting);
 	return s;
 }
 
@@ -562,8 +737,8 @@ public Setting addContactSetting(Long accountId, Long contactId, Setting setting
  */
 @ResponseBody
 @RequestMapping(value = { "setting/update" }, method = RequestMethod.PUT)
-public Setting updateContactSetting(Long accountId, Long contactId, Setting setting) {
-	Setting s = contactSettingService.updateSetting(accountId, contactId, setting);
+public SettingVO updateContactSetting(@RequestBody SettingVO setting) {
+	SettingVO s = contactSettingService.updateSetting(setting);
 	return s;
 }
 
@@ -577,8 +752,20 @@ public Setting updateContactSetting(Long accountId, Long contactId, Setting sett
  */
 @ResponseBody
 @RequestMapping(value = { "setting/delete" }, method = RequestMethod.DELETE)
-public void deleteContactSetting(Long accountId, Long contactId, Setting setting) {
-	contactSettingService.deleteSetting(accountId, contactId, setting);
+public void deleteContactSetting(@RequestBody SettingVO setting) {
+	contactSettingService.deleteSetting(setting);
+}
+
+/**
+ * Find Contact Setting with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "setting/find" }, method = RequestMethod.GET)
+public SettingVO findContactSetting(@RequestParam("id") Long id) {
+	return contactSettingService.findWithId(id);
 }
 
 /**
@@ -591,8 +778,8 @@ public void deleteContactSetting(Long accountId, Long contactId, Setting setting
  */
 @ResponseBody
 @RequestMapping(value = { "common/add" }, method = RequestMethod.POST)
-public InfoCommon addContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
-	InfoCommon i = contactInfoCommonService.createInfoCommon(accountId, contactId, infoCommon);
+public InfoCommonVO addContactInfoCommon(@RequestBody InfoCommonVO infoCommon) {
+	InfoCommonVO i = contactInfoCommonService.createInfoCommon(infoCommon);
 	return i;
 }
 
@@ -606,8 +793,8 @@ public InfoCommon addContactInfoCommon(Long accountId, Long contactId, InfoCommo
  */
 @ResponseBody
 @RequestMapping(value = { "common/update" }, method = RequestMethod.PUT)
-public InfoCommon updateContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
-	InfoCommon i = contactInfoCommonService.updateInfoCommon(accountId, contactId, infoCommon);
+public InfoCommonVO updateContactInfoCommon(@RequestBody InfoCommonVO infoCommon) {
+	InfoCommonVO i = contactInfoCommonService.updateInfoCommon(infoCommon);
 	return i;
 }
 
@@ -621,8 +808,20 @@ public InfoCommon updateContactInfoCommon(Long accountId, Long contactId, InfoCo
  */
 @ResponseBody
 @RequestMapping(value = { "common/delete" }, method = RequestMethod.DELETE)
-public void deleteContactInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon) {
-	contactInfoCommonService.deleteInfoCommon(accountId, contactId, infoCommon);
+public void deleteContactInfoCommon(@RequestBody InfoCommonVO infoCommon) {
+	contactInfoCommonService.deleteInfoCommon(infoCommon);
+}
+
+/**
+ * Find Contact Common with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "common/find" }, method = RequestMethod.GET)
+public InfoCommonVO findContactInfoCommon(@RequestParam("id") Long id) {
+	return contactInfoCommonService.findWithId(id);
 }
 
 /**
@@ -635,8 +834,8 @@ public void deleteContactInfoCommon(Long accountId, Long contactId, InfoCommon i
  */
 @ResponseBody
 @RequestMapping(value = { "info/type/add" }, method = RequestMethod.POST)
-public InfoType addContactInfoType(Long accountId, Long contactId, InfoType infoType) {
-	InfoType it = contactInfoTypeService.createInfoType(accountId, contactId, infoType);
+public InfoTypeVO addContactInfoType(@RequestBody InfoTypeVO infoType) {
+	InfoTypeVO it = contactInfoTypeService.createInfoType(infoType);
 	return it;
 }
 
@@ -650,8 +849,20 @@ public InfoType addContactInfoType(Long accountId, Long contactId, InfoType info
  */
 @ResponseBody
 @RequestMapping(value = { "info/type/delete" }, method = RequestMethod.DELETE)
-public void deleteContactInfoType(Long accountId, Long contactId, InfoType infoType) {
-	contactInfoTypeService.deleteInfoType(accountId, contactId, infoType);
+public void deleteContactInfoType(@RequestParam Long id) {
+	contactInfoTypeService.deleteInfoType(id);
+}
+
+/**
+ * Find InfoType with id
+ * 
+ * @param id
+ * @return
+ */
+@ResponseBody
+@RequestMapping(value = { "info/type/find" }, method = RequestMethod.GET)
+public InfoTypeVO findContactInfoType(@RequestParam("id") Long id) {
+	return contactInfoTypeService.findWithId(id);
 }
 
 }

@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.mvc.model;
 
+import java.util.Date;
+
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
-@JsonRootName("setting")
-public class Setting {
+@JsonRootName("remindDate")
+public class RemindDateVO {
 
 private Long id;
-private String key;
-private String value;
+private String label;
+private Boolean remind;
+private Date remindDate;
 private Long contact;
 private int version;
 
@@ -19,20 +22,28 @@ public void setId(Long id) {
 	this.id = id;
 }
 
-public String getKey() {
-	return key;
+public String getLabel() {
+	return label;
 }
 
-public void setKey(String key) {
-	this.key = key;
+public void setLabel(String label) {
+	this.label = label;
 }
 
-public String getValue() {
-	return value;
+public Boolean getRemind() {
+	return remind;
 }
 
-public void setValue(String value) {
-	this.value = value;
+public void setRemind(Boolean remind) {
+	this.remind = remind;
+}
+
+public Date getRemindDate() {
+	return remindDate;
+}
+
+public void setRemindDate(Date remindDate) {
+	this.remindDate = remindDate;
 }
 
 public Long getContact() {

@@ -3,7 +3,7 @@ package org.personal.mason.feop.oauth.contact.mvc.model;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("address")
-public class Address {
+public class AddressVO {
 
 private Long id;
 private String label;

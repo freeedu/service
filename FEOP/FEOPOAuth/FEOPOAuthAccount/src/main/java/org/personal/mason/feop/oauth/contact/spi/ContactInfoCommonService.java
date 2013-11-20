@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.InfoCommon;
+import org.personal.mason.feop.oauth.contact.domain.model.ContactInfoCommon;
+import org.personal.mason.feop.oauth.contact.mvc.model.InfoCommonVO;
 
-public interface ContactInfoCommonService {
+public interface ContactInfoCommonService extends BaseService<InfoCommonVO, ContactInfoCommon> {
 
-	InfoCommon createInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon);
+InfoCommonVO createInfoCommon(InfoCommonVO view);
 
-	InfoCommon updateInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon);
+InfoCommonVO updateInfoCommon(InfoCommonVO view);
 
-	void deleteInfoCommon(Long accountId, Long contactId, InfoCommon infoCommon);
+void deleteInfoCommon(InfoCommonVO view);
+
+InfoCommonVO findWithId(Long id);
 
 }

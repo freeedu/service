@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.Address;
+import org.personal.mason.feop.oauth.contact.domain.model.ContactAddress;
+import org.personal.mason.feop.oauth.contact.mvc.model.AddressVO;
 
-public interface ContactAddressService {
+public interface ContactAddressService extends BaseService<AddressVO, ContactAddress> {
 
-	Address createAddress(Long accountId, Long contactId, Address address);
+AddressVO createAddress(AddressVO view);
 
-	Address updateAddress(Long accountId, Long contactId, Address address);
+AddressVO updateAddress(AddressVO view);
 
-	void deleteAddress(Long accountId, Long contactId, Address address);
+void deleteAddress(AddressVO view);
+
+AddressVO findWithId(Long id);
 
 }

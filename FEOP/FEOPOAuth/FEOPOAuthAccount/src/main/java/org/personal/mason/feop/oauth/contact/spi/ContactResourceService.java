@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.Resource;
+import org.personal.mason.feop.oauth.contact.domain.model.ContactResource;
+import org.personal.mason.feop.oauth.contact.mvc.model.ResourceVO;
 
-public interface ContactResourceService {
+public interface ContactResourceService extends BaseService<ResourceVO, ContactResource> {
 
-	Resource createResource(Long accountId, Long contactId, Resource resource);
+ResourceVO createResource(ResourceVO resource);
 
-	Resource updateResource(Long accountId, Long contactId, Resource resource);
+ResourceVO updateResource(ResourceVO resource);
 
-	void deleteResource(Long accountId, Long contactId, Resource resource);
+void deleteResource(ResourceVO resource);
+
+ResourceVO findWithId(Long id);
 
 }

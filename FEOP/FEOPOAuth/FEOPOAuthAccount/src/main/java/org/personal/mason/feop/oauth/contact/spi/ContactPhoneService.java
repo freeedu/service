@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.Phone;
+import org.personal.mason.feop.oauth.contact.domain.model.ContactPhone;
+import org.personal.mason.feop.oauth.contact.mvc.model.PhoneVO;
 
-public interface ContactPhoneService {
+public interface ContactPhoneService extends BaseService<PhoneVO, ContactPhone> {
 
-	Phone createPhone(Long accountId, Long contactId, Phone phone);
+PhoneVO createPhone(PhoneVO view);
 
-	Phone updatePhone(Long accountId, Long contactId, Phone phone);
+PhoneVO updatePhone(PhoneVO view);
 
-	void deletePhone(Long accountId, Long contactId, Phone phone);
+void deletePhone(PhoneVO view);
+
+PhoneVO findWithId(Long id);
 
 }

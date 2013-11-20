@@ -6,7 +6,7 @@ import java.util.List;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("contact")
-public class Contact {
+public class ContactVO {
 
 private Long id;
 private String company;
@@ -22,15 +22,15 @@ private String note;
 private String photoUrl;
 private Long belongTo;
 private int version;
-private List<Contact> contacts = new ArrayList<>();
-private List<Record> records = new ArrayList<>();
-private List<Resource> resources = new ArrayList<>();
-private List<Address> addresses = new ArrayList<>();
-private List<Email> emails = new ArrayList<>();
-private List<IM> ims = new ArrayList<>();
-private List<Phone> phones = new ArrayList<>();
-private List<RemindDate> remindDates = new ArrayList<>();
-private List<Setting> settinngs = new ArrayList<>();
+private List<ContactVO> contacts = new ArrayList<>();
+private List<RecordVO> records = new ArrayList<>();
+private List<ResourceVO> resources = new ArrayList<>();
+private List<AddressVO> addresses = new ArrayList<>();
+private List<EmailVO> emails = new ArrayList<>();
+private List<IMVO> ims = new ArrayList<>();
+private List<PhoneVO> phones = new ArrayList<>();
+private List<RemindDateVO> remindDates = new ArrayList<>();
+private List<SettingVO> settinngs = new ArrayList<>();
 
 public Long getId() {
 	return id;
@@ -144,75 +144,75 @@ public void setVersion(int version) {
 	this.version = version;
 }
 
-public List<Contact> getContacts() {
+public List<ContactVO> getContacts() {
 	return contacts;
 }
 
-public void setContacts(List<Contact> contacts) {
+public void setContacts(List<ContactVO> contacts) {
 	this.contacts = contacts;
 }
 
-public List<Record> getRecords() {
+public List<RecordVO> getRecords() {
 	return records;
 }
 
-public void setRecords(List<Record> records) {
+public void setRecords(List<RecordVO> records) {
 	this.records = records;
 }
 
-public List<Resource> getResources() {
+public List<ResourceVO> getResources() {
 	return resources;
 }
 
-public void setResources(List<Resource> resources) {
+public void setResources(List<ResourceVO> resources) {
 	this.resources = resources;
 }
 
-public List<Address> getAddresses() {
+public List<AddressVO> getAddresses() {
 	return addresses;
 }
 
-public void setAddresses(List<Address> addresses) {
+public void setAddresses(List<AddressVO> addresses) {
 	this.addresses = addresses;
 }
 
-public List<Email> getEmails() {
+public List<EmailVO> getEmails() {
 	return emails;
 }
 
-public void setEmails(List<Email> emails) {
+public void setEmails(List<EmailVO> emails) {
 	this.emails = emails;
 }
 
-public List<IM> getIms() {
+public List<IMVO> getIms() {
 	return ims;
 }
 
-public void setIms(List<IM> ims) {
+public void setIms(List<IMVO> ims) {
 	this.ims = ims;
 }
 
-public List<Phone> getPhones() {
+public List<PhoneVO> getPhones() {
 	return phones;
 }
 
-public void setPhones(List<Phone> phones) {
+public void setPhones(List<PhoneVO> phones) {
 	this.phones = phones;
 }
 
-public List<RemindDate> getRemindDates() {
+public List<RemindDateVO> getRemindDates() {
 	return remindDates;
 }
 
-public void setRemindDates(List<RemindDate> remindDates) {
+public void setRemindDates(List<RemindDateVO> remindDates) {
 	this.remindDates = remindDates;
 }
 
-public List<Setting> getSettinngs() {
+public List<SettingVO> getSettinngs() {
 	return settinngs;
 }
 
-public void setSettinngs(List<Setting> settinngs) {
+public void setSettinngs(List<SettingVO> settinngs) {
 	this.settinngs = settinngs;
 }
 

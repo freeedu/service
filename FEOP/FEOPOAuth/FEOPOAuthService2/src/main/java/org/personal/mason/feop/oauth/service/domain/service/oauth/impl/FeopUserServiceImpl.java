@@ -19,115 +19,125 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FeopUserServiceImpl implements FeopUserService {
-	private static final String DEFAULT_USER_ROLES = "default_user_roles";
-	private OauthUserRepository oauthUserRepository;
-	private OauthRoleRepository oauthRoleRepository;
-	private SystemSettingsRepository systemSettingsRepository;
-	private PasswordEncoder passwordEncoder;
+private static final String DEFAULT_USER_ROLES = "default_user_roles";
+private OauthUserRepository oauthUserRepository;
+private OauthRoleRepository oauthRoleRepository;
+private SystemSettingsRepository systemSettingsRepository;
+private PasswordEncoder passwordEncoder;
 
-	@Autowired
-	public void setOauthUserRepository(OauthUserRepository oauthUserRepository) {
-		this.oauthUserRepository = oauthUserRepository;
+@Autowired
+public void setOauthUserRepository(OauthUserRepository oauthUserRepository) {
+	this.oauthUserRepository = oauthUserRepository;
+}
+
+@Autowired
+public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+	this.passwordEncoder = passwordEncoder;
+}
+
+@Autowired
+public void setOauthRoleRepository(OauthRoleRepository oauthRoleRepository) {
+	this.oauthRoleRepository = oauthRoleRepository;
+}
+
+@Autowired
+public void setSystemSettingsRepository(SystemSettingsRepository systemSettingsRepository) {
+	this.systemSettingsRepository = systemSettingsRepository;
+}
+
+@Override
+@Transactional
+public void update(OauthUser user) {
+	oauthUserRepository.saveAndFlush(user);
+}
+
+@Transactional
+public void updatePassword(OauthUser user, String password) {
+	String encodedPassword = passwordEncoder.encode(password);
+	user.setPassword(encodedPassword);
+	oauthUserRepository.saveAndFlush(user);
+}
+
+@Override
+@Transactional
+public void regist(OauthUser user) {
+	String encodedPassword = passwordEncoder.encode(user.getPassword());
+	user.setPassword(encodedPassword);
+	List<SystemSettings> setting = systemSettingsRepository.findByKey(DEFAULT_USER_ROLES);
+	
+	if (setting != null && setting.size() > 0) {
+		Object[] roleNames = setting.get(0).getValue().split(",[\\s]*");
+		user.setRoles(oauthRoleRepository.getDefaultUserRoles(roleNames));
+	} else {
+		user.setRoles(oauthRoleRepository.getDefaultUserRoles());
 	}
+	oauthUserRepository.save(user);
+}
 
-	@Autowired
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
+@Override
+@Transactional
+public OauthUser findUserById(Long id) {
+	return oauthUserRepository.findOne(id);
+}
 
-	@Autowired
-	public void setOauthRoleRepository(OauthRoleRepository oauthRoleRepository) {
-		this.oauthRoleRepository = oauthRoleRepository;
-	}
+@Override
+@Transactional
+public OauthUser findByEmailOrUsername(String emailOrUsername) {
+	List<OauthUser> apps = oauthUserRepository.findByUserNameOrEmail(emailOrUsername);
+	return apps.isEmpty() ? null : apps.get(0);
+}
 
-	@Autowired
-	public void setSystemSettingsRepository(SystemSettingsRepository systemSettingsRepository) {
-		this.systemSettingsRepository = systemSettingsRepository;
-	}
+@Override
+public List<String> findUserRoles(OauthUser user) {
+	return splitRoleNames(user.getRoles());
+}
 
-	@Override
-	@Transactional
-	public void update(OauthUser user) {
-		oauthUserRepository.saveAndFlush(user);
-	}
-
-	@Transactional
-	public void updatePassword(OauthUser user, String password) {
-		String encodedPassword = passwordEncoder.encode(password);
-		user.setPassword(encodedPassword);
-		oauthUserRepository.saveAndFlush(user);
-	}
-
-	@Override
-	@Transactional
-	public void regist(OauthUser user) {
-		String encodedPassword = passwordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPassword);
-		List<SystemSettings> setting = systemSettingsRepository.findByKey(DEFAULT_USER_ROLES);
-
-		if (setting != null && setting.size() > 0) {
-			Object[] roleNames = setting.get(0).getValue().split(",[\\s]*");
-			user.setRoles(oauthRoleRepository.getDefaultUserRoles(roleNames));
-		} else {
-			user.setRoles(oauthRoleRepository.getDefaultUserRoles());
+private List<String> splitRoleNames(List<OauthRole> roles) {
+	List<String> roleNames = new ArrayList<>();
+	
+	for (OauthRole role : roles) {
+		if (role.getEnabled()) {
+			roleNames.add(role.getName());
 		}
-		oauthUserRepository.save(user);
 	}
+	return roleNames;
+}
 
-	@Override
-	@Transactional
-	public OauthUser findUserById(Long id) {
-		return oauthUserRepository.findOne(id);
+@Override
+public OauthUser createUser(SignupForm signupForm) {
+	OauthUser user = new OauthUser();
+	user.setActivated(true);
+	user.setEmail(signupForm.getEmail());
+	user.setPassword(signupForm.getPassword());
+	user.setUserId(UUID.randomUUID().toString());
+	user.setFirstName(signupForm.getFirstName());
+	user.setLastName(signupForm.getLastName());
+	if (signupForm.getUserName() == null) {
+		user.setUserName(String
+				.format("%s %s", signupForm.getFirstName(), signupForm.getLastName()).trim());
+	} else {
+		user.setUserName(signupForm.getUserName().trim());
 	}
+	user.setGender(signupForm.getGender());
+	user.setLocation(signupForm.getLocation());
+	user.setPhone(signupForm.getPhone());
+	user.setProfileImageUri(signupForm.getProfileImageUri());
+	
+	return user;
+}
 
-	@Override
-	@Transactional
-	public OauthUser findByEmailOrUsername(String emailOrUsername) {
-		List<OauthUser> apps = oauthUserRepository.findByUserNameOrEmail(emailOrUsername);
-		return apps.isEmpty() ? null : apps.get(0);
+@Override
+public boolean validate(String oldPassword, OauthUser ouser) {
+	return passwordEncoder.matches(oldPassword, ouser.getPassword());
+}
+
+@Override
+public OauthUser findByUserId(String userId) {
+	List<OauthUser> users = oauthUserRepository.findByUserId(userId);
+	if (users.size() > 0) {
+		return users.get(0);
 	}
-
-	@Override
-	public List<String> findUserRoles(OauthUser user) {
-		return splitRoleNames(user.getRoles());
-	}
-
-	private List<String> splitRoleNames(List<OauthRole> roles) {
-		List<String> roleNames = new ArrayList<>();
-
-		for (OauthRole role : roles) {
-			if (role.getEnabled()) {
-				roleNames.add(role.getName());
-			}
-		}
-		return roleNames;
-	}
-
-	@Override
-	public OauthUser createUser(SignupForm signupForm) {
-		OauthUser user = new OauthUser();
-		user.setActivated(true);
-		user.setEmail(signupForm.getEmail());
-		user.setPassword(signupForm.getPassword());
-		user.setUserId(UUID.randomUUID().toString());
-		user.setFirstName(signupForm.getFirstName());
-		user.setLastName(signupForm.getLastName());
-		if (signupForm.getUserName() == null) {
-			user.setUserName(String.format("%s %s", signupForm.getFirstName(), signupForm.getLastName()).trim());
-		} else {
-			user.setUserName(signupForm.getUserName().trim());
-		}
-		user.setGender(signupForm.getGender());
-		user.setLocation(signupForm.getLocation());
-		user.setPhone(signupForm.getPhone());
-		user.setProfileImageUri(signupForm.getProfileImageUri());
-
-		return user;
-	}
-
-	@Override
-	public boolean validate(String oldPassword, OauthUser ouser) {
-		return passwordEncoder.matches(oldPassword, ouser.getPassword());
-	}
+	return null;
+}
 
 }

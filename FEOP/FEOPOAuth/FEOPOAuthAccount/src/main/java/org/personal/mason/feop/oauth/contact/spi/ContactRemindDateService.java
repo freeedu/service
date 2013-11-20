@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.RemindDate;
+import org.personal.mason.feop.oauth.contact.domain.model.ContactRemindDate;
+import org.personal.mason.feop.oauth.contact.mvc.model.RemindDateVO;
 
-public interface ContactRemindDateService {
+public interface ContactRemindDateService extends BaseService<RemindDateVO, ContactRemindDate> {
 
-	RemindDate createRemindDate(Long accountId, Long contactId, RemindDate remindDate);
+RemindDateVO createRemindDate(RemindDateVO view);
 
-	RemindDate updateRemindDate(Long accountId, Long contactId, RemindDate remindDate);
+RemindDateVO updateRemindDate(RemindDateVO view);
 
-	void deleteRemindDate(Long accountId, Long contactId, RemindDate remindDate);
+void deleteRemindDate(RemindDateVO view);
+
+RemindDateVO findWithId(Long id);
 
 }

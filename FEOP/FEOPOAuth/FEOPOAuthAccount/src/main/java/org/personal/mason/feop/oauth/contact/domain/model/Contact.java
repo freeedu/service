@@ -1,6 +1,5 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -42,7 +41,7 @@ private String jobTitleName;
 private String lastName;
 
 @Column(name = "link_to_contact_id")
-private BigInteger linkToContactId;
+private Long linkToContactId;
 
 @Column(name = "middle_name", length = 80)
 private String middleName;
@@ -152,11 +151,11 @@ public void setLastName(String lastName) {
 	this.lastName = lastName;
 }
 
-public BigInteger getLinkToContactId() {
+public Long getLinkToContactId() {
 	return this.linkToContactId;
 }
 
-public void setLinkToContactId(BigInteger linkToContactId) {
+public void setLinkToContactId(Long linkToContactId) {
 	this.linkToContactId = linkToContactId;
 }
 

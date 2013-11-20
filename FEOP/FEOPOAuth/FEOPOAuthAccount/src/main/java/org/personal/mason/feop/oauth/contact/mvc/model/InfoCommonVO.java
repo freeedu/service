@@ -2,14 +2,16 @@ package org.personal.mason.feop.oauth.contact.mvc.model;
 
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
-@JsonRootName("im")
-public class IM {
+@JsonRootName("info")
+public class InfoCommonVO {
+
 private Long id;
-private String imAddress;
 private String label;
+private String value;
 private int priority;
-private Long contact;
 private int version;
+private Long contact;
+private Long infoType;
 
 public Long getId() {
 	return id;
@@ -17,14 +19,6 @@ public Long getId() {
 
 public void setId(Long id) {
 	this.id = id;
-}
-
-public String getImAddress() {
-	return imAddress;
-}
-
-public void setImAddress(String imAddress) {
-	this.imAddress = imAddress;
 }
 
 public String getLabel() {
@@ -35,12 +29,28 @@ public void setLabel(String label) {
 	this.label = label;
 }
 
+public String getValue() {
+	return value;
+}
+
+public void setValue(String value) {
+	this.value = value;
+}
+
 public int getPriority() {
 	return priority;
 }
 
 public void setPriority(int priority) {
 	this.priority = priority;
+}
+
+public int getVersion() {
+	return version;
+}
+
+public void setVersion(int version) {
+	this.version = version;
 }
 
 public Long getContact() {
@@ -51,12 +61,12 @@ public void setContact(Long contact) {
 	this.contact = contact;
 }
 
-public int getVersion() {
-	return version;
+public Long getInfoType() {
+	return infoType;
 }
 
-public void setVersion(int version) {
-	this.version = version;
+public void setInfoType(Long infoType) {
+	this.infoType = infoType;
 }
 
 }

@@ -4,7 +4,7 @@ public interface AccountInterface {
 
 	AccountModel register(String oauthUser, String oauthSecret, String phoneNumber);
 
-	boolean validate(String oauthuid, String token);
+	AccountModel findAccount(String principle);
 
 	boolean validateSecret(String oauthUid, String oauthSecret);
 

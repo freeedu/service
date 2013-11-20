@@ -1,13 +1,16 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.Record;
+import org.personal.mason.feop.oauth.contact.domain.model.ContactRecord;
+import org.personal.mason.feop.oauth.contact.mvc.model.RecordVO;
 
-public interface ContactRecordService {
+public interface ContactRecordService extends BaseService<RecordVO, ContactRecord> {
 
-	Record createRecord(Long accountId, Long contactId, Record record);
+RecordVO createRecord(RecordVO view);
 
-	Record updateRecord(Long accountId, Long contactId, Record record);
+RecordVO updateRecord(RecordVO view);
 
-	void deleteRecord(Long accountId, Long contactId, Record record);
+void deleteRecord(RecordVO view);
+
+RecordVO findWithId(Long id);
 
 }

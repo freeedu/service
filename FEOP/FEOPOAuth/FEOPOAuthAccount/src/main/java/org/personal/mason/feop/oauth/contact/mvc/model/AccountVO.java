@@ -6,21 +6,21 @@ import java.util.List;
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
 @JsonRootName("account")
-public class Account {
+public class AccountVO {
 
-private String id;
+private Long id;
 private String accountUid;
 private String oauthUid;
-private Contact contact;
-private Device currentDevice;
-private List<Device> devices = new ArrayList<>();
+private ContactVO contact;
+private DeviceVO currentDevice;
+private List<DeviceVO> devices = new ArrayList<>();
 private int version;
 
-public String getId() {
+public Long getId() {
 	return id;
 }
 
-public void setId(String id) {
+public void setId(Long id) {
 	this.id = id;
 }
 
@@ -40,27 +40,27 @@ public void setOauthUid(String oauthUid) {
 	this.oauthUid = oauthUid;
 }
 
-public Contact getContact() {
+public ContactVO getContact() {
 	return contact;
 }
 
-public void setContact(Contact contact) {
+public void setContact(ContactVO contact) {
 	this.contact = contact;
 }
 
-public Device getCurrentDevice() {
+public DeviceVO getCurrentDevice() {
 	return currentDevice;
 }
 
-public void setCurrentDevice(Device currentDevice) {
+public void setCurrentDevice(DeviceVO currentDevice) {
 	this.currentDevice = currentDevice;
 }
 
-public List<Device> getDevices() {
+public List<DeviceVO> getDevices() {
 	return devices;
 }
 
-public void setDevices(List<Device> devices) {
+public void setDevices(List<DeviceVO> devices) {
 	this.devices = devices;
 }
 

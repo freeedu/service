@@ -18,11 +18,20 @@ public class BindDevice extends FOEPPersistable<Long> {
 
 private static final long serialVersionUID = -1532782506884453999L;
 
-@Column(name = "device_identifieer", nullable = false, length = 128)
-private String deviceIdentifieer;
+@Column(name = "device_identifier", nullable = false, length = 128)
+private String deviceIdentifier;
 
 @Column(name = "device_type", nullable = false, length = 64)
 private String deviceType;
+
+@Column(name = "device_name", length = 128)
+private String deviceName;
+
+@Column(name = "mac_addr", length = 128)
+private String macAddress;
+
+@Column(name = "phone_no", length = 64)
+private String phoneNumber;
 
 // bi-directional many-to-one association to AccountBasic
 @ManyToOne
@@ -32,12 +41,12 @@ private AccountBasic accountBasic;
 public BindDevice() {
 }
 
-public String getDeviceIdentifieer() {
-	return this.deviceIdentifieer;
+public String getDeviceIdentifier() {
+	return this.deviceIdentifier;
 }
 
-public void setDeviceIdentifieer(String deviceIdentifieer) {
-	this.deviceIdentifieer = deviceIdentifieer;
+public void setDeviceIdentifier(String deviceIdentifier) {
+	this.deviceIdentifier = deviceIdentifier;
 }
 
 public String getDeviceType() {
@@ -54,6 +63,30 @@ public AccountBasic getAccountBasic() {
 
 public void setAccountBasic(AccountBasic accountBasic) {
 	this.accountBasic = accountBasic;
+}
+
+public void setDeviceName(String deviceName) {
+	this.deviceName = deviceName;
+}
+
+public String getDeviceName() {
+	return deviceName;
+}
+
+public void setMacAddress(String macAddress) {
+	this.macAddress = macAddress;
+}
+
+public String getMacAddress() {
+	return macAddress;
+}
+
+public void setPhoneNumber(String phoneNumber) {
+	this.phoneNumber = phoneNumber;
+}
+
+public String getPhoneNumber() {
+	return phoneNumber;
 }
 
 }

@@ -1,17 +1,13 @@
 package org.personal.mason.feop.oauth.contact.mvc.model;
 
-import java.sql.Date;
-
 import org.codehaus.jackson.map.annotate.JsonRootName;
 
-@JsonRootName("resource")
-public class Resource {
+@JsonRootName("infoType")
+public class InfoTypeVO {
 
 private Long id;
-private Date buildDay;
+private String name;
 private String description;
-private String resourceName;
-private Long contact;
 private int version;
 
 public Long getId() {
@@ -22,12 +18,12 @@ public void setId(Long id) {
 	this.id = id;
 }
 
-public Date getBuildDay() {
-	return buildDay;
+public String getName() {
+	return name;
 }
 
-public void setBuildDay(Date buildDay) {
-	this.buildDay = buildDay;
+public void setName(String name) {
+	this.name = name;
 }
 
 public String getDescription() {
@@ -36,22 +32,6 @@ public String getDescription() {
 
 public void setDescription(String description) {
 	this.description = description;
-}
-
-public String getResourceName() {
-	return resourceName;
-}
-
-public void setResourceName(String resourceName) {
-	this.resourceName = resourceName;
-}
-
-public Long getContact() {
-	return contact;
-}
-
-public void setContact(Long contact) {
-	this.contact = contact;
 }
 
 public int getVersion() {

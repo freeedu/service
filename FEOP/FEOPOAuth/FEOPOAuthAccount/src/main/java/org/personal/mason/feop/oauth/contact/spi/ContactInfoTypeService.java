@@ -1,11 +1,18 @@
 package org.personal.mason.feop.oauth.contact.spi;
 
-import org.personal.mason.feop.oauth.contact.mvc.model.InfoType;
+import java.util.List;
 
-public interface ContactInfoTypeService {
+import org.personal.mason.feop.oauth.contact.domain.model.ContactInfoType;
+import org.personal.mason.feop.oauth.contact.mvc.model.InfoTypeVO;
 
-void deleteInfoType(Long accountId, Long contactId, InfoType infoType);
+public interface ContactInfoTypeService extends BaseService<InfoTypeVO, ContactInfoType> {
 
-InfoType createInfoType(Long accountId, Long contactId, InfoType infoType);
+void deleteInfoType(Long id);
+
+InfoTypeVO createInfoType(InfoTypeVO view);
+
+InfoTypeVO findWithId(Long id);
+
+List<InfoTypeVO> allTypes();
 
 }
