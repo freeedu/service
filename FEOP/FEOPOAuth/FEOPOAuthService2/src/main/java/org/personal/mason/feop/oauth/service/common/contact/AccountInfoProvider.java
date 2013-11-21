@@ -1,7 +1,7 @@
 package org.personal.mason.feop.oauth.service.common.contact;
 
-import org.personal.mason.feop.oauth.contact.protocol.AccountInterface;
-import org.personal.mason.feop.oauth.contact.protocol.AccountModel;
+import org.personal.mason.feop.oauth.common.protocol.AccountInterface;
+import org.personal.mason.feop.oauth.common.protocol.AccountModel;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
 import org.springframework.beans.factory.annotation.Autowired;

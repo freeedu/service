@@ -3,7 +3,7 @@ package org.personal.mason.feop.server.blog.mvc.utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.personal.mason.feop.server.blog.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
 import org.personal.mason.feop.server.blog.utils.Constrains;
 
 public class AuthenticationUtils {

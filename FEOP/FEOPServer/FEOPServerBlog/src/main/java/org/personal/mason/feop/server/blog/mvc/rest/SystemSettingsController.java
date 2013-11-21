@@ -2,7 +2,7 @@ package org.personal.mason.feop.server.blog.mvc.rest;
 
 import java.util.List;
 
-import org.personal.mason.feop.server.blog.client.JDBCClientConfiguration;
+import org.personal.mason.feop.server.blog.common.client.JDBCClientConfiguration;
 import org.personal.mason.feop.server.blog.domain.model.SystemSettings;
 import org.personal.mason.feop.server.blog.domain.service.SystemSettingsService;
 import org.springframework.beans.factory.annotation.Autowired;

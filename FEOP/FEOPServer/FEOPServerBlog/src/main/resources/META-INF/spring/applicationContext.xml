@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
@@ -26,11 +28,13 @@
 
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
-			<bean class="org.springframework.data.web.PageableArgumentResolver" p:prefix="p" p:separator="_" />
+			<bean class="org.springframework.data.web.PageableArgumentResolver" p:prefix="p"
+				p:separator="_" />
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
 
-	<mvc:resources mapping="/resources/**" location="/resources/, classpath:/META-INF/resources/" cache-period="#{60 * 60}" />
+	<mvc:resources mapping="/resources/**" location="/resources/, classpath:/META-INF/resources/"
+		cache-period="#{60 * 60}" />
 
 	<mvc:default-servlet-handler />
 
@@ -40,37 +44,48 @@
 
 	<context:property-placeholder location="classpath:META-INF/spring/*.properties" />
 
-	<!-- <bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.client.XmlClientConfiguration" p:responseType="${response.type}" 
-		p:clientId="${client.id}" p:clientSecret="${client.secret}" p:authUrl="${user.authorization.uri}" p:tokenAccessUrl="${access.token.uri}" p:userInfoUri="${user.info.uri}" 
-		p:oauthLogoutUri="${oauth.logout.uri}" p:oauthRegisterUri="${oauth.register.uri}" p:loginSuccessUri="${login.success.uri}" /> -->
+	<!-- <bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.client.XmlClientConfiguration" 
+		p:responseType="${response.type}" p:clientId="${client.id}" p:clientSecret="${client.secret}" p:authUrl="${user.authorization.uri}" 
+		p:tokenAccessUrl="${access.token.uri}" p:userInfoUri="${user.info.uri}" p:oauthLogoutUri="${oauth.logout.uri}" 
+		p:oauthRegisterUri="${oauth.register.uri}" p:loginSuccessUri="${login.success.uri}" /> -->
 
 
 	<mvc:interceptors>
-		<bean class="org.personal.mason.feop.server.blog.client.OAuthAuthorityInterceptor" />
+		<bean class="org.personal.mason.feop.oauth.common.client.OAuthAuthorityInterceptor" />
 	</mvc:interceptors>
 
-	<bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.client.JDBCClientConfiguration" />
+	<bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.common.client.JDBCClientConfiguration" />
 
-	<bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.code.AuthorizationCodeLoginInfoProvider"
+	<bean id="loginProcessor"
+		class="org.personal.mason.feop.oauth.common.client.oauth.code.AuthorizationCodeLoginInfoProvider"
 		p:configuration-ref="clientConfiguration" />
-	<!-- <bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.implicit.ImplicitLoginInfoProvider" p:configuration-ref="clientConfiguration" 
-		/> -->
+	<!-- <bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.implicit.ImplicitLoginInfoProvider" 
+		p:configuration-ref="clientConfiguration" /> -->
 
-	<bean id="processor" class="org.personal.mason.feop.server.blog.client.HTTPAuthorityProcessor">
+	<bean id="processor" class="org.personal.mason.feop.oauth.common.client.HTTPAuthorityProcessor">
 		<constructor-arg name="interceptors">
 			<list>
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/resources/.*" p:security="false" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/.*.ico" p:security="false" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/resources/.*"
+					p:security="false" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/.*.ico"
+					p:security="false" />
 
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/api/.*" p:access="ROLE_USER" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/user/.*" p:access="ROLE_USER" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="(/setting)|(/section)|(/cat).*" p:access="ROLE_USER" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern=".*(create)|(save)|(update)|(add)|(delete).*"
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/api/.*"
 					p:access="ROLE_USER" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/my/.*" p:access="ROLE_USER" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/syssetting/.*" p:access="ROLE_ADMIN" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/.*/list.*" p:security="false" />
-				<bean class="org.personal.mason.feop.server.blog.client.AuthorityInterceptor" p:pattern="/.*" p:access="allow" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/user/.*"
+					p:access="ROLE_USER" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="(/setting)|(/section)|(/cat).*"
+					p:access="ROLE_USER" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern=".*(create)|(save)|(update)|(add)|(delete).*"
+					p:access="ROLE_USER" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/my/.*"
+					p:access="ROLE_USER" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/syssetting/.*"
+					p:access="ROLE_ADMIN" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/.*/list.*"
+					p:security="false" />
+				<bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/.*"
+					p:access="allow" />
 			</list>
 		</constructor-arg>
 	</bean>

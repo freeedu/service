@@ -195,7 +195,7 @@
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
+			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -260,11 +260,6 @@
 			<artifactId>mockito-all</artifactId>
 			<version>${mockito.version}</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.personal.mason.feop.oauth.contact</groupId>
-			<artifactId>feopoauthcontact</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<properties>

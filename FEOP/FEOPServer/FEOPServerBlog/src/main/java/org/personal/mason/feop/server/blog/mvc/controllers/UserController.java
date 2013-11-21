@@ -3,8 +3,8 @@ package org.personal.mason.feop.server.blog.mvc.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.personal.mason.feop.server.blog.client.ClientConfiguration;
-import org.personal.mason.feop.server.blog.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.oauth.common.client.ClientConfiguration;
+import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
 import org.personal.mason.feop.server.blog.utils.Constrains;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

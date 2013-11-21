@@ -4,6 +4,8 @@ import java.security.Principal;
 
 import javax.ws.rs.PathParam;
 
+import org.personal.mason.feop.oauth.common.protocol.AccountInterface;
+import org.personal.mason.feop.oauth.common.protocol.AccountModel;
 import org.personal.mason.feop.oauth.contact.exception.BindDeviceException;
 import org.personal.mason.feop.oauth.contact.exception.RegistrationException;
 import org.personal.mason.feop.oauth.contact.mvc.model.AccountVO;
@@ -19,8 +21,6 @@ import org.personal.mason.feop.oauth.contact.mvc.model.RecordVO;
 import org.personal.mason.feop.oauth.contact.mvc.model.RemindDateVO;
 import org.personal.mason.feop.oauth.contact.mvc.model.ResourceVO;
 import org.personal.mason.feop.oauth.contact.mvc.model.SettingVO;
-import org.personal.mason.feop.oauth.contact.protocol.AccountInterface;
-import org.personal.mason.feop.oauth.contact.protocol.AccountModel;
 import org.personal.mason.feop.oauth.contact.spi.AccountBasicService;
 import org.personal.mason.feop.oauth.contact.spi.BindDeviceService;
 import org.personal.mason.feop.oauth.contact.spi.ContactAddressService;
