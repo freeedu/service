@@ -12,68 +12,68 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContactPhoneServiceImpl implements ContactPhoneService {
 
-private ContactRepository contactRepository;
-private ContactPhoneRepository contactPhoneRepository;
+    private ContactRepository contactRepository;
+    private ContactPhoneRepository contactPhoneRepository;
 
-@Autowired
-public void setContactRepository(ContactRepository contactRepository) {
-	this.contactRepository = contactRepository;
-}
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
-@Autowired
-public void setContactPhoneRepository(ContactPhoneRepository contactPhoneRepository) {
-	this.contactPhoneRepository = contactPhoneRepository;
-}
+    @Autowired
+    public void setContactPhoneRepository(ContactPhoneRepository contactPhoneRepository) {
+        this.contactPhoneRepository = contactPhoneRepository;
+    }
 
-@Override
-public PhoneVO toViewObject(ContactPhone model) {
-	PhoneVO phoneView = ModelConvertor.toPhoneView(model);
-	return phoneView;
-}
+    @Override
+    public PhoneVO toViewObject(ContactPhone model) {
+        PhoneVO phoneView = ModelConvertor.toPhoneView(model);
+        return phoneView;
+    }
 
-@Override
-public ContactPhone toModel(PhoneVO view) {
-	ContactPhone phone;
-	if (view.getId() == null) {
-		phone = new ContactPhone();
-		if (view.getContact() != null) {
-			phone.setContact(contactRepository.findOne(view.getContact()));
-		}
-	} else {
-		phone = contactPhoneRepository.findOne(view.getId());
-	}
-	ModelConvertor.mergeToPhoneModel(view, phone);
-	return phone;
-}
+    @Override
+    public ContactPhone toModel(PhoneVO view) {
+        ContactPhone phone;
+        if (view.getId() == null) {
+            phone = new ContactPhone();
+            if (view.getContact() != null) {
+                phone.setContact(contactRepository.findOne(view.getContact()));
+            }
+        } else {
+            phone = contactPhoneRepository.findOne(view.getId());
+        }
+        ModelConvertor.mergeToPhoneModel(view, phone);
+        return phone;
+    }
 
-@Override
-public PhoneVO createPhone(PhoneVO view) {
-	ContactPhone model = toModel(view);
-	ContactPhone saved = contactPhoneRepository.save(model);
-	return toViewObject(saved);
-}
+    @Override
+    public PhoneVO createPhone(PhoneVO view) {
+        ContactPhone model = toModel(view);
+        ContactPhone saved = contactPhoneRepository.save(model);
+        return toViewObject(saved);
+    }
 
-@Override
-public PhoneVO updatePhone(PhoneVO view) {
-	ContactPhone model = toModel(view);
-	ContactPhone updated = contactPhoneRepository.saveAndFlush(model);
-	return toViewObject(updated);
-}
+    @Override
+    public PhoneVO updatePhone(PhoneVO view) {
+        ContactPhone model = toModel(view);
+        ContactPhone updated = contactPhoneRepository.saveAndFlush(model);
+        return toViewObject(updated);
+    }
 
-@Override
-public void deletePhone(PhoneVO view) {
-	if (contactPhoneRepository.exists(view.getId())) {
-		contactPhoneRepository.delete(view.getId());
-	}
-}
+    @Override
+    public void deletePhone(PhoneVO view) {
+        if (contactPhoneRepository.exists(view.getId())) {
+            contactPhoneRepository.delete(view.getId());
+        }
+    }
 
-@Override
-public PhoneVO findWithId(Long id) {
-	ContactPhone phone = contactPhoneRepository.findOne(id);
-	if (phone != null) {
-		return toViewObject(phone);
-	}
-	return null;
-}
+    @Override
+    public PhoneVO findWithId(Long id) {
+        ContactPhone phone = contactPhoneRepository.findOne(id);
+        if (phone != null) {
+            return toViewObject(phone);
+        }
+        return null;
+    }
 
 }

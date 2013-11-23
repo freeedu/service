@@ -11,68 +11,68 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ContactEmailServiceImpl implements ContactEmailService {
-private ContactRepository contactRepository;
-private ContactEmailRepository contactEmailRepository;
+    private ContactRepository contactRepository;
+    private ContactEmailRepository contactEmailRepository;
 
-@Autowired
-public void setContactRepository(ContactRepository contactRepository) {
-	this.contactRepository = contactRepository;
-}
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
-@Autowired
-public void setContactEmailRepository(ContactEmailRepository contactEmailRepository) {
-	this.contactEmailRepository = contactEmailRepository;
-}
+    @Autowired
+    public void setContactEmailRepository(ContactEmailRepository contactEmailRepository) {
+        this.contactEmailRepository = contactEmailRepository;
+    }
 
-@Override
-public EmailVO toViewObject(ContactEmail model) {
-	EmailVO emailView = ModelConvertor.toEmailView(model);
-	return emailView;
-}
+    @Override
+    public EmailVO toViewObject(ContactEmail model) {
+        EmailVO emailView = ModelConvertor.toEmailView(model);
+        return emailView;
+    }
 
-@Override
-public ContactEmail toModel(EmailVO view) {
-	ContactEmail email;
-	if (view.getId() == null) {
-		email = new ContactEmail();
-		if (view.getContact() != null) {
-			email.setContact(contactRepository.findOne(view.getContact()));
-		}
-	} else {
-		email = contactEmailRepository.findOne(view.getId());
-	}
-	ModelConvertor.mergeToEmailModel(view, email);
-	return email;
-}
+    @Override
+    public ContactEmail toModel(EmailVO view) {
+        ContactEmail email;
+        if (view.getId() == null) {
+            email = new ContactEmail();
+            if (view.getContact() != null) {
+                email.setContact(contactRepository.findOne(view.getContact()));
+            }
+        } else {
+            email = contactEmailRepository.findOne(view.getId());
+        }
+        ModelConvertor.mergeToEmailModel(view, email);
+        return email;
+    }
 
-@Override
-public EmailVO createEmail(EmailVO view) {
-	ContactEmail model = toModel(view);
-	ContactEmail saved = contactEmailRepository.save(model);
-	return toViewObject(saved);
-}
+    @Override
+    public EmailVO createEmail(EmailVO view) {
+        ContactEmail model = toModel(view);
+        ContactEmail saved = contactEmailRepository.save(model);
+        return toViewObject(saved);
+    }
 
-@Override
-public EmailVO updateEmail(EmailVO view) {
-	ContactEmail model = toModel(view);
-	ContactEmail updated = contactEmailRepository.saveAndFlush(model);
-	return toViewObject(updated);
-}
+    @Override
+    public EmailVO updateEmail(EmailVO view) {
+        ContactEmail model = toModel(view);
+        ContactEmail updated = contactEmailRepository.saveAndFlush(model);
+        return toViewObject(updated);
+    }
 
-@Override
-public void deleteEmail(EmailVO view) {
-	if (contactEmailRepository.exists(view.getId())) {
-		contactEmailRepository.delete(view.getId());
-	}
-}
+    @Override
+    public void deleteEmail(EmailVO view) {
+        if (contactEmailRepository.exists(view.getId())) {
+            contactEmailRepository.delete(view.getId());
+        }
+    }
 
-@Override
-public EmailVO findWithId(Long id) {
-	ContactEmail email = contactEmailRepository.findOne(id);
-	if (email != null) {
-		return toViewObject(email);
-	}
-	return null;
-}
+    @Override
+    public EmailVO findWithId(Long id) {
+        ContactEmail email = contactEmailRepository.findOne(id);
+        if (email != null) {
+            return toViewObject(email);
+        }
+        return null;
+    }
 
 }

@@ -11,7 +11,8 @@
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>3.2.4.RELEASE</spring.version>
+		<spring.version>4.0.0.RC1</spring.version>
+		<!--<spring.version>3.2.5.RELEASE</spring.version>-->
 		<spring.security.version>3.1.4.RELEASE</spring.security.version>
 		<spring.security.oauth2.version>1.0.5.RELEASE</spring.security.oauth2.version>
 		<cglib.version>2.2.2</cglib.version>
@@ -45,6 +46,14 @@
 		<jersey.version>1.17.1</jersey.version>
 	</properties>
 	<repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>http://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
 		<repository>
 			<id>springsource.milestone</id>
 			<name>SpringSource Milestone Repository</name>

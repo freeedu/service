@@ -12,68 +12,68 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContactSettingServiceImpl implements ContactSettingService {
 
-private ContactRepository contactRepository;
-private ContactSettingRepository contactSettingRepository;
+    private ContactRepository contactRepository;
+    private ContactSettingRepository contactSettingRepository;
 
-@Autowired
-public void setContactRepository(ContactRepository contactRepository) {
-	this.contactRepository = contactRepository;
-}
+    @Autowired
+    public void setContactRepository(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
-@Autowired
-public void setContactSettingRepository(ContactSettingRepository contactSettingRepository) {
-	this.contactSettingRepository = contactSettingRepository;
-}
+    @Autowired
+    public void setContactSettingRepository(ContactSettingRepository contactSettingRepository) {
+        this.contactSettingRepository = contactSettingRepository;
+    }
 
-@Override
-public SettingVO createSetting(SettingVO setting) {
-	ContactSetting s = toModel(setting);
-	ContactSetting saved = contactSettingRepository.save(s);
-	return toViewObject(saved);
-}
+    @Override
+    public SettingVO createSetting(SettingVO setting) {
+        ContactSetting s = toModel(setting);
+        ContactSetting saved = contactSettingRepository.save(s);
+        return toViewObject(saved);
+    }
 
-@Override
-public SettingVO updateSetting(SettingVO setting) {
-	ContactSetting s = toModel(setting);
-	ContactSetting updated = contactSettingRepository.saveAndFlush(s);
-	return toViewObject(updated);
-}
+    @Override
+    public SettingVO updateSetting(SettingVO setting) {
+        ContactSetting s = toModel(setting);
+        ContactSetting updated = contactSettingRepository.saveAndFlush(s);
+        return toViewObject(updated);
+    }
 
-@Override
-public void deleteSetting(SettingVO setting) {
-	if (contactSettingRepository.exists(setting.getId())) {
-		contactSettingRepository.delete(setting.getId());
-	}
-}
+    @Override
+    public void deleteSetting(SettingVO setting) {
+        if (contactSettingRepository.exists(setting.getId())) {
+            contactSettingRepository.delete(setting.getId());
+        }
+    }
 
-@Override
-public SettingVO toViewObject(ContactSetting model) {
-	SettingVO vo = ModelConvertor.toSettingView(model);
-	return vo;
-}
+    @Override
+    public SettingVO toViewObject(ContactSetting model) {
+        SettingVO vo = ModelConvertor.toSettingView(model);
+        return vo;
+    }
 
-@Override
-public ContactSetting toModel(SettingVO view) {
-	ContactSetting setting;
-	if (view.getId() == null) {
-		setting = new ContactSetting();
-		if (view.getContact() != null) {
-			setting.setContact(contactRepository.findOne(view.getContact()));
-		}
-	} else {
-		setting = contactSettingRepository.findOne(view.getId());
-	}
-	ModelConvertor.mergeToSettingModel(view, setting);
-	return setting;
-}
+    @Override
+    public ContactSetting toModel(SettingVO view) {
+        ContactSetting setting;
+        if (view.getId() == null) {
+            setting = new ContactSetting();
+            if (view.getContact() != null) {
+                setting.setContact(contactRepository.findOne(view.getContact()));
+            }
+        } else {
+            setting = contactSettingRepository.findOne(view.getId());
+        }
+        ModelConvertor.mergeToSettingModel(view, setting);
+        return setting;
+    }
 
-@Override
-public SettingVO findWithId(Long id) {
-	ContactSetting setting = contactSettingRepository.findOne(id);
-	if (setting == null) {
-		return toViewObject(setting);
-	}
-	return null;
-}
+    @Override
+    public SettingVO findWithId(Long id) {
+        ContactSetting setting = contactSettingRepository.findOne(id);
+        if (setting == null) {
+            return toViewObject(setting);
+        }
+        return null;
+    }
 
 }

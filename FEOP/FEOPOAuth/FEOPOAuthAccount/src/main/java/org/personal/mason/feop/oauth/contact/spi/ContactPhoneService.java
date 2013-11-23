@@ -5,12 +5,12 @@ import org.personal.mason.feop.oauth.contact.mvc.model.PhoneVO;
 
 public interface ContactPhoneService extends BaseService<PhoneVO, ContactPhone> {
 
-PhoneVO createPhone(PhoneVO view);
+    PhoneVO createPhone(PhoneVO view);
 
-PhoneVO updatePhone(PhoneVO view);
+    PhoneVO updatePhone(PhoneVO view);
 
-void deletePhone(PhoneVO view);
+    void deletePhone(PhoneVO view);
 
-PhoneVO findWithId(Long id);
+    PhoneVO findWithId(Long id);
 
 }

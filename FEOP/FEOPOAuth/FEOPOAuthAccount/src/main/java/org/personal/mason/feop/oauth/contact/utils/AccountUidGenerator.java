@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class AccountUidGenerator {
 
-public static String generateUid() {
-	return UUID.randomUUID().toString();
-}
+    public static String generateUid() {
+        return UUID.randomUUID().toString();
+    }
 }

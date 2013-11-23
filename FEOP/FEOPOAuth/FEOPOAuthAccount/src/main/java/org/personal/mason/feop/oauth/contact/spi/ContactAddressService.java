@@ -5,12 +5,12 @@ import org.personal.mason.feop.oauth.contact.mvc.model.AddressVO;
 
 public interface ContactAddressService extends BaseService<AddressVO, ContactAddress> {
 
-AddressVO createAddress(AddressVO view);
+    AddressVO createAddress(AddressVO view);
 
-AddressVO updateAddress(AddressVO view);
+    AddressVO updateAddress(AddressVO view);
 
-void deleteAddress(AddressVO view);
+    void deleteAddress(AddressVO view);
 
-AddressVO findWithId(Long id);
+    AddressVO findWithId(Long id);
 
 }

@@ -7,14 +7,14 @@ import org.personal.mason.feop.oauth.contact.mvc.model.DeviceVO;
 
 public interface AccountBasicService extends BaseService<AccountVO, AccountBasic> {
 
-boolean isExistAccountWithOauthUid(String accountUid);
+    boolean isExistAccountWithOauthUid(String accountUid);
 
-AccountVO registAccount(DeviceVO device, String accountUid);
+    AccountVO registAccount(DeviceVO device, String accountUid);
 
-AccountVO findAccountWithOauthUidAndId(String oauthUid, Long accountId);
+    AccountVO findAccountWithOauthUidAndId(String oauthUid, Long accountId);
 
-AccountVO findAccountWithId(Long accountId);
+    AccountVO findAccountWithId(Long accountId);
 
-ContactVO findMyContact(Long accountId);
+    ContactVO findMyContact(Long accountId);
 
 }

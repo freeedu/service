@@ -5,12 +5,12 @@ import org.personal.mason.feop.oauth.contact.mvc.model.ResourceVO;
 
 public interface ContactResourceService extends BaseService<ResourceVO, ContactResource> {
 
-ResourceVO createResource(ResourceVO resource);
+    ResourceVO createResource(ResourceVO resource);
 
-ResourceVO updateResource(ResourceVO resource);
+    ResourceVO updateResource(ResourceVO resource);
 
-void deleteResource(ResourceVO resource);
+    void deleteResource(ResourceVO resource);
 
-ResourceVO findWithId(Long id);
+    ResourceVO findWithId(Long id);
 
 }

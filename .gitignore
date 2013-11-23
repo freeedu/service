@@ -3,4 +3,6 @@ bin/
 target
 *~
 .metadata
+.idea
+.project
 .settings
