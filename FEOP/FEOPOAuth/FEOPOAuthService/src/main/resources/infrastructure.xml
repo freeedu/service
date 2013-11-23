@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<context:property-placeholder location="classpath:app.properties" />
@@ -28,43 +26,43 @@
 		<property name="packagesToScan" value="org.personal.mason.feop.oauth.service" />
 	</bean>
 
-	<bean id="commonEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="commonDataSource" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="generateDdl" value="true" />
-				<property name="showSql" value="${jpa.showSql}" />
-				<property name="databasePlatform" value="${hibernate.dialect}" />
-			</bean>
-		</property>
-		<property name="persistenceUnitName" value="common" />
-		<property name="packagesToScan" value="org.personal.mason.feop.oauth.common" />
-	</bean>
+	<!--<bean id="commonEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+		<!--<property name="dataSource" ref="commonDataSource" />-->
+		<!--<property name="jpaVendorAdapter">-->
+			<!--<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
+				<!--<property name="generateDdl" value="true" />-->
+				<!--<property name="showSql" value="${jpa.showSql}" />-->
+				<!--<property name="databasePlatform" value="${hibernate.dialect}" />-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--<property name="persistenceUnitName" value="common" />-->
+		<!--<property name="packagesToScan" value="org.personal.mason.feop.oauth.common" />-->
+	<!--</bean>-->
 
-	<bean id="contactEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="contactDataSource" />
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="generateDdl" value="true" />
-				<property name="showSql" value="${jpa.showSql}" />
-				<property name="databasePlatform" value="${hibernate.dialect}" />
-			</bean>
-		</property>
-		<property name="persistenceUnitName" value="contact" />
-		<property name="packagesToScan" value="org.personal.mason.feop.oauth.contact" />
-	</bean>
+	<!--<bean id="contactEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+		<!--<property name="dataSource" ref="contactDataSource" />-->
+		<!--<property name="jpaVendorAdapter">-->
+			<!--<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
+				<!--<property name="generateDdl" value="true" />-->
+				<!--<property name="showSql" value="${jpa.showSql}" />-->
+				<!--<property name="databasePlatform" value="${hibernate.dialect}" />-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--<property name="persistenceUnitName" value="contact" />-->
+		<!--<property name="packagesToScan" value="org.personal.mason.feop.oauth.contact" />-->
+	<!--</bean>-->
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<bean id="commonTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="commonEntityManagerFactory" />
-	</bean>
+	<!--<bean id="commonTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
+		<!--<property name="entityManagerFactory" ref="commonEntityManagerFactory" />-->
+	<!--</bean>-->
 
-	<bean id="contactTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="contactEntityManagerFactory" />
-	</bean>
+	<!--<bean id="contactTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
+		<!--<property name="entityManagerFactory" ref="contactEntityManagerFactory" />-->
+	<!--</bean>-->
 
 	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
