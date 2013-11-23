@@ -12,8 +12,8 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>FEOPOAuthCommon</module>
-		<module>FEOPOAuthAccount</module>
+		<module>FEOPOAuthContact</module>
 		<module>FEOPOAuthResource</module>
-		<module>FEOPOAuthService2</module>
+		<module>FEOPOAuthService</module>
 	</modules>
 </project>
