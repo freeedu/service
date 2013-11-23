@@ -1,9 +1,9 @@
 package org.personal.mason.feop.oauth.common.cf.service;
 
-import java.util.logging.Logger;
-
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolConfiguration;
+
+import java.util.logging.Logger;
 
 public class AppFogMysqlDataSource extends DataSource {
 

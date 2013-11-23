@@ -1,8 +1,8 @@
 package org.personal.mason.feop.oauth.common.cf.service;
 
-import java.util.List;
-
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import java.util.List;
 
 public class AppFogServicesConfiguration {
 
