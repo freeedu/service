@@ -1,0 +1,1 @@
+Client using this to easy implemented the oauth invoking and privilege checking.
