@@ -154,8 +154,6 @@ public class ContactApi {
      * information access token, use the token and the oauth_uid to create an
      * account.
      *
-     * @param oauthuid
-     * @param token
      * @return
      */
     @RequestMapping(value = {"web/regist"}, method = RequestMethod.POST)
@@ -228,7 +226,6 @@ public class ContactApi {
      * Find my Contact with accountId
      *
      * @param accountId
-     * @param ismine
      * @return
      */
     @ResponseBody
@@ -253,7 +250,6 @@ public class ContactApi {
     /**
      * Delete one of my contact
      *
-     * @param accountId
      * @param contact
      */
     @ResponseBody
@@ -265,7 +261,6 @@ public class ContactApi {
     /**
      * Add a contact
      *
-     * @param accountId
      * @param contact
      * @return
      */
@@ -279,7 +274,6 @@ public class ContactApi {
     /**
      * Update one of my contact include mine
      *
-     * @param accountId
      * @param contact
      * @return
      */
@@ -293,8 +287,6 @@ public class ContactApi {
     /**
      * Add address for contact
      *
-     * @param accountId
-     * @param contactId
      * @param address
      * @return
      */
@@ -308,8 +300,6 @@ public class ContactApi {
     /**
      * Update address for contact
      *
-     * @param accountId
-     * @param contactId
      * @param address
      * @return
      */
@@ -323,8 +313,6 @@ public class ContactApi {
     /**
      * Delete address for contact
      *
-     * @param accountId
-     * @param contactId
      * @param address
      * @return
      */
@@ -349,8 +337,6 @@ public class ContactApi {
     /**
      * Add email for contact
      *
-     * @param accountId
-     * @param contactId
      * @param email
      * @return
      */
@@ -364,9 +350,7 @@ public class ContactApi {
     /**
      * Update email for contact
      *
-     * @param accountId
-     * @param contactId
-     * @param EmailVO
+     * @param email
      * @return
      */
     @ResponseBody
@@ -379,8 +363,6 @@ public class ContactApi {
     /**
      * Delete email for contact
      *
-     * @param accountId
-     * @param contactId
      * @param email
      * @return
      */
@@ -405,8 +387,6 @@ public class ContactApi {
     /**
      * Add im for contact
      *
-     * @param accountId
-     * @param contactId
      * @param im
      * @return
      */
@@ -420,8 +400,6 @@ public class ContactApi {
     /**
      * Update im for contact
      *
-     * @param accountId
-     * @param contactId
      * @param im
      * @return
      */
@@ -435,8 +413,6 @@ public class ContactApi {
     /**
      * Delete im for contact
      *
-     * @param accountId
-     * @param contactId
      * @param im
      * @return
      */
@@ -461,8 +437,6 @@ public class ContactApi {
     /**
      * Add phone to Contact
      *
-     * @param accountId
-     * @param contactId
      * @param phone
      * @return
      */
@@ -476,8 +450,6 @@ public class ContactApi {
     /**
      * Update phone of Contact
      *
-     * @param accountId
-     * @param contactId
      * @param phone
      * @return
      */
@@ -491,8 +463,6 @@ public class ContactApi {
     /**
      * Delete phone of Contact
      *
-     * @param accountId
-     * @param contactId
      * @param phone
      * @return
      */
@@ -517,8 +487,6 @@ public class ContactApi {
     /**
      * Add record to contact
      *
-     * @param accountId
-     * @param contactId
      * @param record
      * @return
      */
@@ -532,8 +500,6 @@ public class ContactApi {
     /**
      * Update record of contact
      *
-     * @param accountId
-     * @param contactId
      * @param record
      * @return
      */
@@ -547,8 +513,6 @@ public class ContactApi {
     /**
      * Delete record of Contact
      *
-     * @param accountId
-     * @param contactId
      * @param record
      * @return
      */
@@ -573,8 +537,6 @@ public class ContactApi {
     /**
      * Add remind date to Contact
      *
-     * @param accountId
-     * @param contactId
      * @param remindDate
      * @return
      */
@@ -588,8 +550,6 @@ public class ContactApi {
     /**
      * Update remind date of contact
      *
-     * @param accountId
-     * @param contactId
      * @param remindDate
      * @return
      */
@@ -603,8 +563,6 @@ public class ContactApi {
     /**
      * Delete remind date of contact
      *
-     * @param accountId
-     * @param contactId
      * @param remindDate
      * @return
      */
@@ -629,8 +587,6 @@ public class ContactApi {
     /**
      * Add resource to Contact
      *
-     * @param accountId
-     * @param contactId
      * @param resource
      * @return
      */
@@ -644,8 +600,6 @@ public class ContactApi {
     /**
      * Update Resource of contact
      *
-     * @param accountId
-     * @param contactId
      * @param resource
      * @return
      */
@@ -659,8 +613,6 @@ public class ContactApi {
     /**
      * Delete resource of contact
      *
-     * @param accountId
-     * @param contactId
      * @param resource
      * @return
      */
@@ -685,8 +637,6 @@ public class ContactApi {
     /**
      * Add setting
      *
-     * @param accountId
-     * @param contactId
      * @param setting
      * @return
      */
@@ -700,8 +650,6 @@ public class ContactApi {
     /**
      * Update Setting
      *
-     * @param accountId
-     * @param contactId
      * @param setting
      * @return
      */
@@ -715,8 +663,6 @@ public class ContactApi {
     /**
      * Delete Setting
      *
-     * @param accountId
-     * @param contactId
      * @param setting
      * @return
      */
@@ -741,8 +687,6 @@ public class ContactApi {
     /**
      * Add common info to contact
      *
-     * @param accountId
-     * @param contactId
      * @param infoCommon
      * @return
      */
@@ -756,8 +700,6 @@ public class ContactApi {
     /**
      * Update Common info of contact
      *
-     * @param accountId
-     * @param contactId
      * @param infoCommon
      * @return
      */
@@ -771,8 +713,6 @@ public class ContactApi {
     /**
      * Delete common info of contact
      *
-     * @param accountId
-     * @param contactId
      * @param infoCommon
      * @return
      */
@@ -797,8 +737,6 @@ public class ContactApi {
     /**
      * Add common info type
      *
-     * @param accountId
-     * @param contactId
      * @param infoType
      * @return
      */
@@ -812,9 +750,6 @@ public class ContactApi {
     /**
      * Delete Common info type
      *
-     * @param accountId
-     * @param contactId
-     * @param infoType
      * @return
      */
     @ResponseBody

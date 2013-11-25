@@ -5,6 +5,7 @@ import org.personal.mason.feop.oauth.contact.mvc.model.InfoTypeVO;
 import org.personal.mason.feop.oauth.contact.mvc.model.RecordVO;
 import org.personal.mason.feop.oauth.contact.mvc.model.ResourceVO;
 import org.personal.mason.feop.oauth.contact.spi.ContactInfoTypeService;
+import org.personal.mason.feop.oauth.contact.spi.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,16 @@ import java.util.List;
 public class ContactQueryApi {
 
     private ContactInfoTypeService contactInfoTypeService;
+    private ContactService contactService;
 
     @Autowired
     public void setContactInfoTypeService(ContactInfoTypeService contactInfoTypeService) {
         this.contactInfoTypeService = contactInfoTypeService;
+    }
+
+    @Autowired
+    public void setContactService(ContactService contactService) {
+        this.contactService = contactService;
     }
 
     /**
@@ -35,7 +42,7 @@ public class ContactQueryApi {
     @RequestMapping(value = {"remind"}, method = RequestMethod.GET)
     @ResponseBody
     public List<ContactVO> findContactByRemindDate(Long accountId, Date date) {
-        throw new RuntimeException("Not Implemented Exception");
+        return contactService.findContactsWithAccountAndDate(accountId, date);
     }
 
     /**
@@ -47,7 +54,7 @@ public class ContactQueryApi {
     @RequestMapping(value = {"updates"}, method = RequestMethod.GET)
     @ResponseBody
     public List<ContactVO> findUpdatedContact(Long accountId) {
-        throw new RuntimeException("Not Implemented Exception");
+        return contactService.findUpdateContacts(accountId);
     }
 
     /**
@@ -60,7 +67,7 @@ public class ContactQueryApi {
     @RequestMapping(value = {"rec"}, method = RequestMethod.GET)
     @ResponseBody
     public List<ContactVO> findContactWithRecord(Long accountId, RecordVO record) {
-        throw new RuntimeException("Not Implemented Exception");
+        return contactService.findContactsWithAccountAndRecord(accountId, record);
     }
 
     /**
@@ -73,7 +80,7 @@ public class ContactQueryApi {
     @RequestMapping(value = {"res"}, method = RequestMethod.GET)
     @ResponseBody
     public List<ContactVO> findContactWithResource(Long accountId, ResourceVO resource) {
-        throw new RuntimeException("Not Implemented Exception");
+        return contactService.findContactsWithAccountAndResource(accountId, resource);
     }
 
     /**
@@ -86,7 +93,7 @@ public class ContactQueryApi {
     @RequestMapping(value = {"kw"}, method = RequestMethod.GET)
     @ResponseBody
     public List<ContactVO> findContactWithString(Long accountId, String query) {
-        throw new RuntimeException("Not Implemented Exception");
+        return contactService.queryContactWithAccountAndQuery(accountId, query);
     }
 
     /**
@@ -98,7 +105,7 @@ public class ContactQueryApi {
     @RequestMapping(value = {"known"}, method = RequestMethod.GET)
     @ResponseBody
     public List<ContactVO> findContactsKnown(Long accoutId) {
-        throw new RuntimeException("Not Implemented Exception");
+        return contactService.findContactsAccountMightKnow(accoutId);
     }
 
     /**

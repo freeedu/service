@@ -8,9 +8,14 @@ import org.personal.mason.feop.oauth.contact.utils.ModelConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class ContactServiceImpl implements ContactService {
 
+    private AccountBasicRepository accountBasicRepository;
     private ContactRepository contactRepository;
     private ContactAddressRepository contactAddressRepository;
     private ContactEmailRepository contactEmailRepository;
@@ -20,6 +25,11 @@ public class ContactServiceImpl implements ContactService {
     private ContactResourceRepository contactResourceRepository;
     private ContactRemindDateRepository contactRemindDateRepository;
     private ContactSettingRepository contactSettingRepository;
+
+    @Autowired
+    public void setAccountBasicRepository(AccountBasicRepository accountBasicRepository) {
+        this.accountBasicRepository = accountBasicRepository;
+    }
 
     @Autowired
     public void setContactRepository(ContactRepository contactRepository) {
@@ -220,6 +230,94 @@ public class ContactServiceImpl implements ContactService {
             return toViewObject(contact);
         }
         return null;
+    }
+
+    @Override
+    public List<ContactVO> findContactsWithAccountAndDate(Long accountId, Date date) {
+        List<ContactVO> views = new ArrayList<>();
+        AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
+        if(accountId != null){
+            List<Contact> contacts = contactRepository.findByContactAndContactRemindDateRemindDate(accountBasic.getContact(), date);
+            for (Contact contact : contacts){
+                ContactVO view = toViewObject(contact);
+                views.add(view);
+            }
+        }
+        return views;
+    }
+
+    @Override
+    public List<ContactVO> findUpdateContacts(Long accountId) {
+        List<ContactVO> views = new ArrayList<>();
+        AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
+        if(accountId != null){
+            List<Contact> contacts = contactRepository.findUpdateContacts(accountBasic.getContact());
+            for (Contact contact : contacts){
+                ContactVO view = toViewObject(contact);
+                views.add(view);
+            }
+        }
+        return views;
+    }
+
+    @Override
+    public List<ContactVO> findContactsWithAccountAndRecord(Long accountId, RecordVO recordVO) {
+        List<ContactVO> views = new ArrayList<>();
+        AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
+        if(accountId != null){
+            ContactRecord record = new ContactRecord();
+            ModelConvertor.mergeToRecordModel(recordVO, record);
+            List<Contact> contacts = contactRepository.findByContactAndContactRecord(accountBasic.getContact(), record);
+            for (Contact contact : contacts){
+                ContactVO view = toViewObject(contact);
+                views.add(view);
+            }
+        }
+        return views;
+    }
+
+    @Override
+    public List<ContactVO> findContactsWithAccountAndResource(Long accountId, ResourceVO resourceVO) {
+        List<ContactVO> views = new ArrayList<>();
+        AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
+        if(accountId != null){
+            ContactResource resource = new ContactResource();
+            ModelConvertor.mergeToResourceModel(resourceVO, resource);
+            List<Contact> contacts = contactRepository.findByContactAndContactResource(accountBasic.getContact(), resource);
+            for (Contact contact : contacts){
+                ContactVO view = toViewObject(contact);
+                views.add(view);
+            }
+        }
+        return views;
+    }
+
+    @Override
+    public List<ContactVO> queryContactWithAccountAndQuery(Long accountId, String query) {
+        List<ContactVO> views = new ArrayList<>();
+        AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
+        if(accountId != null){
+            List<Contact> contacts = contactRepository.findByContactAndQuery(accountBasic.getContact(), query);
+            for (Contact contact : contacts){
+                ContactVO view = toViewObject(contact);
+                views.add(view);
+            }
+        }
+        return views;
+    }
+
+    @Override
+    public List<ContactVO> findContactsAccountMightKnow(Long accountId) {
+        List<ContactVO> views = new ArrayList<>();
+        AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
+        if(accountId != null){
+            List<Contact> contacts = contactRepository.findContactMightKnown(accountBasic.getContact());
+            for (Contact contact : contacts){
+                ContactVO view = toViewObject(contact);
+                views.add(view);
+            }
+        }
+        return views;
     }
 
 }
