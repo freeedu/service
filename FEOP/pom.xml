@@ -22,6 +22,7 @@
 		<spring-data-jpa.version>1.4.1.RELEASE</spring-data-jpa.version>
 		<hibernate.jpa.2.0.api.version>1.0.1.Final</hibernate.jpa.2.0.api.version>
 		<hibernate.entitymanager.version>4.2.7.Final</hibernate.entitymanager.version>
+        <hibernate.search.version>4.4.0.Final</hibernate.search.version>
 		<hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
 		<mysql.connector.java.version>5.1.26</mysql.connector.java.version>
 		<tomcat.jdbc.version>7.0.47</tomcat.jdbc.version>

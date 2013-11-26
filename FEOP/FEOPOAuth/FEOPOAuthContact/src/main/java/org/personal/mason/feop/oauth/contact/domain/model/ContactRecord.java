@@ -1,5 +1,8 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,14 +10,17 @@ import java.util.Date;
  * The persistent class for the contact_record database table.
  */
 @Entity
+@Indexed
 @Table(name = "contact_record")
 public class ContactRecord extends FOEPPersistable<Long> {
 
     private static final long serialVersionUID = -3829838155744166550L;
 
+    @Field
     @Lob
     private String accomplishment;
 
+    @Field
     @Column(length = 255)
     private String description;
 
@@ -26,6 +32,7 @@ public class ContactRecord extends FOEPPersistable<Long> {
     @Column(name = "start_date")
     private Date startDate;
 
+    @Field
     @Column(length = 255)
     private String type;
 

@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 
 /**
@@ -14,6 +16,7 @@ public class ContactPhone extends FOEPPersistable<Long> {
     @Column(name = "phone_label", length = 255)
     private String phoneLabel;
 
+    @Field
     @Column(name = "phone_number", nullable = false, length = 40)
     private String phoneNumber;
 

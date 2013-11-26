@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 
 /**
@@ -11,6 +13,7 @@ public class ContactInstantMessage extends FOEPPersistable<Long> {
 
     private static final long serialVersionUID = 9053653995042048902L;
 
+    @Field
     @Column(name = "im_address", nullable = false, length = 40)
     private String imAddress;
 

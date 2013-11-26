@@ -237,7 +237,7 @@ public class ContactServiceImpl implements ContactService {
         List<ContactVO> views = new ArrayList<>();
         AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
         if(accountId != null){
-            List<Contact> contacts = contactRepository.findByContactAndContactRemindDateRemindDate(accountBasic.getContact(), date);
+            List<Contact> contacts = contactRepository.getByContactAndContactRemindDateRemindDate(accountBasic.getContact(), date);
             for (Contact contact : contacts){
                 ContactVO view = toViewObject(contact);
                 views.add(view);
@@ -251,7 +251,7 @@ public class ContactServiceImpl implements ContactService {
         List<ContactVO> views = new ArrayList<>();
         AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
         if(accountId != null){
-            List<Contact> contacts = contactRepository.findUpdateContacts(accountBasic.getContact());
+            List<Contact> contacts = contactRepository.getUpdateContacts(accountBasic.getContact());
             for (Contact contact : contacts){
                 ContactVO view = toViewObject(contact);
                 views.add(view);
@@ -267,7 +267,7 @@ public class ContactServiceImpl implements ContactService {
         if(accountId != null){
             ContactRecord record = new ContactRecord();
             ModelConvertor.mergeToRecordModel(recordVO, record);
-            List<Contact> contacts = contactRepository.findByContactAndContactRecord(accountBasic.getContact(), record);
+            List<Contact> contacts = contactRepository.getByContactAndContactRecord(accountBasic.getContact(), record);
             for (Contact contact : contacts){
                 ContactVO view = toViewObject(contact);
                 views.add(view);
@@ -283,7 +283,7 @@ public class ContactServiceImpl implements ContactService {
         if(accountId != null){
             ContactResource resource = new ContactResource();
             ModelConvertor.mergeToResourceModel(resourceVO, resource);
-            List<Contact> contacts = contactRepository.findByContactAndContactResource(accountBasic.getContact(), resource);
+            List<Contact> contacts = contactRepository.getByContactAndContactResource(accountBasic.getContact(), resource);
             for (Contact contact : contacts){
                 ContactVO view = toViewObject(contact);
                 views.add(view);
@@ -297,7 +297,7 @@ public class ContactServiceImpl implements ContactService {
         List<ContactVO> views = new ArrayList<>();
         AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
         if(accountId != null){
-            List<Contact> contacts = contactRepository.findByContactAndQuery(accountBasic.getContact(), query);
+            List<Contact> contacts = contactRepository.getByContactAndQuery(accountBasic.getContact(), query);
             for (Contact contact : contacts){
                 ContactVO view = toViewObject(contact);
                 views.add(view);
@@ -311,7 +311,7 @@ public class ContactServiceImpl implements ContactService {
         List<ContactVO> views = new ArrayList<>();
         AccountBasic accountBasic = accountBasicRepository.findOne(accountId);
         if(accountId != null){
-            List<Contact> contacts = contactRepository.findContactMightKnown(accountBasic.getContact());
+            List<Contact> contacts = contactRepository.getContactMightKnown(accountBasic.getContact());
             for (Contact contact : contacts){
                 ContactVO view = toViewObject(contact);
                 views.add(view);

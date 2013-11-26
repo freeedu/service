@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 
 /**
@@ -11,6 +13,7 @@ public class ContactEmail extends FOEPPersistable<Long> {
 
     private static final long serialVersionUID = 5355035111588385108L;
 
+    @Field
     @Column(name = "email_address", nullable = false, length = 255)
     private String emailAddress;
 

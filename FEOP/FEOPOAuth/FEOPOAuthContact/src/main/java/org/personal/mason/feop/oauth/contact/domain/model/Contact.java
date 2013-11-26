@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
+import org.hibernate.search.annotations.*;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,26 +9,33 @@ import java.util.List;
  * The persistent class for the contacts database table.
  */
 @Entity
+@Indexed
 @Table(name = "contacts")
 public class Contact extends FOEPPersistable<Long> {
 
     private static final long serialVersionUID = 7754986492566919598L;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(name = "company_name", length = 255)
     private String companyName;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(name = "contact_name", length = 255)
     private String contactName;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(name = "department_name", length = 255)
     private String departmentName;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(name = "first_name", length = 80)
     private String firstName;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(name = "job_title_name", length = 255)
     private String jobTitleName;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(name = "last_name", length = 80)
     private String lastName;
 
@@ -36,9 +45,11 @@ public class Contact extends FOEPPersistable<Long> {
     @Column(name = "middle_name", length = 80)
     private String middleName;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Column(name = "nick_name", length = 80)
     private String nickName;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Lob
     private String note;
 
@@ -54,18 +65,23 @@ public class Contact extends FOEPPersistable<Long> {
     private List<ContactAddress> contactAddresses;
 
     // bi-directional many-to-one association to ContactEmail
+    @IndexedEmbedded
     @OneToMany(mappedBy = "contact")
     private List<ContactEmail> contactEmails;
 
     // bi-directional many-to-one association to ContactInstantMessage
+    @IndexedEmbedded
     @OneToMany(mappedBy = "contact")
     private List<ContactInstantMessage> contactInstantMessages;
 
     // bi-directional many-to-one association to ContactPhone
+
+    @IndexedEmbedded
     @OneToMany(mappedBy = "contact")
     private List<ContactPhone> contactPhones;
 
     // bi-directional many-to-one association to ContactRecord
+    @IndexedEmbedded
     @OneToMany(mappedBy = "contact")
     private List<ContactRecord> contactRecords;
 
@@ -73,7 +89,13 @@ public class Contact extends FOEPPersistable<Long> {
     @OneToMany(mappedBy = "contact")
     private List<ContactRemindDate> contactRemindDates;
 
+    // bi-directional many-to-one association to ContactSetting
+    @IndexedEmbedded
+    @OneToMany(mappedBy = "contact")
+    private List<ContactInfoCommon> contactCommons;
+
     // bi-directional many-to-one association to ContactResource
+    @IndexedEmbedded
     @OneToMany(mappedBy = "contact")
     private List<ContactResource> contactResources;
 
@@ -334,6 +356,29 @@ public class Contact extends FOEPPersistable<Long> {
 
         return contactRemindDate;
     }
+
+    public List<ContactInfoCommon> getContactCommons() {
+        return contactCommons;
+    }
+
+    public void setContactCommons(List<ContactInfoCommon> contactCommons) {
+        this.contactCommons = contactCommons;
+    }
+
+    public ContactInfoCommon addContactInfoCommon(ContactInfoCommon contactInfoCommon) {
+        getContactCommons().add(contactInfoCommon);
+        contactInfoCommon.setContact(this);
+
+        return contactInfoCommon;
+    }
+
+    public ContactInfoCommon removeContactInfoCommon(ContactInfoCommon contactInfoCommon) {
+        getContactCommons().remove(contactInfoCommon);
+        contactInfoCommon.setContact(null);
+
+        return contactInfoCommon;
+    }
+
 
     public List<ContactResource> getContactResources() {
         return this.contactResources;

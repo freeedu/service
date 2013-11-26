@@ -1,6 +1,7 @@
 package org.personal.mason.feop.oauth.contact.config;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.hibernate.search.store.impl.RAMDirectoryProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,6 +15,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -74,6 +77,10 @@ public class RootConfig {
         emf.setPersistenceUnitName(persistenceUnitName);
         emf.setPackagesToScan(packagesToScan);
         emf.setJpaVendorAdapter(jpaVendorAdapter());
+        Properties jpaProperties = new Properties();
+        jpaProperties.put("hibernate.search.default.directory_provider", new RAMDirectoryProvider());
+
+        emf.setJpaProperties(jpaProperties);
         return emf;
     }
 

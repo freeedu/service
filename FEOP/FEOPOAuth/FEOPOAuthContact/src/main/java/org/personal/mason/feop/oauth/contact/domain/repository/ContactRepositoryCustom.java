@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface ContactRepositoryCustom {
 
-    List<Contact> findByContactAndContactRemindDateRemindDate(Contact contact, Date date);
+    List<Contact> getByContactAndContactRemindDateRemindDate(Contact contact, Date date);
 
-    List<Contact> findByContactAndContactRecord(Contact contact, ContactRecord record);
+    List<Contact> getByContactAndContactRecord(Contact contact, ContactRecord record);
 
-    List<Contact> findByContactAndContactResource(Contact contact, ContactResource resource);
+    List<Contact> getByContactAndContactResource(Contact contact, ContactResource resource);
 
-    List<Contact> findUpdateContacts(Contact contact);
+    List<Contact> getUpdateContacts(Contact contact);
 
-    List<Contact> findByContactAndQuery(Contact contact, String query);
+    List<Contact> getByContactAndQuery(Contact contact, String query);
 
-    List<Contact> findContactMightKnown(Contact contact);
+    List<Contact> getContactMightKnown(Contact contact);
 }

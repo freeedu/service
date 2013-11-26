@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
+import org.hibernate.search.annotations.Field;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,8 +19,10 @@ public class ContactResource extends FOEPPersistable<Long> {
     private Date buildDate;
 
     @Lob
+    @Field
     private String description;
 
+    @Field
     @Column(name = "resource_name", length = 255)
     private String resourceName;
 
