@@ -17,7 +17,7 @@ public interface ContactRepositoryCustom {
 
     List<Contact> getUpdateContacts(Contact contact);
 
-    List<Contact> getByContactAndQuery(Contact contact, String query);
+    List<Contact> getByContactAndQuery(Long contactId, String query);
 
     List<Contact> getContactMightKnown(Contact contact);
 }

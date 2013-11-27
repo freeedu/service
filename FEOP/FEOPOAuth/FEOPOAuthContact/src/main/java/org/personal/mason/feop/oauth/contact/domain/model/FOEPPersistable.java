@@ -40,6 +40,11 @@ public abstract class FOEPPersistable<PK extends Serializable> extends AbstractP
         this.version = 0;
     }
 
+    @Override
+    public void setId(PK id) {
+          super.setId(id);
+    }
+
     public Date getCreateTime() {
         return createTime;
     }

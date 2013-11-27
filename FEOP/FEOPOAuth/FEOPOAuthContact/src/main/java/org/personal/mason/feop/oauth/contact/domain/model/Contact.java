@@ -1,6 +1,12 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
+import org.apache.lucene.search.FieldValueFilter;
+import org.apache.lucene.search.QueryWrapperFilter;
 import org.hibernate.search.annotations.*;
+import org.hibernate.search.filter.ShardSensitiveOnlyFilter;
+import org.personal.mason.feop.oauth.contact.common.FOEPContactBridge;
+import org.personal.mason.feop.oauth.contact.common.FOEPContactFilter;
+import org.personal.mason.feop.oauth.contact.common.FOEPContactFilterFactory;
 
 import javax.persistence.*;
 import java.util.List;
@@ -104,13 +110,16 @@ public class Contact extends FOEPPersistable<Long> {
     private List<ContactSetting> contactSettings;
 
     // bi-directional many-to-one association to Contact
-    @ManyToOne
-    @JoinColumn(name = "related_contact_id")
-    private Contact contact;
+    @Field
+//    @ManyToOne
+//    @JoinColumn(name = "related_contact_id")
+//    private Contact contact;
+    @Column(name = "related_contact_id")
+    private Long relatedContactId;
 
     // bi-directional many-to-one association to Contact
-    @OneToMany(mappedBy = "contact")
-    private List<Contact> contacts;
+//    @OneToMany(mappedBy = "contact")
+//    private List<Contact> contacts;
 
     public Contact() {
     }
@@ -424,34 +433,44 @@ public class Contact extends FOEPPersistable<Long> {
         return contactSetting;
     }
 
-    public Contact getContact() {
-        return this.contact;
+//    public Contact getContact() {
+//        return this.contact;
+//    }
+//
+//    public void setContact(Contact contact) {
+//        this.contact = contact;
+//    }
+
+    public Long getRelatedContactId() {
+        return relatedContactId;
     }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
+    public void setRelatedContactId(Long relatedContactId) {
+        this.relatedContactId = relatedContactId;
     }
 
-    public List<Contact> getContacts() {
-        return this.contacts;
-    }
+//    public List<Contact> getContacts() {
+//        return this.contacts;
+//    }
+//
+//    public void setContacts(List<Contact> contacts) {
+//        this.contacts = contacts;
+//    }
 
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
-    }
-
-    public Contact addContact(Contact contact) {
-        getContacts().add(contact);
-        contact.setContact(this);
-
-        return contact;
-    }
-
-    public Contact removeContact(Contact contact) {
-        getContacts().remove(contact);
-        contact.setContact(null);
-
-        return contact;
-    }
+//    public Contact addContact(Contact contact) {
+//        getContacts().add(contact);
+////        contact.setContact(this);
+//        contact.setRelatedContactId(this.getId());
+//
+//        return contact;
+//    }
+//
+//    public Contact removeContact(Contact contact) {
+//        getContacts().remove(contact);
+////        contact.setContact(null);
+//        contact.setRelatedContactId(null);
+//
+//        return contact;
+//    }
 
 }

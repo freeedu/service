@@ -1,6 +1,12 @@
 package org.personal.mason.feop.oauth.contact.domain.repository;
 
+import org.apache.lucene.search.Filter;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.personal.mason.feop.oauth.contact.domain.model.Contact;
@@ -174,15 +180,22 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
     }
 
     @Override
-    public List<Contact> getByContactAndQuery(Contact contact, String queryString) {
+    public List<Contact> getByContactAndQuery(Long contactId, String queryString) {
         QueryBuilder qb = getFullTextEntityManager().getSearchFactory().buildQueryBuilder().forEntity(Contact.class).get();
-        org.apache.lucene.search.Query query = qb.keyword()
-                .onFields("companyName", "contactName", "departmentName", "firstName", "jobTitleName", "lastName", "nickName", "note",
+        org.apache.lucene.search.Query query = qb.bool()
+                .must(qb.keyword().onFields("companyName", "contactName", "departmentName", "firstName", "jobTitleName", "lastName", "nickName", "note",
                         "contactEmails.emailAddress", "contactCommons.value", "contactInstantMessages.imAddress", "contactPhones.phoneNumber",
-                        "contactRecords.accomplishment", "contactRecords.description", "contactResources.resourceName", "contactResources.description")
-                .matching(queryString).createQuery();
-        Query persistenceQuery = getFullTextEntityManager().createFullTextQuery(query, Contact.class);
-        List<Contact> result = persistenceQuery.getResultList();
+                        "contactRecords.accomplishment", "contactRecords.description", "contactResources.resourceName", "contactResources.description").matching(queryString).createQuery())
+                .must(qb.keyword().onField("relatedContactId").matching(contactId).createQuery())
+                .createQuery();
+
+        FullTextQuery fullTextQuery = getFullTextEntityManager().createFullTextQuery(query, Contact.class);
+
+//        org.apache.lucene.search.Query query2 = qb.keyword().onField("contact").matching(contact).createQuery();
+//
+//        fullTextQuery.enableFullTextFilter("contact_filter").setParameter("query", query2);
+
+        List<Contact> result = fullTextQuery.getResultList();
 
         return result;
     }

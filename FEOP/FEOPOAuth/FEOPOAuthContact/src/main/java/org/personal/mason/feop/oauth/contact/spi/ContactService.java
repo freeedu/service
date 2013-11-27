@@ -18,6 +18,8 @@ public interface ContactService extends BaseService<ContactVO, Contact> {
 
     ContactVO findWithId(Long contactId);
 
+    List<ContactVO> findMyContacts(Long contactId);
+
     List<ContactVO> findContactsWithAccountAndDate(Long accountId, Date date);
 
     List<ContactVO> findUpdateContacts(Long accountId);

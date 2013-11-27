@@ -51,8 +51,9 @@ public class ModelConvertor {
         view.setNote(contact.getNote());
         view.setPhotoUrl(contact.getPhotoUrl());
         view.setVersion(contact.getVersion());
-        if (contact.getContact() != null) {
-            view.setBelongTo(contact.getContact().getId());
+        if (contact.getRelatedContactId() != null) {
+//            view.setBelongTo(contact.getContact().getId());
+            view.setBelongTo(contact.getRelatedContactId());
         }
         return view;
     }
