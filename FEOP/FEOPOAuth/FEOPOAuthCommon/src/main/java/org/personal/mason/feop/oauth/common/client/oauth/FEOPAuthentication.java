@@ -4,21 +4,21 @@ import org.personal.mason.feop.oauth.common.model.UserInfo;
 
 public interface FEOPAuthentication {
 
-	boolean hasValidToken();
+    boolean hasValidToken();
 
-	boolean hasRole(String role);
+    boolean hasRole(String role);
 
-	public boolean isTokenExpired();
+    public boolean isTokenExpired();
 
-	public String getAccessToken();
+    public String getAccessToken();
 
-	public String getRefreshToken();
+    public String getRefreshToken();
 
-	public String getTokenType();
+    public String getTokenType();
 
-	public String getScope();
+    public String getScope();
 
-	public void setUserInfo(UserInfo userInfo);
+    public void setUserInfo(UserInfo userInfo);
 
-	public UserInfo getUserInfo();
+    public UserInfo getUserInfo();
 }

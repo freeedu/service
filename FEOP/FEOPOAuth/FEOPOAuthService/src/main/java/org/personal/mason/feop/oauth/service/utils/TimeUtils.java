@@ -5,8 +5,8 @@ import java.util.Calendar;
 
 public class TimeUtils {
 
-	public static Timestamp getCurrentTimestamp() {
-		return new Timestamp(Calendar.getInstance().getTime().getTime());
-	}
+    public static Timestamp getCurrentTimestamp() {
+        return new Timestamp(Calendar.getInstance().getTime().getTime());
+    }
 
 }

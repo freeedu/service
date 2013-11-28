@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<beans profile="default">
-		<bean id="oauthDataSource" class="org.personal.mason.feop.oauth.common.cf.service.AppFogMysqlDataSource"
-			p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-oauth2" />
-		<!--<bean id="commonDataSource" class="org.personal.mason.feop.oauth.common.cf.service.AppFogMysqlDataSource"-->
-			<!--p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-common" />-->
-		<!--<bean id="contactDataSource" class="org.personal.mason.feop.oauth.common.cf.service.AppFogMysqlDataSource"-->
-			<!--p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-contact" />-->
-	</beans>
-	<beans profile="development">
-		<bean id="oauthDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${mysql.jdbc.driverClassName}"
-			p:url="${oauth2.jdbc.url}" p:username="${oauth2.jdbc.username}" p:password="${oauth2.jdbc.password}" />
+    <beans profile="default">
+        <bean id="oauthDataSource" class="org.personal.mason.feop.oauth.common.cf.service.AppFogMysqlDataSource"
+              p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-oauth2"/>
+        <!--<bean id="commonDataSource" class="org.personal.mason.feop.oauth.common.cf.service.AppFogMysqlDataSource"-->
+        <!--p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-common" />-->
+        <!--<bean id="contactDataSource" class="org.personal.mason.feop.oauth.common.cf.service.AppFogMysqlDataSource"-->
+        <!--p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-contact" />-->
+    </beans>
+    <beans profile="development">
+        <bean id="oauthDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+              p:driverClassName="${mysql.jdbc.driverClassName}"
+              p:url="${oauth2.jdbc.url}" p:username="${oauth2.jdbc.username}" p:password="${oauth2.jdbc.password}"/>
 
-		<!--<bean id="commonDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${mysql.jdbc.driverClassName}"-->
-			<!--p:url="${common.jdbc.url}" p:username="${common.jdbc.username}" p:password="${common.jdbc.password}" />-->
+        <!--<bean id="commonDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" p:driverClassName="${mysql.jdbc.driverClassName}"-->
+        <!--p:url="${common.jdbc.url}" p:username="${common.jdbc.username}" p:password="${common.jdbc.password}" />-->
 
-		<!--<bean id="contactDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"-->
-			<!--p:driverClassName="${mysql.jdbc.driverClassName}" p:url="${contact.jdbc.url}" p:username="${contact.jdbc.username}"-->
-			<!--p:password="${contact.jdbc.password}" />-->
-	</beans>
+        <!--<bean id="contactDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"-->
+        <!--p:driverClassName="${mysql.jdbc.driverClassName}" p:url="${contact.jdbc.url}" p:username="${contact.jdbc.username}"-->
+        <!--p:password="${contact.jdbc.password}" />-->
+    </beans>
 </beans>

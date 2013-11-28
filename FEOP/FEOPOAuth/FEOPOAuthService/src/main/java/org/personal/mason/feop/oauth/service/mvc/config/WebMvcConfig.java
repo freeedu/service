@@ -8,15 +8,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages="org.personal.mason.feop.oauth.service.mvc.controllers")
+@ComponentScan(basePackages = "org.personal.mason.feop.oauth.service.mvc.controllers")
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(31556926);
-		super.addResourceHandlers(registry);
-	}
-	
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(31556926);
+        super.addResourceHandlers(registry);
+    }
+
 //	@Bean
 //	public InternalResourceViewResolver internalResolver() {
 //		InternalResourceViewResolver internalResolver = new InternalResourceViewResolver();

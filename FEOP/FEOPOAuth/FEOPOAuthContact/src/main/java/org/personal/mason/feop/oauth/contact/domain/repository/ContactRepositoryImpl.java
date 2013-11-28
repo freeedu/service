@@ -1,10 +1,5 @@
 package org.personal.mason.feop.oauth.contact.domain.repository;
 
-import org.apache.lucene.search.Filter;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
@@ -19,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
-import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,8 +50,8 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
         CriteriaQuery<Contact> criteria = criteriaBuilder.createQuery(Contact.class);
         Root<Contact> fromContact = criteria.from(Contact.class);
         List<Contact> cs = em.createQuery(criteria.select(fromContact)).getResultList();
-        if(cs != null){
-            for (Contact c : cs){
+        if (cs != null) {
+            for (Contact c : cs) {
                 getFullTextEntityManager().index(c);
             }
         }
@@ -191,18 +185,13 @@ public class ContactRepositoryImpl implements ContactRepositoryCustom {
 
         FullTextQuery fullTextQuery = getFullTextEntityManager().createFullTextQuery(query, Contact.class);
 
-//        org.apache.lucene.search.Query query2 = qb.keyword().onField("contact").matching(contact).createQuery();
-//
-//        fullTextQuery.enableFullTextFilter("contact_filter").setParameter("query", query2);
-
         List<Contact> result = fullTextQuery.getResultList();
-
         return result;
     }
 
     @Override
     public List<Contact> getContactMightKnown(Contact contact) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException("Not implemented yet!");
     }
 
 }

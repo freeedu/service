@@ -1,32 +1,32 @@
 package org.personal.mason.feop.server.blog.domain.service;
 
-import java.util.List;
-
 import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.model.Sery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.List;
+
 public interface SeryService {
 
-	void save(Sery sery);
+    void save(Sery sery);
 
-	Sery update(Sery sery);
+    Sery update(Sery sery);
 
-	Sery findById(Long id);
+    Sery findById(Long id);
 
-	void delete(Sery sery);
+    void delete(Sery sery);
 
-	void delete(Long id);
+    void delete(Long id);
 
-	List<Sery> findByCategory(Category category);
+    List<Sery> findByCategory(Category category);
 
-	Page<Sery> findByCategory(Category category, Pageable pageable);
+    Page<Sery> findByCategory(Category category, Pageable pageable);
 
-	List<Sery> findByCategory(Category category, Sort sort);
+    List<Sery> findByCategory(Category category, Sort sort);
 
-	List<Sery> findByName(String name);
+    List<Sery> findByName(String name);
 
-	Page<Sery> findByName(String name, Pageable pageable);
+    Page<Sery> findByName(String name, Pageable pageable);
 }

@@ -6,5 +6,5 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 
-<%@ taglib tagdir="/WEB-INF/tags/util" prefix="util"%>
-<fmt:requestEncoding value="UTF-8" />
+<%@ taglib tagdir="/WEB-INF/tags/util" prefix="util" %>
+<fmt:requestEncoding value="UTF-8"/>

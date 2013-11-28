@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 
 public class PageableUtils {
 
-	public static Pageable getPageable(Pageable pageable, Sort sort) {
-		return new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), sort);
-	}
+    public static Pageable getPageable(Pageable pageable, Sort sort) {
+        return new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), sort);
+    }
 }

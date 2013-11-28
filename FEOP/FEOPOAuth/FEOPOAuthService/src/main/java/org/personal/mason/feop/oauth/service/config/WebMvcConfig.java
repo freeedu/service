@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -44,14 +43,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public TilesViewResolver tilesViewResolver(){
+    public TilesViewResolver tilesViewResolver() {
         TilesViewResolver resolver = new TilesViewResolver();
         resolver.setOrder(1);
-        return  resolver;
+        return resolver;
     }
 
     @Bean
-    public TilesConfigurer tilesConfigurer(){
+    public TilesConfigurer tilesConfigurer() {
         TilesConfigurer configurer = new TilesConfigurer();
         configurer.setDefinitions(new String[]{"/WEB-INF/tiles/tiles.xm"});
         return configurer;

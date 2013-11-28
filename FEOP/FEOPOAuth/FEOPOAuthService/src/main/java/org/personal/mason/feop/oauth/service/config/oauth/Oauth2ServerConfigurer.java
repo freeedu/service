@@ -1,4 +1,4 @@
-package org.personal.mason.feop.oauth.service.config;
+package org.personal.mason.feop.oauth.service.config.oauth;
 
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -61,13 +61,13 @@ public final class Oauth2ServerConfigurer extends SecurityConfigurerAdapter<Defa
 
     @Override
     public void init(HttpSecurity builder) throws Exception {
-        if(builder.getConfigurers(HttpBasicConfigurer.class) == null){
+        if (builder.getConfigurers(HttpBasicConfigurer.class) == null) {
             builder.httpBasic();
         }
         builder.setSharedObject(AuthenticationEntryPoint.class, authenticationEntryPoint);
     }
 
-    public Oauth2ServerConfigurer resourceId(String resourceId){
+    public Oauth2ServerConfigurer resourceId(String resourceId) {
         this.resourceId = resourceId;
         return this;
     }
@@ -80,7 +80,7 @@ public final class Oauth2ServerConfigurer extends SecurityConfigurerAdapter<Defa
         clientCredentialsTokenEndpointFilter.setAuthenticationManager(authenticationManager(builder));
         clientCredentialsTokenEndpointFilter = postProcess(clientCredentialsTokenEndpointFilter);
 
-        AuthenticationManager authenticationManager =  oauthAuthenticationManager(builder);
+        AuthenticationManager authenticationManager = oauthAuthenticationManager(builder);
         resoucesServerFilter = new OAuth2AuthenticationProcessingFilter();
         resoucesServerFilter.setAuthenticationManager(authenticationManager);
         resoucesServerFilter = postProcess(resoucesServerFilter);
@@ -107,7 +107,7 @@ public final class Oauth2ServerConfigurer extends SecurityConfigurerAdapter<Defa
     }
 
     private AuthorizationServerTokenServices tokenServices(HttpSecurity builder) {
-        if(this.tokenServices != null){
+        if (this.tokenServices != null) {
             return this.tokenServices;
         }
 
@@ -121,14 +121,14 @@ public final class Oauth2ServerConfigurer extends SecurityConfigurerAdapter<Defa
     }
 
     private TokenStore tokenStore() {
-        if(this.tokenStore == null){
+        if (this.tokenStore == null) {
             this.tokenStore = new InMemoryTokenStore();
         }
 
         return this.tokenStore;
     }
 
-    private ClientDetailsService clientDetails(){
+    private ClientDetailsService clientDetails() {
         return getBuilder().getSharedObject(ClientDetailsService.class);
     }
 
@@ -141,13 +141,13 @@ public final class Oauth2ServerConfigurer extends SecurityConfigurerAdapter<Defa
     }
 
     private AuthorizationCodeServices authorizationCodeServices(HttpSecurity builder) {
-        if(authorizationCodeServices == null){
+        if (authorizationCodeServices == null) {
             authorizationCodeServices = new InMemoryAuthorizationCodeServices();
         }
         return authorizationCodeServices;
     }
 
-    private AuthenticationManager authenticationManager(HttpSecurity builder) throws  Exception{
+    private AuthenticationManager authenticationManager(HttpSecurity builder) throws Exception {
         return builder.getSharedObject(AuthenticationManagerBuilder.class).build();
         //return builder.getAuthenticationManager();
     }
@@ -157,7 +157,7 @@ public final class Oauth2ServerConfigurer extends SecurityConfigurerAdapter<Defa
     }
 
     private ConsumerTokenServices consumerTokenServices(HttpSecurity builder) {
-        if(consumerTokenServices == null){
+        if (consumerTokenServices == null) {
             DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
             defaultTokenServices.setClientDetailsService(clientDetails());
             defaultTokenServices.setTokenStore(tokenStore());
@@ -166,8 +166,8 @@ public final class Oauth2ServerConfigurer extends SecurityConfigurerAdapter<Defa
         return this.consumerTokenServices;
     }
 
-    private TokenGranter tokenGranter(HttpSecurity builder) throws Exception{
-        if(this.tokenGranter == null){
+    private TokenGranter tokenGranter(HttpSecurity builder) throws Exception {
+        if (this.tokenGranter == null) {
             ClientDetailsService clientDetailsService = clientDetails();
             AuthorizationServerTokenServices tokenServices = tokenServices(builder);
             AuthorizationCodeServices authorizationCodeServices = authorizationCodeServices(builder);

@@ -19,56 +19,56 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SeryController {
 
-	private SeryService seryService;
-	private CategoryService categoryService;
+    private SeryService seryService;
+    private CategoryService categoryService;
 
-	@Autowired
-	public void setSeryService(SeryService seryService) {
-		this.seryService = seryService;
-	}
+    @Autowired
+    public void setSeryService(SeryService seryService) {
+        this.seryService = seryService;
+    }
 
-	@Autowired
-	public void setCategoryService(CategoryService categoryService) {
-		this.categoryService = categoryService;
-	}
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
-	@RequestMapping(value = "/sery/create", method = RequestMethod.GET)
-	public String createSery(Model model) {
-		model.addAttribute("seryModel", new SeryModel());
-		return "";
-	}
+    @RequestMapping(value = "/sery/create", method = RequestMethod.GET)
+    public String createSery(Model model) {
+        model.addAttribute("seryModel", new SeryModel());
+        return "";
+    }
 
-	@RequestMapping(value = "/sery/save", method = RequestMethod.POST)
-	public String saveSery(@Validated SeryModel seryModel, BindingResult result) {
-		if (result.hasErrors()) {
-			return null;
-		}
+    @RequestMapping(value = "/sery/save", method = RequestMethod.POST)
+    public String saveSery(@Validated SeryModel seryModel, BindingResult result) {
+        if (result.hasErrors()) {
+            return null;
+        }
 
-		Sery sery = SeryModel.convert(seryModel);
-		Category category = categoryService.findById(seryModel.getCategoryId());
-		sery.setCategory(category);
+        Sery sery = SeryModel.convert(seryModel);
+        Category category = categoryService.findById(seryModel.getCategoryId());
+        sery.setCategory(category);
 
-		seryService.save(sery);
-		return "";
-	}
+        seryService.save(sery);
+        return "";
+    }
 
-	@RequestMapping(value = "/sery/delete", method = RequestMethod.DELETE)
-	public void deleteSery(@RequestParam("id") Long id) {
-		seryService.delete(id);
-	}
+    @RequestMapping(value = "/sery/delete", method = RequestMethod.DELETE)
+    public void deleteSery(@RequestParam("id") Long id) {
+        seryService.delete(id);
+    }
 
-	@RequestMapping(value = "/sery/list", method = RequestMethod.GET)
-	public String findByName(@RequestParam("q") String query, Pageable pageable, Model model) {
-		Page<Sery> series = seryService.findByName(query, pageable);
-		model.addAttribute("series", series);
-		return "";
-	}
+    @RequestMapping(value = "/sery/list", method = RequestMethod.GET)
+    public String findByName(@RequestParam("q") String query, Pageable pageable, Model model) {
+        Page<Sery> series = seryService.findByName(query, pageable);
+        model.addAttribute("series", series);
+        return "";
+    }
 
-	@RequestMapping(value = "/sery/c/list", method = RequestMethod.GET)
-	public String findByCategory(@RequestParam("c") Long categoryId, Pageable pageable, Model model) {
-		Category cat = categoryService.findById(categoryId);
-		Page<Sery> series = seryService.findByCategory(cat, pageable);
-		model.addAttribute("series", series);
-		return "";
-	}
+    @RequestMapping(value = "/sery/c/list", method = RequestMethod.GET)
+    public String findByCategory(@RequestParam("c") Long categoryId, Pageable pageable, Model model) {
+        Category cat = categoryService.findById(categoryId);
+        Page<Sery> series = seryService.findByCategory(cat, pageable);
+        model.addAttribute("series", series);
+        return "";
+    }
 }

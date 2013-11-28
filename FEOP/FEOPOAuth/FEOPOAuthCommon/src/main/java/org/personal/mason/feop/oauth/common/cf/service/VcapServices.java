@@ -11,7 +11,6 @@ import java.util.Map.Entry;
 
 /**
  * Analysis the Vcap environemnt and generate Database configurations
- *
  */
 public class VcapServices {
 

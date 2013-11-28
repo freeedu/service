@@ -1,4 +1,4 @@
-package org.personal.mason.feop.oauth.service.config;
+package org.personal.mason.feop.oauth.service.config.oauth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
  */
 
 @Configuration
-public  class Oauth2Config extends WebSecurityConfigurerAdapter {
+public abstract class Oauth2ConfigAdapter extends WebSecurityConfigurerAdapter {
 
     @Bean
     public Oauth2ServerConfigurer oauth2ServerConfigurer() throws Exception {
@@ -31,7 +31,7 @@ public  class Oauth2Config extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthorizationEndpoint authorizationEndpoint() throws Exception{
+    public AuthorizationEndpoint authorizationEndpoint() throws Exception {
         AuthorizationEndpoint authorizationEndpoint = new AuthorizationEndpoint();
         authorizationEndpoint.setTokenGranter(tokenGranter());
         authorizationEndpoint.setClientDetailsService(clientDetails());
@@ -48,7 +48,8 @@ public  class Oauth2Config extends WebSecurityConfigurerAdapter {
     public TokenEndpoint tokenEndpoint() throws Exception {
         TokenEndpoint tokenEndpoint = new TokenEndpoint();
         tokenEndpoint.setClientDetailsService(clientDetails());
-        tokenEndpoint.setTokenGranter(tokenGranter());;
+        tokenEndpoint.setTokenGranter(tokenGranter());
+        ;
         return tokenEndpoint;
     }
 
@@ -58,12 +59,12 @@ public  class Oauth2Config extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public WhitelabelApprovalEndpoint approvalEndpoint(){
+    public WhitelabelApprovalEndpoint approvalEndpoint() {
         return new WhitelabelApprovalEndpoint();
     }
 
     @Bean
-    public FrameworkEndpointHandlerMapping endpointHandlerMapping(){
+    public FrameworkEndpointHandlerMapping endpointHandlerMapping() {
         return new FrameworkEndpointHandlerMapping();
     }
 

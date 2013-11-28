@@ -10,34 +10,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BlogSettingServiceImpl implements BlogSettingService {
 
-	private BlogSettingRepository blogSettingRepository;
+    private BlogSettingRepository blogSettingRepository;
 
-	@Autowired
-	public void setBlogSettingRepository(BlogSettingRepository blogSettingRepository) {
-		this.blogSettingRepository = blogSettingRepository;
-	}
+    @Autowired
+    public void setBlogSettingRepository(BlogSettingRepository blogSettingRepository) {
+        this.blogSettingRepository = blogSettingRepository;
+    }
 
-	@Override
-	@Transactional
-	public BlogSetting findById(Long id) {
-		return blogSettingRepository.findOne(id);
-	}
+    @Override
+    @Transactional
+    public BlogSetting findById(Long id) {
+        return blogSettingRepository.findOne(id);
+    }
 
-	@Override
-	@Transactional
-	public BlogSetting update(BlogSetting setting) {
-		return blogSettingRepository.saveAndFlush(setting);
-	}
+    @Override
+    @Transactional
+    public BlogSetting update(BlogSetting setting) {
+        return blogSettingRepository.saveAndFlush(setting);
+    }
 
-	@Override
-	@Transactional
-	public void delete(BlogSetting setting) {
-		blogSettingRepository.delete(setting);
-	}
+    @Override
+    @Transactional
+    public void delete(BlogSetting setting) {
+        blogSettingRepository.delete(setting);
+    }
 
-	@Override
-	@Transactional
-	public void delete(Long id) {
-		blogSettingRepository.delete(id);
-	}
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        blogSettingRepository.delete(id);
+    }
 }

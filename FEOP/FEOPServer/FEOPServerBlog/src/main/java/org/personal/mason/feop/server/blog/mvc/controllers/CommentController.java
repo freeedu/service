@@ -1,10 +1,5 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 import org.personal.mason.feop.server.blog.domain.model.Comment;
@@ -24,114 +19,118 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class CommentController {
 
-	private CommentService commentService;
-	private BlogService blogService;
-	private BlogSectionService blogSectionService;
+    private CommentService commentService;
+    private BlogService blogService;
+    private BlogSectionService blogSectionService;
 
-	@Autowired
-	public void setcommentService(CommentService commentService) {
-		this.commentService = commentService;
-	}
+    @Autowired
+    public void setcommentService(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
-	@Autowired
-	public void setBlogSectionService(BlogSectionService blogSectionService) {
-		this.blogSectionService = blogSectionService;
-	}
+    @Autowired
+    public void setBlogSectionService(BlogSectionService blogSectionService) {
+        this.blogSectionService = blogSectionService;
+    }
 
-	@Autowired
-	public void setBlogService(BlogService blogService) {
-		this.blogService = blogService;
-	}
+    @Autowired
+    public void setBlogService(BlogService blogService) {
+        this.blogService = blogService;
+    }
 
-	@RequestMapping(value = "/comment/create", method = RequestMethod.GET)
-	public String createComment(@RequestParam(value = "b", required = false) Long blogId,
-			@RequestParam(value = "s", required = false) Long sectionId, @RequestParam(value = "c", required = false) Long commentId, Model model) {
-		CommentModel comment = new CommentModel();
+    @RequestMapping(value = "/comment/create", method = RequestMethod.GET)
+    public String createComment(@RequestParam(value = "b", required = false) Long blogId,
+                                @RequestParam(value = "s", required = false) Long sectionId, @RequestParam(value = "c", required = false) Long commentId, Model model) {
+        CommentModel comment = new CommentModel();
 
-		if (blogId != null) {
-			comment.setBlogId(blogId);
-		}
-		if (sectionId != null) {
-			comment.setBlogSectionId(sectionId);
-		}
-		if (commentId != null) {
-			comment.setCommentId(commentId);
-		}
+        if (blogId != null) {
+            comment.setBlogId(blogId);
+        }
+        if (sectionId != null) {
+            comment.setBlogSectionId(sectionId);
+        }
+        if (commentId != null) {
+            comment.setCommentId(commentId);
+        }
 
-		model.addAttribute("newcomment", comment);
-		return "app.blog.comment.new";
-	}
+        model.addAttribute("newcomment", comment);
+        return "app.blog.comment.new";
+    }
 
-	@RequestMapping(value = "/comment/save", method = RequestMethod.POST)
-	public String saveComment(@Validated CommentModel commentModel, BindingResult result) {
-		if (result.hasErrors()) {
-			return null;
-		}
+    @RequestMapping(value = "/comment/save", method = RequestMethod.POST)
+    public String saveComment(@Validated CommentModel commentModel, BindingResult result) {
+        if (result.hasErrors()) {
+            return null;
+        }
 
-		if (commentModel.getBlogId() == null && commentModel.getBlogSectionId() == null && commentModel.getCommentId() == null) {
-			result.rejectValue("*", "comment.create.invalid", "comment should at blog, blogsection or comment");
-			return null;
-		}
+        if (commentModel.getBlogId() == null && commentModel.getBlogSectionId() == null && commentModel.getCommentId() == null) {
+            result.rejectValue("*", "comment.create.invalid", "comment should at blog, blogsection or comment");
+            return null;
+        }
 
-		Comment comment = CommentModel.convert(commentModel);
+        Comment comment = CommentModel.convert(commentModel);
 
-		if (commentModel.getBlogId() != null) {
-			Blog blog = blogService.findById(commentModel.getBlogId());
-			comment.setBlog(blog);
-		}
+        if (commentModel.getBlogId() != null) {
+            Blog blog = blogService.findById(commentModel.getBlogId());
+            comment.setBlog(blog);
+        }
 
-		if (commentModel.getBlogSectionId() != null) {
-			BlogSection section = blogSectionService.findById(commentModel.getBlogSectionId());
-			comment.setBlogSection(section);
-			comment.setBlog(section.getBlog());
-		}
+        if (commentModel.getBlogSectionId() != null) {
+            BlogSection section = blogSectionService.findById(commentModel.getBlogSectionId());
+            comment.setBlogSection(section);
+            comment.setBlog(section.getBlog());
+        }
 
-		if (commentModel.getCommentId() != null) {
-			Comment pc = commentService.findById(commentModel.getCommentId());
-			comment.setComment(pc);
-			comment.setBlogSection(pc.getBlogSection());
-			comment.setBlog(pc.getBlog());
-		}
+        if (commentModel.getCommentId() != null) {
+            Comment pc = commentService.findById(commentModel.getCommentId());
+            comment.setComment(pc);
+            comment.setBlogSection(pc.getBlogSection());
+            comment.setBlog(pc.getBlog());
+        }
 
-		commentService.save(comment);
-		StringBuilder builder = new StringBuilder();
-		builder.append("redirect:%s?id=%d");
+        commentService.save(comment);
+        StringBuilder builder = new StringBuilder();
+        builder.append("redirect:%s?id=%d");
 
-		return String.format(builder.toString(), "/blog/view", comment.getBlog().getId());
-	}
+        return String.format(builder.toString(), "/blog/view", comment.getBlog().getId());
+    }
 
-	@RequestMapping(value = "/comment/list", method = RequestMethod.GET)
-	public String findComments(@RequestParam(value = "b", required = false) Long blogId, @RequestParam(value = "s", required = false) Long sectionId,
-			@RequestParam(value = "c", required = false) Long commentId, Pageable pageable, Model model, HttpServletRequest request) {
-		Page<Comment> comments = null;
+    @RequestMapping(value = "/comment/list", method = RequestMethod.GET)
+    public String findComments(@RequestParam(value = "b", required = false) Long blogId, @RequestParam(value = "s", required = false) Long sectionId,
+                               @RequestParam(value = "c", required = false) Long commentId, Pageable pageable, Model model, HttpServletRequest request) {
+        Page<Comment> comments = null;
 
-		if (blogId != null) {
-			Blog blog = blogService.findById(blogId);
-			comments = commentService.findByBlog(blog, pageable);
-		} else if (sectionId != null) {
-			BlogSection section = blogSectionService.findById(sectionId);
-			comments = commentService.findByBlogSection(section, pageable);
-		} else if (commentId != null) {
-			Comment pc = commentService.findById(commentId);
-			comments = commentService.findByComment(pc, pageable);
-		}
+        if (blogId != null) {
+            Blog blog = blogService.findById(blogId);
+            comments = commentService.findByBlog(blog, pageable);
+        } else if (sectionId != null) {
+            BlogSection section = blogSectionService.findById(sectionId);
+            comments = commentService.findByBlogSection(section, pageable);
+        } else if (commentId != null) {
+            Comment pc = commentService.findById(commentId);
+            comments = commentService.findByComment(pc, pageable);
+        }
 
-		List<CommentModel> models = new ArrayList<>();
+        List<CommentModel> models = new ArrayList<>();
 
-		if (comments != null) {
-			for (Comment comment : comments) {
-				CommentModel cm = CommentModel.revert(comment);
-				models.add(cm);
-			}
+        if (comments != null) {
+            for (Comment comment : comments) {
+                CommentModel cm = CommentModel.revert(comment);
+                models.add(cm);
+            }
 
-			model.addAttribute("pager", Pager.getPager(comments.getNumber(), comments.getTotalPages(), request));
+            model.addAttribute("pager", Pager.getPager(comments.getNumber(), comments.getTotalPages(), request));
 
-		}
-		model.addAttribute("comments", models);
+        }
+        model.addAttribute("comments", models);
 
-		return "app.blog.comment.list";
-	}
+        return "app.blog.comment.list";
+    }
 }

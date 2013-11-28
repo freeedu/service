@@ -11,8 +11,6 @@ import org.hibernate.search.annotations.Key;
 import org.hibernate.search.filter.FilterKey;
 import org.personal.mason.feop.oauth.contact.domain.model.Contact;
 
-import java.util.StringTokenizer;
-
 /**
  * Created with IntelliJ IDEA.
  * User: mason
@@ -24,7 +22,7 @@ public class FOEPContactFilterFactory {
     private Contact contact;
 
     @Factory
-    public Filter getFilter(){
+    public Filter getFilter() {
         PhraseQuery query = new PhraseQuery();
 
 
@@ -39,7 +37,7 @@ public class FOEPContactFilterFactory {
     }
 
     @Key
-    public FilterKey getKey(){
+    public FilterKey getKey() {
         FOEPContactFilterKey key = new FOEPContactFilterKey();
         key.setContact(this.contact);
         return key;

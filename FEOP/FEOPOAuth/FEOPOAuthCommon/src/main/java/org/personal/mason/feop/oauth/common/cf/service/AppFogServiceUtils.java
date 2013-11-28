@@ -10,22 +10,22 @@ import java.util.Map;
 
 public class AppFogServiceUtils {
 
-	public static Map<String, AppFogServiceConfiguration> parse(String servicesString) {
-		Map<String, AppFogServiceConfiguration> serviceConfigurations = new HashMap<>();
+    public static Map<String, AppFogServiceConfiguration> parse(String servicesString) {
+        Map<String, AppFogServiceConfiguration> serviceConfigurations = new HashMap<>();
 
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			AppFogServicesConfiguration config = mapper.readValue(servicesString, AppFogServicesConfiguration.class);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            AppFogServicesConfiguration config = mapper.readValue(servicesString, AppFogServicesConfiguration.class);
 
-			for (AppFogMysqlConfiguration configuration : config.getMysql()) {
-				serviceConfigurations.put(configuration.getName(), configuration);
-			}
-		} catch (JsonParseException e) {
-		} catch (JsonMappingException e) {
-		} catch (IOException e) {
-		}
+            for (AppFogMysqlConfiguration configuration : config.getMysql()) {
+                serviceConfigurations.put(configuration.getName(), configuration);
+            }
+        } catch (JsonParseException e) {
+        } catch (JsonMappingException e) {
+        } catch (IOException e) {
+        }
 
-		return serviceConfigurations;
-	}
+        return serviceConfigurations;
+    }
 
 }

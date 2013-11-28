@@ -5,9 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtils {
-	private final static DateFormat MONTH_AND_DAY = new SimpleDateFormat("MMdd");
+    private final static DateFormat MONTH_AND_DAY = new SimpleDateFormat("MMdd");
 
-	public static String getMonthAndDay(Date date) {
-		return MONTH_AND_DAY.format(date);
-	}
+    public static String getMonthAndDay(Date date) {
+        return MONTH_AND_DAY.format(date);
+    }
 }

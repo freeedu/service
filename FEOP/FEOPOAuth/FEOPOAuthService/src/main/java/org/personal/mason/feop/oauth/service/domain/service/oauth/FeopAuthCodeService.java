@@ -4,10 +4,10 @@ import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthCode;
 
 public interface FeopAuthCodeService {
 
-	public void save(OauthCode oauthCode);
+    public void save(OauthCode oauthCode);
 
-	public OauthCode findOauthCodeByCode(String code);
+    public OauthCode findOauthCodeByCode(String code);
 
-	public void delete(OauthCode oauthCode);
+    public void delete(OauthCode oauthCode);
 
 }

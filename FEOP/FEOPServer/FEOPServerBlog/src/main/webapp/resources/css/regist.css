@@ -1,16 +1,15 @@
 /* CSS Document */
 
-			
 #registration {
-	background-color: #fff;
+    background-color: #fff;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
     background-image: -webkit-linear-gradient(top, #fff, #eee);
     background-image: -moz-linear-gradient(top, #fff, #eee);
     background-image: -ms-linear-gradient(top, #fff, #eee);
     background-image: -o-linear-gradient(top, #fff, #eee);
-    background-image: linear-gradient(top, #fff, #eee);  
+    background-image: linear-gradient(top, #fff, #eee);
     width: 480px;
-	height:420px;
+    height: 420px;
     margin: -210px 0 0 -240px;
     padding: 30px;
     position: absolute;
@@ -19,22 +18,10 @@
     z-index: 0;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
-    border-radius: 1px;  
-    -webkit-box-shadow:
-          0 0 2px rgba(0, 0, 0, 0.2),
-          0 1px 1px rgba(0, 0, 0, .2),
-          0 3px 0 #fff,
-          0 4px 0 rgba(0, 0, 0, .2);
-    -moz-box-shadow:
-          0 0 2px rgba(0, 0, 0, 0.2),  
-          1px 1px   0 rgba(0,   0,   0,   .1),
-          3px 3px   0 rgba(255, 255, 255, 1),
-          4px 4px   0 rgba(0,   0,   0,   .1);
-    box-shadow:
-          0 0 2px rgba(0, 0, 0, 0.2),  
-          0 1px 1px rgba(0, 0, 0, .2),
-          0 3px 0 #fff,
-          0 4px 0 rgba(0, 0, 0, .2);
+    border-radius: 1px;
+    -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, .2), 0 3px 0 #fff, 0 4px 0 rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(0, 0, 0, .1), 3px 3px 0 rgba(255, 255, 255, 1), 4px 4px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, .2), 0 3px 0 #fff, 0 4px 0 rgba(0, 0, 0, .2);
 }
 
 #registration:before {
@@ -51,7 +38,7 @@
     box-shadow: 0 0 0 1px #fff;
 }
 
-#registration h1{
+#registration h1 {
     text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0px 2px 0 rgba(0, 0, 0, .5);
     text-transform: uppercase;
     text-align: center;
@@ -62,29 +49,26 @@
     position: relative;
 }
 
-#registration h1:after, h1:before
-{
+#registration h1:after, h1:before {
     background-color: #777;
     content: "";
     height: 1px;
     position: absolute;
     top: 15px;
-    width: 50px;   
+    width: 50px;
 }
 
-#registration h1:after
-{ 
+#registration h1:after {
     background-image: -webkit-gradient(linear, left top, right top, from(#777), to(#fff));
     background-image: -webkit-linear-gradient(left, #777, #fff);
     background-image: -moz-linear-gradient(left, #777, #fff);
     background-image: -ms-linear-gradient(left, #777, #fff);
     background-image: -o-linear-gradient(left, #777, #fff);
-    background-image: linear-gradient(left, #777, #fff);      
+    background-image: linear-gradient(left, #777, #fff);
     right: 0;
 }
 
-#registration h1:before
-{
+#registration h1:before {
     background-image: -webkit-gradient(linear, right top, left top, from(#777), to(#fff));
     background-image: -webkit-linear-gradient(right, #777, #fff);
     background-image: -moz-linear-gradient(right, #777, #fff);
@@ -94,16 +78,13 @@
     left: 0;
 }
 
-	  
-#registration fieldset
-{
+#registration fieldset {
     border: 0;
     padding: 0;
     margin: 0;
 }
-	  
-#registration input
-{
+
+#registration input {
     padding: 15px 15px 15px 40px;
     margin: 0 0 10px 0;
     width: 420px;; /*310px;  353 + 2 + 45 = 400 */
@@ -116,32 +97,27 @@
     box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
 }
 
-#registration #name
-{
-	background: #f1f1f1 url(../images/result.png) no-repeat;
+#registration #name {
+    background: #f1f1f1 url(../images/result.png) no-repeat;
     background-position: 5px -102px !important;
 }
 
-#registration #tel
-{
-	background: #f1f1f1 url(../images/result.png) no-repeat;
+#registration #tel {
+    background: #f1f1f1 url(../images/result.png) no-repeat;
     background-position: 5px -26px !important;
 }
 
-#registration #email
-{
-	background: #f1f1f1 url(../images/result.png) no-repeat;
+#registration #email {
+    background: #f1f1f1 url(../images/result.png) no-repeat;
     background-position: 5px -138px !important;
 }
 
-#registration .password
-{
-	background: #f1f1f1 url(../images/result.png) no-repeat;
+#registration .password {
+    background: #f1f1f1 url(../images/result.png) no-repeat;
     background-position: 5px 10px !important;
 }
 
-#registration #inputs input:focus
-{
+#registration #inputs input:focus {
     background-color: #fff;
     border-color: #e8c291;
     outline: none;
@@ -151,21 +127,19 @@
 }
 
 #registration #acceptTerms {
-	width:auto;
-	border:none;
+    width: auto;
+    border: none;
 }
 
-#registration label{
-	font-size:12px;
+#registration label {
+    font-size: 12px;
 }
 
-#registration #actions
-{
+#registration #actions {
     margin: 25px 0 0 0;
 }
 
-#registration #register
-{		
+#registration #register {
     background-color: #ffb94b;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#fddb6f), to(#ffb94b));
     background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
@@ -173,17 +147,17 @@
     background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
     background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
     background-image: linear-gradient(top, #fddb6f, #ffb94b);
-    
+
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
     border-radius: 1px;
-    
-    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-    
-     -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-     -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-     box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;    
-    
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+
+    -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+
     border-width: 1px;
     border-style: solid;
     border-color: #d69e31 #e3a037 #d5982d #e3a037;
@@ -197,8 +171,7 @@
     color: #8f5a0a;
 }
 
-#registration #register:hover,#register:focus
-{		
+#registration #register:hover, #register:focus {
     background-color: #fddb6f;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ffb94b), to(#fddb6f));
     background-image: -webkit-linear-gradient(top, #ffb94b, #fddb6f);
@@ -206,25 +179,22 @@
     background-image: -ms-linear-gradient(top, #ffb94b, #fddb6f);
     background-image: -o-linear-gradient(top, #ffb94b, #fddb6f);
     background-image: linear-gradient(top, #ffb94b, #fddb6f);
-}	
+}
 
-#registration #register:active
-{		
+#registration #register:active {
     outline: none;
-   
-     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
 }
 
-#registration #register::-moz-focus-inner
-{
-  border: none;
+#registration #register::-moz-focus-inner {
+    border: none;
 }
 
-#registration #actions a
-{
-    color: #3151A2;    
+#registration #actions a {
+    color: #3151A2;
     float: right;
     line-height: 35px;
     margin-left: 10px;

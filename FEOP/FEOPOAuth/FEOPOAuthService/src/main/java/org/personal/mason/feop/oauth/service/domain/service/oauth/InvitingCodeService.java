@@ -1,18 +1,18 @@
 package org.personal.mason.feop.oauth.service.domain.service.oauth;
 
-import java.util.List;
-
 import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
+
+import java.util.List;
 
 public interface InvitingCodeService {
 
-	public List<InvitingCode> generateInvitingCodes(int number);
+    public List<InvitingCode> generateInvitingCodes(int number);
 
-	InvitingCode findWithCode(String code);
-	
-	List<InvitingCode> findAll();
+    InvitingCode findWithCode(String code);
 
-	void delete(InvitingCode code);
+    List<InvitingCode> findAll();
 
-	void delete(Long id);
+    void delete(InvitingCode code);
+
+    void delete(Long id);
 }

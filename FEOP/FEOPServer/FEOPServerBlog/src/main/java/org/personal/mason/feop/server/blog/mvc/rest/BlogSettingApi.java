@@ -14,38 +14,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("api")
 public class BlogSettingApi {
 
-	private BlogSettingService blogSettingService;
+    private BlogSettingService blogSettingService;
 
-	@Autowired
-	public void setBlogSettingService(BlogSettingService blogSettingService) {
-		this.blogSettingService = blogSettingService;
-	}
+    @Autowired
+    public void setBlogSettingService(BlogSettingService blogSettingService) {
+        this.blogSettingService = blogSettingService;
+    }
 
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "/setting", method = RequestMethod.GET)
-	@ResponseBody
-	public BlogSettingModel findSettingWithId(@RequestParam("id") Long id) {
-		BlogSetting setting = blogSettingService.findById(id);
-		BlogSettingModel settingModel = BlogSettingModel.revert(setting);
-		return settingModel;
-	}
+    /**
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/setting", method = RequestMethod.GET)
+    @ResponseBody
+    public BlogSettingModel findSettingWithId(@RequestParam("id") Long id) {
+        BlogSetting setting = blogSettingService.findById(id);
+        BlogSettingModel settingModel = BlogSettingModel.revert(setting);
+        return settingModel;
+    }
 
-	/**
-	 * 
-	 * @param blogSettingModel
-	 * @return
-	 */
-	@RequestMapping(value = "/setting/update", method = RequestMethod.PUT)
-	@ResponseBody
-	public BlogSettingModel update(BlogSettingModel blogSettingModel) {
-		BlogSetting setting = BlogSettingModel.convert(blogSettingModel);
-		BlogSetting updatedSetting = blogSettingService.update(setting);
+    /**
+     * @param blogSettingModel
+     * @return
+     */
+    @RequestMapping(value = "/setting/update", method = RequestMethod.PUT)
+    @ResponseBody
+    public BlogSettingModel update(BlogSettingModel blogSettingModel) {
+        BlogSetting setting = BlogSettingModel.convert(blogSettingModel);
+        BlogSetting updatedSetting = blogSettingService.update(setting);
 
-		BlogSettingModel updatedSettingModel = BlogSettingModel.revert(updatedSetting);
-		return updatedSettingModel;
-	}
+        BlogSettingModel updatedSettingModel = BlogSettingModel.revert(updatedSetting);
+        return updatedSettingModel;
+    }
 }

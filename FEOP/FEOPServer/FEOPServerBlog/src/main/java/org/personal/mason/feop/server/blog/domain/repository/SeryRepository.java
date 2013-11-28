@@ -1,24 +1,23 @@
 package org.personal.mason.feop.server.blog.domain.repository;
 
-import java.util.List;
-
 import org.personal.mason.feop.server.blog.domain.model.Category;
 import org.personal.mason.feop.server.blog.domain.model.Sery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.lang.String;
+
+import java.util.List;
 
 public interface SeryRepository extends JpaRepository<Sery, Long> {
 
-	List<Sery> findByCategory(Category category);
+    List<Sery> findByCategory(Category category);
 
-	Page<Sery> findByCategory(Category category, Pageable pageable);
+    Page<Sery> findByCategory(Category category, Pageable pageable);
 
-	List<Sery> findByCategory(Category category, Sort sort);
+    List<Sery> findByCategory(Category category, Sort sort);
 
-	Page<Sery> findBySeriesNameLike(String seriesname, Pageable pageable);
+    Page<Sery> findBySeriesNameLike(String seriesname, Pageable pageable);
 
-	List<Sery> findBySeriesName(String seriesname);
+    List<Sery> findBySeriesName(String seriesname);
 }

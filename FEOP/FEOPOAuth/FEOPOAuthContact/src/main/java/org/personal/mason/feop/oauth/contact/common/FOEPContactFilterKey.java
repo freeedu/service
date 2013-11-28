@@ -19,14 +19,14 @@ public class FOEPContactFilterKey extends FilterKey {
         this.contact = contact;
     }
 
-    public Contact getContact(){
-        return  contact;
+    public Contact getContact() {
+        return contact;
     }
 
     @Override
-    public boolean equals(Object otherKey){
-        if(this.contact == null || !(otherKey instanceof FOEPContactFilterKey)){
-            return  false;
+    public boolean equals(Object otherKey) {
+        if (this.contact == null || !(otherKey instanceof FOEPContactFilterKey)) {
+            return false;
         }
 
         FOEPContactFilterKey filterKey = (FOEPContactFilterKey) otherKey;
@@ -35,9 +35,9 @@ public class FOEPContactFilterKey extends FilterKey {
 
     @Override
     public int hashCode() {
-       if(this.contact == null){
-           return 0;
-       }
-       return this.contact.hashCode();
+        if (this.contact == null) {
+            return 0;
+        }
+        return this.contact.hashCode();
     }
 }

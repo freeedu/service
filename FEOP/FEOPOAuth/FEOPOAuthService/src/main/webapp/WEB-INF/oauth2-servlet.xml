@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
-		http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+
+
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<context:annotation-config />
-	<context:component-scan base-package="org.personal.mason.feop.oauth.service" />
-	<context:component-scan base-package="org.personal.mason.feop.oauth.contact"/>
+    <context:annotation-config/>
+    <context:component-scan base-package="org.personal.mason.feop.oauth.service"/>
+    <context:component-scan base-package="org.personal.mason.feop.oauth.contact"/>
 
-	<aop:aspectj-autoproxy proxy-target-class="true" />
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-	<mvc:default-servlet-handler />
+    <mvc:default-servlet-handler/>
 
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/tiles/" />
-		<property name="suffix" value=".jsp" />
-		<property name="order" value="2" />
-	</bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/tiles/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="2"/>
+    </bean>
 
-	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
-		<property name="order" value="1" />
-	</bean>
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+        <property name="order" value="1"/>
+    </bean>
 
-	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-		<property name="definitions">
-			<list>
-				<value>/WEB-INF/tiles/tiles.xml</value>
-			</list>
-		</property>
-	</bean>
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles/tiles.xml</value>
+            </list>
+        </property>
+    </bean>
 </beans>

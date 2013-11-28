@@ -1,12 +1,6 @@
 package org.personal.mason.feop.oauth.contact.domain.model;
 
-import org.apache.lucene.search.FieldValueFilter;
-import org.apache.lucene.search.QueryWrapperFilter;
 import org.hibernate.search.annotations.*;
-import org.hibernate.search.filter.ShardSensitiveOnlyFilter;
-import org.personal.mason.feop.oauth.contact.common.FOEPContactBridge;
-import org.personal.mason.feop.oauth.contact.common.FOEPContactFilter;
-import org.personal.mason.feop.oauth.contact.common.FOEPContactFilterFactory;
 
 import javax.persistence.*;
 import java.util.List;

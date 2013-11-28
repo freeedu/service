@@ -1,28 +1,28 @@
 package org.personal.mason.feop.server.blog.domain.service;
 
-import java.util.List;
-
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.model.BlogSection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface BlogSectionService {
-	List<BlogSection> findByBlog(Blog blog);
+    List<BlogSection> findByBlog(Blog blog);
 
-	Page<BlogSection> findByBlog(Blog blog, Pageable pageable);
+    Page<BlogSection> findByBlog(Blog blog, Pageable pageable);
 
-	void save(Blog blog, BlogSection section);
+    void save(Blog blog, BlogSection section);
 
-	BlogSection update(BlogSection section);
+    BlogSection update(BlogSection section);
 
-	void delete(BlogSection section);
+    void delete(BlogSection section);
 
-	void delete(Long id);
+    void delete(Long id);
 
-	BlogSection findById(Long id);
+    BlogSection findById(Long id);
 
-	Integer count(Blog blog);
+    Integer count(Blog blog);
 
-	Integer getMaxSequence(Blog blog);
+    Integer getMaxSequence(Blog blog);
 }

@@ -1,24 +1,24 @@
 package org.personal.mason.feop.server.blog.domain.service;
 
-import java.util.List;
-
 import org.personal.mason.feop.server.blog.domain.model.Tag;
+
+import java.util.List;
 
 public interface TagService {
 
-	void save(Tag tag);
+    void save(Tag tag);
 
-	void findById(Long id);
+    void findById(Long id);
 
-	Tag update(Tag tag);
+    Tag update(Tag tag);
 
-	void delete(Tag tag);
+    void delete(Tag tag);
 
-	void delete(Long id);
+    void delete(Long id);
 
-	List<Tag> findByTagNameLike(String tagname);
+    List<Tag> findByTagNameLike(String tagname);
 
-	Tag findByTagName(String tagname);
+    Tag findByTagName(String tagname);
 
-	List<Tag> findOrCreateWithNames(String[] names);
+    List<Tag> findOrCreateWithNames(String[] names);
 }

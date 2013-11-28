@@ -7,7 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -74,13 +77,13 @@ public class RootConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         StandardPasswordEncoder encoder = new StandardPasswordEncoder();
         return encoder;
     }
 
     @Bean
-    public JavaMailSender javaMailSender(){
+    public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(mailHost);
         mailSender.setUsername(mailUsername);
@@ -93,7 +96,7 @@ public class RootConfig {
     }
 
     @Bean
-    public EmailSender emailSender(){
+    public EmailSender emailSender() {
         EmailSender sender = new EmailSender();
         sender.setJavaMailSender(javaMailSender());
         sender.setSender(mailUsername);
@@ -137,7 +140,7 @@ public class RootConfig {
     }
 
     @Bean
-    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
+    public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 }

@@ -1,90 +1,90 @@
-<!--?xml version="1.0" encoding="UTF-8"? -->  
- <!DOCTYPE tiles-definitions PUBLIC  
-        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+<!--?xml version="1.0" encoding="UTF-8"? -->
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<definition name="app.template.head.content.foot" template="/WEB-INF/views/layout/template-hcf.jsp">
-		<put-attribute name="head" value="/WEB-INF/views/inc/header.jsp" />
-		<put-attribute name="content" value="" />
-		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
-	</definition>
+    <definition name="app.template.head.content.foot" template="/WEB-INF/views/layout/template-hcf.jsp">
+        <put-attribute name="head" value="/WEB-INF/views/inc/header.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"/>
+    </definition>
 
 
-	<definition name="app.error.template" template="/WEB-INF/views/layout/template-hcf.jsp">
-		<put-attribute name="head" value="/WEB-INF/views/inc/header.jsp" />
-		<put-attribute name="content" value="" />
-		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
-	</definition>
+    <definition name="app.error.template" template="/WEB-INF/views/layout/template-hcf.jsp">
+        <put-attribute name="head" value="/WEB-INF/views/inc/header.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"/>
+    </definition>
 
-	<definition name="app.template.head.content.detail.foot" template="/WEB-INF/views/layout/template-hcdf.jsp">
-		<put-attribute name="head" value="/WEB-INF/views/inc/header.jsp" />
-		<put-attribute name="content-left" value="" />
-		<put-attribute name="content-right" value="/WEB-INF/views/inc/asideRight.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" />
-	</definition>
+    <definition name="app.template.head.content.detail.foot" template="/WEB-INF/views/layout/template-hcdf.jsp">
+        <put-attribute name="head" value="/WEB-INF/views/inc/header.jsp"/>
+        <put-attribute name="content-left" value=""/>
+        <put-attribute name="content-right" value="/WEB-INF/views/inc/asideRight.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"/>
+    </definition>
 
-	<definition name="app.template.content" template="/WEB-INF/views/layout/template-c.jsp">
-		<put-attribute name="content-left" value="" />
-	</definition>
+    <definition name="app.template.content" template="/WEB-INF/views/layout/template-c.jsp">
+        <put-attribute name="content-left" value=""/>
+    </definition>
 
-	<!-- <definition name="app.homepage" template="/WEB-INF/views/layout/template.jsp"> <put-attribute name="head" value="/WEB-INF/views/inc/header.jsp" 
-		/> <put-attribute name="breadcrumb" value="/WEB-INF/views/inc/breadcrumb.jsp" /> <put-attribute name="content-left" value="" /> <put-attribute name="content-right" 
-		value="/WEB-INF/views/inc/asideRight.jsp" /> <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" /> </definition> -->
+    <!-- <definition name="app.homepage" template="/WEB-INF/views/layout/template.jsp"> <put-attribute name="head" value="/WEB-INF/views/inc/header.jsp"
+        /> <put-attribute name="breadcrumb" value="/WEB-INF/views/inc/breadcrumb.jsp" /> <put-attribute name="content-left" value="" /> <put-attribute name="content-right"
+        value="/WEB-INF/views/inc/asideRight.jsp" /> <put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp" /> </definition> -->
 
-	<!-- App Index -->
-	<definition name="app.index" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/index.jsp" />
-	</definition>
+    <!-- App Index -->
+    <definition name="app.index" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/index.jsp"/>
+    </definition>
 
-	<!-- App Error -->
-	<definition name="app.error" extends="app.error.template">
-		<put-attribute name="content" value="/WEB-INF/views/error/error.jsp" />
-	</definition>
+    <!-- App Error -->
+    <definition name="app.error" extends="app.error.template">
+        <put-attribute name="content" value="/WEB-INF/views/error/error.jsp"/>
+    </definition>
 
-	<definition name="app.aboutme" extends="app.template.head.content.foot">
-		<put-attribute name="content" value="/WEB-INF/views/about.jsp" />
-	</definition>
+    <definition name="app.aboutme" extends="app.template.head.content.foot">
+        <put-attribute name="content" value="/WEB-INF/views/about.jsp"/>
+    </definition>
 
-	<definition name="app.contact" extends="app.template.head.content.foot">
-		<put-attribute name="content" value="/WEB-INF/views/contact.jsp" />
-	</definition>
+    <definition name="app.contact" extends="app.template.head.content.foot">
+        <put-attribute name="content" value="/WEB-INF/views/contact.jsp"/>
+    </definition>
 
-	<!-- Blog Definition -->
-	<definition name="app.blog.list" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/blog/list.jsp" />
-	</definition>
+    <!-- Blog Definition -->
+    <definition name="app.blog.list" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/blog/list.jsp"/>
+    </definition>
 
-	<definition name="app.blog.my.list" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/blog/list.jsp" />
-	</definition>
+    <definition name="app.blog.my.list" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/blog/list.jsp"/>
+    </definition>
 
-	<definition name="app.blog.new" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/blog/new.jsp" />
-	</definition>
+    <definition name="app.blog.new" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/blog/new.jsp"/>
+    </definition>
 
-	<definition name="app.blog.view" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/blog/view.jsp" />
-	</definition>
+    <definition name="app.blog.view" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/blog/view.jsp"/>
+    </definition>
 
-	<definition name="app.blog.edit" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/blog/edit.jsp" />
-	</definition>
+    <definition name="app.blog.edit" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/blog/edit.jsp"/>
+    </definition>
 
-	<!-- Blog Section Definition -->
-	<definition name="app.blog.section.view" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/blog/section/view.jsp" />
-	</definition>
-	<definition name="app.blog.section.edit" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/blog/section/edit.jsp" />
-	</definition>
-	<definition name="app.blog.section.new" extends="app.template.head.content.detail.foot">
-		<put-attribute name="content-left" value="/WEB-INF/views/blog/section/new.jsp" />
-	</definition>
+    <!-- Blog Section Definition -->
+    <definition name="app.blog.section.view" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/blog/section/view.jsp"/>
+    </definition>
+    <definition name="app.blog.section.edit" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/blog/section/edit.jsp"/>
+    </definition>
+    <definition name="app.blog.section.new" extends="app.template.head.content.detail.foot">
+        <put-attribute name="content-left" value="/WEB-INF/views/blog/section/new.jsp"/>
+    </definition>
 
-	<!-- Common Definition TODO: adjust for using -->
-	<definition name="app.blog.comment.list" extends="app.template.content">
-		<put-attribute name="content" value="/WEB-INF/views/blog/comment/list.jsp" />
-	</definition>
+    <!-- Common Definition TODO: adjust for using -->
+    <definition name="app.blog.comment.list" extends="app.template.content">
+        <put-attribute name="content" value="/WEB-INF/views/blog/comment/list.jsp"/>
+    </definition>
 
 </tiles-definitions>

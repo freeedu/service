@@ -1,9 +1,10 @@
 package org.personal.mason.feop.oauth.contact.common;
 
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.search.*;
-import org.apache.lucene.util.Bits;
-import org.apache.lucene.util.OpenBitSet;
+import org.apache.lucene.search.DocIdSet;
+import org.apache.lucene.search.Filter;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.QueryWrapperFilter;
 import org.personal.mason.feop.oauth.contact.domain.model.Contact;
 
 import java.io.IOException;

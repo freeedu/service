@@ -15,41 +15,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class BlogSettingController {
 
-	private BlogSettingService blogSettingService;
+    private BlogSettingService blogSettingService;
 
-	@Autowired
-	public void setBlogSettingService(BlogSettingService blogSettingService) {
-		this.blogSettingService = blogSettingService;
-	}
+    @Autowired
+    public void setBlogSettingService(BlogSettingService blogSettingService) {
+        this.blogSettingService = blogSettingService;
+    }
 
-	@RequestMapping(value = "/setting", method = RequestMethod.GET)
-	public String findSettingWithId(@RequestParam("id") Long id, Model model) {
-		BlogSetting setting = blogSettingService.findById(id);
+    @RequestMapping(value = "/setting", method = RequestMethod.GET)
+    public String findSettingWithId(@RequestParam("id") Long id, Model model) {
+        BlogSetting setting = blogSettingService.findById(id);
 
-		BlogSettingModel settingModel = BlogSettingModel.revert(setting);
-		model.addAttribute("/setting", settingModel);
-		return "blog.setting.view";
-	}
+        BlogSettingModel settingModel = BlogSettingModel.revert(setting);
+        model.addAttribute("/setting", settingModel);
+        return "blog.setting.view";
+    }
 
-	@RequestMapping(value = "/setting/update", method = RequestMethod.GET)
-	public String update(@RequestParam("id") Long id, Model model) {
-		BlogSetting setting = blogSettingService.findById(id);
-		BlogSettingModel updatedSettingModel = BlogSettingModel.revert(setting);
-		model.addAttribute("/setting", updatedSettingModel);
-		return "blog.setting.update";
-	}
+    @RequestMapping(value = "/setting/update", method = RequestMethod.GET)
+    public String update(@RequestParam("id") Long id, Model model) {
+        BlogSetting setting = blogSettingService.findById(id);
+        BlogSettingModel updatedSettingModel = BlogSettingModel.revert(setting);
+        model.addAttribute("/setting", updatedSettingModel);
+        return "blog.setting.update";
+    }
 
-	@RequestMapping(value = "/setting/update", method = RequestMethod.PUT)
-	public String update(@Validated BlogSettingModel blogSettingModel, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return null;
-		}
+    @RequestMapping(value = "/setting/update", method = RequestMethod.PUT)
+    public String update(@Validated BlogSettingModel blogSettingModel, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return null;
+        }
 
-		BlogSetting setting = BlogSettingModel.convert(blogSettingModel);
-		BlogSetting updatedSetting = blogSettingService.update(setting);
+        BlogSetting setting = BlogSettingModel.convert(blogSettingModel);
+        BlogSetting updatedSetting = blogSettingService.update(setting);
 
-		BlogSettingModel updatedSettingModel = BlogSettingModel.revert(updatedSetting);
-		model.addAttribute("setting", updatedSettingModel);
-		return "blog.setting.view";
-	}
+        BlogSettingModel updatedSettingModel = BlogSettingModel.revert(updatedSetting);
+        model.addAttribute("setting", updatedSettingModel);
+        return "blog.setting.view";
+    }
 }

@@ -1,10 +1,5 @@
 package org.personal.mason.feop.oauth.service.common.oauth2;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,52 +11,57 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Component
 public class OAuth2UserDetailsServiceImpl implements UserDetailsService {
 
-	private FeopUserService feopUserService;
+    private FeopUserService feopUserService;
 
-	@Autowired
-	public void setFeopUserService(FeopUserService feopUserService) {
-		this.feopUserService = feopUserService;
-	}
+    @Autowired
+    public void setFeopUserService(FeopUserService feopUserService) {
+        this.feopUserService = feopUserService;
+    }
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		OauthUser user = feopUserService.findByEmailOrUsername(username);
-		System.out.println("UserDetails:" + user);
+        OauthUser user = feopUserService.findByEmailOrUsername(username);
+        System.out.println("UserDetails:" + user);
 
-		if (null == user) {
-			throw new UsernameNotFoundException("Invalid User");
-		}
+        if (null == user) {
+            throw new UsernameNotFoundException("Invalid User");
+        }
 
-		Collection<GrantedAuthority> grantedAuths = this.obtionGrantedAuthorities(user);
-		boolean enabled = true;
-		boolean accountNonExpired = true;
-		boolean credentialsNonExpired = true;
-		boolean accountNonLocked = true;
+        Collection<GrantedAuthority> grantedAuths = this.obtionGrantedAuthorities(user);
+        boolean enabled = true;
+        boolean accountNonExpired = true;
+        boolean credentialsNonExpired = true;
+        boolean accountNonLocked = true;
 
-		User userDetail = new User(username, user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuths);
+        User userDetail = new User(username, user.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, grantedAuths);
 
-		return userDetail;
-	}
+        return userDetail;
+    }
 
-	private Set<GrantedAuthority> obtionGrantedAuthorities(OauthUser user) {
+    private Set<GrantedAuthority> obtionGrantedAuthorities(OauthUser user) {
 
-		if (null == user) {
-			return null;
-		}
+        if (null == user) {
+            return null;
+        }
 
-		Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
+        Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
 
-		List<String> roles = feopUserService.findUserRoles(user);
+        List<String> roles = feopUserService.findUserRoles(user);
 
-		for (String role : roles) {
-			authSet.add(new SimpleGrantedAuthority(role));
-		}
+        for (String role : roles) {
+            authSet.add(new SimpleGrantedAuthority(role));
+        }
 
-		return authSet;
-	}
+        return authSet;
+    }
 
 }

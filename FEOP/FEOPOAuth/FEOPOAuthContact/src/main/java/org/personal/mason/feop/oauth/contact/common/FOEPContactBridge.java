@@ -1,7 +1,6 @@
 package org.personal.mason.feop.oauth.contact.common;
 
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Fieldable;
 import org.apache.lucene.document.NumericField;
 import org.hibernate.search.bridge.LuceneOptions;
 import org.hibernate.search.bridge.TwoWayFieldBridge;
@@ -39,7 +38,7 @@ public class FOEPContactBridge implements TwoWayFieldBridge {
 
     @Override
     public String objectToString(Object object) {
-        if(object instanceof Contact){
+        if (object instanceof Contact) {
             Contact contact = (Contact) object;
 
             return String.format("%d_%d", contact.getId(), contact.getVersion());

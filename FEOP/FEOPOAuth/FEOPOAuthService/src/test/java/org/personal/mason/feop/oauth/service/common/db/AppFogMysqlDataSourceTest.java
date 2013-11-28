@@ -5,11 +5,11 @@ import org.personal.mason.feop.oauth.common.cf.service.AppFogMysqlDataSource;
 
 public class AppFogMysqlDataSourceTest {
 
-@Test
-public void testSetServiceName() {
-	AppFogMysqlDataSource dataSource = new AppFogMysqlDataSource();
-	dataSource.setServiceName("foep-db-contact");
-	System.out.println(true);
-}
+    @Test
+    public void testSetServiceName() {
+        AppFogMysqlDataSource dataSource = new AppFogMysqlDataSource();
+        dataSource.setServiceName("foep-db-contact");
+        System.out.println(true);
+    }
 
 }

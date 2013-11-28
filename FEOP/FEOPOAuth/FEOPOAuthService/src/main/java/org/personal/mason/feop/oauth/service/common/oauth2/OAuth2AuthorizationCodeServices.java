@@ -9,35 +9,35 @@ import org.springframework.security.oauth2.provider.code.RandomValueAuthorizatio
 
 public class OAuth2AuthorizationCodeServices extends RandomValueAuthorizationCodeServices {
 
-	private FeopAuthCodeService feopAuthCodeService;
+    private FeopAuthCodeService feopAuthCodeService;
 
-	@Autowired
-	public void setFeopAuthCodeService(FeopAuthCodeService feopAuthCodeService) {
-		this.feopAuthCodeService = feopAuthCodeService;
-	}
+    @Autowired
+    public void setFeopAuthCodeService(FeopAuthCodeService feopAuthCodeService) {
+        this.feopAuthCodeService = feopAuthCodeService;
+    }
 
-	@Override
-	protected void store(String code, AuthorizationRequestHolder authentication) {
-		OauthCode oauthCode = new OauthCode();
-		oauthCode.setCode(code);
-		oauthCode.setAuthentication(SerializationUtils.serialize(authentication));
-		feopAuthCodeService.save(oauthCode);
-	}
+    @Override
+    protected void store(String code, AuthorizationRequestHolder authentication) {
+        OauthCode oauthCode = new OauthCode();
+        oauthCode.setCode(code);
+        oauthCode.setAuthentication(SerializationUtils.serialize(authentication));
+        feopAuthCodeService.save(oauthCode);
+    }
 
-	@Override
-	protected AuthorizationRequestHolder remove(String code) {
-		AuthorizationRequestHolder authentication;
+    @Override
+    protected AuthorizationRequestHolder remove(String code) {
+        AuthorizationRequestHolder authentication;
 
-		OauthCode oauthCode = feopAuthCodeService.findOauthCodeByCode(code);
+        OauthCode oauthCode = feopAuthCodeService.findOauthCodeByCode(code);
 
-		if (oauthCode != null) {
-			authentication = SerializationUtils.deserialize(oauthCode.getAuthentication());
-			feopAuthCodeService.delete(oauthCode);
-		} else {
-			authentication = null;
-		}
+        if (oauthCode != null) {
+            authentication = SerializationUtils.deserialize(oauthCode.getAuthentication());
+            feopAuthCodeService.delete(oauthCode);
+        } else {
+            authentication = null;
+        }
 
-		return authentication;
-	}
+        return authentication;
+    }
 
 }

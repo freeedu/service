@@ -2,36 +2,36 @@
 <!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
-	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
 
-		<layout class="org.apache.log4j.PatternLayout">
+        <layout class="org.apache.log4j.PatternLayout">
 
-			<param name="ConversionPattern" value="%d %-5p %c.%M:%L - %m%n" />
-		</layout>
-	</appender>
+            <param name="ConversionPattern" value="%d %-5p %c.%M:%L - %m%n"/>
+        </layout>
+    </appender>
 
-	<logger name="org.hibernate.type">
+    <logger name="org.hibernate.type">
 
-		<level value="error" />
-	</logger>
+        <level value="error"/>
+    </logger>
 
-	<logger name="org.hibernate.tool.hbm2ddl">
+    <logger name="org.hibernate.tool.hbm2ddl">
 
-		<level value="error" />
-	</logger>
+        <level value="error"/>
+    </logger>
 
-	<logger name="org.personal.mason.feop.oauth.service">
+    <logger name="org.personal.mason.feop.oauth.service">
 
-		<level value="infoe" />
-	</logger>
+        <level value="infoe"/>
+    </logger>
 
-	<!-- for all other loggers log only warn and above log messages -->
+    <!-- for all other loggers log only warn and above log messages -->
 
-	<root>
+    <root>
 
-		<priority value="WARN" />
+        <priority value="WARN"/>
 
-		<appender-ref ref="STDOUT" />
-	</root>
+        <appender-ref ref="STDOUT"/>
+    </root>
 
 </log4j:configuration>

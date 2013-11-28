@@ -1,68 +1,68 @@
 package org.personal.mason.feop.server.blog.mvc.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.codehaus.jackson.map.annotate.JsonRootName;
 import org.personal.mason.feop.server.blog.domain.model.Category;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "category")
 @JsonRootName("category")
 public class CategoryModel {
 
-	private Long id;
-	private String categoryName;
-	private String description;
-	private Long parentCategoryId;
+    private Long id;
+    private String categoryName;
+    private String description;
+    private Long parentCategoryId;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
-	public String getCategoryName() {
-		return categoryName;
-	}
+    public String getCategoryName() {
+        return categoryName;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setParentCategoryId(Long parentCategoryId) {
-		this.parentCategoryId = parentCategoryId;
-	}
+    public void setParentCategoryId(Long parentCategoryId) {
+        this.parentCategoryId = parentCategoryId;
+    }
 
-	public Long getParentCategoryId() {
-		return parentCategoryId;
-	}
+    public Long getParentCategoryId() {
+        return parentCategoryId;
+    }
 
-	public static Category convert(CategoryModel categoryModel) {
-		Category category = new Category();
-		category.setId(categoryModel.getId());
-		category.setCategoryName(categoryModel.getCategoryName());
-		category.setDescription(categoryModel.getDescription());
+    public static Category convert(CategoryModel categoryModel) {
+        Category category = new Category();
+        category.setId(categoryModel.getId());
+        category.setCategoryName(categoryModel.getCategoryName());
+        category.setDescription(categoryModel.getDescription());
 
-		return category;
-	}
+        return category;
+    }
 
-	public static CategoryModel revert(Category category) {
-		CategoryModel model = new CategoryModel();
-		model.setId(category.getId());
-		model.setCategoryName(category.getCategoryName());
-		model.setDescription(category.getDescription());
-		if (category.getCategory() != null) {
-			model.setParentCategoryId(category.getCategory().getId());
-		}
-		return model;
-	}
+    public static CategoryModel revert(Category category) {
+        CategoryModel model = new CategoryModel();
+        model.setId(category.getId());
+        model.setCategoryName(category.getCategoryName());
+        model.setDescription(category.getDescription());
+        if (category.getCategory() != null) {
+            model.setParentCategoryId(category.getCategory().getId());
+        }
+        return model;
+    }
 }

@@ -1,68 +1,67 @@
 @charset "UTF-8";
-header{
-	background-color:#CCC;
-	height:98px;
-	vertical-align:bottom;
-	position:relative;
-	width:100%;
+header {
+    background-color: #CCC;
+    height: 98px;
+    vertical-align: bottom;
+    position: relative;
+    width: 100%;
 }
 
-#header-left   {
-	position:absolute;
-	left:0;
-	bottom:0;
-	margin-right:-350px;
+#header-left {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-right: -350px;
 }
 
 #header-right {
-	position:absolute;
-	right:15px;
+    position: absolute;
+    right: 15px;
 }
 
-#header-right a{
-	-moz-border-radius:2px;
-	-webkit-border-radius:2px;
-	border-radius:2px;
-	border:1px solid gray;
-	display:inline-block;
-	color:#ffffff;
-	font-family:Comic Sans MS;
-	font-size:14px;
-	font-weight:bold;
-	padding:6px 20px;
-	text-decoration:none;
-	text-shadow:1px 1px 0px #fff;
-	
-	margin:5px;
+#header-right a {
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: 1px solid gray;
+    display: inline-block;
+    color: #ffffff;
+    font-family: Comic Sans MS;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 20px;
+    text-decoration: none;
+    text-shadow: 1px 1px 0px #fff;
+
+    margin: 5px;
 }
 
 #header-right a:hover {
-	background-color:#4A4A4A;
+    background-color: #4A4A4A;
 }
 
 #header-right a:active {
-	position:relative;
-	top:1px;
+    position: relative;
+    top: 1px;
 }
 
-.darkgray{
-	background-color:#6C6D70;
+.darkgray {
+    background-color: #6C6D70;
 }
 
-.gray{
-	background-color:gray;
+.gray {
+    background-color: gray;
 }
-
 
 #logo-icon {
-	width:224px;
-	margin-bottom:-20px;
+    width: 224px;
+    margin-bottom: -20px;
 }
 
-#logo-desc{
-	font-size:14px;
-	padding-left:15px;
-	font-family:Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
-	font-style:italic;
-	color:#eee;
+#logo-desc {
+    font-size: 14px;
+    padding-left: 15px;
+    font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", serif;
+    font-style: italic;
+    color: #eee;
 }

@@ -5,15 +5,15 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class ResetPasswordForm {
 
-	@Email(message = "Please provide a valid email address")
-	@NotEmpty(message = "Email is required")
-	private String email;
+    @Email(message = "Please provide a valid email address")
+    @NotEmpty(message = "Email is required")
+    private String email;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 }
