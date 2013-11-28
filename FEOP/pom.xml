@@ -13,7 +13,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.0.0.RC1</spring.version>
 		<!--<spring.version>3.2.5.RELEASE</spring.version>-->
-		<spring.security.version>3.1.4.RELEASE</spring.security.version>
+		<!--<spring.security.version>3.1.4.RELEASE</spring.security.version>-->
+        <spring.security.version>3.2.0.RC2</spring.security.version>
 		<spring.security.oauth2.version>1.0.5.RELEASE</spring.security.oauth2.version>
 		<cglib.version>2.2.2</cglib.version>
 		<aspectj.version>1.7.4</aspectj.version>
@@ -48,17 +49,9 @@
 	</properties>
 	<repositories>
         <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>http://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>repository.springsource.milestone</id>
+            <name>SpringSource Milestone Repository</name>
+            <url>http://repo.springsource.org/milestone</url>
         </repository>
-		<repository>
-			<id>springsource.milestone</id>
-			<name>SpringSource Milestone Repository</name>
-			<url>http://repo.springsource.org/milestone</url>
-		</repository>
 	</repositories>
 </project>

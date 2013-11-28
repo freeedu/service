@@ -12,8 +12,8 @@
 	<jpa:auditing auditor-aware-ref="auditorAware" />
 	<jpa:repositories base-package="org.personal.mason.feop.oauth.service.domain.repository"
 		entity-manager-factory-ref="entityManagerFactory" />
-	<jpa:repositories base-package="org.personal.mason.feop.oauth.common.domain.repository"
-		entity-manager-factory-ref="commonEntityManagerFactory" />
-	<jpa:repositories base-package="org.personal.mason.feop.oauth.contact.domain.repository"
-		entity-manager-factory-ref="contactEntityManagerFactory" />
+	<!--<jpa:repositories base-package="org.personal.mason.feop.oauth.common.domain.repository"-->
+		<!--entity-manager-factory-ref="commonEntityManagerFactory" />-->
+	<!--<jpa:repositories base-package="org.personal.mason.feop.oauth.contact.domain.repository"-->
+		<!--entity-manager-factory-ref="contactEntityManagerFactory" />-->
 </beans>
