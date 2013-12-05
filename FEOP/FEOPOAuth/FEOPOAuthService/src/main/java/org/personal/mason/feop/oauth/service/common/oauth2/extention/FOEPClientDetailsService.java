@@ -59,7 +59,7 @@ public class FOEPClientDetailsService implements ClientDetailsService, ClientReg
 
     @Override
     public void addClientDetails(ClientDetails clientDetails) throws ClientAlreadyExistsException {
-        if(feopClientDetailService.isExist(clientDetails.getClientId())){
+        if (feopClientDetailService.isExist(clientDetails.getClientId())) {
             throw new ClientAlreadyExistsException("Client already exists: " + clientDetails.getClientId());
         }
         OauthClientDetail ocd = ClientDetailsConvertor.toOauthClientDetail(clientDetails);
@@ -70,7 +70,7 @@ public class FOEPClientDetailsService implements ClientDetailsService, ClientReg
     @Override
     public void updateClientDetails(ClientDetails clientDetails) throws NoSuchClientException {
         OauthClientDetail ocd = feopClientDetailService.findByClientId(clientDetails.getClientId());
-        if(ocd == null){
+        if (ocd == null) {
             throw new NoSuchClientException("No client found with id = " + clientDetails.getClientId());
         }
 
@@ -81,7 +81,7 @@ public class FOEPClientDetailsService implements ClientDetailsService, ClientReg
     @Override
     public void updateClientSecret(String clientId, String secret) throws NoSuchClientException {
         OauthClientDetail ocd = feopClientDetailService.findByClientId(clientId);
-        if(ocd == null){
+        if (ocd == null) {
             throw new NoSuchClientException("No client found with id = " + clientId);
         }
 
@@ -92,7 +92,7 @@ public class FOEPClientDetailsService implements ClientDetailsService, ClientReg
     @Override
     public void removeClientDetails(String clientId) throws NoSuchClientException {
         OauthClientDetail ocd = feopClientDetailService.findByClientId(clientId);
-        if(ocd == null){
+        if (ocd == null) {
             throw new NoSuchClientException("No client found with id = " + clientId);
         }
 
@@ -103,7 +103,7 @@ public class FOEPClientDetailsService implements ClientDetailsService, ClientReg
     public List<ClientDetails> listClientDetails() {
         List<ClientDetails> cds = new ArrayList<>();
         List<OauthClientDetail> clientDetails = feopClientDetailService.findAllOauthClientDetails();
-        for(OauthClientDetail ocd : clientDetails){
+        for (OauthClientDetail ocd : clientDetails) {
             cds.add(ClientDetailsConvertor.toClientDetails(ocd));
         }
         return cds;
@@ -127,11 +127,11 @@ public class FOEPClientDetailsService implements ClientDetailsService, ClientReg
                     oauthClientDetail.getWebServerRedirectUri());
             clientDetails.setClientSecret(oauthClientDetail.getClientSecret());
 
-            if(oauthClientDetail.getAccessTokenValidity() != null){
+            if (oauthClientDetail.getAccessTokenValidity() != null) {
                 clientDetails.setAccessTokenValiditySeconds(oauthClientDetail.getAccessTokenValidity());
             }
 
-            if(oauthClientDetail.getRefreshTokenValidity() != null){
+            if (oauthClientDetail.getRefreshTokenValidity() != null) {
                 clientDetails.setRefreshTokenValiditySeconds(oauthClientDetail.getRefreshTokenValidity());
             }
 
@@ -141,8 +141,7 @@ public class FOEPClientDetailsService implements ClientDetailsService, ClientReg
                     @SuppressWarnings("unchecked")
                     Map<String, Object> additionalInformation = mapper.readValue(json, Map.class);
                     clientDetails.setAdditionalInformation(additionalInformation);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     logger.warn("Could not decode JSON for additional information: " + clientDetails, e);
                 }
             }
@@ -176,7 +175,7 @@ public class FOEPClientDetailsService implements ClientDetailsService, ClientReg
             return ocd;
         }
 
-        public final static void mergeToOauthClientDetail(OauthClientDetail ocd, ClientDetails clientDetails){
+        public final static void mergeToOauthClientDetail(OauthClientDetail ocd, ClientDetails clientDetails) {
             String json = null;
             try {
                 json = mapper.writeValueAsString(clientDetails.getAdditionalInformation());

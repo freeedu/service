@@ -1,6 +1,7 @@
 package org.personal.mason.feop.oauth.service.config;
 
 import org.personal.mason.feop.oauth.service.common.oauth2.OAuth2UserDetailsServiceImpl;
+import org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPAuthorizationCodeServices;
 import org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPClientDetailsService;
 import org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPTokenStore;
 import org.springframework.context.annotation.Bean;
@@ -69,20 +70,9 @@ public class OAuthConfig {
     }
 
     @Bean
-    public OAuth2MethodSecurityExpressionHandler oauthExpressionHandler(){
-        return new OAuth2MethodSecurityExpressionHandler();
-    }
-
-    @Bean
-    public OAuth2WebSecurityExpressionHandler oauthWebExpressionHandler(){
-        return new OAuth2WebSecurityExpressionHandler();
-    }
-
-    @Bean
-    public OAuth2AuthenticationProcessingFilter resourceServerFilter(){
-        OAuth2AuthenticationProcessingFilter processingFilter = new OAuth2AuthenticationProcessingFilter();
-        //processingFilter.s
-        return processingFilter;
+    public FOEPAuthorizationCodeServices authorizationCodeServices() {
+        FOEPAuthorizationCodeServices authorizationCodeServices = new FOEPAuthorizationCodeServices();
+        return authorizationCodeServices;
     }
 
 }

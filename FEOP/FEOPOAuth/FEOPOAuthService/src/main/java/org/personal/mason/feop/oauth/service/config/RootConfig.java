@@ -32,11 +32,10 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {
-        "org.personal.mason.feop.oauth.service.domain.repository",
-        "org.personal.mason.feop.oauth.service.spi.impl",
-        "org.personal.mason.feop.oauth.service.common"
+        "org.personal.mason.feop.oauth.service",
+        "org.personal.mason.feop.oauth.common"
 })
-@EnableJpaRepositories(basePackages = {"org.personal.mason.feop.oauth.service.repository"})
+@EnableJpaRepositories(basePackages = {"org.personal.mason.feop.oauth.service.domain.repository", "org.personal.mason.feop.oauth.common.domain.repository"})
 @PropertySource(value = {"classpath:app.properties"})
 @EnableTransactionManagement
 public class RootConfig {
@@ -61,7 +60,7 @@ public class RootConfig {
     private String database;
     @Value("${persistence.unit.name}")
     private String persistenceUnitName;
-    @Value("${package.to.scan}")
+    @Value("${packages.to.scan}")
     private String[] packagesToScan;
     @Value("${mail.host}")
     private String mailHost;
@@ -159,20 +158,5 @@ public class RootConfig {
         emailSender.setJavaMailSender(javaMailSender());
         return emailSender;
     }
-//   <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
-//    p:host="${mail.host}" p:username="${mail.username}" p:password="${mail.password}">
-//    <property name="javaMailProperties">
-//    <props>
-//    <prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
-//    <prop key="mail.smtp.auth">true</prop>
-//    <prop key="mail.smtp.ssl.enable">true</prop>
-//    <prop key="mail.smtp.starttls.enable">true</prop>
-//    <prop key="mail.debug">${mail.debug}</prop>
-//    </props>
-//    </property>
-//    </bean>
-//
-//    <bean id="emailSender" class="org.personal.mason.feop.oauth.service.common.mail.EmailSender"
-//    p:javaMailSender-ref="javaMailSender" p:sender="${mail.username}"/>
 
 }

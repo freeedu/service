@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.service.domain.service.oauth.impl;
 
+import org.personal.mason.feop.oauth.common.domain.model.SystemSetting;
+import org.personal.mason.feop.oauth.common.domain.repository.SystemSettingRepository;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthRole;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
 import org.personal.mason.feop.oauth.service.domain.repository.oauth.OauthRoleRepository;
@@ -20,7 +22,7 @@ public class FeopUserServiceImpl implements FeopUserService {
     private static final String DEFAULT_USER_ROLES = "default_user_roles";
     private OauthUserRepository oauthUserRepository;
     private OauthRoleRepository oauthRoleRepository;
-    private SystemSettingsRepository systemSettingsRepository;
+    private SystemSettingRepository systemSettingRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -39,9 +41,10 @@ public class FeopUserServiceImpl implements FeopUserService {
     }
 
     @Autowired
-    public void setSystemSettingsRepository(SystemSettingsRepository systemSettingsRepository) {
-        this.systemSettingsRepository = systemSettingsRepository;
+    public void setSystemSettingRepository(SystemSettingRepository systemSettingRepository) {
+        this.systemSettingRepository = systemSettingRepository;
     }
+
 
     @Override
     @Transactional
@@ -61,7 +64,7 @@ public class FeopUserServiceImpl implements FeopUserService {
     public void regist(OauthUser user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        List<SystemSettings> setting = systemSettingsRepository.findByKey(DEFAULT_USER_ROLES);
+        List<SystemSetting> setting = systemSettingRepository.findByKey(DEFAULT_USER_ROLES);
 
         if (setting != null && setting.size() > 0) {
             Object[] roleNames = setting.get(0).getValue().split(",[\\s]*");

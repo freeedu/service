@@ -38,16 +38,26 @@
                     <div class="input-group">
                         <span class="input-group-addon "><i class="glyphicon glyphicon-user"></i></span><input
                             class="form-control" type="text"
-                            placeholder="Username" autofocus required name='j_username'>
+                            placeholder="Username" autofocus required name='username'>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon "><i class="glyphicon glyphicon-lock"></i></span><input
                             class="form-control" type="password"
-                            placeholder="Password" required name='j_password'>
+                            placeholder="Password" required name='password'>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <input
+                                class="form-control" type="hidden"
+                                name="${_csrf.parameterName}"
+                                value="${_csrf.token}"/>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-sm" value="Log in"> <a
                         class="btn btn-link btn-sm pull-right"

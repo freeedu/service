@@ -15,12 +15,10 @@ public class EmailSender {
 
     private String sender;
 
-    @Autowired
     public void setJavaMailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
-    @Autowired
     public void setSender(String sender) {
         this.sender = sender;
     }
