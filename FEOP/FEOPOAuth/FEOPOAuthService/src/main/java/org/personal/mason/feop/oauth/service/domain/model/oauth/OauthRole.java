@@ -1,6 +1,6 @@
 package org.personal.mason.feop.oauth.service.domain.model.oauth;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "roles")
-public class OauthRole extends AbstractPersistable<Long> {
+public class OauthRole extends FOEPPersistable<Long> {
     private static final long serialVersionUID = -1019367973729294374L;
 
     private Boolean enabled;

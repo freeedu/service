@@ -22,14 +22,17 @@
     <bean id="resourceServerFilter" class="org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter" p:authenticationManager-ref="feopAM"
             />
 
-    <bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService"
-          c:dataSource-ref="oauthDataSource"/>
+    <bean id="clientDetails" class="org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPClientDetailsService"/>
+    <!--<bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService"-->
+          <!--c:dataSource-ref="oauthDataSource"/>-->
+
 
     <bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices"
           p:tokenStore-ref="tokenStore" p:supportRefreshToken="true" p:clientDetailsService-ref="clientDetails"/>
 
-    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore"
-          c:dataSource-ref="oauthDataSource"/>
+    <!--<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore"-->
+          <!--c:dataSource-ref="oauthDataSource"/>-->
+    <bean id="tokenStore" class="org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPTokenStore"/>
 
     <bean id="userApprovalHandler"
           class="org.springframework.security.oauth2.provider.approval.TokenServicesUserApprovalHandler"

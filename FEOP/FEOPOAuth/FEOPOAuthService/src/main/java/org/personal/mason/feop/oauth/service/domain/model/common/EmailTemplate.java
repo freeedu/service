@@ -1,18 +1,17 @@
 package org.personal.mason.feop.oauth.service.domain.model.common;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "email_template")
-public class EmailTemplate extends AbstractPersistable<Long> {
+public class EmailTemplate extends FOEPPersistable<Long> {
 
     private static final long serialVersionUID = 9187789630779122218L;
 
     private String name;
-    private Integer version;
     private String subject;
     private String content;
 
@@ -22,14 +21,6 @@ public class EmailTemplate extends AbstractPersistable<Long> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public String getContent() {

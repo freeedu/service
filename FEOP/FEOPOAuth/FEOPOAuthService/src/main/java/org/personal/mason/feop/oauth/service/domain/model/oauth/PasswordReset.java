@@ -1,13 +1,13 @@
 package org.personal.mason.feop.oauth.service.domain.model.oauth;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "password_reset")
-public class PasswordReset extends AbstractPersistable<Long> {
+public class PasswordReset extends FOEPPersistable<Long> {
 
     private static final long serialVersionUID = 3399070411158599314L;
 

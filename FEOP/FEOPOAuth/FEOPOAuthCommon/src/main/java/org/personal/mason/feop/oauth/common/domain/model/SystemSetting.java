@@ -1,27 +1,47 @@
-package org.personal.mason.feop.oauth.service.domain.model.common;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
+package org.personal.mason.feop.oauth.common.domain.model;
 
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Created with IntelliJ IDEA.
+ * User: mason
+ * Date: 12/4/13
+ * Time: 12:40 AM
+ * To change this template use File | Settings | File Templates.
+ */
 @Entity
 @Table(name = "system_settings")
-public class SystemSettings extends AbstractPersistable<Long> {
-
-    private static final long serialVersionUID = 268514826697363336L;
+public class SystemSetting extends FOEPPersistable<Long> {
+    @Column(name = "setting_profile")
+    private String profile;
 
     @Column(name = "setting_key")
     private String key;
+
     @Column(name = "setting_value")
     private String value;
+
+    @Column(length = 255)
+    private String description;
+
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "start_time")
     private Date startDate;
+
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "end_time", nullable = true)
     private Date endDate;
+
     private Boolean disabled;
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
     public String getKey() {
         return key;
@@ -37,6 +57,14 @@ public class SystemSettings extends AbstractPersistable<Long> {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getStartDate() {
@@ -62,5 +90,4 @@ public class SystemSettings extends AbstractPersistable<Long> {
     public void setDisabled(Boolean disabled) {
         this.disabled = disabled;
     }
-
 }

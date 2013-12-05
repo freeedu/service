@@ -24,6 +24,11 @@ public class AuthorityInterceptor {
     public AuthorityInterceptor() {
     }
 
+    public AuthorityInterceptor(String pattern, boolean security) {
+        this.pattern = pattern;
+        this.security = security;
+    }
+
     public String getPattern() {
         return pattern;
     }

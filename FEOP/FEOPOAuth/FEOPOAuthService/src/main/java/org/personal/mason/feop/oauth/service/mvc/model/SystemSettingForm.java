@@ -1,6 +1,6 @@
 package org.personal.mason.feop.oauth.service.mvc.model;
 
-import org.personal.mason.feop.oauth.service.domain.model.common.SystemSettings;
+import org.personal.mason.feop.oauth.common.domain.model.SystemSetting;
 
 import java.util.Date;
 
@@ -61,7 +61,7 @@ public class SystemSettingForm {
         this.disabled = diabled;
     }
 
-    public static SystemSettingForm revert(SystemSettings setting) {
+    public static SystemSettingForm revert(SystemSetting setting) {
         SystemSettingForm form = new SystemSettingForm();
         form.setId(setting.getId());
         form.setKey(setting.getKey());

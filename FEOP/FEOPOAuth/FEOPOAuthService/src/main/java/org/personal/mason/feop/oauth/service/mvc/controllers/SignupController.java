@@ -1,9 +1,9 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
-import org.personal.mason.feop.oauth.service.domain.model.common.SystemSettings;
+import org.personal.mason.feop.oauth.common.domain.model.SystemSetting;
+import org.personal.mason.feop.oauth.common.spi.SystemSettingService;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
-import org.personal.mason.feop.oauth.service.domain.service.common.SystemSettingsService;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.InvitingCodeService;
 import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
@@ -30,7 +30,7 @@ public class SignupController {
     private static String INVITE_PERIOD_VALUE = "true";
 
     private FeopUserService feopUserService;
-    private SystemSettingsService systemSettingsService;
+    private SystemSettingService systemSettingService;
     private InvitingCodeService invitingCodeService;
 
     @InitBinder
@@ -48,8 +48,8 @@ public class SignupController {
     }
 
     @Autowired
-    public void setSystemSettingsService(SystemSettingsService systemSettingsService) {
-        this.systemSettingsService = systemSettingsService;
+    public void setSystemSettingService(SystemSettingService systemSettingService) {
+        this.systemSettingService = systemSettingService;
     }
 
     @Autowired
@@ -63,7 +63,7 @@ public class SignupController {
         if (redirectUri != null) {
             model.addAttribute("redirect_uri", redirectUri);
         }
-        List<SystemSettings> settings = systemSettingsService.findByKey(INVITE_PERIOD_KEY);
+        List<SystemSetting> settings = systemSettingService.findByKey(INVITE_PERIOD_KEY);
         if (SystemSettingUtils.getValue(settings).equals(INVITE_PERIOD_VALUE)) {
             model.addAttribute("requireInvite", true);
         }
@@ -87,7 +87,7 @@ public class SignupController {
             return "app.regist";
         }
 
-        List<SystemSettings> settings = systemSettingsService.findByKey(INVITE_PERIOD_KEY);
+        List<SystemSetting> settings = systemSettingService.findByKey(INVITE_PERIOD_KEY);
         if (SystemSettingUtils.getValue(settings).equals(INVITE_PERIOD_VALUE)) {
             String inviteCode = signupForm.getInviteCode();
             InvitingCode invitingCode = invitingCodeService.findWithCode(inviteCode);

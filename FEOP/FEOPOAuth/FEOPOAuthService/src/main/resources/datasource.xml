@@ -11,7 +11,7 @@
         <!--<bean id="contactDataSource" class="org.personal.mason.feop.oauth.common.cf.service.AppFogMysqlDataSource"-->
         <!--p:driverClassName="${mysql.jdbc.driverClassName}" p:serviceName="foep-db-contact" />-->
     </beans>
-    <beans profile="default,development">
+    <beans profile="default,dev">
         <bean id="oauthDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
               p:driverClassName="${mysql.jdbc.driverClassName}"
               p:url="${oauth2.jdbc.url}" p:username="${oauth2.jdbc.username}" p:password="${oauth2.jdbc.password}"/>

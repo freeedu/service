@@ -1,5 +1,6 @@
 package org.personal.mason.feop.oauth.contact.config;
 
+import org.personal.mason.feop.oauth.common.config.CommonConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.WebApplicationInitializer;
@@ -22,7 +23,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-        ctx.register(RootConfig.class);
+        ctx.register(RootConfig.class, CommonConfig.class);
         ctx.refresh();
 
         servletContext.addListener(new ContextLoaderListener(ctx));

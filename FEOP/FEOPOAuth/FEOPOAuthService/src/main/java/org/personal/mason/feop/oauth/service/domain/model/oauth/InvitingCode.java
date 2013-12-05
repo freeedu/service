@@ -1,6 +1,6 @@
 package org.personal.mason.feop.oauth.service.domain.model.oauth;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "invite_code")
-public class InvitingCode extends AbstractPersistable<Long> {
+public class InvitingCode extends FOEPPersistable<Long> {
 
     private static final long serialVersionUID = -4404481291665733440L;
 

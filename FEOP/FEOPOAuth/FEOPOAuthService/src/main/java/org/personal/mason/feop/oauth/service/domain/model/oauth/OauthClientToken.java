@@ -1,6 +1,6 @@
 package org.personal.mason.feop.oauth.service.domain.model.oauth;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 @Entity
 @Table(name = "oauth_client_token")
-public class OauthClientToken extends AbstractPersistable<Long> {
+public class OauthClientToken extends FOEPPersistable<Long> {
 
     /**
      *

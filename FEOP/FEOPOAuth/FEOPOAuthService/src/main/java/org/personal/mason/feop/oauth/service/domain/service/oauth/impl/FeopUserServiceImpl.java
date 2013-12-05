@@ -1,9 +1,7 @@
 package org.personal.mason.feop.oauth.service.domain.service.oauth.impl;
 
-import org.personal.mason.feop.oauth.service.domain.model.common.SystemSettings;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthRole;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
-import org.personal.mason.feop.oauth.service.domain.repository.common.SystemSettingsRepository;
 import org.personal.mason.feop.oauth.service.domain.repository.oauth.OauthRoleRepository;
 import org.personal.mason.feop.oauth.service.domain.repository.oauth.OauthUserRepository;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;

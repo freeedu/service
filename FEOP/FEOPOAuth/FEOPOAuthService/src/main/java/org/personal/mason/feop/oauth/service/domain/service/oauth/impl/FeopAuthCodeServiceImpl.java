@@ -38,4 +38,11 @@ public class FeopAuthCodeServiceImpl implements FeopAuthCodeService {
         oauthCodeRepository.delete(oauthCode);
     }
 
+    @Override
+    public void deleteByCode(String code) {
+        List<OauthCode> oauthCodes = oauthCodeRepository.findByCode(code);
+        if(oauthCodes != null && !oauthCodes.isEmpty()){
+            oauthCodeRepository.delete(oauthCodes);
+        }
+    }
 }

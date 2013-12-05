@@ -2,5 +2,5 @@ package org.personal.mason.feop.oauth.common.client;
 
 public enum AuthenticationStatus {
 
-    NotLogin, Denied, Access;
+    NOT_LOGIN, DENIED, ALLOW_ACCESS;
 }

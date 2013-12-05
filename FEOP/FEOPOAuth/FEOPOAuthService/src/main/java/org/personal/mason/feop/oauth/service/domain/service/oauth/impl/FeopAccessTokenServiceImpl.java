@@ -27,7 +27,7 @@ public class FeopAccessTokenServiceImpl implements FeopAccessTokenService {
 
     @Override
     @Transactional
-    public void saveObject(OauthAccessToken accessToken) {
+    public void saveAccessToken(OauthAccessToken accessToken) {
         oauthAccessTokenRepository.save(accessToken);
     }
 
@@ -62,6 +62,22 @@ public class FeopAccessTokenServiceImpl implements FeopAccessTokenService {
     @Transactional
     public List<OauthAccessToken> findAccessTokenWithClientId(String clientId) {
         return oauthAccessTokenRepository.findByClientId(clientId);
+    }
+
+    @Override
+    public void deleteWithTokenId(String tokenId) {
+        List<OauthAccessToken> oauthAccessTokens = oauthAccessTokenRepository.findByTokenId(tokenId);
+        if(oauthAccessTokens != null && !oauthAccessTokens.isEmpty()){
+            oauthAccessTokens.removeAll(oauthAccessTokens);
+        }
+    }
+
+    @Override
+    public void deleteWithRefreshToken(String refreshTokenId) {
+        List<OauthAccessToken> oauthAccessTokens = oauthAccessTokenRepository.findByRefreshToken(refreshTokenId);
+        if(oauthAccessTokens != null && !oauthAccessTokens.isEmpty()){
+            oauthAccessTokens.removeAll(oauthAccessTokens);
+        }
     }
 
 }

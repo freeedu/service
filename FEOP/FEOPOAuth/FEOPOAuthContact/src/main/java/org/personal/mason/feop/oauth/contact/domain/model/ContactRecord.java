@@ -2,6 +2,7 @@ package org.personal.mason.feop.oauth.contact.domain.model;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -1,7 +1,7 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
-import org.personal.mason.feop.oauth.service.domain.model.common.SystemSettings;
-import org.personal.mason.feop.oauth.service.domain.service.common.SystemSettingsService;
+import org.personal.mason.feop.oauth.common.domain.model.SystemSetting;
+import org.personal.mason.feop.oauth.common.spi.SystemSettingService;
 import org.personal.mason.feop.oauth.service.mvc.model.SystemSettingForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -33,11 +33,11 @@ public class SystemSettingsController {
         binder.registerCustomEditor(Date.class, editor);
     }
 
-    private SystemSettingsService systemSettingsService;
+    private SystemSettingService systemSettingService;
 
     @Autowired
-    public void setSystemSettingsService(SystemSettingsService systemSettingsService) {
-        this.systemSettingsService = systemSettingsService;
+    public void setSystemSettingService(SystemSettingService systemSettingService) {
+        this.systemSettingService = systemSettingService;
     }
 
     @RequestMapping(value = {"/admin/settings/new"}, method = RequestMethod.GET)
@@ -47,14 +47,14 @@ public class SystemSettingsController {
 
     @RequestMapping(value = {"/admin/settings/new"}, method = RequestMethod.POST)
     public String saveSystemSetting(@Valid SystemSettingForm systemSettingForm, BindingResult result, Model model) {
-        SystemSettings settings = new SystemSettings();
+        SystemSetting settings = new SystemSetting();
         settings.setKey(systemSettingForm.getKey());
         settings.setValue(systemSettingForm.getValue());
         settings.setStartDate(systemSettingForm.getStartDate());
         settings.setEndDate(systemSettingForm.getEndDate());
         settings.setDisabled(systemSettingForm.getDisabled() == null ? false : systemSettingForm.getDisabled());
 
-        systemSettingsService.save(settings);
+        systemSettingService.save(settings);
 
         model.addAttribute("setting", settings);
         return "app.settings.view";
@@ -62,7 +62,7 @@ public class SystemSettingsController {
 
     @RequestMapping(value = {"/admin/settings/update"}, method = RequestMethod.GET)
     public String updateSystemSetting(@RequestParam("id") Long id, Model model) {
-        SystemSettings setting = systemSettingsService.findById(id);
+        SystemSetting setting = systemSettingService.findById(id);
         if (setting == null) {
             return null;
         }
@@ -73,7 +73,7 @@ public class SystemSettingsController {
 
     @RequestMapping(value = {"/admin/settings/update"}, method = RequestMethod.POST)
     public String mergeSystemSetting(@Valid SystemSettingForm setting, BindingResult result, Model model) {
-        SystemSettings settings = systemSettingsService.findById(setting.getId());
+        SystemSetting settings = systemSettingService.findById(setting.getId());
         settings.setKey(setting.getKey());
         settings.setStartDate(setting.getStartDate());
         settings.setEndDate(setting.getEndDate());
@@ -92,23 +92,23 @@ public class SystemSettingsController {
         if (size == null) {
             size = 10;
         }
-        Page<SystemSettings> settings = systemSettingsService.findAll(page, size);
+        Page<SystemSetting> settings = systemSettingService.findAll(page, size);
         model.addAttribute("settings", settings.getContent());
         return "app.settings.list";
     }
 
     @RequestMapping(value = {"/admin/settings/delete"}, method = RequestMethod.GET)
     public String deleteSetting(@RequestParam("id") Long id) {
-        SystemSettings setting = systemSettingsService.findById(id);
+        SystemSetting setting = systemSettingService.findById(id);
         if (setting != null) {
-            systemSettingsService.delete(setting);
+            systemSettingService.delete(setting);
         }
         return "redirect:/admin/settings/list";
     }
 
     @RequestMapping(value = {"/admin/settings/view"}, method = RequestMethod.GET)
     public String viewSetting(@RequestParam("id") Long id, Model model) {
-        SystemSettings setting = systemSettingsService.findById(id);
+        SystemSetting setting = systemSettingService.findById(id);
         if (setting == null) {
             return null;
         }

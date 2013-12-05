@@ -20,4 +20,5 @@ public interface FeopClientDetailService {
 
     List<OauthClientDetail> findAllOauthClientDetailsByUser(String currentUser);
 
+    boolean isExist(String clientId);
 }

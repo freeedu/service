@@ -11,9 +11,6 @@
     <!-- import the commons -->
     <context:component-scan base-package="org.personal.mason.feop.oauth.common"/>
 
-    <!-- import the contact -->
-    <context:component-scan base-package="org.personal.mason.feop.oauth.contact"/>
-
     <!-- PasswordEncoder for encode password -->
     <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
 

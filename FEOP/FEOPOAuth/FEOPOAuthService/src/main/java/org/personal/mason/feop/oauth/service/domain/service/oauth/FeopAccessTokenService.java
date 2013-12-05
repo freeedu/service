@@ -8,7 +8,7 @@ public interface FeopAccessTokenService {
 
     OauthAccessToken findAccessTokenWithTokenId(String extractTokenKey);
 
-    void saveObject(OauthAccessToken accessToken);
+    void saveAccessToken(OauthAccessToken accessToken);
 
     void removeAccessTokenByTokenId(String extractTokenKey);
 
@@ -20,4 +20,7 @@ public interface FeopAccessTokenService {
 
     List<OauthAccessToken> findAccessTokenWithClientId(String clientId);
 
+    void deleteWithTokenId(String tokenId);
+
+    void deleteWithRefreshToken(String refreshTokenId);
 }

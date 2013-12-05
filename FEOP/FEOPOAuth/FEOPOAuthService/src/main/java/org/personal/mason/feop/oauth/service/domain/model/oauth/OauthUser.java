@@ -1,6 +1,6 @@
 package org.personal.mason.feop.oauth.service.domain.model.oauth;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "users")
-public class OauthUser extends AbstractPersistable<Long> {
+public class OauthUser extends FOEPPersistable<Long> {
     private static final long serialVersionUID = 4887499676134613261L;
 
     private Boolean activated;

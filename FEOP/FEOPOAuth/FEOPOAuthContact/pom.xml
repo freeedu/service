@@ -146,7 +146,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <configuration>
                     <port>8999</port>
-                    <path>/contact</path>
+                    <path>/</path>
                 </configuration>
             </plugin>
             <plugin>

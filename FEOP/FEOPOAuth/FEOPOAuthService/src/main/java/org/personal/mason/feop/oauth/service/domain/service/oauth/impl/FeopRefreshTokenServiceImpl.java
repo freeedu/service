@@ -21,7 +21,7 @@ public class FeopRefreshTokenServiceImpl implements FeopRefreshTokenService {
 
     @Override
     @Transactional
-    public void saveObject(OauthRefreshToken token) {
+    public void saveRefreshToken(OauthRefreshToken token) {
         oauthRefreshTokenRepository.save(token);
     }
 

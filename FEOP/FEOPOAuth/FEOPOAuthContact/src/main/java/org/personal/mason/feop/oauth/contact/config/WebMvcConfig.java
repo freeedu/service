@@ -1,7 +1,11 @@
 package org.personal.mason.feop.oauth.contact.config;
 
+import org.personal.mason.feop.oauth.common.client.*;
+import org.personal.mason.feop.oauth.common.client.oauth.code.AuthorizationCodeLoginProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,6 +19,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -74,6 +79,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(new LocaleChangeInterceptor());
+        OAuthAuthenticationInterceptor interceptor = new OAuthAuthenticationInterceptor();
+        interceptor.setFoepAuthenticationProcessor(foepAuthenticationProcessor());
+        interceptor.setFoepLoginProcessor(foepLoginProcessor());
+        registry.addInterceptor(interceptor);
     }
 
     @Bean
@@ -85,6 +94,35 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         maps.put("org.springframework.transaction.TransactionException", "dataAccessFailure");
         resolver.setExceptionMappings(maps);
         return resolver;
+    }
+
+    @Bean
+    public FOEPAuthenticationProcessor foepAuthenticationProcessor(){
+        AuthorityInterceptor resourceInterceptor = new AuthorityInterceptor("/resources/.*", false);
+        AuthorityInterceptor icoInterceptor = new AuthorityInterceptor("/.*.ico", false);
+        AuthorityInterceptor contactInterceptor = new AuthorityInterceptor("/contact.*", true);
+        contactInterceptor.setAccess("ROLE_USER, ROLE_ADMIN, ROLE_DEV");
+
+        DefaultAuthenticationProcessor processor = new DefaultAuthenticationProcessor(Arrays.asList(resourceInterceptor, icoInterceptor, contactInterceptor));
+        processor.setTokenUtils(tokenUtils());
+        return processor;
+    }
+
+    @Bean
+    public TokenUtils tokenUtils() {
+        return new DefaultTokenUtils();
+    }
+
+    @Bean
+    public FOEPLoginProcessor foepLoginProcessor(){
+        AuthorizationCodeLoginProcessor processor = new AuthorizationCodeLoginProcessor(clientConfiguration());
+        processor.setTokenUtils(tokenUtils());
+        return processor;
+    }
+
+    @Bean
+    public ClientConfiguration clientConfiguration() {
+        return new DBClientConfiguration();
     }
 
 }

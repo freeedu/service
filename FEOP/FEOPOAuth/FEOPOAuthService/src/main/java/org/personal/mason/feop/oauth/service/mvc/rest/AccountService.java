@@ -33,7 +33,11 @@ public class AccountService {
             userInfo.setUserId(user.getUserId());
             userInfo.setFirstName(user.getFirstName());
             userInfo.setLastName(user.getLastName());
-            userInfo.setScreenName(user.getUserName());
+            if(user.getUserName() != null){
+                userInfo.setScreenName(user.getUserName());
+            } else {
+                userInfo.setScreenName(user.getEmail());
+            }
             userInfo.setGender(user.getGender());
             userInfo.setBirth(user.getBirth());
             userInfo.setProfileImageUri(user.getProfileImageUri());

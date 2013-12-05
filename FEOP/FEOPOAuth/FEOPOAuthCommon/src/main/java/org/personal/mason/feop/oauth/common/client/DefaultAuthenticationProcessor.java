@@ -3,28 +3,23 @@ package org.personal.mason.feop.oauth.common.client;
 import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
 import org.personal.mason.feop.oauth.common.model.UserRole;
 import org.personal.mason.feop.oauth.common.utils.Constrains;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
-public class HTTPAuthorityProcessor {
+public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcessor {
     private final List<AuthorityInterceptor> interceptors;
+    private TokenUtils tokenUtils;
 
-    public HTTPAuthorityProcessor(List<AuthorityInterceptor> interceptors) {
+    public DefaultAuthenticationProcessor(List<AuthorityInterceptor> interceptors) {
         this.interceptors = interceptors;
     }
 
-    @Deprecated
-    public boolean needProcess(String uri) {
-        if (interceptors != null) {
-            for (AuthorityInterceptor interceptor : interceptors) {
-                if (interceptor.needProcess(uri)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public void setTokenUtils(TokenUtils tokenUtils) {
+        this.tokenUtils = tokenUtils;
     }
 
     private AuthorityInterceptor findProcessUrl(String uri) {
@@ -39,27 +34,33 @@ public class HTTPAuthorityProcessor {
     }
 
     public AuthenticationStatus checkStatus(HttpServletRequest request) {
+        assert (tokenUtils != null);
         String requestURI = request.getRequestURI();
         AuthorityInterceptor processor = findProcessUrl(requestURI);
         if (processor != null) {
-            if (processor.hasRoleControl()) {
-                HttpSession session = request.getSession(true);
-                FEOPAuthentication authentication = (FEOPAuthentication) session
-                        .getAttribute(Constrains.AUTHENTICATIOIN);
-                if (authentication == null || !authentication.hasValidToken()) {
-                    return AuthenticationStatus.NotLogin;
-                }
+            if (!processor.hasRoleControl()) {
+                return AuthenticationStatus.ALLOW_ACCESS;
+            }
+            Map<String, String[]> parms = request.getParameterMap();
+            if(!parms.containsKey("token")) {
+                return AuthenticationStatus.NOT_LOGIN;
+            }
 
-                if (checkRoles(authentication.getUserInfo().getRoles(), processor.getRequiredRoles())) {
-                    return AuthenticationStatus.Access;
-                } else {
-                    return AuthenticationStatus.Denied;
-                }
+            String token = parms.get("token")[0];
+
+            FEOPAuthentication authentication = tokenUtils.getAuthentication(token);
+
+            if (authentication == null || !authentication.hasValidToken()) {
+                return AuthenticationStatus.NOT_LOGIN;
+            }
+
+            if (checkRoles(authentication.getUserInfo().getRoles(), processor.getRequiredRoles())) {
+                return AuthenticationStatus.ALLOW_ACCESS;
             } else {
-                return AuthenticationStatus.Access;
+                return AuthenticationStatus.DENIED;
             }
         }
-        return AuthenticationStatus.Denied;
+        return AuthenticationStatus.DENIED;
     }
 
     private static boolean checkRoles(List<UserRole> roles, List<String> checkRoles) {

@@ -1,4 +1,4 @@
-package org.personal.mason.feop.oauth.common.client.oauth;
+package org.personal.mason.feop.oauth.common.client;
 
 public interface StateKeyGenerator {
 

@@ -4,7 +4,7 @@ import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthRefreshToke
 
 public interface FeopRefreshTokenService {
 
-    void saveObject(OauthRefreshToken token);
+    void saveRefreshToken(OauthRefreshToken token);
 
     OauthRefreshToken findRefreshTokenWithTokenId(String extractTokenKey);
 

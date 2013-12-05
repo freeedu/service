@@ -65,4 +65,10 @@ public class FeopClientDetailServiceImpl implements FeopClientDetailService {
         return oauthClientDetailRepository.findByOwner(currentUser);
     }
 
+    @Override
+    public boolean isExist(String clientId) {
+        List<OauthClientDetail> details = oauthClientDetailRepository.findByClientId(clientId);
+        return details.isEmpty();
+    }
+
 }

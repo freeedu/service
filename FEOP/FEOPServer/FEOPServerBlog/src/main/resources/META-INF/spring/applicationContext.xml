@@ -50,18 +50,19 @@
 
 
     <mvc:interceptors>
-        <bean class="org.personal.mason.feop.oauth.common.client.OAuthAuthorityInterceptor"/>
+        <bean class="org.personal.mason.feop.oauth.common.client.OAuthAuthenticationInterceptor"/>
     </mvc:interceptors>
 
     <bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.common.client.JDBCClientConfiguration"/>
 
     <bean id="loginProcessor"
-          class="org.personal.mason.feop.oauth.common.client.oauth.code.AuthorizationCodeLoginInfoProvider"
-          p:configuration-ref="clientConfiguration"/>
+          class="org.personal.mason.feop.oauth.common.client.oauth.code.AuthorizationCodeLoginProcessor">
+        <constructor-arg name="configuration" ref="clientConfiguration"/>
+    </bean>
     <!-- <bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.implicit.ImplicitLoginInfoProvider"
         p:configuration-ref="clientConfiguration" /> -->
 
-    <bean id="processor" class="org.personal.mason.feop.oauth.common.client.HTTPAuthorityProcessor">
+    <bean id="foepAuthenticationProcessor" class="org.personal.mason.feop.oauth.common.client.DefaultAuthenticationProcessor">
         <constructor-arg name="interceptors">
             <list>
                 <bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/resources/.*"

@@ -1,4 +1,4 @@
-package org.personal.mason.feop.oauth.contact.domain.model;
+package org.personal.mason.feop.oauth.common.domain.model;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,7 +26,7 @@ public abstract class FOEPPersistable<PK extends Serializable> extends AbstractP
     private Date lastUpdateTime;
 
     @Version
-    private int version;
+    private int version = 0;
 
     @PreUpdate
     public void beforeUpdate() {

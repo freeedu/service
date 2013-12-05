@@ -27,9 +27,12 @@ import java.util.Properties;
  */
 
 @Configuration
-@ComponentScan(basePackages = {"org.personal.mason.feop.oauth.contact.domain.repository",
-        "org.personal.mason.feop.oauth.contact.spi.impl", "org.personal.mason.feop.oauth.contact.common"})
-@EnableJpaRepositories(basePackages = "org.personal.mason.feop.oauth.contact.domain.repository")
+@ComponentScan(basePackages = {
+        "org.personal.mason.feop.oauth.contact.domain.repository",
+        "org.personal.mason.feop.oauth.contact.spi.impl",
+        "org.personal.mason.feop.oauth.contact.common"
+})
+@EnableJpaRepositories(basePackages = {"org.personal.mason.feop.oauth.contact.domain.repository"})
 @PropertySource(value = {"classpath:contact.properties"})
 @EnableTransactionManagement
 public class RootConfig {
@@ -53,7 +56,7 @@ public class RootConfig {
     @Value("${persistence.unit.name}")
     private String persistenceUnitName;
     @Value("${package.to.scan}")
-    private String packagesToScan;
+    private String[] packagesToScan;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

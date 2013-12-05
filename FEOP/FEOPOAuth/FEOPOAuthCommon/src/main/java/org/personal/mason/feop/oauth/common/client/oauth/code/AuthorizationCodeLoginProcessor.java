@@ -1,12 +1,13 @@
 package org.personal.mason.feop.oauth.common.client.oauth.code;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.personal.mason.feop.oauth.common.client.oauth.OAuthLoginInfoProvider;
-import org.personal.mason.feop.oauth.common.utils.Constrains;
+import org.personal.mason.feop.oauth.common.client.ClientConfiguration;
+import org.personal.mason.feop.oauth.common.client.DefaultLoginProcessor;
+import org.personal.mason.feop.oauth.common.client.LoginStatus;
+import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -15,7 +16,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
+public class AuthorizationCodeLoginProcessor extends DefaultLoginProcessor {
+
+    public AuthorizationCodeLoginProcessor(ClientConfiguration configuration) {
+        super(configuration);
+    }
 
     @Override
     public String getAuthorizationRequestUrl(HttpServletRequest request) {
@@ -54,20 +59,40 @@ public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
     }
 
     @Override
-    public String getAccessTokenRequestUrl(String callback) {
-        // TODO Auto-generated method stub
-        return null;
+    public LoginStatus checkLogin(HttpServletRequest request) {
+        Map<String, String[]> parms = request.getParameterMap();
+        if (parms.containsKey("token")) {
+            String token = parms.get("token")[0];
+            FEOPAuthentication authentication = getTokenUtils().getAuthentication(token);
+            if (authentication != null && authentication.hasValidToken()) {
+                return LoginStatus.AUTHENTICATED;
+            }
+        }
+
+        String code = request.getParameter("code");
+        if (code != null) {
+            return LoginStatus.ACCESS_TOKEN;
+        }
+
+        String error = request.getParameter("error");
+        if (error != null) {
+            return LoginStatus.ACCESS_ERROR;
+        }
+
+        return LoginStatus.REQUEST_AUTH;
     }
 
     @Override
-    public void processAccessToken(HttpServletRequest request, HttpServletResponse response) {
+    public void accessTokenAndRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        requestAccessToken(request, response);
+    }
+
+    @Override
+    public void processAccessError(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String error = request.getParameter("error");
-        if (error == null) {
-            requestAccessToken(request, response);
-        } else {
-            String errorDesc = request.getParameter("error_description");
-            System.out.println(errorDesc);
-        }
+        String errorDesc = request.getParameter("error_description");
+
+        response.sendRedirect(String.format(getErrorRedirectPage().contains("?") ? "%s&error=%s&desc=%s" : "%s?error=%s&desc=%s", getErrorRedirectPage(), error, errorDesc));
     }
 
     private void requestAccessToken(HttpServletRequest request, HttpServletResponse response) {
@@ -112,10 +137,7 @@ public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
 
                 @SuppressWarnings("unchecked")
                 Map<String, Object> properties = mapper.readValue(new URL(uri), Map.class);
-                HttpSession session = request.getSession(true);
-
-                session.setAttribute(Constrains.AUTHENTICATIOIN, new AuthorizationCodeAuthentication(
-                        properties));
+                getTokenUtils().persist(new AuthorizationCodeAuthentication(properties));
 
                 retrieveUserInfo(request);
 
@@ -129,11 +151,4 @@ public class AuthorizationCodeLoginInfoProvider extends OAuthLoginInfoProvider {
             }
         }
     }
-
-    @Override
-    public boolean isDirectlyRequestToken(HttpServletRequest request) {
-        String referer = request.getHeader("referer");
-        return referer != null && referer.contains(getConfiguration().getAuthUrl());
-    }
-
 }

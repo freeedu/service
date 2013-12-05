@@ -10,4 +10,5 @@ public interface FeopAuthCodeService {
 
     public void delete(OauthCode oauthCode);
 
+    void deleteByCode(String code);
 }
