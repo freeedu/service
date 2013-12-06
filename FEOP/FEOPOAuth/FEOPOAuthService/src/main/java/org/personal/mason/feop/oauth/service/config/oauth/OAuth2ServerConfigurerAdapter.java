@@ -37,7 +37,6 @@ import java.util.Arrays;
 @Import(OAuthConfig.class)
 public abstract class OAuth2ServerConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
-
     private TokenGranter tokenGranter;
 
     @Autowired

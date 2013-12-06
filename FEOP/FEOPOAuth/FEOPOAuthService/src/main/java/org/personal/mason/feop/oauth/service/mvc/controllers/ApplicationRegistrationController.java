@@ -31,7 +31,7 @@ public class ApplicationRegistrationController {
         this.feopClientDetailService = feopClientDetailService;
     }
 
-    @RequestMapping(value = {"/client/", "/client/form"})
+    @RequestMapping(value = {"/client/form"})
     public String signup(@ModelAttribute ClientForm clientForm, ModelMap map) {
         map.addAttribute("client_types", AuthorizationType.getAllTypes());
         return "app.client.new";

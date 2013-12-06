@@ -47,11 +47,11 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="<c:url value="/home"/>"><i class="glyphicon glyphicon-home"></i>
                         Home</a></li>
-                    <li class="dropdown"><a href="<c:url value="/account/"/>" class="dropdown-toggle"
+                    <li class="dropdown"><a href="<c:url value="/account/profile"/>" class="dropdown-toggle"
                                             data-toggle="dropdown">Profile<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="<c:url value="/account/changepwd"/>">Change Password</a></li>
-                            <li><a href="<c:url value="/account/"/>">Profile</a></li>
+                            <li><a href="<c:url value="/account/profile"/>">Profile</a></li>
                             <li><a href="<c:url value="/account/update"/>">Update Profile</a></li>
                         </ul>
                     </li>
@@ -61,7 +61,7 @@
                                 class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<c:url value="/client/list"/>">My Application</a></li>
-                                <li><a href="<c:url value="/client/"/>">New Application</a></li>
+                                <li><a href="<c:url value="/client/new"/>">New Application</a></li>
                             </ul>
                         </li>
                     </sec:authorize>
@@ -93,7 +93,7 @@
                     <a class="btn btn-primary btn-sm" href="<c:url value="/oauth/logout.do"/>">Logout</a>
                 </sec:authorize>
                 <sec:authorize ifNotGranted="ROLE_USER">
-                    <a class="btn btn-default btn-sm" href="<c:url value="/signup/"/>">Signup</a>
+                    <a class="btn btn-default btn-sm" href="<c:url value="/signup/new"/>">Signup</a>
                 </sec:authorize>
             </div>
         </div>

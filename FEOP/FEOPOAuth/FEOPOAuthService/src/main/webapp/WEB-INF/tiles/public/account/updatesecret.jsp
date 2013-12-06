@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<c:url value="/account/findpassword" var="updateAction"/>
+<c:url value="/findpassword" var="updateAction"/>
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">

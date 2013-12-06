@@ -30,21 +30,21 @@
             </c:if>
         </s:hasBindErrors>
         <div class="form-group">
-            <label for="key">Key</label> <input type="text" name="key" class="form-control" required/>
+            <label for="key">Key</label> <input id="key" type="text" name="key" class="form-control" required/>
         </div>
         <div class="form-group">
-            <label for="value">Value</label> <input type="text" name="value" class="form-control" required/>
+            <label for="value">Value</label> <input id="value" type="text" name="value" class="form-control" required/>
         </div>
         <div class="form-group">
 
-            <label for="startDate">Effect Start Time</label> <input type="date" name="startDate" class="form-control"
+            <label for="startDate">Effect Start Time</label> <input id="startDate" type="date" name="startDate" class="form-control"
                                                                     required/>
         </div>
         <div class="form-group">
-            <label for="endDate">Effect End Time</label> <input type="date" name="endDate" class="form-control"/>
+            <label for="endDate">Effect End Time</label> <input id="endDate" type="date" name="endDate" class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="diabled"> <input type="checkbox" name="diabled" checked="checked">&nbsp;Diable
+            <label for="disabled"> <input id="disabled" type="checkbox" name="disabled" checked="checked">&nbsp;Disable
             </label>
         </div>
         <div class="form-group">

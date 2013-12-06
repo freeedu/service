@@ -37,9 +37,6 @@ import java.util.Map;
 public class ProfileController {
 
     private FeopUserService feopUserService;
-    private PasswordResetService passwordResetService;
-    private EmailTemplateService emailTemplateService;
-    private EmailSender emailSender;
 
     @InitBinder
     protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
@@ -51,90 +48,8 @@ public class ProfileController {
     }
 
     @Autowired
-    private ServletContext servletContext;
-
-    @Autowired
-    public void setEmailTemplateService(EmailTemplateService emailTemplateService) {
-        this.emailTemplateService = emailTemplateService;
-    }
-
-    @Autowired
     public void setFeopUserService(FeopUserService feopUserService) {
         this.feopUserService = feopUserService;
-    }
-
-    @Autowired
-    public void setPasswordResetService(PasswordResetService passwordResetService) {
-        this.passwordResetService = passwordResetService;
-    }
-
-    @Autowired
-    public void setEmailSender(EmailSender emailSender) {
-        this.emailSender = emailSender;
-    }
-
-    @RequestMapping(value = {"/account/resetpassword"}, method = RequestMethod.GET)
-    public String resetPassword() {
-        return "app.resetpassword";
-    }
-
-    @RequestMapping(value = {"/account/resetpassword"}, method = RequestMethod.POST)
-    public String resetPassword(@ModelAttribute ResetPasswordForm resetPasswordForm, HttpServletRequest request, Model model) {
-        String email = resetPasswordForm.getEmail();
-        OauthUser user = feopUserService.findByEmailOrUsername(email);
-        if (user == null) {
-            model.addAttribute("errorMsg", "Invalid email account");
-            return null;
-        }
-
-        PasswordReset reset = new PasswordReset();
-        reset.setEmail(email);
-        reset.setRequestTime(TimeUtils.getCurrentTimestamp());
-        reset.setToken(StringGenerator.genereateUniqueToken());
-        passwordResetService.save(reset);
-        // TODO: mail
-        final String RESET_PASSWORD_TEMPLATE = "RESET_PASSWORD_TEMPLATE";
-        EmailTemplate template = emailTemplateService.findLatestTemplateWithName(RESET_PASSWORD_TEMPLATE);
-        if (template != null) {
-            Map<String, String> props = new HashMap<String, String>();
-            String servletPath = "/account/findpassword";
-            String resetPasswordUrl = String.format("%s?token=%s", buildUrlWithRequest(request, servletPath), reset.getToken());
-            props.put("resetPasswordUrl", resetPasswordUrl);
-
-            String body = MailBodyGenerator.buildEmailBody(template.getContent(), props);
-            emailSender.sendEmail(reset.getEmail(), template.getSubject(), body);
-        }
-        model.addAttribute("msg", "An reset Email has send to you.");
-        return "app.resetpassword";
-    }
-
-    @RequestMapping(value = {"/account/findpassword"}, method = RequestMethod.GET)
-    public String updateSecurityWithToken(@RequestParam String token, Model model) {
-        model.addAttribute("tkn", token);
-        return "app.findpassword";
-    }
-
-    @RequestMapping(value = {"/account/findpassword"}, method = RequestMethod.POST)
-    public String updateSecretWithToken(@Valid PasswordResetForm passwordResetForm, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "app.findpassword";
-        }
-
-        if (!passwordResetForm.getNewPassword().equals(passwordResetForm.getRepeatPassword())) {
-            result.rejectValue("repeatPassword", "errors.changesecret.repeatPassword", "New Password does not match.");
-            return "app.findpassword";
-        }
-
-        PasswordReset passwordReset = passwordResetService.findByToken(passwordResetForm.getToken());
-        if (passwordReset != null) {
-            String email = passwordReset.getEmail();
-            OauthUser user = feopUserService.findByEmailOrUsername(email);
-
-            feopUserService.updatePassword(user, passwordResetForm.getNewPassword());
-            passwordResetService.delete(passwordReset);
-        }
-        model.addAttribute("msg", "Password reset success!");
-        return "app.findpassword";
     }
 
     @RequestMapping(value = {"/account/changepwd"}, method = RequestMethod.GET)
@@ -142,7 +57,7 @@ public class ProfileController {
         return "app.profile.updatesecret";
     }
 
-    @RequestMapping(value = {"/account/changesecret"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/account/changepwd"}, method = RequestMethod.POST)
     public String updatePassword(@Valid ChangePasswordForm changePasswordForm, BindingResult result, ModelMap map, Principal principal) {
         if (result.hasErrors()) {
             return "app.profile.updatesecret";
@@ -172,7 +87,7 @@ public class ProfileController {
         return "app.profile.updatesecret";
     }
 
-    @RequestMapping(value = {"/account/", "/account/profile"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/account/profile"}, method = RequestMethod.GET)
     public String myProfile(ModelMap map, Principal principal) {
         String princ = principal.getName();
 
@@ -227,11 +142,7 @@ public class ProfileController {
     }
 
     @RequestMapping(value = {"/account/update"}, method = RequestMethod.POST)
-    public String changeProfile(@Valid UserForm userForm, BindingResult result, Principal principal) {
-        if (result.hasErrors()) {
-            return "app.profile.update";
-        }
-
+    public String changeProfile(UserForm userForm, Principal principal) {
         String princ = principal.getName();
 
         OauthUser ouser = feopUserService.findByEmailOrUsername(princ);
@@ -245,12 +156,6 @@ public class ProfileController {
         feopUserService.update(ouser);
 
         return "redirect:/account/profile";
-    }
-
-    private String buildUrlWithRequest(HttpServletRequest request, String servletPath) {
-        String url = request.getRequestURL().toString();
-        String oldServletPath = request.getServletPath();
-        return url.replace(oldServletPath, servletPath);
     }
 
 }

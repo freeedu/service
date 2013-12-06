@@ -9,9 +9,10 @@
         <div>
             <h3>Email Templates</h3>
         </div>
-
         <hr>
     </div>
+    <c:choose>
+        <c:when  test="${not empty templates  }">
     <c:forEach items="${templates}" var="template">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -55,4 +56,11 @@
             </div>
         </div>
     </c:forEach>
+    </c:when>
+    <c:otherwise>
+        <div class="alert alert-warning">
+            There is no Setting now.. <a href="<c:url value="/admin/et/new"/>">Add</a> Template..
+        </div>
+    </c:otherwise>
+    </c:choose>
 </div>

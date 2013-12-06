@@ -11,9 +11,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-@RunWith(value = SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/oauth2-servlet.xml", "classpath:auditing-context.xml", "classpath:beans.xml",
-        "classpath:infrastructure.xml", "classpath:spring-security-oauth2.xml", "classpath:spring-security.xml", "classpath:spring-mail.xml"})
 @WebAppConfiguration
 public class FEOPUserServiceTest {
 

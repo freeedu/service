@@ -10,6 +10,7 @@ import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
 import org.personal.mason.feop.oauth.service.utils.SystemSettingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -57,7 +58,7 @@ public class SignupController {
         this.invitingCodeService = invitingCodeService;
     }
 
-    @RequestMapping(value = {"/signup/", "/signup/form"})
+    @RequestMapping(value = {"/signup/", "/signup/form"}, method = RequestMethod.GET)
     public String signup(@RequestParam(value = "redirect_uri", required = false) String redirectUri, @ModelAttribute SignupForm signupForm,
                          Model model) {
         if (redirectUri != null) {

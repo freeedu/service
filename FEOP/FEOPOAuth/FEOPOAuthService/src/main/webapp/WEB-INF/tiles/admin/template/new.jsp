@@ -31,14 +31,14 @@
         </s:hasBindErrors>
 
         <div class="form-group">
-            <label for="name">Template Name</label> <input name="name" class="form-control" required/>
+            <label for="name">Template Name</label> <input id="name" name="name" class="form-control" required/>
         </div>
         <div class="form-group">
-            <label for="subject">Subject</label> <input name="subject" class="form-control" required/>
+            <label for="subject">Subject</label> <input id="subject" name="subject" class="form-control" required/>
         </div>
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea name="content" class="form-control" required rows="6"></textarea>
+            <textarea id="content" name="content" class="form-control" required rows="6"></textarea>
         </div>
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-primary btn-sm"/>

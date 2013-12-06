@@ -13,48 +13,57 @@
 
         <hr>
     </div>
-    <c:forEach items="${settings}" var="setting">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <c:url value="/admin/settings/view?id=${setting.id }" var="viewTarget"/>
-                <a href="${viewTarget }" class="btn btn-link btn-sm"><c:out value="${setting.key }"/></a> <a
-                    href='<c:url value="/admin/settings/delete?id=${setting.id }"/>'
-                    class="btn btn-link btn-sm pull-right">Delete</a>
-                <c:url value="/admin/settings/update?id=${setting.id }" var="update"/>
-                <a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
+    <c:choose>
+        <c:when test="${not empty settings  }">
+            <c:forEach items="${settings}" var="setting">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <c:url value="/admin/settings/view?id=${setting.id }" var="viewTarget"/>
+                        <a href="${viewTarget }" class="btn btn-link btn-sm"><c:out value="${setting.key }"/></a> <a
+                            href='<c:url value="/admin/settings/delete?id=${setting.id }"/>'
+                            class="btn btn-link btn-sm pull-right">Delete</a>
+                        <c:url value="/admin/settings/update?id=${setting.id }" var="update"/>
+                        <a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">Setting Key:</div>
+                            <div class="col-md-9">
+                                <c:out value="${setting.key }"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">Setting Value:</div>
+                            <div class="col-md-9">
+                                <c:out value="${setting.value }"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">Effect Start Date:</div>
+                            <div class="col-md-9">
+                                <c:out value="${setting.startDate }"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">Effect End Date:</div>
+                            <div class="col-md-9">
+                                <c:out value="${setting.endDate }"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">Diabled:</div>
+                            <div class="col-md-9">
+                                <c:out value="${setting.disabled }"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <div class="alert alert-warning">
+                There is no Setting now.. <a href="<c:url value="/admin/settings/new"/>">Add</a> one..
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-3">Setting Key:</div>
-                    <div class="col-md-9">
-                        <c:out value="${setting.key }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Setting Value:</div>
-                    <div class="col-md-9">
-                        <c:out value="${setting.value }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Effect Start Date:</div>
-                    <div class="col-md-9">
-                        <c:out value="${setting.startDate }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Effect End Date:</div>
-                    <div class="col-md-9">
-                        <c:out value="${setting.endDate }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Diabled:</div>
-                    <div class="col-md-9">
-                        <c:out value="${setting.disabled }"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </c:forEach>
+        </c:otherwise>
+    </c:choose>
 </div>

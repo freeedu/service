@@ -1,6 +1,7 @@
 package org.personal.mason.feop.oauth.service.config;
 
 import org.personal.mason.feop.oauth.service.common.oauth2.OAuth2UserDetailsServiceImpl;
+import org.personal.mason.feop.oauth.service.common.security.FEOPLogoutSuccessHandler;
 import org.personal.mason.feop.oauth.service.config.oauth.OAuth2ServerConfigurer;
 import org.personal.mason.feop.oauth.service.config.oauth.OAuth2ServerConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.approval.TokenServicesUserApprovalHandler;
 import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 /**
  * Created with IntelliJ IDEA.
@@ -51,7 +53,7 @@ public class OAuth2ServerConfig extends OAuth2ServerConfigurerAdapter {
     }
 
     @Bean
-    @DependsOn("springSecurityFilterChain") // FIXME remove the need for @DependsOn
+    //@DependsOn("springSecurityFilterChain") // FIXME remove the need for @DependsOn
     public UserApprovalHandler userApprovalHandler() throws Exception {
         TokenServicesUserApprovalHandler userApprovalHandler = new TokenServicesUserApprovalHandler();
         userApprovalHandler.setTokenServices(tokenServices());
@@ -60,16 +62,37 @@ public class OAuth2ServerConfig extends OAuth2ServerConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/account/findpassword", "/account/resetpassword");
+        web.ignoring().antMatchers("/resources/**", "/account/findpassword", "/account/resetpassword","/signup/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/token/**").hasRole("USER")
+                //.anyRequest().permitAll()
+                .and().exceptionHandling().accessDeniedPage("/login?error=true")
+                .and().logout()
+                .logoutUrl("/oauth/logout.do")
+                .invalidateHttpSession(true)
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .and().formLogin()
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/home")
+                .loginProcessingUrl("/oauth/login.do")
+                .loginPage("/login");
+        http.anonymous().disable()
+            .authorizeRequests()
                 .antMatchers("/oauth/token").fullyAuthenticated()
-                .antMatchers("/client/**", "/account/**", "/me/**", "/home*").hasRole("USER")
+                .regexMatchers("/client/.*", "/account/.*", "/me/.*", "/home.*").hasRole("USER")
+                //.antMatchers("/client/**", "/account/**", "/me/**", "/home*").hasRole("USER")
                 .antMatchers("/oauth/**").hasAnyRole("CLIENT", "USER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .and().exceptionHandling().accessDeniedPage("/login?error=true")
                 .and().apply(new OAuth2ServerConfigurer(authenticationManager()));
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler(){
+        return new FEOPLogoutSuccessHandler();
     }
 }

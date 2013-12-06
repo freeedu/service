@@ -93,7 +93,9 @@ public class SystemSettingsController {
             size = 10;
         }
         Page<SystemSetting> settings = systemSettingService.findAll(page, size);
-        model.addAttribute("settings", settings.getContent());
+        if(settings != null){
+            model.addAttribute("settings", settings.getContent());
+        }
         return "app.settings.list";
     }
 

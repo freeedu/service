@@ -79,7 +79,7 @@
         </c:when>
         <c:otherwise>
             <div class="alert alert-warning">
-                You have no applications. <a href="<c:url value="/client/"/>">Create</a> now.
+                You have no applications. <a href="<c:url value="/client/new"/>">Create</a> now.
             </div>
         </c:otherwise>
     </c:choose>

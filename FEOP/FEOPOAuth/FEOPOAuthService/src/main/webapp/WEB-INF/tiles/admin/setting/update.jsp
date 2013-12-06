@@ -33,23 +33,23 @@
             <input type="text" value="${setting.id }" name="id" class="right" hidden="true"/>
         </div>
         <div class="form-group">
-            <label for="key">Setting Key:</label><input type="text" value="${setting.key }" name="key"
+            <label for="key">Setting Key:</label><input id="key" type="text" value="${setting.key }" name="key"
                                                         class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="value">Setting Value:</label><input type="text" value="${setting.value }" name="value"
+            <label for="value">Setting Value:</label><input id="value" type="text" value="${setting.value }" name="value"
                                                             class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="startDate">Effect Start Date:</label><input type="datetime" value="${setting.startDate }"
+            <label for="startDate">Effect Start Date:</label><input id="startDate" type="datetime" value="${setting.startDate }"
                                                                     name="startDate" class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="endDate">Effect End Date:</label><input type="datetime" value="${setting.endDate }"
+            <label for="endDate">Effect End Date:</label><input id="endDate" type="datetime" value="${setting.endDate }"
                                                                 name="endDate" class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="disabled">Diabled:</label><input type="checkbox" value="${setting.disabled }" name="disabled"
+            <label for="disabled">Diabled:</label><input id="disabled" type="checkbox" value="${setting.disabled }" name="disabled"
                                                          class="checkbox"/>
         </div>
         <div class="form-group">

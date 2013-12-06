@@ -132,7 +132,7 @@
             </div>
             <div class="form-group ">
                 <div class="input-group checkbox">
-                    <input name="acceptTerms" type="checkbox" required/> <label for="acceptTerms"> I agree to the <a
+                    <input id="acceptTerms" name="acceptTerms" type="checkbox" required/> <label for="acceptTerms"> I agree to the <a
                         href="">Terms and Conditions</a>
                     and <a href="">Privacy Policy</a>
                 </label>

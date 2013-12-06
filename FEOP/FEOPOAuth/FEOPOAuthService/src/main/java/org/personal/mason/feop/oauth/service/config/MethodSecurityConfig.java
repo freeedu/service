@@ -19,11 +19,11 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
  */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
-@Import(SecurityConfiguration.class)
+@Import(OAuth2ServerConfig.class)
 public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
 
     @Autowired
-    private SecurityConfiguration securityConfig;
+    private OAuth2ServerConfig securityConfig;
 
     @Bean
     public OAuth2MethodSecurityExpressionHandler oauthExpressionHandler() {

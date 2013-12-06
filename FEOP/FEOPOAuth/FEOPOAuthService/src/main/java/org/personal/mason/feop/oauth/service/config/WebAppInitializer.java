@@ -16,7 +16,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{SecurityConfiguration.class, OAuth2ServerConfig.class, MethodSecurityConfig.class};
+        return new Class<?>[]{ OAuth2ServerConfig.class, MethodSecurityConfig.class};
     }
 
     @Override
@@ -29,8 +29,8 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         return new String[]{"/"};
     }
 
-    @Override
-    protected Filter[] getServletFilters() {
-        return new Filter[]{new DelegatingFilterProxy("springSecurityFilterChain") };
-    }
+//    @Override
+//    protected Filter[] getServletFilters() {
+//        return new Filter[]{new DelegatingFilterProxy("springSecurityFilterChain") };
+//    }
 }

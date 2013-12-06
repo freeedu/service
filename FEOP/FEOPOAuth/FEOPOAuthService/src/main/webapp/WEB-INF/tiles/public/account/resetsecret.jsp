@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<c:url value="/account/resetpassword" var="resetAction"/>
+<c:url value="/resetpassword" var="resetAction"/>
 
 <c:if test="${msg != null }">
     <div class="alert alert-success">

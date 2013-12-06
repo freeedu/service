@@ -8,10 +8,10 @@
 <nav>
     <ul id="menu">
         <li><a href="<c:url value="/home"/>">Home</a></li>
-        <li><a href="<c:url value="/account/"/>">Profile</a>
+        <li><a href="<c:url value="/account/profile"/>">Profile</a>
             <ul>
                 <li><a href="<c:url value="/account/changepwd"/>">Change Password</a></li>
-                <li><a href="<c:url value="/account/"/>">Profile</a></li>
+                <li><a href="<c:url value="/account/profile"/>">Profile</a></li>
                 <li><a href="<c:url value="/account/update"/>">Update Profile</a></li>
             </ul>
         </li>
@@ -20,7 +20,7 @@
             <li><a href="<c:url value="/client/list"/>">Applications</a>
                 <ul>
                     <li><a href="<c:url value="/client/list"/>">My Application</a></li>
-                    <li><a href="<c:url value="/client/"/>">New Application</a></li>
+                    <li><a href="<c:url value="/client/new"/>">New Application</a></li>
                 </ul>
             </li>
         </sec:authorize>

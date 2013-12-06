@@ -41,7 +41,7 @@
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-sm" value="Log in"> <a
                         class="btn btn-link btn-sm pull-right"
-                        href="<c:url value="/account/resetpassword"/>">Forgot your password?</a>
+                        href="<c:url value="/resetpassword"/>">Forgot your password?</a>
                 </div>
 
             </form>

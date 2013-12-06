@@ -16,7 +16,8 @@
         </div>
         <hr>
     </div>
-    <div class=""></div>
+    <c:choose>
+    <c:when  test="${not empty invites  }">
     <c:forEach items="${invites}" var="invite">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -40,4 +41,11 @@
             </div>
         </div>
     </c:forEach>
+    </c:when>
+    <c:otherwise>
+        <div class="alert alert-info">
+            There is no Inviting.
+        </div>
+    </c:otherwise>
+    </c:choose>
 </div>

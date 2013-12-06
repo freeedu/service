@@ -7,7 +7,6 @@
 
 <c:url value="/account/update" var="update"/>
 
-
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <form action="${update }" method="post" class="form-horizontal" name="userForm">
