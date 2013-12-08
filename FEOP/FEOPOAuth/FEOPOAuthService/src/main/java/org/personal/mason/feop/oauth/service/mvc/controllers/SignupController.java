@@ -1,16 +1,15 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
-import org.personal.mason.feop.oauth.common.domain.model.SystemSetting;
+import org.personal.mason.feop.oauth.common.spi.SettingsHolder;
 import org.personal.mason.feop.oauth.common.spi.SystemSettingService;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.InvitingCodeService;
 import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
-import org.personal.mason.feop.oauth.service.utils.SystemSettingUtils;
+import org.personal.mason.feop.oauth.service.utils.SettingKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,16 +22,13 @@ import javax.validation.Valid;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class SignupController {
-    private static String INVITE_PERIOD_KEY = "invite_registration";
-    private static String INVITE_PERIOD_VALUE = "true";
 
     private FeopUserService feopUserService;
-    private SystemSettingService systemSettingService;
     private InvitingCodeService invitingCodeService;
+    private SettingsHolder settingsHolder;
 
     @InitBinder
     protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
@@ -49,8 +45,8 @@ public class SignupController {
     }
 
     @Autowired
-    public void setSystemSettingService(SystemSettingService systemSettingService) {
-        this.systemSettingService = systemSettingService;
+    public void setSettingsHolder(SettingsHolder settingsHolder) {
+        this.settingsHolder = settingsHolder;
     }
 
     @Autowired
@@ -58,20 +54,20 @@ public class SignupController {
         this.invitingCodeService = invitingCodeService;
     }
 
-    @RequestMapping(value = {"/signup/", "/signup/form"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/signup/new"}, method = RequestMethod.GET)
     public String signup(@RequestParam(value = "redirect_uri", required = false) String redirectUri, @ModelAttribute SignupForm signupForm,
                          Model model) {
         if (redirectUri != null) {
             model.addAttribute("redirect_uri", redirectUri);
         }
-        List<SystemSetting> settings = systemSettingService.findByKey(INVITE_PERIOD_KEY);
-        if (SystemSettingUtils.getValue(settings).equals(INVITE_PERIOD_VALUE)) {
+
+        if(!SettingKeys.INVITE_PERIOD_VALUE.equals(settingsHolder.findWithKey(SettingKeys.INVITE_PERIOD_KEY))){
             model.addAttribute("requireInvite", true);
         }
         return "app.regist";
     }
 
-    @RequestMapping(value = "/signup/new", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup/save", method = RequestMethod.POST)
     public String signup(@Valid SignupForm signupForm, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "app.regist";
@@ -88,9 +84,7 @@ public class SignupController {
             return "app.regist";
         }
 
-        List<SystemSetting> settings = systemSettingService.findByKey(INVITE_PERIOD_KEY);
-        if (SystemSettingUtils.getValue(settings).equals(INVITE_PERIOD_VALUE)) {
-            String inviteCode = signupForm.getInviteCode();
+        if(!SettingKeys.INVITE_PERIOD_VALUE.equals(settingsHolder.findWithKey(SettingKeys.INVITE_PERIOD_KEY))){    String inviteCode = signupForm.getInviteCode();
             InvitingCode invitingCode = invitingCodeService.findWithCode(inviteCode);
             if (inviteCode != null && invitingCode != null) {
                 invitingCodeService.delete(invitingCode);
@@ -107,7 +101,7 @@ public class SignupController {
             return String.format("redirect:%s", signupForm.getRedirectUrl());
         }
 
-        redirectAttributes.addFlashAttribute("message", "You have successfully signed up and logged in.");
+        redirectAttributes.addFlashAttribute("message", "You have successfully signed up.");
         return "redirect:/";
     }
 }

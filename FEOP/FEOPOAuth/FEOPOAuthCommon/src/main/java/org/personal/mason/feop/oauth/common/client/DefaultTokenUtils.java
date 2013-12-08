@@ -1,6 +1,6 @@
 package org.personal.mason.feop.oauth.common.client;
 
-import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,15 +13,21 @@ import java.util.concurrent.ConcurrentHashMap;
  * To change this template use File | Settings | File Templates.
  */
 public class DefaultTokenUtils implements TokenUtils {
-    private Map<String, FEOPAuthentication> authenticationMap = new ConcurrentHashMap<>(50);
+    private Map<String, FOEPAuthentication> authenticationMap = new ConcurrentHashMap<>(50);
 
     @Override
     public boolean validate(String token) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        if(!authenticationMap.containsKey(token)){
+            return false;
+        }
+        if(authenticationMap.get(token).isTokenExpired()){
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public FEOPAuthentication getAuthentication(String token) {
+    public FOEPAuthentication getAuthentication(String token) {
         if(authenticationMap.containsKey(token)){
             return authenticationMap.get(token);
         }
@@ -29,7 +35,14 @@ public class DefaultTokenUtils implements TokenUtils {
     }
 
     @Override
-    public synchronized void persist(FEOPAuthentication feopAuthentication) {
-        authenticationMap.put(feopAuthentication.getAccessToken(), feopAuthentication);
+    public synchronized void persist(FOEPAuthentication FOEPAuthentication) {
+        authenticationMap.put(FOEPAuthentication.getAccessToken(), FOEPAuthentication);
+    }
+
+    @Override
+    public void removeAuthentication(String token) {
+        if(authenticationMap.containsKey(token)){
+            authenticationMap.remove(token);
+        }
     }
 }

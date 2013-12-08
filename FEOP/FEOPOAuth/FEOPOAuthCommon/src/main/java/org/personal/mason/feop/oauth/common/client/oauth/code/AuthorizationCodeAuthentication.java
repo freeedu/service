@@ -1,12 +1,12 @@
 package org.personal.mason.feop.oauth.common.client.oauth.code;
 
-import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.personal.mason.feop.oauth.common.model.UserInfo;
 
 import java.util.Calendar;
 import java.util.Map;
 
-public class AuthorizationCodeAuthentication implements FEOPAuthentication {
+public class AuthorizationCodeAuthentication implements FOEPAuthentication {
     private static final String ACCESS_TOKEN = "access_token";
     private static final String TOKEN_TYPE = "token_type";
     private static final String EXPIRES_IN = "expires_in";

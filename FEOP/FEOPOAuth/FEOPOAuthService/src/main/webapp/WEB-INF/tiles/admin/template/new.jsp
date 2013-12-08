@@ -11,7 +11,7 @@
         </div>
         <hr>
     </div>
-    <c:url value="/admin/et/new" var="newAction"/>
+    <c:url value="/admin/et/save" var="newAction"/>
     <form action="${newAction }" method="post" name="emailTemplateForm" class="editable client2">
 
         <s:hasBindErrors htmlEscape="true" name="emailTemplateForm">
@@ -39,6 +39,11 @@
         <div class="form-group">
             <label for="content">Content</label>
             <textarea id="content" name="content" class="form-control" required rows="6"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
         </div>
         <div class="form-group">
             <input type="submit" value="Create" class="btn btn-primary btn-sm"/>

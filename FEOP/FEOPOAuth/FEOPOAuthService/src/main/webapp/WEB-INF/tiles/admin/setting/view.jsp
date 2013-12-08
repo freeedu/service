@@ -15,7 +15,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <strong>${setting.key }</strong>
-            <c:url value="/admin/settings/update?id=${setting.id }" var="update"/>
+            <c:url value="/admin/settings/edit?id=${setting.id }" var="update"/>
             <a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
         </div>
         <div class="panel-body">

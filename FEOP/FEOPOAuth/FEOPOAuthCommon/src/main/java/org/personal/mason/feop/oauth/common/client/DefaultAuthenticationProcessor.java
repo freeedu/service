@@ -1,12 +1,9 @@
 package org.personal.mason.feop.oauth.common.client;
 
-import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.personal.mason.feop.oauth.common.model.UserRole;
-import org.personal.mason.feop.oauth.common.utils.Constrains;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +45,7 @@ public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcess
 
             String token = parms.get("token")[0];
 
-            FEOPAuthentication authentication = tokenUtils.getAuthentication(token);
+            FOEPAuthentication authentication = tokenUtils.getAuthentication(token);
 
             if (authentication == null || !authentication.hasValidToken()) {
                 return AuthenticationStatus.NOT_LOGIN;

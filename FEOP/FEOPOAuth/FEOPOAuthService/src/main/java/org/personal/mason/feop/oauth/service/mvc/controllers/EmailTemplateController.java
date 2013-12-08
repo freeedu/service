@@ -29,7 +29,7 @@ public class EmailTemplateController {
         return "app.et.new";
     }
 
-    @RequestMapping(value = {"/admin/et/new"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/admin/et/save"}, method = RequestMethod.POST)
     public String saveEmailTemplate(@Valid EmailTemplateForm emailTemplateForm, BindingResult result, Model model) {
         EmailTemplate latestTemplate = emailTemplateService.findLatestTemplateWithName(emailTemplateForm.getName());
         EmailTemplate template;
@@ -52,7 +52,7 @@ public class EmailTemplateController {
         return "app.et.view";
     }
 
-    @RequestMapping(value = {"/admin/et/update"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/admin/et/edit"}, method = RequestMethod.GET)
     public String updateEmailTemplate(@RequestParam("id") Long id, Model model) {
         EmailTemplate template = emailTemplateService.findById(id);
         if (template == null) {
@@ -69,7 +69,7 @@ public class EmailTemplateController {
         EmailTemplate editTemplate = emailTemplateService.findById(template.getId());
 
         editTemplate.setVersion(editTemplate.getVersion() + 1);
-        editTemplate.setContent(template.getContent());
+            editTemplate.setContent(template.getContent());
 
         model.addAttribute("template", editTemplate);
         return "app.et.view";

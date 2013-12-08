@@ -2,7 +2,7 @@ package org.personal.mason.feop.oauth.common.client.oauth;
 
 import org.personal.mason.feop.oauth.common.model.UserInfo;
 
-public interface FEOPAuthentication {
+public interface FOEPAuthentication {
 
     boolean hasValidToken();
 

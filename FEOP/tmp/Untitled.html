@@ -10,7 +10,7 @@ http://oauth.feop.org:8889/oauth/token?grant_type=authorization_code&redirect_ur
 
 http://oauth.feop.org:8889/oauth/authorize?response_type=code&client_id=test&&redirect_uri=http%3A%2F%2Flocalhost
 
-http://oauth.feop.org:8889/oauth/token?grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost&client_id=test&client_secret=e8739e4c59b841b0&code=234BBoI8ztbhmDLQpX9uO2jBMl7Xn6Tg
+http://oauth.feop.org:8889/oauth/token?grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost&client_id=test&client_secret=e8739e4c59b841b0&code=IsryBzeWVaSCdUN0wxDcSBVR82q8I9Eo
 
 
 
@@ -21,3 +21,40 @@ Oauth Client Registration
 1. Create three profiles for use
 	Web Application
 	
+	
+	
+	 @RequestMapping(value = {"/account/update"}, method = RequestMethod.POST)
+	  @RequestMapping(value = {"/account/pwd/save"}, method = RequestMethod.POST)
+	 
+	
+	--------------
+	
+	
+	@RequestMapping("/oauth/confirm_access")
+	
+	
+	 @RequestMapping(value = "/client/save", method = RequestMethod.POST)
+	  
+	  @RequestMapping(value = {"/admin/et/save"}, method = RequestMethod.POST)
+	  @RequestMapping(value = {"/admin/et/update"}, method = RequestMethod.POST)
+	
+	  @RequestMapping(value = {"/admin/et/update"}, method = RequestMethod.POST)
+	  @RequestMapping(value = {"/admin/et/delete"}, method = RequestMethod.GET)
+	
+	  
+	  
+	  @RequestMapping(value = {"/findpassword/update"}, method = RequestMethod.POST)
+	  @RequestMapping(value = {"/resetpassword/confirm"}, method = RequestMethod.POST)
+	  @RequestMapping(value = {"/resetpassword"}, method = RequestMethod.GET)
+	  
+	  
+	  @RequestMapping(value = "/signup/save", method = RequestMethod.POST)
+	  
+	  @RequestMapping(value = {"/signup/new"}, method = RequestMethod.GET)
+
+	  @RequestMapping(value = {"/admin/settings/save"}, method = RequestMethod.POST)
+	  @RequestMapping(value = {"/admin/settings/edit"}, method = RequestMethod.GET)
+	  @RequestMapping(value = {"/admin/settings/update"}, method = RequestMethod.POST)
+	
+	@RequestMapping(value = {"/admin/settings/list"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/admin/settings/delete"}, method = RequestMethod.GET)

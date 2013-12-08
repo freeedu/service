@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="beans.xml"/>
+    <import resource="auditing-context.xml"/>
+
+    <!--<oauth2:expression-handler id="oauthExpressionHandler"/>-->
+    <bean id="oauthExpressionHandler" class="org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler"/>
+
+    <!--<oauth2:web-expression-handler id="oauthWebExpressionHandler"/>-->
+    <bean id="oauthWebExpressionHandler" class="org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler"/>
+
+    <!--<oauth2:resource-server id="resourceServerFilter" resource-id="feop"-->
+                            <!--token-services-ref="tokenServices"/>-->
+
+    <bean id="feopAM" class="org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager" p:resourceId="feop" p:tokenServices-ref="tokenServices"/>
+
+
+    <bean id="resourceServerFilter" class="org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter" p:authenticationManager-ref="feopAM"
+            />
+
+    <bean id="clientDetails" class="org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPClientDetailsService"/>
+    <!--<bean id="clientDetails" class="org.springframework.security.oauth2.provider.JdbcClientDetailsService"-->
+          <!--c:dataSource-ref="oauthDataSource"/>-->
+
+
+    <bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices"
+          p:tokenStore-ref="tokenStore" p:supportRefreshToken="true" p:clientDetailsService-ref="clientDetails"/>
+
+    <!--<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore"-->
+          <!--c:dataSource-ref="oauthDataSource"/>-->
+    <bean id="tokenStore" class="org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPTokenStore"/>
+
+    <bean id="userApprovalHandler"
+          class="org.springframework.security.oauth2.provider.approval.TokenServicesUserApprovalHandler"
+          p:tokenServices-ref="tokenServices">
+    </bean>
+
+    <bean id="userDetailsService"
+          class="org.personal.mason.feop.oauth.service.common.oauth2.OAuth2UserDetailsServiceImpl"/>
+
+    <bean id="clientDetailsUserService"
+          class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService"
+          c:clientDetailsService-ref="clientDetails"/>
+
+</beans>
+

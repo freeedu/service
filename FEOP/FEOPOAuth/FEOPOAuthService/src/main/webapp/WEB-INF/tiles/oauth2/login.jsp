@@ -10,8 +10,7 @@
 <sec:authorize ifNotGranted="ROLE_USER">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            <form role="form" class="form-horizontal" name="loginForm" action="${loginAction}"
-                  method="post">
+            <form role="form" class="form-horizontal" name="loginForm" action="${loginAction}" method="post">
 
                 <div class="form-group">
                     <h3>Login</h3>

@@ -8,6 +8,7 @@ package org.personal.mason.feop.oauth.common.client;
  * To change this template use File | Settings | File Templates.
  */
 public enum  LoginStatus {
+    REDIRECT_LOGIN,
     REQUEST_AUTH,
     ACCESS_TOKEN,
     ACCESS_ERROR,

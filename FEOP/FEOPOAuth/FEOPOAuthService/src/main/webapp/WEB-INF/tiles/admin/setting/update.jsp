@@ -37,11 +37,13 @@
                                                         class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="value">Setting Value:</label><input id="value" type="text" value="${setting.value }" name="value"
+            <label for="value">Setting Value:</label><input id="value" type="text" value="${setting.value }"
+                                                            name="value"
                                                             class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="startDate">Effect Start Date:</label><input id="startDate" type="datetime" value="${setting.startDate }"
+            <label for="startDate">Effect Start Date:</label><input id="startDate" type="datetime"
+                                                                    value="${setting.startDate }"
                                                                     name="startDate" class="form-control"/>
         </div>
         <div class="form-group">
@@ -49,8 +51,15 @@
                                                                 name="endDate" class="form-control"/>
         </div>
         <div class="form-group">
-            <label for="disabled">Diabled:</label><input id="disabled" type="checkbox" value="${setting.disabled }" name="disabled"
+            <label for="disabled">Diabled:</label><input id="disabled" type="checkbox" value="${setting.disabled }"
+                                                         name="disabled"
                                                          class="checkbox"/>
+        </div>
+        <div class="form-group">
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+
         </div>
         <div class="form-group">
             <input type="submit" value="Update Profile" class="btn btn-primary btn-sm"/>

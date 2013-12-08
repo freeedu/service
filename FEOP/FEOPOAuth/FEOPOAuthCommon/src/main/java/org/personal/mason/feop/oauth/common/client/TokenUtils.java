@@ -1,7 +1,6 @@
 package org.personal.mason.feop.oauth.common.client;
 
-import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
-import org.personal.mason.feop.oauth.common.client.oauth.code.AuthorizationCodeAuthentication;
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +12,9 @@ import org.personal.mason.feop.oauth.common.client.oauth.code.AuthorizationCodeA
 public interface TokenUtils {
     boolean validate(String token);
 
-    FEOPAuthentication getAuthentication(String token);
+    FOEPAuthentication getAuthentication(String token);
 
-    void persist(FEOPAuthentication feopAuthentication);
+    void persist(FOEPAuthentication FOEPAuthentication);
+
+    void removeAuthentication(String token);
 }

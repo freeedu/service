@@ -50,9 +50,9 @@
                     <li class="dropdown"><a href="<c:url value="/account/profile"/>" class="dropdown-toggle"
                                             data-toggle="dropdown">Profile<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<c:url value="/account/changepwd"/>">Change Password</a></li>
+                            <li><a href="<c:url value="/account/pwd/edit"/>">Change Password</a></li>
                             <li><a href="<c:url value="/account/profile"/>">Profile</a></li>
-                            <li><a href="<c:url value="/account/update"/>">Update Profile</a></li>
+                            <li><a href="<c:url value="/account/edit"/>">Update Profile</a></li>
                         </ul>
                     </li>
                     <sec:authorize ifAllGranted="ROLE_USER" access="hasRole('ROLE_DEV')">

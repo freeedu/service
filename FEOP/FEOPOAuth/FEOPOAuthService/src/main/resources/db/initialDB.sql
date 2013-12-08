@@ -1,0 +1,1 @@
+INSERT INTO `roles`(id, name, enabled, version) VALUES ('1', 'ROLE_ADMIN', b'1', '0'), ('2', 'ROLE_USER', b'1', '0'), ('3', 'ROLE_DEV', b'1', '0') ON DUPLICATE KEY UPDATE enabled = b'1', version = 1;

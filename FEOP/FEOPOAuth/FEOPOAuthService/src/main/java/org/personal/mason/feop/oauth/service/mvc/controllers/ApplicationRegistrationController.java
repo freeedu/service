@@ -31,27 +31,27 @@ public class ApplicationRegistrationController {
         this.feopClientDetailService = feopClientDetailService;
     }
 
-    @RequestMapping(value = {"/client/form"})
+    @RequestMapping(value = {"/client/new"})
     public String signup(@ModelAttribute ClientForm clientForm, ModelMap map) {
         map.addAttribute("client_types", AuthorizationType.getAllTypes());
         return "app.client.new";
     }
 
-    @RequestMapping(value = "/client/create", method = RequestMethod.POST)
-    public String signup(@Valid ClientForm clientForm, BindingResult result, RedirectAttributes redirectAttributes, ModelMap map, Principal principal) {
+    @RequestMapping(value = "/client/save", method = RequestMethod.POST)
+    public String signup(@Valid ClientForm clientForm, BindingResult result,  Principal principal, ModelMap map) {
         if (result.hasErrors()) {
-            return "redirect:/client/form";
+            return "redirect:/client/new";
         }
 
         String appName = clientForm.getClientName();
         if (feopClientDetailService.findByClientId(appName) != null) {
             result.rejectValue("clientName", "errors.client.clientName", "Application Name already in use.");
-            return "redirect:/client/form";
+            return "redirect:/client/new";
         }
 
         if (principal.getName() == null || principal.getName().isEmpty()) {
             result.rejectValue("", "errors.client.clientName", "You do not have privilege for this action.");
-            return "redirect:/client/form";
+            return "redirect:/client/new";
         }
 
         OauthClientDetail client = new OauthClientDetail();
@@ -99,7 +99,7 @@ public class ApplicationRegistrationController {
             feopClientDetailService.deleteApplication(client);
         }
 
-        return "app.client.list";
+        return "redirect:/client/list";
     }
 
     @RequestMapping(value = {"/client/view/{clientId}"})

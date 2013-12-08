@@ -52,12 +52,12 @@ public class ProfileController {
         this.feopUserService = feopUserService;
     }
 
-    @RequestMapping(value = {"/account/changepwd"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/account/pwd/edit"}, method = RequestMethod.GET)
     public String changePassword(@ModelAttribute ChangePasswordForm changePasswordForm) {
         return "app.profile.updatesecret";
     }
 
-    @RequestMapping(value = {"/account/changepwd"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/account/pwd/update"}, method = RequestMethod.POST)
     public String updatePassword(@Valid ChangePasswordForm changePasswordForm, BindingResult result, ModelMap map, Principal principal) {
         if (result.hasErrors()) {
             return "app.profile.updatesecret";
@@ -115,7 +115,7 @@ public class ProfileController {
         return "app.profile";
     }
 
-    @RequestMapping(value = {"/account/update"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/account/edit"}, method = RequestMethod.GET)
     public String updateProfile(ModelMap map, Principal principal) {
         String princ = principal.getName();
 

@@ -1,16 +1,13 @@
 package org.personal.mason.feop.oauth.common.client;
 
-import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.personal.mason.feop.oauth.common.client.oauth.RestClient;
 import org.personal.mason.feop.oauth.common.model.UserInfo;
-import org.personal.mason.feop.oauth.common.utils.Constrains;
 import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -63,15 +60,10 @@ public abstract class DefaultLoginProcessor implements FOEPLoginProcessor {
 
     public abstract String getAuthorizationRequestUrl(HttpServletRequest request);
 
-    public void retrieveUserInfo(HttpServletRequest request) {
-        Map<String, String[]> parms = request.getParameterMap();
-        if(!parms.containsKey("token")) {
-            return;
-        }
+    @Override
+    public void retrieveUserInfo(String accessToken) {
 
-        String token = parms.get("token")[0];
-
-        FEOPAuthentication authentication = tokenUtils.getAuthentication(token);
+        FOEPAuthentication authentication = tokenUtils.getAuthentication(accessToken);
 
         if (authentication != null) {
             StringBuilder urlPattern = new StringBuilder(configuration.getUserInfoUri());
@@ -89,7 +81,40 @@ public abstract class DefaultLoginProcessor implements FOEPLoginProcessor {
 
     }
 
+    @Override
     public String getErrorRedirectPage() {
         return errorRedirectPage;
+    }
+
+    @Override
+    public void redirectToLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (getConfiguration().isForceLogin()) {
+            String requestUri = request.getRequestURI();
+            String loginUri = getConfiguration().getLoginUri();
+            if (loginUri != null && !loginUri.isEmpty() && !requestUri.startsWith(loginUri)) {
+                response.sendRedirect(loginUri);
+            }
+        } else {
+            response.sendRedirect(getErrorRedirectPage());
+        }
+    }
+
+    @Override
+    public void redirectToSuccessPage(HttpServletRequest request, HttpServletResponse response, FOEPAuthentication authentication) throws IOException {
+        if (getConfiguration().getLoginSuccessUri() != null) {
+            response.sendRedirect(appendToken(getConfiguration().getLoginSuccessUri(), authentication.getAccessToken()));
+        } else {
+            response.sendRedirect(appendToken(request.getRequestURI(), authentication.getAccessToken()));
+        }
+    }
+
+    static String appendToken(String original, String token){
+        if(original.contains("?")){
+            return original.concat("&token=").concat(token);
+        }else {
+            return original.concat("?token=").concat(token);
+        }
+
+
     }
 }

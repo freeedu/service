@@ -66,7 +66,7 @@ public class PasswordController {
         return "app.resetpassword";
     }
 
-    @RequestMapping(value = {"/resetpassword"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/resetpassword/confirm"}, method = RequestMethod.POST)
     public String resetPassword(@ModelAttribute ResetPasswordForm resetPasswordForm, HttpServletRequest request, Model model) {
         String email = resetPasswordForm.getEmail();
         OauthUser user = feopUserService.findByEmailOrUsername(email);
@@ -102,7 +102,7 @@ public class PasswordController {
         return "app.findpassword";
     }
 
-    @RequestMapping(value = {"/findpassword"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/findpassword/update"}, method = RequestMethod.POST)
     public String updateSecretWithToken(@Valid PasswordResetForm passwordResetForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "app.findpassword";

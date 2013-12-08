@@ -13,8 +13,10 @@ public class XmlClientConfiguration implements ClientConfiguration {
     private String oauthRegisterUri;
     private String oauthLogoutUri;
     private String loginSuccessUri;
-
     private boolean enableCSRF = true;
+    private boolean forceLogin = true;
+    private String loginUri;
+    private String logoutUri;
 
     public String getResponseType() {
         return responseType;
@@ -110,6 +112,30 @@ public class XmlClientConfiguration implements ClientConfiguration {
 
     public String getLoginSuccessUri() {
         return loginSuccessUri;
+    }
+
+    public boolean isForceLogin() {
+        return forceLogin;
+    }
+
+    public void setForceLogin(boolean forceLogin) {
+        this.forceLogin = forceLogin;
+    }
+
+    public String getLoginUri() {
+        return loginUri;
+    }
+
+    public void setLoginUri(String loginUri) {
+        this.loginUri = loginUri;
+    }
+
+    public String getLogoutUri() {
+        return logoutUri;
+    }
+
+    public void setLogoutUri(String logoutUri) {
+        this.logoutUri = logoutUri;
     }
 
     @Override

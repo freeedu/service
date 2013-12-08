@@ -13,7 +13,7 @@
         <hr>
     </div>
     <c:url value="/admin/et/update" var="update"/>
-    <form action="${update }" method="post" class="form-horizontal" name="emailTemplateForm">
+    <form action="${update }" method="post" class="form-horizontal" name="template">
 
         <s:hasBindErrors htmlEscape="true" name="emailTemplateForm">
             <c:if test="${errors.errorCount gt 0}">
@@ -32,8 +32,8 @@
         </s:hasBindErrors>
 
         <div class="form-group">
-            <label for="id">Template Id:</label><input id="id" type="text" value="${template.id }" name="id"
-                                                       class="form-control" disabled="disabled"/>
+            <input id="id" type="hidden" value="${template.id }" name="id"
+                                                       class="form-control"/>
         </div>
         <div class="form-group">
             <label for="name">Name:</label><input id="name" type="text" value="${template.name }" name="name" class="form-control"
@@ -50,6 +50,11 @@
         <div class="form-group">
             <label for="content">Content:</label>
             <textarea id="content" name="content" class="form-control" rows="6">${template.content }</textarea>
+        </div>
+        <div class="form-group">
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
         </div>
         <div class="form-group">
             <input type="submit" value="Update Profile" class="btn btn-primary btn-sm"/>

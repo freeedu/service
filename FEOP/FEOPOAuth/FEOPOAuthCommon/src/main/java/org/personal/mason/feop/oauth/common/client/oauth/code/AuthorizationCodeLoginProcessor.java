@@ -4,7 +4,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.personal.mason.feop.oauth.common.client.ClientConfiguration;
 import org.personal.mason.feop.oauth.common.client.DefaultLoginProcessor;
 import org.personal.mason.feop.oauth.common.client.LoginStatus;
-import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +43,7 @@ public class AuthorizationCodeLoginProcessor extends DefaultLoginProcessor {
             }
         }
 
-        if (getConfiguration().getScope() != null) {
+        if (getConfiguration().getScope() != null && !getConfiguration().getScope().isEmpty()) {
             urlPattern.append("&scope=%s");
             params.add(getConfiguration().getScope());
         }
@@ -60,13 +60,10 @@ public class AuthorizationCodeLoginProcessor extends DefaultLoginProcessor {
 
     @Override
     public LoginStatus checkLogin(HttpServletRequest request) {
-        Map<String, String[]> parms = request.getParameterMap();
-        if (parms.containsKey("token")) {
-            String token = parms.get("token")[0];
-            FEOPAuthentication authentication = getTokenUtils().getAuthentication(token);
-            if (authentication != null && authentication.hasValidToken()) {
-                return LoginStatus.AUTHENTICATED;
-            }
+        String requestUri = request.getRequestURI();
+        String loginUri = getConfiguration().getLoginUri();
+        if (loginUri != null && !loginUri.isEmpty() && !requestUri.startsWith(loginUri)) {
+            return LoginStatus.REDIRECT_LOGIN;
         }
 
         String code = request.getParameter("code");
@@ -79,7 +76,19 @@ public class AuthorizationCodeLoginProcessor extends DefaultLoginProcessor {
             return LoginStatus.ACCESS_ERROR;
         }
 
-        return LoginStatus.REQUEST_AUTH;
+        Map<String, String[]> parms = request.getParameterMap();
+
+        if (!parms.containsKey("token")) {
+            return LoginStatus.REQUEST_AUTH;
+        }
+
+        String token = parms.get("token")[0];
+        FOEPAuthentication authentication = getTokenUtils().getAuthentication(token);
+        if (authentication == null || !authentication.hasValidToken()) {
+            return LoginStatus.REQUEST_AUTH;
+        }
+
+        return LoginStatus.AUTHENTICATED;
     }
 
     @Override
@@ -117,7 +126,7 @@ public class AuthorizationCodeLoginProcessor extends DefaultLoginProcessor {
                 }
             }
 
-            if (getConfiguration().getScope() != null) {
+            if (getConfiguration().getScope() != null && !getConfiguration().getScope().isEmpty()) {
                 urlPattern.append("&scope=%s");
                 params.add(getConfiguration().getScope());
             }
@@ -137,15 +146,11 @@ public class AuthorizationCodeLoginProcessor extends DefaultLoginProcessor {
 
                 @SuppressWarnings("unchecked")
                 Map<String, Object> properties = mapper.readValue(new URL(uri), Map.class);
-                getTokenUtils().persist(new AuthorizationCodeAuthentication(properties));
+                AuthorizationCodeAuthentication authentication = new AuthorizationCodeAuthentication(properties);
+                getTokenUtils().persist(authentication);
 
-                retrieveUserInfo(request);
-
-                if (getConfiguration().getLoginSuccessUri() != null) {
-                    response.sendRedirect(getConfiguration().getLoginSuccessUri());
-                } else {
-                    response.sendRedirect(request.getRequestURI());
-                }
+                retrieveUserInfo(authentication.getAccessToken());
+                redirectToSuccessPage(request, response, authentication);
             } catch (IOException e) {
                 e.printStackTrace();
             }

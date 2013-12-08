@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<c:url value="/client/create" var="newAction"/>
+<c:url value="/client/save" var="newAction"/>
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -44,6 +44,13 @@
             </div>
             <div class="form-group">
                 <label class="left">Redirect Url</label> <input name="redirectUrl" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="hidden"
+                           name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create Account" class="btn btn-primary btn-sm"/>

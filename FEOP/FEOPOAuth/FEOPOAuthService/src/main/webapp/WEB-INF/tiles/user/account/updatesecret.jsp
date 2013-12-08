@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<c:url value="/account/changepwd" var="updateAction"/>
+<c:url value="/account/pwd/update" var="updateAction"/>
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -58,6 +58,13 @@
                     <span class="input-group-addon "><i class="glyphicon glyphicon-lock"></i></span><input
                         class="form-control" type="password"
                         placeholder="Re Enter Password" name="repeatPassword" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="hidden"
+                           name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
                 </div>
             </div>
             <div class="form-group">

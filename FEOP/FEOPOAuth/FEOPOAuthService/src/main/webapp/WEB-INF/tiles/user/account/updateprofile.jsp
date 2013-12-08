@@ -50,6 +50,14 @@
                 <label class="left">Phone:</label><input type="text" name="phone" class="form-control"
                                                          value="${userForm.phone }"/>
             </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="hidden"
+                           name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
+                </div>
+            </div>
+
 
             <div class="form-group">
                 <input type="submit" value="Update Profile" class="btn btn-primary btn-sm"/>

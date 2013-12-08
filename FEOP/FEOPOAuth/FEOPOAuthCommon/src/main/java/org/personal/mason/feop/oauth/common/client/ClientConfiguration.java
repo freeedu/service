@@ -14,6 +14,9 @@ public interface ClientConfiguration {
     static final String OAUTH_LOGOUT_URI = "oauth.logout.uri";
     static final String OAUTH_REGISTER_URI = "oauth.register.uri";
     static final String LOGIN_SUCCESS_URI = "login.success.uri";
+    static final String FORCE_LOGIN = "force.login";
+    static final String LOGIN_URI = "login.uri";
+    static final String LOGOUT_URI = "logout.uri";
 
     public String getResponseType();
 
@@ -38,6 +41,12 @@ public interface ClientConfiguration {
     public String getOauthRegisterUri();
 
     public String getLoginSuccessUri();
+
+    public boolean isForceLogin();
+
+    public String getLoginUri();
+
+    public String getLogoutUri();
 
     public void reloadConfiguration();
 }

@@ -46,6 +46,7 @@
         <jodatime-jsptags.version>1.1.1</jodatime-jsptags.version>
         <jodatime.version>2.2</jodatime.version>
         <jersey.version>1.17.1</jersey.version>
+        <guava.version>15.0</guava.version>
     </properties>
     <repositories>
         <repository>

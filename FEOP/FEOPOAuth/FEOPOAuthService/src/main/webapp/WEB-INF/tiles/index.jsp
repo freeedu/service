@@ -5,11 +5,12 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
+<c:url value="/oauth/login.do" var="loginAction"/>
+
 <sec:authorize ifNotGranted="ROLE_USER">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            <form role="form" class="form-horizontal" name="loginForm" action="<c:url value="/oauth/login.do"/>"
-                  method="post">
+            <form role="form" class="form-horizontal" name="loginForm" action="${loginAction}" method="post">
 
                 <div class="form-group">
                     <h3>Login</h3>

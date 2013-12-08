@@ -95,7 +95,11 @@ public class FOEPTokenStore implements TokenStore {
         }
 
         OauthAccessToken accessToken = toOauthAccessToken(token, authentication);
-        feopAccessTokenService.saveAccessToken(accessToken);
+        OauthAccessToken authenticationId = feopAccessTokenService.findAccessTokenWithAuthenticationId(accessToken.getAuthenticationId());
+        OauthAccessToken tokenId = feopAccessTokenService.findAccessTokenWithTokenId(accessToken.getTokenId());
+        if(authenticationId == null && tokenId == null){
+            feopAccessTokenService.saveAccessToken(accessToken);
+        }
     }
 
     @Override

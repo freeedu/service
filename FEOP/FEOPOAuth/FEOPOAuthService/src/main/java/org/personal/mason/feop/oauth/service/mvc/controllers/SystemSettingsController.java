@@ -45,7 +45,7 @@ public class SystemSettingsController {
         return "app.settings.new";
     }
 
-    @RequestMapping(value = {"/admin/settings/new"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/admin/settings/save"}, method = RequestMethod.POST)
     public String saveSystemSetting(@Valid SystemSettingForm systemSettingForm, BindingResult result, Model model) {
         SystemSetting settings = new SystemSetting();
         settings.setKey(systemSettingForm.getKey());
@@ -60,7 +60,7 @@ public class SystemSettingsController {
         return "app.settings.view";
     }
 
-    @RequestMapping(value = {"/admin/settings/update"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/admin/settings/edit"}, method = RequestMethod.GET)
     public String updateSystemSetting(@RequestParam("id") Long id, Model model) {
         SystemSetting setting = systemSettingService.findById(id);
         if (setting == null) {

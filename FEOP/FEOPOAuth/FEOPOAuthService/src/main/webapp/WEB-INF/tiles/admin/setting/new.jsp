@@ -12,7 +12,7 @@
         <hr>
     </div>
 
-    <c:url value="/admin/settings/new" var="newAction"/>
+    <c:url value="/admin/settings/save" var="newAction"/>
     <form action="${newAction }" method="post" name="systemSettingForm" class="editable setting">
         <s:hasBindErrors htmlEscape="true" name="systemSettingForm">
             <c:if test="${errors.errorCount gt 0}">
@@ -37,15 +37,24 @@
         </div>
         <div class="form-group">
 
-            <label for="startDate">Effect Start Time</label> <input id="startDate" type="date" name="startDate" class="form-control"
+            <label for="startDate">Effect Start Time</label> <input id="startDate" type="date" name="startDate"
+                                                                    class="form-control"
                                                                     required/>
         </div>
         <div class="form-group">
-            <label for="endDate">Effect End Time</label> <input id="endDate" type="date" name="endDate" class="form-control"/>
+            <label for="endDate">Effect End Time</label> <input id="endDate" type="date" name="endDate"
+                                                                class="form-control"/>
         </div>
         <div class="form-group">
             <label for="disabled"> <input id="disabled" type="checkbox" name="disabled" checked="checked">&nbsp;Disable
             </label>
+        </div>
+        <div class="form-group">
+
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+
         </div>
         <div class="form-group">
             <input class="btn btn-primary btn-sm" type="submit" value="Create Setting"/>

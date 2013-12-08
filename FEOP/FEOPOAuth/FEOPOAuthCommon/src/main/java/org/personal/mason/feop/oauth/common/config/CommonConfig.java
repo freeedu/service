@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.common.config;
 
+import org.personal.mason.feop.oauth.common.spi.SettingsHolder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -15,11 +17,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "org.personal.mason.feop.oauth.common.domain.repository",
-        "org.personal.mason.feop.oauth.common.domain.model",
-        "org.personal.mason.feop.oauth.common.spi.impl"
+        "org.personal.mason.feop.oauth.common"
 })
 @EnableJpaRepositories(basePackages = {"org.personal.mason.feop.oauth.common.domain.repository"})
 @EnableTransactionManagement
 public class CommonConfig {
+
 }

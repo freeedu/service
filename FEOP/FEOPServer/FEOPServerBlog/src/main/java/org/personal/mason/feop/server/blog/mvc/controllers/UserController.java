@@ -1,7 +1,7 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
 import org.personal.mason.feop.oauth.common.client.ClientConfiguration;
-import org.personal.mason.feop.oauth.common.client.oauth.FEOPAuthentication;
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.personal.mason.feop.server.blog.utils.Constrains;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class UserController {
 
     @RequestMapping(value = {"/user/login"}, method = RequestMethod.GET)
     public String login(HttpServletRequest request, HttpServletResponse response) {
-        FEOPAuthentication authentication = (FEOPAuthentication) request.getAttribute(Constrains.AUTHENTICATIOIN);
+        FOEPAuthentication authentication = (FOEPAuthentication) request.getAttribute(Constrains.AUTHENTICATIOIN);
         authentication.getUserInfo();
         return "app.homepage";
     }

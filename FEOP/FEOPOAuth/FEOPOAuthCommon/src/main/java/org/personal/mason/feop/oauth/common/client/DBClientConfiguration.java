@@ -114,6 +114,24 @@ public class DBClientConfiguration implements ClientConfiguration {
     }
 
     @Override
+    public boolean isForceLogin() {
+        String s = getConfig().get(FORCE_LOGIN);
+
+        return "true".equalsIgnoreCase(s);
+    }
+
+
+    @Override
+    public String getLoginUri() {
+        return getConfig().get(LOGIN_URI);
+    }
+
+    @Override
+    public String getLogoutUri() {
+        return getConfig().get(LOGOUT_URI);
+    }
+
+    @Override
     public void reloadConfiguration() {
         synchronized (RELOAD_LOCK) {
             config.clear();

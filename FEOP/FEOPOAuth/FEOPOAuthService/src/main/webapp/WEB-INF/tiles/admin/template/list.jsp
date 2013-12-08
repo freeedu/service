@@ -20,7 +20,7 @@
                 <a href="${viewTarget }"><c:out value="${template.name }"/></a> <a
                     href='<c:url value="/admin/et/delete?id=${template.id }"/>'
                     class="btn btn-link btn-sm pull-right">Delete</a>
-                <c:url value="/admin/et/update?id=${template.id }" var="update"/>
+                <c:url value="/admin/et/edit?id=${template.id }" var="update"/>
                 <a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
             </div>
             <div class="panel-body">

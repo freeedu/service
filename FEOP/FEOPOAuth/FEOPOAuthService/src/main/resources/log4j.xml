@@ -22,7 +22,12 @@
 
     <logger name="org.personal.mason.feop.oauth.service">
 
-        <level value="info"/>
+        <level value="debug"/>
+    </logger>
+
+    <logger name="org.springframework.web.servlet.mvc.method">
+
+        <level value="debug"/>
     </logger>
 
     <!-- for all other loggers log only warn and above log messages -->

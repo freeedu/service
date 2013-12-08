@@ -35,16 +35,34 @@
 
             <form id="confirmationForm" name="confirmationForm" action="<%=request.getContextPath()%>/oauth/authorize"
                   method="post">
-                <input name="user_oauth_approval" value="true" type="hidden"/> <label><input name="authorize"
-                                                                                             value="Authorize"
-                                                                                             type="submit"
-                                                                                             class="btn btn-info btn-sm"></label>
+                <input name="user_oauth_approval" value="true" type="hidden"/>
+
+                <div class="form-group">
+
+                    <input type="hidden"
+                           name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
+
+                </div>
+                <label><input name="authorize"
+                              value="Authorize"
+                              type="submit"
+                              class="btn btn-info btn-sm"></label>
             </form>
             <form id="denialForm" name="denialForm" action="<%=request.getContextPath()%>/oauth/authorize"
                   method="post">
-                <input name="user_oauth_approval" value="false" type="hidden"/> <label><input name="deny" value="Deny"
-                                                                                              type="submit"
-                                                                                              class="btn btn-danger btn-sm"></label>
+                <input name="user_oauth_approval" value="false" type="hidden"/>
+
+                <div class="form-group">
+
+                    <input type="hidden"
+                           name="${_csrf.parameterName}"
+                           value="${_csrf.token}"/>
+
+                </div>
+                <label><input name="deny" value="Deny"
+                              type="submit"
+                              class="btn btn-danger btn-sm"></label>
             </form>
         </sec:authorize>
     </div>

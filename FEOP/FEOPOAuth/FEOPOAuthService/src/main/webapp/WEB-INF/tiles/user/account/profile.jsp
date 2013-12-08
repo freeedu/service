@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<c:url value="/account/update" var="update"/>
+<c:url value="/account/edit" var="update"/>
 <c:if test="${userForm != null}">
     <div class="col-md-8 col-md-offset-2">
 
