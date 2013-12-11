@@ -1,8 +1,8 @@
-package org.personal.mason.feop.oauth.service.domain.service.oauth.impl;
+package org.personal.mason.feop.oauth.service.domain.service.common.impl;
 
-import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
-import org.personal.mason.feop.oauth.service.domain.repository.oauth.InvitingCodeRepository;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.InvitingCodeService;
+import org.personal.mason.feop.oauth.service.domain.model.common.InvitingCode;
+import org.personal.mason.feop.oauth.service.domain.repository.common.InvitingCodeRepository;
+import org.personal.mason.feop.oauth.service.domain.service.common.InvitingCodeService;
 import org.personal.mason.feop.oauth.service.utils.InvitingCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

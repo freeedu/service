@@ -1,7 +1,7 @@
 package org.personal.mason.feop.oauth.service.common.oauth2;
 
-import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
+import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,7 +29,7 @@ public class OAuth2UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        OauthUser user = feopUserService.findByEmailOrUsername(username);
+        FoepUser user = feopUserService.findByEmailOrUsername(username);
         System.out.println("UserDetails:" + user);
 
         if (null == user) {
@@ -47,7 +47,7 @@ public class OAuth2UserDetailsServiceImpl implements UserDetailsService {
         return userDetail;
     }
 
-    private Set<GrantedAuthority> obtionGrantedAuthorities(OauthUser user) {
+    private Set<GrantedAuthority> obtionGrantedAuthorities(FoepUser user) {
 
         if (null == user) {
             return null;

@@ -1,4 +1,4 @@
-package org.personal.mason.feop.oauth.service.domain.model.oauth;
+package org.personal.mason.feop.oauth.service.domain.model.common;
 
 import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 

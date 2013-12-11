@@ -2,6 +2,7 @@ package org.personal.mason.feop.oauth.service.domain.service.oauth.impl;
 
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthClientDetail;
 import org.personal.mason.feop.oauth.service.domain.repository.oauth.OauthClientDetailRepository;
+import org.personal.mason.feop.oauth.service.domain.service.common.impl.AuthorizationType;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopClientDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

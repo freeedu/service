@@ -1,4 +1,4 @@
-package org.personal.mason.feop.oauth.service.domain.service.oauth.impl;
+package org.personal.mason.feop.oauth.service.domain.service.common.impl;
 
 import java.util.Arrays;
 import java.util.List;

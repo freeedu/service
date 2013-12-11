@@ -3,11 +3,11 @@ package org.personal.mason.feop.oauth.service.mvc.controllers;
 import org.personal.mason.feop.oauth.service.common.mail.EmailSender;
 import org.personal.mason.feop.oauth.service.common.mail.MailBodyGenerator;
 import org.personal.mason.feop.oauth.service.domain.model.common.EmailTemplate;
-import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
-import org.personal.mason.feop.oauth.service.domain.model.oauth.PasswordReset;
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
+import org.personal.mason.feop.oauth.service.domain.model.common.PasswordReset;
 import org.personal.mason.feop.oauth.service.domain.service.common.EmailTemplateService;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.PasswordResetService;
+import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.PasswordResetService;
 import org.personal.mason.feop.oauth.service.mvc.model.PasswordResetForm;
 import org.personal.mason.feop.oauth.service.mvc.model.ResetPasswordForm;
 import org.personal.mason.feop.oauth.service.utils.StringGenerator;
@@ -69,7 +69,7 @@ public class PasswordController {
     @RequestMapping(value = {"/resetpassword/confirm"}, method = RequestMethod.POST)
     public String resetPassword(@ModelAttribute ResetPasswordForm resetPasswordForm, HttpServletRequest request, Model model) {
         String email = resetPasswordForm.getEmail();
-        OauthUser user = feopUserService.findByEmailOrUsername(email);
+        FoepUser user = feopUserService.findByEmailOrUsername(email);
         if (user == null) {
             model.addAttribute("errorMsg", "Invalid email account");
             return null;
@@ -116,7 +116,7 @@ public class PasswordController {
         PasswordReset passwordReset = passwordResetService.findByToken(passwordResetForm.getToken());
         if (passwordReset != null) {
             String email = passwordReset.getEmail();
-            OauthUser user = feopUserService.findByEmailOrUsername(email);
+            FoepUser user = feopUserService.findByEmailOrUsername(email);
 
             feopUserService.updatePassword(user, passwordResetForm.getNewPassword());
             passwordResetService.delete(passwordReset);

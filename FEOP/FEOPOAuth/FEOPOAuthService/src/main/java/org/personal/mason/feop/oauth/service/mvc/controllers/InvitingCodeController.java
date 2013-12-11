@@ -1,7 +1,7 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
-import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.InvitingCodeService;
+import org.personal.mason.feop.oauth.service.domain.model.common.InvitingCode;
+import org.personal.mason.feop.oauth.service.domain.service.common.InvitingCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,11 +1,10 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
 import org.personal.mason.feop.oauth.common.spi.SettingsHolder;
-import org.personal.mason.feop.oauth.common.spi.SystemSettingService;
-import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
-import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.InvitingCodeService;
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
+import org.personal.mason.feop.oauth.service.domain.model.common.InvitingCode;
+import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.InvitingCodeService;
 import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
 import org.personal.mason.feop.oauth.service.utils.SettingKeys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +93,7 @@ public class SignupController {
             }
         }
 
-        OauthUser user = feopUserService.createUser(signupForm);
+        FoepUser user = feopUserService.createUser(signupForm);
         feopUserService.regist(user);
 
         if (signupForm.getRedirectUrl() != null) {

@@ -1,33 +1,31 @@
-package org.personal.mason.feop.oauth.service.domain.service.oauth.impl;
+package org.personal.mason.feop.oauth.service.domain.service.common.impl;
 
 import org.personal.mason.feop.oauth.common.domain.model.SystemSetting;
 import org.personal.mason.feop.oauth.common.domain.repository.SystemSettingRepository;
-import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthRole;
-import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
-import org.personal.mason.feop.oauth.service.domain.repository.oauth.OauthRoleRepository;
-import org.personal.mason.feop.oauth.service.domain.repository.oauth.OauthUserRepository;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepAuthority;
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
+import org.personal.mason.feop.oauth.service.domain.repository.common.FoepAuthorityRepository;
+import org.personal.mason.feop.oauth.service.domain.repository.common.FoepUserRepository;
+import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
 import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class FeopUserServiceImpl implements FeopUserService {
     private static final String DEFAULT_USER_ROLES = "default_user_roles";
-    private OauthUserRepository oauthUserRepository;
-    private OauthRoleRepository oauthRoleRepository;
+    private FoepUserRepository foepUserRepository;
+    private FoepAuthorityRepository foepAuthorityRepository;
     private SystemSettingRepository systemSettingRepository;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public void setOauthUserRepository(OauthUserRepository oauthUserRepository) {
-        this.oauthUserRepository = oauthUserRepository;
+    public void setFoepUserRepository(FoepUserRepository foepUserRepository) {
+        this.foepUserRepository = foepUserRepository;
     }
 
     @Autowired
@@ -36,8 +34,8 @@ public class FeopUserServiceImpl implements FeopUserService {
     }
 
     @Autowired
-    public void setOauthRoleRepository(OauthRoleRepository oauthRoleRepository) {
-        this.oauthRoleRepository = oauthRoleRepository;
+    public void setFoepAuthorityRepository(FoepAuthorityRepository foepAuthorityRepository) {
+        this.foepAuthorityRepository = foepAuthorityRepository;
     }
 
     @Autowired
@@ -48,55 +46,57 @@ public class FeopUserServiceImpl implements FeopUserService {
 
     @Override
     @Transactional
-    public void update(OauthUser user) {
-        oauthUserRepository.saveAndFlush(user);
+    public void update(FoepUser user) {
+        foepUserRepository.saveAndFlush(user);
     }
 
     @Transactional
-    public void updatePassword(OauthUser user, String password) {
+    public void updatePassword(FoepUser user, String password) {
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
-        oauthUserRepository.saveAndFlush(user);
+        foepUserRepository.saveAndFlush(user);
     }
 
     @Override
     @Transactional
-    public void regist(OauthUser user) {
+    public void regist(FoepUser user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         List<SystemSetting> setting = systemSettingRepository.findByKey(DEFAULT_USER_ROLES);
 
         if (setting != null && setting.size() > 0) {
             Object[] roleNames = setting.get(0).getValue().split(",[\\s]*");
-            user.setRoles(oauthRoleRepository.getDefaultUserRoles(roleNames));
+            List<FoepAuthority> defaultUserRoles = foepAuthorityRepository.getDefaultUserRoles(roleNames);
+            user.setRoles(new HashSet<FoepAuthority>(defaultUserRoles));
         } else {
-            user.setRoles(oauthRoleRepository.getDefaultUserRoles());
+            List<FoepAuthority> defaultUserRoles = foepAuthorityRepository.getDefaultUserRoles();
+            user.setRoles(new HashSet<FoepAuthority>(defaultUserRoles));
         }
-        oauthUserRepository.save(user);
+        foepUserRepository.save(user);
     }
 
     @Override
     @Transactional
-    public OauthUser findUserById(Long id) {
-        return oauthUserRepository.findOne(id);
+    public FoepUser findUserById(Long id) {
+        return foepUserRepository.findOne(id);
     }
 
     @Override
     @Transactional
-    public OauthUser findByEmailOrUsername(String emailOrUsername) {
-        List<OauthUser> apps = oauthUserRepository.findByUserNameOrEmail(emailOrUsername);
+    public FoepUser findByEmailOrUsername(String emailOrUsername) {
+        List<FoepUser> apps = foepUserRepository.findByUserNameOrEmail(emailOrUsername);
         return apps.isEmpty() ? null : apps.get(0);
     }
 
     @Override
-    public List<String> findUserRoles(OauthUser user) {
+    public List<String> findUserRoles(FoepUser user) {
         return splitRoleNames(user.getRoles());
     }
 
-    private List<String> splitRoleNames(List<OauthRole> roles) {
+    private List<String> splitRoleNames(Set<FoepAuthority> roles) {
         List<String> roleNames = new ArrayList<>();
 
-        for (OauthRole role : roles) {
+        for (FoepAuthority role : roles) {
             if (role.getEnabled()) {
                 roleNames.add(role.getName());
             }
@@ -105,9 +105,11 @@ public class FeopUserServiceImpl implements FeopUserService {
     }
 
     @Override
-    public OauthUser createUser(SignupForm signupForm) {
-        OauthUser user = new OauthUser();
-        user.setActivated(true);
+    public FoepUser createUser(SignupForm signupForm) {
+        FoepUser user = new FoepUser();
+        user.setEnabled(true);
+        user.setAccountNonExpired(true);
+        user.setCredentialsNonExpired(true);
         user.setEmail(signupForm.getEmail());
         user.setPassword(signupForm.getPassword());
         user.setUserId(UUID.randomUUID().toString());
@@ -128,13 +130,13 @@ public class FeopUserServiceImpl implements FeopUserService {
     }
 
     @Override
-    public boolean validate(String oldPassword, OauthUser ouser) {
+    public boolean validate(String oldPassword, FoepUser ouser) {
         return passwordEncoder.matches(oldPassword, ouser.getPassword());
     }
 
     @Override
-    public OauthUser findByUserId(String userId) {
-        List<OauthUser> users = oauthUserRepository.findByUserId(userId);
+    public FoepUser findByUserId(String userId) {
+        List<FoepUser> users = foepUserRepository.findByUserId(userId);
         if (users.size() > 0) {
             return users.get(0);
         }

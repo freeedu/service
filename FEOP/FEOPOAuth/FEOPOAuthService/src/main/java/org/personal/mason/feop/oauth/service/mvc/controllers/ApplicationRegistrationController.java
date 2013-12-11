@@ -2,7 +2,7 @@ package org.personal.mason.feop.oauth.service.mvc.controllers;
 
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthClientDetail;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopClientDetailService;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.impl.AuthorizationType;
+import org.personal.mason.feop.oauth.service.domain.service.common.impl.AuthorizationType;
 import org.personal.mason.feop.oauth.service.mvc.model.ClientForm;
 import org.personal.mason.feop.oauth.service.mvc.model.UserApplication;
 import org.personal.mason.feop.oauth.service.utils.StringGenerator;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;

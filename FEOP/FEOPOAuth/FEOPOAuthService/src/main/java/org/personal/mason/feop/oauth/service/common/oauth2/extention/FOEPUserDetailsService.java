@@ -1,12 +1,19 @@
 package org.personal.mason.feop.oauth.service.common.oauth2.extention;
 
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepGroup;
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
+import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.FoepGroupService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.GroupManager;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,10 +23,29 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class FOEPUserDetailsService implements UserDetailsService, GroupManager {
+    private FeopUserService feopUserService;
+    private FoepGroupService foepGroupService;
+
+    @Autowired
+    public void setFeopUserService(FeopUserService feopUserService) {
+        this.feopUserService = feopUserService;
+    }
+
+    @Autowired
+    public void setFoepGroupService(FoepGroupService foepGroupService){
+        this.foepGroupService = foepGroupService;
+    }
 
     @Override
     public List<String> findAllGroups() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<FoepGroup> groups = foepGroupService.findAll();
+        List<String> groupNames = new ArrayList<>();
+        if(groups != null){
+            for (FoepGroup group : groups){
+                groupNames.add(group.getGroupName());
+            }
+        }
+        return groupNames;
     }
 
     @Override
@@ -69,6 +95,41 @@ public class FOEPUserDetailsService implements UserDetailsService, GroupManager 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        FoepUser user = feopUserService.findByEmailOrUsername(username);
+        System.out.println("UserDetails:" + user);
+
+        if (null == user) {
+            throw new UsernameNotFoundException("Invalid User");
+        }
+
+        Collection<GrantedAuthority> grantedAuths = this.obtionGrantedAuthorities(user);
+
+
+        User userDetail = new User(username,
+                user.getPassword(),
+                user.getEnabled(),
+                user.getAccountNonExpired(),
+                user.getCredentialsNonExpired(),
+                user.getAccountNonLocked(),
+                grantedAuths);
+
+        return userDetail;
+    }
+
+    private Set<GrantedAuthority> obtionGrantedAuthorities(FoepUser user) {
+
+        if (null == user) {
+            return null;
+        }
+
+        Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
+
+        List<String> roles = feopUserService.findUserRoles(user);
+
+        for (String role : roles) {
+            authSet.add(new SimpleGrantedAuthority(role));
+        }
+
+        return authSet;
     }
 }

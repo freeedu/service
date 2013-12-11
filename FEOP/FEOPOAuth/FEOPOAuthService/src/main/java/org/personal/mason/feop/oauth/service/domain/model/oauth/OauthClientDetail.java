@@ -18,7 +18,7 @@ public class OauthClientDetail extends FOEPPersistable<Long> {
     @Column(name = "access_token_validity")
     private Integer accessTokenValidity;
 
-    @Column(name = "additional_information")
+    @Column(name = "additional_information", length = 4096)
     private String additionalInformation;
 
     private String authorities;

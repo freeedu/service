@@ -1,6 +1,6 @@
-package org.personal.mason.feop.oauth.service.domain.repository.oauth;
+package org.personal.mason.feop.oauth.service.domain.repository.common;
 
-import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
+import org.personal.mason.feop.oauth.service.domain.model.common.InvitingCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

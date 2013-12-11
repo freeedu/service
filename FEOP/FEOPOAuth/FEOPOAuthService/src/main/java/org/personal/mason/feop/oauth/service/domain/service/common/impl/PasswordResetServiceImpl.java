@@ -1,8 +1,8 @@
-package org.personal.mason.feop.oauth.service.domain.service.oauth.impl;
+package org.personal.mason.feop.oauth.service.domain.service.common.impl;
 
-import org.personal.mason.feop.oauth.service.domain.model.oauth.PasswordReset;
-import org.personal.mason.feop.oauth.service.domain.repository.oauth.PasswordResetRepository;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.PasswordResetService;
+import org.personal.mason.feop.oauth.service.domain.model.common.PasswordReset;
+import org.personal.mason.feop.oauth.service.domain.repository.common.PasswordResetRepository;
+import org.personal.mason.feop.oauth.service.domain.service.common.PasswordResetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

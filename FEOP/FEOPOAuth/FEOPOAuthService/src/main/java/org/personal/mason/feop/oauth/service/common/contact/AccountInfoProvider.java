@@ -2,8 +2,8 @@ package org.personal.mason.feop.oauth.service.common.contact;
 
 import org.personal.mason.feop.oauth.common.protocol.AccountInterface;
 import org.personal.mason.feop.oauth.common.protocol.AccountModel;
-import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthUser;
-import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
+import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +21,8 @@ public class AccountInfoProvider implements AccountInterface {
     public AccountModel register(String oauthUser, String oauthSecret, String phoneNumber) {
         AccountModel model = new AccountModel();
         try {
-            OauthUser user = new OauthUser();
-            user.setActivated(true);
+            FoepUser user = new FoepUser();
+            user.setEnabled(true);
             user.setPhone(phoneNumber);
             user.setEmail(oauthUser);
             user.setPassword(oauthSecret);
@@ -41,7 +41,7 @@ public class AccountInfoProvider implements AccountInterface {
     @Override
     public AccountModel findAccount(String principleName) {
         AccountModel model = new AccountModel();
-        OauthUser user = feopUserService.findByEmailOrUsername(principleName);
+        FoepUser user = feopUserService.findByEmailOrUsername(principleName);
         if (user != null) {
             model.setAccountUid(user.getUserId());
             model.setSuccess(true);
@@ -55,7 +55,7 @@ public class AccountInfoProvider implements AccountInterface {
 
     @Override
     public boolean validateSecret(String oauthUid, String oauthSecret) {
-        OauthUser user = feopUserService.findByUserId(oauthUid);
+        FoepUser user = feopUserService.findByUserId(oauthUid);
         if (user != null) {
             return feopUserService.validate(oauthSecret, user);
         }

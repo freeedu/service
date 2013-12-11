@@ -1,6 +1,6 @@
-package org.personal.mason.feop.oauth.service.domain.service.oauth;
+package org.personal.mason.feop.oauth.service.domain.service.common;
 
-import org.personal.mason.feop.oauth.service.domain.model.oauth.PasswordReset;
+import org.personal.mason.feop.oauth.service.domain.model.common.PasswordReset;
 
 import java.util.Date;
 import java.util.List;

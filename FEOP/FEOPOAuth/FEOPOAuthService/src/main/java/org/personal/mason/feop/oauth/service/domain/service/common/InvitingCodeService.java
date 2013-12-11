@@ -1,6 +1,6 @@
-package org.personal.mason.feop.oauth.service.domain.service.oauth;
+package org.personal.mason.feop.oauth.service.domain.service.common;
 
-import org.personal.mason.feop.oauth.service.domain.model.oauth.InvitingCode;
+import org.personal.mason.feop.oauth.service.domain.model.common.InvitingCode;
 
 import java.util.List;
 

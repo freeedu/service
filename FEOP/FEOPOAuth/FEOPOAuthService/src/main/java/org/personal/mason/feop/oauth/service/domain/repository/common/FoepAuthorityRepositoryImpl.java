@@ -1,6 +1,6 @@
-package org.personal.mason.feop.oauth.service.domain.repository.oauth;
+package org.personal.mason.feop.oauth.service.domain.repository.common;
 
-import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthRole;
+import org.personal.mason.feop.oauth.service.domain.model.common.FoepAuthority;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.persistence.EntityManager;
@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OauthRoleRepositoryImpl implements OauthRoleRepositoryCustom {
+public class FoepAuthorityRepositoryImpl implements FoepAuthorityRepositoryCustom {
     private final static String DEFAULT_USER_ROLE = "ROLE_USER";
 
     @PersistenceContext(unitName = "oauth2")
@@ -24,15 +24,15 @@ public class OauthRoleRepositoryImpl implements OauthRoleRepositoryCustom {
     }
 
     @Override
-    public List<OauthRole> getDefaultUserRoles(Object... roleNames) {
+    public List<FoepAuthority> getDefaultUserRoles(Object... roleNames) {
         try {
             if (roleNames.length == 0) {
                 roleNames = new Object[]{DEFAULT_USER_ROLE};
             }
 
             CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-            CriteriaQuery<OauthRole> criteria = criteriaBuilder.createQuery(OauthRole.class);
-            Root<OauthRole> root = criteria.from(OauthRole.class);
+            CriteriaQuery<FoepAuthority> criteria = criteriaBuilder.createQuery(FoepAuthority.class);
+            Root<FoepAuthority> root = criteria.from(FoepAuthority.class);
             Predicate roleNamePredicate = root.get("name").in(roleNames);
             Predicate enablePredicate = criteriaBuilder.equal(root.get("enabled"), true);
             Predicate wherePredicate = criteriaBuilder.and(roleNamePredicate, enablePredicate);
