@@ -5,8 +5,8 @@ import org.personal.mason.feop.oauth.common.model.UserRole;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepAuthority;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthAccessToken;
+import org.personal.mason.feop.oauth.service.domain.service.common.FoepUserService;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopAccessTokenService;
-import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AccountService {
 
     private FeopAccessTokenService feopAccessTokenService;
-    private FeopUserService feopUserService;
+    private FoepUserService foepUserService;
 
     @Autowired
     public void setFeopAccessTokenService(FeopAccessTokenService feopAccessTokenService) {
@@ -26,8 +26,8 @@ public class AccountService {
     }
 
     @Autowired
-    public void setFeopUserService(FeopUserService feopUserService) {
-        this.feopUserService = feopUserService;
+    public void setFoepUserService(FoepUserService foepUserService) {
+        this.foepUserService = foepUserService;
     }
 
     @RequestMapping(value = {"/userinfo"}, method = RequestMethod.GET)
@@ -38,23 +38,17 @@ public class AccountService {
         if (accessToken != null) {
             String userName = accessToken.getUserName();
 
-            FoepUser user = feopUserService.findByEmailOrUsername(userName);
+            FoepUser user = foepUserService.findByEmailOrUsername(userName);
             if (user != null) {
                 UserInfo userInfo = new UserInfo();
                 userInfo.setUserId(user.getUserId());
-                userInfo.setFirstName(user.getFirstName());
-                userInfo.setLastName(user.getLastName());
                 if (user.getUserName() != null) {
                     userInfo.setScreenName(user.getUserName());
                 } else {
                     userInfo.setScreenName(user.getEmail());
                 }
-                userInfo.setGender(user.getGender());
-                userInfo.setBirth(user.getBirth());
-                userInfo.setProfileImageUri(user.getProfileImageUri());
                 userInfo.setEmail(userName);
                 userInfo.setPhone(user.getPhone());
-                userInfo.setLocation(user.getLocation());
 
                 if (user.getRoles() != null) {
                     for (FoepAuthority role : user.getRoles()) {

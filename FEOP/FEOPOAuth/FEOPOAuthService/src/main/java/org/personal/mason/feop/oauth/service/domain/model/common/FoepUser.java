@@ -3,8 +3,6 @@ package org.personal.mason.feop.oauth.service.domain.model.common;
 import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,39 +13,27 @@ import java.util.Set;
 public class FoepUser extends FOEPPersistable<Long> {
     private static final long serialVersionUID = 4887499676134613261L;
 
-    @Column(name = "fname")
-    private String firstName;
-    @Column(name = "lname")
-    private String lastName;
-
-    private String gender;
-
-    @Temporal(TemporalType.DATE)
-    private Date birth;
-    @Column(name = "profile_img_uri")
-    private String profileImageUri;
-    private String location;
-
+    @Column(name = "user_email", unique = true)
     private String email;
-
-    private String password;
-
+    @Column(name = "user_phone", unique = true)
     private String phone;
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "password", nullable = false)
+    private String password;
 
     @Column(name = "user_id")
     private String userId;
 
-    @Column(name = "user_name")
-    private String userName;
-
     @Column(name = "enabled")
-    private Boolean enabled;
+    private Boolean enabled = true;
     @Column(name = "account_non_expired")
-    private Boolean accountNonExpired;
+    private Boolean accountNonExpired = true;
     @Column(name = "cred_non_expired")
-    private Boolean credentialsNonExpired;
+    private Boolean credentialsNonExpired = true;
     @Column(name = "account_non_locked")
-    private Boolean accountNonLocked;
+    private Boolean accountNonLocked = true;
 
     // bi-directional many-to-many association to ORole
     @ManyToMany(fetch = FetchType.EAGER)
@@ -58,54 +44,6 @@ public class FoepUser extends FOEPPersistable<Long> {
     private Set<FoepGroup> groups;
 
     public FoepUser() {
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public String getProfileImageUri() {
-        return profileImageUri;
-    }
-
-    public void setProfileImageUri(String profileImageUri) {
-        this.profileImageUri = profileImageUri;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getEmail() {
@@ -196,59 +134,4 @@ public class FoepUser extends FOEPPersistable<Long> {
         this.groups = groups;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof FoepUser)) return false;
-        if (!super.equals(o)) return false;
-
-        FoepUser foepUser = (FoepUser) o;
-
-        if (accountNonExpired != null ? !accountNonExpired.equals(foepUser.accountNonExpired) : foepUser.accountNonExpired != null)
-            return false;
-        if (accountNonLocked != null ? !accountNonLocked.equals(foepUser.accountNonLocked) : foepUser.accountNonLocked != null)
-            return false;
-        if (birth != null ? !birth.equals(foepUser.birth) : foepUser.birth != null) return false;
-        if (credentialsNonExpired != null ? !credentialsNonExpired.equals(foepUser.credentialsNonExpired) : foepUser.credentialsNonExpired != null)
-            return false;
-        if (email != null ? !email.equals(foepUser.email) : foepUser.email != null) return false;
-        if (enabled != null ? !enabled.equals(foepUser.enabled) : foepUser.enabled != null) return false;
-        if (firstName != null ? !firstName.equals(foepUser.firstName) : foepUser.firstName != null) return false;
-        if (gender != null ? !gender.equals(foepUser.gender) : foepUser.gender != null) return false;
-        if (groups != null ? !groups.equals(foepUser.groups) : foepUser.groups != null) return false;
-        if (lastName != null ? !lastName.equals(foepUser.lastName) : foepUser.lastName != null) return false;
-        if (location != null ? !location.equals(foepUser.location) : foepUser.location != null) return false;
-        if (password != null ? !password.equals(foepUser.password) : foepUser.password != null) return false;
-        if (phone != null ? !phone.equals(foepUser.phone) : foepUser.phone != null) return false;
-        if (profileImageUri != null ? !profileImageUri.equals(foepUser.profileImageUri) : foepUser.profileImageUri != null)
-            return false;
-        if (roles != null ? !roles.equals(foepUser.roles) : foepUser.roles != null) return false;
-        if (userId != null ? !userId.equals(foepUser.userId) : foepUser.userId != null) return false;
-        if (userName != null ? !userName.equals(foepUser.userName) : foepUser.userName != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
-        result = 31 * result + (birth != null ? birth.hashCode() : 0);
-        result = 31 * result + (profileImageUri != null ? profileImageUri.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (enabled != null ? enabled.hashCode() : 0);
-        result = 31 * result + (accountNonExpired != null ? accountNonExpired.hashCode() : 0);
-        result = 31 * result + (credentialsNonExpired != null ? credentialsNonExpired.hashCode() : 0);
-        result = 31 * result + (accountNonLocked != null ? accountNonLocked.hashCode() : 0);
-        result = 31 * result + (roles != null ? roles.hashCode() : 0);
-        result = 31 * result + (groups != null ? groups.hashCode() : 0);
-        return result;
-    }
 }

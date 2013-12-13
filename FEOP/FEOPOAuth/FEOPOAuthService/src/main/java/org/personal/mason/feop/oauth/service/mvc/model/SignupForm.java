@@ -3,47 +3,26 @@ package org.personal.mason.feop.oauth.service.mvc.model;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import java.util.Date;
-
 public class SignupForm {
 
-    @NotEmpty(message = "First Name is required")
-    private String firstName;
-    @NotEmpty(message = "Last Name is required")
-    private String lastName;
+    @NotEmpty(message = "Username is required")
     private String userName;
+
     private String inviteCode;
+
     @Email(message = "Please provide a valid email address")
     @NotEmpty(message = "Email is required")
     private String email;
+
     @NotEmpty(message = "Password is required")
     private String password;
+
     @NotEmpty(message = "Repeat Password is required")
     private String repeatPassword;
 
-    private String gender;
-    private Date birth;
-    private String profileImageUri;
-    private String location;
     private String phone;
 
     private String redirectUrl;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String getInviteCode() {
         return inviteCode;
@@ -83,38 +62,6 @@ public class SignupForm {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public String getProfileImageUri() {
-        return profileImageUri;
-    }
-
-    public void setProfileImageUri(String profileImageUri) {
-        this.profileImageUri = profileImageUri;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getPhone() {

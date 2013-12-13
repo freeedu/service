@@ -3,7 +3,7 @@ package org.personal.mason.feop.oauth.service.mvc.controllers;
 import org.personal.mason.feop.oauth.common.spi.SettingsHolder;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
 import org.personal.mason.feop.oauth.service.domain.model.common.InvitingCode;
-import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.FoepUserService;
 import org.personal.mason.feop.oauth.service.domain.service.common.InvitingCodeService;
 import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
 import org.personal.mason.feop.oauth.service.utils.SettingKeys;
@@ -25,7 +25,7 @@ import java.util.Date;
 @Controller
 public class SignupController {
 
-    private FeopUserService feopUserService;
+    private FoepUserService foepUserService;
     private InvitingCodeService invitingCodeService;
     private SettingsHolder settingsHolder;
 
@@ -39,8 +39,8 @@ public class SignupController {
     }
 
     @Autowired
-    public void setFeopUserService(FeopUserService feopUserService) {
-        this.feopUserService = feopUserService;
+    public void setFoepUserService(FoepUserService foepUserService) {
+        this.foepUserService = foepUserService;
     }
 
     @Autowired
@@ -78,7 +78,7 @@ public class SignupController {
         }
 
         String email = signupForm.getEmail();
-        if (feopUserService.findByEmailOrUsername(email) != null) {
+        if (foepUserService.findByEmailOrUsername(email) != null) {
             result.rejectValue("email", "errors.signup.email", "Account with this email address already exist.");
             return "app.regist";
         }
@@ -93,8 +93,8 @@ public class SignupController {
             }
         }
 
-        FoepUser user = feopUserService.createUser(signupForm);
-        feopUserService.regist(user);
+        FoepUser user = foepUserService.createUser(signupForm);
+        foepUserService.regist(user);
 
         if (signupForm.getRedirectUrl() != null) {
             return String.format("redirect:%s", signupForm.getRedirectUrl());

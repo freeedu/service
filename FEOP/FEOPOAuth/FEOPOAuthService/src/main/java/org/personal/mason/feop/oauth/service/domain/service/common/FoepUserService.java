@@ -5,7 +5,7 @@ import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
 
 import java.util.List;
 
-public interface FeopUserService {
+public interface FoepUserService {
 
     public void regist(FoepUser user);
 
@@ -24,4 +24,6 @@ public interface FeopUserService {
     public void updatePassword(FoepUser user, String password);
 
     public boolean validate(String oldPassword, FoepUser ouser);
+
+
 }

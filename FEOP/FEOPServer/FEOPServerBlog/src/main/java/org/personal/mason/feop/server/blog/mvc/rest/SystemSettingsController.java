@@ -1,6 +1,6 @@
 package org.personal.mason.feop.server.blog.mvc.rest;
 
-import org.personal.mason.feop.server.blog.common.client.JDBCClientConfiguration;
+import org.personal.mason.feop.oauth.common.client.DBClientConfiguration;
 import org.personal.mason.feop.server.blog.domain.model.SystemSettings;
 import org.personal.mason.feop.server.blog.domain.service.SystemSettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.List;
 public class SystemSettingsController {
 
     private SystemSettingsService systemSettingsService;
-
+    
     @Autowired
     public void setSystemSettingsService(SystemSettingsService systemSettingsService) {
         this.systemSettingsService = systemSettingsService;
@@ -25,7 +25,7 @@ public class SystemSettingsController {
     @RequestMapping(value = {"/syssetting/oauthkeys"})
     @ResponseBody
     public List<String> listOauthKeys() {
-        return JDBCClientConfiguration.getAllOauthSettings();
+        return DBClientConfiguration.getAllOauthSettings();
     }
 
     @RequestMapping(value = {"/syssetting/list"})

@@ -1,11 +1,18 @@
 package org.personal.mason.feop.oauth.service.mvc.controllers;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPUserDetailsService;
+import org.personal.mason.feop.oauth.service.common.oauth2.extention.FoepBasicUser;
+import org.personal.mason.feop.oauth.service.common.oauth2.extention.FoepUserDetails;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
-import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.FoepUserService;
 import org.personal.mason.feop.oauth.service.mvc.model.ChangePasswordForm;
 import org.personal.mason.feop.oauth.service.mvc.model.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,8 +28,10 @@ import java.util.Date;
 
 @Controller
 public class ProfileController {
+    private static final Log LOG = LogFactory.getLog(ProfileController.class);
+//    private FoepUserService foepUserService;
 
-    private FeopUserService feopUserService;
+    private FOEPUserDetailsService foepUserDetailsService;
 
     @InitBinder
     protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
@@ -34,9 +43,14 @@ public class ProfileController {
     }
 
     @Autowired
-    public void setFeopUserService(FeopUserService feopUserService) {
-        this.feopUserService = feopUserService;
+    public void setFoepUserDetailsService(FOEPUserDetailsService foepUserDetailsService){
+        this.foepUserDetailsService = foepUserDetailsService;
     }
+
+//    @Autowired
+//    public void setFoepUserService(FoepUserService foepUserService) {
+//        this.foepUserService = foepUserService;
+//    }
 
     @RequestMapping(value = {"/account/pwd/edit"}, method = RequestMethod.GET)
     public String changePassword(@ModelAttribute ChangePasswordForm changePasswordForm) {
@@ -54,22 +68,23 @@ public class ProfileController {
             return "app.profile.updatesecret";
         }
 
-        String email = principal.getName();
-        FoepUser ouser = feopUserService.findByEmailOrUsername(email);
-        String oldPassword = changePasswordForm.getOldPassword();
-        if (!feopUserService.validate(oldPassword, ouser)) {
+        try {
+            foepUserDetailsService.changePassword(changePasswordForm.getOldPassword(), changePasswordForm.getNewPassword());//foepUserService.findByEmailOrUsername(email);
+        } catch (EmptyResultDataAccessException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Failed to find foep user");
+            }
+            result.rejectValue("", "errors.changesecret", "You do not have privilege for this operation.");
+            return "app.profile.updatesecret";
+        } catch (IllegalArgumentException e) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Password validate failed.");
+            }
             result.rejectValue("oldPassword", "errors.changesecret.oldPassowrd", "Your password is not correct.");
             return "app.profile.updatesecret";
         }
 
-        if (ouser == null) {
-            result.rejectValue("", "errors.changesecret", "You do not have privilege for this operation.");
-            return "app.profile.updatesecret";
-        }
-
-        feopUserService.updatePassword(ouser, changePasswordForm.getNewPassword());
         map.addAttribute("msg", "You have update your password successfully.");
-
         return "app.profile.updatesecret";
     }
 
@@ -77,7 +92,7 @@ public class ProfileController {
     public String myProfile(ModelMap map, Principal principal) {
         String princ = principal.getName();
 
-        FoepUser ouser = feopUserService.findByEmailOrUsername(princ);
+        FoepUser ouser = foepUserDetailsService.findByEmailOrUsernameOrPhone(princ);
         if (ouser == null) {
             return "redirect:/oauth/logout";
         }
@@ -88,16 +103,9 @@ public class ProfileController {
         uf.setEmail(ouser.getEmail());
         uf.setPhone(ouser.getPhone());
         uf.setUserId(ouser.getUserId());
-        uf.setActivated(ouser.getEnabled());
-        uf.setFirstName(ouser.getFirstName());
-        uf.setLastName(ouser.getLastName());
-        uf.setGender(ouser.getGender());
-        uf.setLocation(ouser.getLocation());
-        uf.setBirth(ouser.getBirth());
-        uf.setProfileImageUri(ouser.getProfileImageUri());
+        uf.setEnabled(ouser.getEnabled());
 
         map.addAttribute("userForm", uf);
-
         return "app.profile";
     }
 
@@ -105,7 +113,7 @@ public class ProfileController {
     public String updateProfile(ModelMap map, Principal principal) {
         String princ = principal.getName();
 
-        FoepUser ouser = feopUserService.findByEmailOrUsername(princ);
+        FoepUser ouser = foepUserDetailsService.findByEmailOrUsernameOrPhone(princ);
         if (ouser == null) {
             return "redirect:/oauth/logout";
         }
@@ -115,13 +123,7 @@ public class ProfileController {
         uf.setEmail(ouser.getEmail());
         uf.setPhone(ouser.getPhone());
         uf.setUserId(ouser.getUserId());
-        uf.setActivated(ouser.getEnabled());
-        uf.setFirstName(ouser.getFirstName());
-        uf.setLastName(ouser.getLastName());
-        uf.setGender(ouser.getGender());
-        uf.setLocation(ouser.getLocation());
-        uf.setBirth(ouser.getBirth());
-        uf.setProfileImageUri(ouser.getProfileImageUri());
+        uf.setEnabled(ouser.getEnabled());
         map.addAttribute("userForm", uf);
 
         return "app.profile.update";
@@ -131,7 +133,7 @@ public class ProfileController {
     public String changeProfile(UserForm userForm, Principal principal) {
         String princ = principal.getName();
 
-        FoepUser ouser = feopUserService.findByEmailOrUsername(princ);
+        FoepUser ouser = foepUserDetailsService.findByEmailOrUsernameOrPhone(princ);
         if (ouser == null) {
             return "redirect:/oauth/login";
         }
@@ -139,7 +141,24 @@ public class ProfileController {
         ouser.setPhone(userForm.getPhone());
         ouser.setUserName(userForm.getUserName());
 
-        feopUserService.update(ouser);
+        /**
+         *
+         * @param id
+         * @param email
+         * @param phone
+         * @param authorities
+         * @param password
+         * @param username
+         * @param accountNonExpired
+         * @param accountNonLocked
+         * @param credentialsNonExpired
+         * @param enabled
+         */
+        FoepUserDetails userDetails = new FoepBasicUser(ouser.getId(), ouser.getEmail(),
+                userForm.getPhone(), null, ouser.getPassword(), userForm.getUserName(),
+                ouser.getAccountNonExpired(), ouser.getAccountNonLocked(),
+                ouser.getCredentialsNonExpired(), ouser.getEnabled());
+        foepUserDetailsService.updateUser(userDetails);
 
         return "redirect:/account/profile";
     }

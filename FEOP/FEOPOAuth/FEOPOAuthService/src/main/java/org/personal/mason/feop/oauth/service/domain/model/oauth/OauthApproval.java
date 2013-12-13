@@ -16,7 +16,8 @@ import java.util.Date;
 @Entity
 @Table(name = "oauth_approvals")
 public class OauthApproval extends FOEPPersistable<Long> {
-    @Column(name = "user_id")
+	private static final long serialVersionUID = -2237619438295617875L;
+	@Column(name = "user_id")
     private String user;
     @Column(name = "client_id")
     private String client;

@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<c:url value="/signup/new" var="newAction"/>
+<c:url value="/signup/save" var="newAction"/>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <form class="form-horizontal" action="${newAction }" method="post" name="signupForm" role="form">
@@ -42,17 +42,17 @@
                     </div>
                 </div>
             </c:if>
+
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon "><i class="glyphicon glyphicon-user"></i></span><input
-                        name="firstName" type="text" class="form-control" value="" placeholder="First Name"
-                        required="required"/>
+                        name="userName" type="text" class="form-control" value="" placeholder="User Name"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon "><i class="glyphicon glyphicon-user"></i></span><input
-                        name="lastName" type="text" class="form-control" value="" placeholder="Last Name"
+                    <span class="input-group-addon "><i class="glyphicon glyphicon-envelope"></i></span><input
+                        name="email" type="email" class="form-control" value="" placeholder="Email"
                         required="required"/>
                 </div>
             </div>
@@ -66,7 +66,16 @@
                     </div>
                 </div>
             </c:if>
-
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon "><i class="glyphicon glyphicon-earphone"></i></span><input id="tel"
+                                                                                                               name="phone"
+                                                                                                               type="tel"
+                                                                                                               class="form-control"
+                                                                                                               value=""
+                                                                                                               placeholder="Phone"/>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon "><i class="glyphicon glyphicon-lock"></i></span><input
@@ -81,55 +90,7 @@
                         required="required"/>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon "><i class="glyphicon glyphicon-user"></i></span><input
-                        name="userName" type="text" class="form-control" value="" placeholder="Screen Name"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon "><i class="glyphicon glyphicon-envelope"></i></span><input
-                        name="email" type="email" class="form-control" value="" placeholder="Email"
-                        required="required"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon "><i class="glyphicon glyphicon-earphone"></i></span><input id="tel"
-                                                                                                               name="phone"
-                                                                                                               type="tel"
-                                                                                                               class="form-control"
-                                                                                                               value=""
-                                                                                                               placeholder="Phone"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><select
-                        class="form-control" name="gender" title="Gender">
-                    <option value="" selected="selected">Choose gender ...</option>
-                    <option value="m">Male</option>
-                    <option value="f">Female</option>
-                </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon "><i class="glyphicon glyphicon-bell"></i></span><input id="birth"
-                                                                                                           name="birth"
-                                                                                                           type="date"
-                                                                                                           class="form-control"
-                                                                                                           value=""
-                                                                                                           placeholder="Birthday">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon "><i class="glyphicon glyphicon-map-marker"></i></span><input
-                        id="location" name="location" type="text" class="form-control" value="" placeholder="Location">
-                </div>
-            </div>
+
             <div class="form-group ">
                 <div class="input-group checkbox">
                     <input id="acceptTerms" name="acceptTerms" type="checkbox" required/> <label for="acceptTerms"> I agree to the <a

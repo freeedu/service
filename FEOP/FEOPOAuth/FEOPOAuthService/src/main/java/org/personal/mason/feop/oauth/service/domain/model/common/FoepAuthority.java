@@ -1,12 +1,12 @@
 package org.personal.mason.feop.oauth.service.domain.model.common;
 
-import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
-import java.util.Set;
+
+import org.personal.mason.feop.oauth.common.domain.model.FOEPPersistable;
 
 /**
  * The persistent class for the roles database table.
@@ -62,29 +62,4 @@ public class FoepAuthority extends FOEPPersistable<Long> {
         this.groups = groups;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        FoepAuthority that = (FoepAuthority) o;
-
-        if (!enabled.equals(that.enabled)) return false;
-        if (!groups.equals(that.groups)) return false;
-        if (!name.equals(that.name)) return false;
-        if (!users.equals(that.users)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + enabled.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + users.hashCode();
-        result = 31 * result + groups.hashCode();
-        return result;
-    }
 }

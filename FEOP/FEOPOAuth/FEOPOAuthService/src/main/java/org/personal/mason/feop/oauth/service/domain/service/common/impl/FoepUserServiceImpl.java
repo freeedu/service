@@ -6,17 +6,21 @@ import org.personal.mason.feop.oauth.service.domain.model.common.FoepAuthority;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
 import org.personal.mason.feop.oauth.service.domain.repository.common.FoepAuthorityRepository;
 import org.personal.mason.feop.oauth.service.domain.repository.common.FoepUserRepository;
-import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.FoepUserService;
 import org.personal.mason.feop.oauth.service.mvc.model.SignupForm;
+import org.personal.mason.feop.oauth.service.utils.StringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
-public class FeopUserServiceImpl implements FeopUserService {
+public class FoepUserServiceImpl implements FoepUserService {
     private static final String DEFAULT_USER_ROLES = "default_user_roles";
     private FoepUserRepository foepUserRepository;
     private FoepAuthorityRepository foepAuthorityRepository;
@@ -84,7 +88,7 @@ public class FeopUserServiceImpl implements FeopUserService {
     @Override
     @Transactional
     public FoepUser findByEmailOrUsername(String emailOrUsername) {
-        List<FoepUser> apps = foepUserRepository.findByUserNameOrEmail(emailOrUsername);
+        List<FoepUser> apps = foepUserRepository.findByEmailOrPhoneOrUserName(emailOrUsername);
         return apps.isEmpty() ? null : apps.get(0);
     }
 
@@ -112,19 +116,8 @@ public class FeopUserServiceImpl implements FeopUserService {
         user.setCredentialsNonExpired(true);
         user.setEmail(signupForm.getEmail());
         user.setPassword(signupForm.getPassword());
-        user.setUserId(UUID.randomUUID().toString());
-        user.setFirstName(signupForm.getFirstName());
-        user.setLastName(signupForm.getLastName());
-        if (signupForm.getUserName() == null) {
-            user.setUserName(String
-                    .format("%s %s", signupForm.getFirstName(), signupForm.getLastName()).trim());
-        } else {
-            user.setUserName(signupForm.getUserName().trim());
-        }
-        user.setGender(signupForm.getGender());
-        user.setLocation(signupForm.getLocation());
-        user.setPhone(signupForm.getPhone());
-        user.setProfileImageUri(signupForm.getProfileImageUri());
+        user.setUserId(StringGenerator.generateUniqueString());
+        user.setUserName(signupForm.getUserName().trim());
 
         return user;
     }

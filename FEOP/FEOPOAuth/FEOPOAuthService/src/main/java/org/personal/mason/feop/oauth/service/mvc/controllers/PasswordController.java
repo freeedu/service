@@ -6,7 +6,7 @@ import org.personal.mason.feop.oauth.service.domain.model.common.EmailTemplate;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
 import org.personal.mason.feop.oauth.service.domain.model.common.PasswordReset;
 import org.personal.mason.feop.oauth.service.domain.service.common.EmailTemplateService;
-import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.FoepUserService;
 import org.personal.mason.feop.oauth.service.domain.service.common.PasswordResetService;
 import org.personal.mason.feop.oauth.service.mvc.model.PasswordResetForm;
 import org.personal.mason.feop.oauth.service.mvc.model.ResetPasswordForm;
@@ -37,7 +37,7 @@ import java.util.Map;
 @Controller
 public class PasswordController {
     private PasswordResetService passwordResetService;
-    private FeopUserService feopUserService;
+    private FoepUserService foepUserService;
     private EmailTemplateService emailTemplateService;
     private EmailSender emailSender;
 
@@ -47,8 +47,8 @@ public class PasswordController {
     }
 
     @Autowired
-    public void setFeopUserService(FeopUserService feopUserService) {
-        this.feopUserService = feopUserService;
+    public void setFoepUserService(FoepUserService foepUserService) {
+        this.foepUserService = foepUserService;
     }
 
     @Autowired
@@ -69,7 +69,7 @@ public class PasswordController {
     @RequestMapping(value = {"/resetpassword/confirm"}, method = RequestMethod.POST)
     public String resetPassword(@ModelAttribute ResetPasswordForm resetPasswordForm, HttpServletRequest request, Model model) {
         String email = resetPasswordForm.getEmail();
-        FoepUser user = feopUserService.findByEmailOrUsername(email);
+        FoepUser user = foepUserService.findByEmailOrUsername(email);
         if (user == null) {
             model.addAttribute("errorMsg", "Invalid email account");
             return null;
@@ -116,9 +116,9 @@ public class PasswordController {
         PasswordReset passwordReset = passwordResetService.findByToken(passwordResetForm.getToken());
         if (passwordReset != null) {
             String email = passwordReset.getEmail();
-            FoepUser user = feopUserService.findByEmailOrUsername(email);
+            FoepUser user = foepUserService.findByEmailOrUsername(email);
 
-            feopUserService.updatePassword(user, passwordResetForm.getNewPassword());
+            foepUserService.updatePassword(user, passwordResetForm.getNewPassword());
             passwordResetService.delete(passwordReset);
         }
         model.addAttribute("msg", "Password reset success!");

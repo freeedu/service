@@ -3,6 +3,8 @@ package org.personal.mason.feop.oauth.service.domain.repository.common;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: mason
@@ -11,4 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * To change this template use File | Settings | File Templates.
  */
 public interface FoepGroupRepository extends JpaRepository<FoepGroup, Long> {
+    List<FoepGroup> findByGroupName(String groupName);
 }

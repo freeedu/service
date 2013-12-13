@@ -32,8 +32,7 @@
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
-    <mvc:resources mapping="/resources/**" location="/resources/, classpath:/META-INF/resources/"
-                   cache-period="#{60 * 60}"/>
+    <mvc:resources mapping="/resources/**" location="/resources/" cache-period="#{60 * 60}"/>
 
     <mvc:default-servlet-handler/>
 
@@ -53,7 +52,7 @@
         <bean class="org.personal.mason.feop.oauth.common.client.OAuthAuthenticationInterceptor"/>
     </mvc:interceptors>
 
-    <bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.common.client.JDBCClientConfiguration"/>
+    <bean id="clientConfiguration" class="org.personal.mason.feop.oauth.common.client.DBClientConfiguration"/>
 
     <bean id="loginProcessor"
           class="org.personal.mason.feop.oauth.common.client.oauth.code.AuthorizationCodeLoginProcessor">
@@ -62,7 +61,8 @@
     <!-- <bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.implicit.ImplicitLoginInfoProvider"
         p:configuration-ref="clientConfiguration" /> -->
 
-    <bean id="foepAuthenticationProcessor" class="org.personal.mason.feop.oauth.common.client.DefaultAuthenticationProcessor">
+    <bean id="foepAuthenticationProcessor"
+          class="org.personal.mason.feop.oauth.common.client.DefaultAuthenticationProcessor">
         <constructor-arg name="interceptors">
             <list>
                 <bean class="org.personal.mason.feop.oauth.common.client.AuthorityInterceptor" p:pattern="/resources/.*"

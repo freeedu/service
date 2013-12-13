@@ -3,18 +3,18 @@ package org.personal.mason.feop.oauth.service.common.contact;
 import org.personal.mason.feop.oauth.common.protocol.AccountInterface;
 import org.personal.mason.feop.oauth.common.protocol.AccountModel;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
-import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.FoepUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountInfoProvider implements AccountInterface {
 
-    private FeopUserService feopUserService;
+    private FoepUserService foepUserService;
 
     @Autowired
-    public void setFeopUserService(FeopUserService feopUserService) {
-        this.feopUserService = feopUserService;
+    public void setFoepUserService(FoepUserService foepUserService) {
+        this.foepUserService = foepUserService;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class AccountInfoProvider implements AccountInterface {
             user.setPhone(phoneNumber);
             user.setEmail(oauthUser);
             user.setPassword(oauthSecret);
-            feopUserService.regist(user);
+            foepUserService.regist(user);
 
             model.setAccountUid(user.getUserId());
             model.setSuccess(true);
@@ -41,7 +41,7 @@ public class AccountInfoProvider implements AccountInterface {
     @Override
     public AccountModel findAccount(String principleName) {
         AccountModel model = new AccountModel();
-        FoepUser user = feopUserService.findByEmailOrUsername(principleName);
+        FoepUser user = foepUserService.findByEmailOrUsername(principleName);
         if (user != null) {
             model.setAccountUid(user.getUserId());
             model.setSuccess(true);
@@ -55,9 +55,9 @@ public class AccountInfoProvider implements AccountInterface {
 
     @Override
     public boolean validateSecret(String oauthUid, String oauthSecret) {
-        FoepUser user = feopUserService.findByUserId(oauthUid);
+        FoepUser user = foepUserService.findByUserId(oauthUid);
         if (user != null) {
-            return feopUserService.validate(oauthSecret, user);
+            return foepUserService.validate(oauthSecret, user);
         }
         return false;
     }

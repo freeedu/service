@@ -1,7 +1,7 @@
 package org.personal.mason.feop.oauth.service.common.oauth2;
 
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
-import org.personal.mason.feop.oauth.service.domain.service.common.FeopUserService;
+import org.personal.mason.feop.oauth.service.domain.service.common.FoepUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,17 +19,17 @@ import java.util.Set;
 @Component
 public class OAuth2UserDetailsServiceImpl implements UserDetailsService {
 
-    private FeopUserService feopUserService;
+    private FoepUserService foepUserService;
 
     @Autowired
-    public void setFeopUserService(FeopUserService feopUserService) {
-        this.feopUserService = feopUserService;
+    public void setFoepUserService(FoepUserService foepUserService) {
+        this.foepUserService = foepUserService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        FoepUser user = feopUserService.findByEmailOrUsername(username);
+        FoepUser user = foepUserService.findByEmailOrUsername(username);
         System.out.println("UserDetails:" + user);
 
         if (null == user) {
@@ -55,7 +55,7 @@ public class OAuth2UserDetailsServiceImpl implements UserDetailsService {
 
         Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
 
-        List<String> roles = feopUserService.findUserRoles(user);
+        List<String> roles = foepUserService.findUserRoles(user);
 
         for (String role : roles) {
             authSet.add(new SimpleGrantedAuthority(role));

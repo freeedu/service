@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.service.utils;
 
+import org.springframework.security.crypto.codec.Hex;
+import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
 
@@ -18,6 +20,11 @@ public class StringGenerator {
 
     public static String generateCode() {
         return KeyGenerators.string().generateKey();
+    }
+
+    public static String generateUniqueString(){
+        BytesKeyGenerator generator = KeyGenerators.secureRandom(32);
+        return new String(Hex.encode(generator.generateKey()));
     }
 
     public static void main(String[] args) {

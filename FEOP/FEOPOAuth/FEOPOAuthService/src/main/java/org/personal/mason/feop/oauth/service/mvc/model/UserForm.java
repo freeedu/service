@@ -1,21 +1,17 @@
 package org.personal.mason.feop.oauth.service.mvc.model;
 
-import java.util.Date;
-
 public class UserForm {
 
     private Long id;
-    private Boolean activated;
+    private Boolean enabled;
     private String email;
     private String phone;
     private String userId;
     private String userName;
-    private String gender;
-    private Date birth;
-    private String profileImageUri;
-    private String location;
-    private String firstName;
-    private String lastName;
+    private Boolean accountNonExpired;
+    private Boolean credentialsNonExpired;
+    private Boolean accountNonLocked;
+
 
     public Long getId() {
         return id;
@@ -25,12 +21,12 @@ public class UserForm {
         this.id = id;
     }
 
-    public Boolean getActivated() {
-        return activated;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setActivated(Boolean activated) {
-        this.activated = activated;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getEmail() {
@@ -65,52 +61,27 @@ public class UserForm {
         this.userName = userName;
     }
 
-    public String getGender() {
-        return gender;
+    public Boolean getAccountNonExpired() {
+        return accountNonExpired;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setAccountNonExpired(Boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
     }
 
-    public Date getBirth() {
-        return birth;
+    public Boolean getCredentialsNonExpired() {
+        return credentialsNonExpired;
     }
 
-    public void setBirth(Date birth) {
-        this.birth = birth;
+    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    public String getProfileImageUri() {
-        return profileImageUri;
+    public Boolean getAccountNonLocked() {
+        return accountNonLocked;
     }
 
-    public void setProfileImageUri(String profileImageUri) {
-        this.profileImageUri = profileImageUri;
+    public void setAccountNonLocked(Boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
     }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
 }

@@ -1,5 +1,13 @@
 package org.personal.mason.feop.oauth.service.common.oauth2.extention;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.personal.mason.feop.oauth.service.domain.model.oauth.OauthAccessToken;
@@ -8,8 +16,6 @@ import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopAccessToke
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopRefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.common.util.SerializationUtils;
@@ -17,17 +23,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.AuthenticationKeyGenerator;
 import org.springframework.security.oauth2.provider.token.DefaultAuthenticationKeyGenerator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -89,11 +84,6 @@ public class FOEPTokenStore implements TokenStore {
 
     @Override
     public void storeAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
-        String refreshToken = null;
-        if (token.getRefreshToken() != null) {
-            refreshToken = token.getRefreshToken().getValue();
-        }
-
         OauthAccessToken accessToken = toOauthAccessToken(token, authentication);
         OauthAccessToken authenticationId = feopAccessTokenService.findAccessTokenWithAuthenticationId(accessToken.getAuthenticationId());
         OauthAccessToken tokenId = feopAccessTokenService.findAccessTokenWithTokenId(accessToken.getTokenId());

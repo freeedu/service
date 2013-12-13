@@ -25,18 +25,6 @@
                 <c:out value="${userForm.userId }"/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-3">First Name:</div>
-            <div class="col-md-9">
-                <c:out value="${userForm.firstName }"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">Last Name:</div>
-            <div class="col-md-9">
-                <c:out value="${userForm.lastName }"/>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-3">User Name:</div>
@@ -59,7 +47,7 @@
         <div class="row">
             <div class="col-md-3">Status:</div>
             <div class="col-md-9">
-                <c:out value="${userForm.activated }"/>
+                <c:out value="${userForm.enabled }"/>
             </div>
         </div>
     </div>
