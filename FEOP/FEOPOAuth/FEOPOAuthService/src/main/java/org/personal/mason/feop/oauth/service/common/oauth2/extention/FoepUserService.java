@@ -1,7 +1,10 @@
 package org.personal.mason.feop.oauth.service.common.oauth2.extention;
 
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,5 +17,6 @@ public interface FoepUserService {
 
     public void buildAdditionalParams(FoepUser foepUser, UserDetails user);
 
-    FoepUser findByEmailOrUsernameOrPhone(String princ);
+    public FoepUser findByEmailOrUsernameOrPhone(String princ);
+
 }

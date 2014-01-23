@@ -132,12 +132,6 @@
             <version>${mysql.connector.java.version}</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
-            <version>${tomcat.jdbc.version}</version>
-        </dependency>
         <!-- Log -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -222,10 +216,12 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.1</version>
+                <version>2.2</version>
                 <configuration>
                     <port>8889</port>
                     <path>/</path>
+                    <contextReloadable>true</contextReloadable>
+                    <update>true</update>
                 </configuration>
             </plugin>
             <plugin>

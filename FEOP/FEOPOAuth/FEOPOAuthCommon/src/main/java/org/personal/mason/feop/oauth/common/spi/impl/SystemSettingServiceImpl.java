@@ -5,6 +5,7 @@ import org.personal.mason.feop.oauth.common.domain.repository.SystemSettingRepos
 import org.personal.mason.feop.oauth.common.spi.SystemSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,8 +38,8 @@ public class SystemSettingServiceImpl implements SystemSettingService {
     }
 
     @Override
-    public Page<SystemSetting> findAll(int page, int size) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Page<SystemSetting> findAll(Pageable pageable) {
+        return systemSettingRepository.findAll(pageable);
     }
 
     @Override

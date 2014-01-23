@@ -1,11 +1,10 @@
 package org.personal.mason.feop.oauth.common.cf.service;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
-import org.apache.tomcat.jdbc.pool.PoolConfiguration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.util.logging.Logger;
 
-public class AppFogMysqlDataSource extends DataSource {
+public class AppFogMysqlDataSource extends DriverManagerDataSource {
 
     Logger logger = Logger.getLogger(AppFogMysqlDataSource.class.getName());
 
@@ -20,13 +19,8 @@ public class AppFogMysqlDataSource extends DataSource {
         super();
     }
 
-    /**
-     * Constructs a DataSource object wrapping a connection
-     *
-     * @param poolProperties
-     */
-    public AppFogMysqlDataSource(PoolConfiguration poolProperties) {
-        super(poolProperties);
+    public AppFogMysqlDataSource(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public void setServiceName(String serviceName) {

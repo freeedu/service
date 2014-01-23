@@ -6,76 +6,89 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <div class="col-md-8 col-md-offset-2">
-    <div class="row">
-        <div>
-            <h3>User Applications</h3>
-        </div>
 
-        <hr>
-    </div>
+    <h4>User Applications</h4>
+
+    <hr>
     <c:choose>
         <c:when test="${not empty applications  }">
-            <c:forEach items="${applications}" var="app">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <c:url value="/client/view/${app.clientId }" var="viewTarget"/>
-                        <a href="${viewTarget }" class="btn btn-link btn-normal"><c:out value="${app.clientId }"/></a>
-                        <a
-                                href='<c:url value="/client/delete/${app.clientId }"/>'
-                                class="pull-right btn btn-link btn-sm">Delete</a>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-3">Application Id:</div>
-                            <div class="col-md-9">
-                                <c:out value="${app.clientId }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Client Secret:</div>
-                            <div class="col-md-9">
-                                <c:out value="${app.clientSecret }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Authorized Grant Types:</div>
-                            <div class="col-md-9">
-                                <c:out value="${app.authorizedGrantTypes }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Authorities:</div>
-                            <div class="col-md-9">
-                                <c:out value="${app.authorities }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Resource Ids:</div>
-                            <div class="col-md-9">
-                                <c:out value="${app.resourceIds }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Scope:</div>
-                            <div class="col-md-9">
-                                <c:out value="${app.scope }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Redirect Uri:</div>
-                            <div class="col-md-9">
-                                <c:out value="${app.webServerRedirectUri }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Additional Info:</div>
-                            <div class="col-md-9">
-                                <c:out value="${app.additionalInfo }"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
+            <div class="panel-group" id="applications">
+                <c:forEach items="${applications}" var="app">
+                    <table class="panel table table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <td class="left col-sm-4">
+                                <c:url value="/client/view/${app.clientId }" var="viewTarget"/>
+                                <span class="glyphicon glyphicon-chevron-down btn-link btn-sm" data-toggle="collapse"
+                                      data-parent="#applications"
+                                      href="#collapse${app.clientId}"></span>
+                                <a href="${viewTarget }" class="btn btn-link btn-normal"><c:out
+                                        value="${app.clientId }"/></a>
+
+                            </td>
+                            <td class="right col-sm-8">
+                                <a href='<c:url value="/client/delete/${app.clientId }"/>'
+                                   class="pull-right btn btn-link btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                        </thead>
+
+
+                        <tbody class="collapse" id="collapse${app.clientId}">
+                        <tr>
+                            <td class="col-sm-4">
+                                Application Id:
+                            </td>
+                            <td class="left col-sm-8" style="word-break: break-all;"><c:out
+                                    value="${app.clientId }"/></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right col-sm-4">Client Secret:</td>
+                            <td class="left col-sm-8" style="word-break: break-all;"><c:out
+                                    value="${app.clientSecret }"/></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right col-sm-4">Authorized Grant Types:</td>
+                            <td class="left col-sm-8" style="word-break: break-all;"><c:out
+                                    value="${app.authorizedGrantTypes }"/></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right col-sm-4">Authorities:</td>
+                            <td class="left col-sm-8" style="word-break: break-all;"><c:out
+                                    value="${app.authorities }"/></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right col-sm-4">Resource Ids:</td>
+                            <td class="left col-sm-8" style="word-break: break-all;"><c:out
+                                    value="${app.resourceIds }"/></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right col-sm-4">Scope:</td>
+                            <td class="left col-sm-8" style="word-break: break-all;"><c:out
+                                    value="${app.scope }"/></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right col-sm-4">Redirect Uri:</td>
+                            <td class="left col-sm-8" style="word-break: break-all;"><c:out
+                                    value="${app.webServerRedirectUri }"/></td>
+                        </tr>
+
+                        <tr>
+                            <td class="right col-sm-4">Additional Info:</td>
+                            <td class="left col-sm-8" style="word-break: break-all;"><c:out
+                                    value="${app.additionalInfo }"/></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </c:forEach>
+            </div>
         </c:when>
         <c:otherwise>
             <div class="alert alert-warning">

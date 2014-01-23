@@ -59,68 +59,76 @@
         $('#sery-value').val($('#sery').val());
     }
 </script>
-<div class="page-header">
-    <h3>New Blog</h3>
-</div>
-<form role="form" class="form-horizontal" action='<c:url value="/my/blog/create"/>' method="post">
-    <div class="form-group">
-        <label for="blogTitle" class="col-lg-2 control-label">Title</label>
 
-        <div class="col-lg-10">
-            <input class="form-control" name="blogTitle" type="text" placeholder="Title" autofocus required>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="page-header">
+            <h3>New Blog</h3>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-2 control-label" for="blogSubtitle">Subtitle</label>
+        <form role="form" class="form-horizontal" action='<c:url value="/my/blog/create"/>' method="post">
+            <div class="form-group">
+                <label for="blogTitle" class="col-lg-2 control-label">Title</label>
 
-        <div class="col-lg-10">
-            <input class="form-control" type="text" name="blogSubtitle" placeholder="Subtitle">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="category.id" class="col-lg-2 control-label">Category</label>
-
-        <div class="col-lg-10">
-            <input name="category.id" id="category-value" type="hidden"> <select class="form-control" id="category"
-                                                                                 onchange="changeCategory()">
-        </select>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="sery.id" class="col-lg-2 control-label">Sery</label>
-
-        <div class="col-lg-10">
-            <input name="sery.id" id="sery-value" type="hidden"> <select class="form-control" id="sery"
-                                                                         onchange="changeSery();">
-        </select>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="tagNames" class="col-lg-2 control-label">Labels</label>
-
-        <div class="col-lg-10">
-            <input id="cat-labels" class="form-control" name="tagNames" placeholder="Create or Search tag"
-                   onclick="labelautocomplete('${autocompleteUrl}');">
-
-            <div class="dropdown">
-                <ul class="dropdown-menu" id="ui-autocomplete" role="menu"></ul>
+                <div class="col-lg-10">
+                    <input class="form-control" name="blogTitle" type="text" placeholder="Title" autofocus required>
+                </div>
             </div>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="blogSubtitle">Subtitle</label>
 
-    <div class="form-group">
-        <label for="blogDesc" class="col-lg-2 control-label">Description</label>
+                <div class="col-lg-10">
+                    <input class="form-control" type="text" name="blogSubtitle" placeholder="Subtitle">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="category.id" class="col-lg-2 control-label">Category</label>
 
-        <div class="col-lg-10">
-            <textarea class="form-control richeditor" name="blogDesc" placeholder="Description" rows="6"></textarea>
-        </div>
+                <div class="col-lg-10">
+                    <input name="category.id" id="category-value" type="hidden"> <select class="form-control"
+                                                                                         id="category"
+                                                                                         onchange="changeCategory()">
+                </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="sery.id" class="col-lg-2 control-label">Sery</label>
+
+                <div class="col-lg-10">
+                    <input name="sery.id" id="sery-value" type="hidden"> <select class="form-control" id="sery"
+                                                                                 onchange="changeSery();">
+                </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tagNames" class="col-lg-2 control-label">Labels</label>
+
+                <div class="col-lg-10">
+                    <input id="cat-labels" class="form-control" name="tagNames" placeholder="Create or Search tag"
+                           onclick="labelautocomplete('${autocompleteUrl}');">
+
+                    <div class="dropdown">
+                        <ul class="dropdown-menu" id="ui-autocomplete" role="menu"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="blogDesc" class="col-lg-2 control-label">Description</label>
+
+                <div class="col-lg-10">
+                    <textarea class="form-control richeditor" name="blogDesc" placeholder="Description"
+                              rows="6"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <input type="submit" class="btn btn-primary" value="Create"> <input type="submit"
+                                                                                        class="btn btn-default"
+                                                                                        value="Create & New Section">
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
-            <input type="submit" class="btn btn-primary" value="Create"> <input type="submit" class="btn btn-default"
-                                                                                value="Create & New Section">
-        </div>
-    </div>
-</form>
+</div>

@@ -3,38 +3,38 @@
     $(document)
             .ready(
             function () {
-                // Set specific variable to represent all iframe tags.
+// Set specific variable to represent all iframe tags.
                 var iFrames = document.getElementsByTagName('iframe');
 
-                // Resize heights.
+// Resize heights.
                 function iResize() {
-                    // Iterate through all iframes in the page.
+// Iterate through all iframes in the page.
                     for (var i = 0, j = iFrames.length; i < j; i++) {
-                        // Set inline style to equal the body height of the iframed content.
+// Set inline style to equal the body height of the iframed content.
                         iFrames[i].style.height = iFrames[i].contentWindow.document.body.offsetHeight
                                 + 'px';
                     }
                 }
 
-                // Check if browser is Safari or Opera.
+// Check if browser is Safari or Opera.
                 if ($.browser.safari || $.browser.opera) {
-                    // Start timer when loaded.
+// Start timer when loaded.
                     $('iframe').load(function () {
                         setTimeout(iResize, 0);
                     });
 
-                    // Safari and Opera need a kick-start.
+// Safari and Opera need a kick-start.
                     for (var i = 0, j = iFrames.length; i < j; i++) {
                         var iSource = iFrames[i].src;
                         iFrames[i].src = "";
                         iFrames[i].src = iSource;
                     }
                 } else {
-                    // For other good browsers.
+// For other good browsers.
                     $('iframe')
                             .load(
                             function () {
-                                // Set inline style to equal the body height of the iframed content.
+// Set inline style to equal the body height of the iframed content.
                                 this.style.height = this.contentWindow.document.body.offsetHeight
                                         + 'px';
                             });
@@ -43,106 +43,99 @@
 </script>
 <c:if test="${blog != null }">
     <c:url value="/blog/view?id=${blog.id }" var="viewblog"/>
-    <div class="page-header">
-        <h3>
-            <c:out value="${blog.blogTitle }"/>
-            <c:if test="${authentication != null}">
-                <div class="btn-group pull-right">
-                    <button class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
-                        Action <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="<c:url value="/my/blog/update?id=${blog.id }"/>">Update</a></li>
-                        <li><a>Setting</a></li>
-                        <li><a href="<c:url value="/my/blog/delete?id=${blog.id }"/>">Delete</a></li>
-                    </ul>
-                </div>
-            </c:if>
-        </h3>
-    </div>
 
-    <div>
-        <c:choose>
-            <c:when test="${not empty blog.tags }">
-                <c:forEach items="${blog.tags }" var="tag">
-                    <span class="label label-default"><c:out value="${tag.tagName }"/></span>
-                </c:forEach>
-            </c:when>
-            <c:otherwise>
-                <span class="label "> </span>
-            </c:otherwise>
-        </c:choose>
-        <div class="pull-right">
-            <span class="label label-primary"><i class="glyphicon glyphicon-user"></i> <c:out
-                    value="${blog.authorName }"/></span> <span
-                class="label label-primary"><i class="glyphicon glyphicon-calendar"></i> <c:out
-                value="${blog.createDate }"/></span>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="page-header">
+                <h3>
+                        <%--<c:out value="${blog.blogTitle }"/>--%>
+                    <span>${blog.blogTitle }</span>
+                    <c:if test="${authentication != null && blog.authorUid == authentication.userInfo.userId}">
+                        <div class="btn-group pull-right">
+                            <button class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                                Action <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="<c:url value="/my/blog/update?id=${blog.id }"/>">Update</a></li>
+                                <li><a>Setting</a></li>
+                                <li><a href="<c:url value="/my/blog/delete?id=${blog.id }"/>">Delete</a></li>
+                            </ul>
+                        </div>
+                    </c:if>
+                </h3>
+                <div>
+                        <span class="label label-primary"><i
+                                class="glyphicon glyphicon-user"></i> ${blog.authorName }</span> <span
+                        class="label label-primary"><i
+                        class="glyphicon glyphicon-calendar"></i> ${blog.createDate }</span>
 
-            <c:if test="${blog.category != null}">
-                <c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog"/>
-                <a href="${viewCategoryBlog }" class="label label-primary"><i class="glyphicon glyphicon-list"></i>
-                    <c:out
-                            value="${blog.category.categoryName }"/></a>
-            </c:if>
+                    <c:if test="${blog.category != null}">
+                        <c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog"/>
+                        <a href="${viewCategoryBlog }" class="label label-primary"><i
+                                class="glyphicon glyphicon-list"></i>${blog.category.categoryName }</a>
+                    </c:if>
 
-            <c:if test="${blog.sery != null}">
-                <c:url value="/blog/list?s=${blog.sery.id }" var="viewSeryBlog"/>
+                    <c:if test="${blog.sery != null}">
+                        <c:url value="/blog/list?s=${blog.sery.id }" var="viewSeryBlog"/>
 				<span><a href="${viewSeryBlog }" class="label label-primary"><i class="glyphicon glyphicon-book"></i>
                     <c:out
                             value="${blog.sery.seriesName }"/></a></span>
-            </c:if>
+                    </c:if>
             <span class="label label-primary"><i class="glyphicon glyphicon-comment"></i> <c:out
                     value="${blog.comments }"/> Commons</span>
-        </div>
-    </div>
-    <hr>
+                </div>
+            </div>
+            <p>
+                <c:choose>
+                    <c:when test="${not empty blog.tags }">
+                        <c:forEach items="${blog.tags }" var="tag">
+                            <span class="label label-default">${tag.tagName }</span>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="label "> </span>
+                    </c:otherwise>
+                </c:choose>
+            </p>
 
-    <ul class="list-inline">
-        <li>
-            <div>${blog.blogDesc }</div>
-        </li>
-    </ul>
-    <br>
+            <div class="content">${blog.blogDesc }</div>
 
 
-    <c:if test="${not empty blog.sections }">
-        <div class="panel-group" id="accordion">
-            <c:forEach var="section" items="${blog.sections }">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a href="#collapse${section.sequence }" class="accordion-toggle" data-toggle="collapse">
-                                <c:out value="${section.sectionTitle }"/>
-                            </a>
+            <c:if test="${not empty blog.sections }">
+
+                <c:forEach var="section" items="${blog.sections }">
+                    <hr/>
+                    <div class="content">
+                        <h4>
+                                ${section.sectionTitle }
                             <small>
                                 <button class="btn btn-link btn-xs pull-right"
                                         onclick="openCommentModal('section', '${section.id }');">Common
                                 </button>
                             </small>
                         </h4>
+                        <div class="content">${section.sectionContent}</div>
+
                     </div>
-                    <div id="collapse${section.sequence }" class="panel-collapse collapse in">
-                        <div class="panel-body">${section.sectionContent}</div>
-                    </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+
+            </c:if>
         </div>
-    </c:if>
+
+        <div>
+            <button class="btn btn-link btn-sm" onclick="openCommentModal('blog', '${blog.id }');">Leave a Common
+            </button>
+        </div>
 
 
-    <div>
-        <button class="btn btn-link btn-sm" onclick="openCommentModal('blog', '${blog.id }');">Leave a Common</button>
+        <hr/>
+        <div class="row-fluid">
+            <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                    src='<c:url value="/comment/list?b=${blog.id }"/>'></iframe>
+        </div>
     </div>
 
 </c:if>
-
-<div class="row-fluid">
-    <div class="span12">
-        <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                src='<c:url value="/comment/list?b=${blog.id }"/>'></iframe>
-    </div>
-</div>
-<br>
 
 
 <!-- Modal -->
@@ -157,7 +150,6 @@
                 </div>
 
                 <div class="modal-body">
-
                     <div class="form-group">
                         <input class="form-control" id="blog-id-holder" name="blogId" type="hidden"> <input
                             class="form-control" id="section-id-holder"
@@ -170,11 +162,13 @@
                         <div class="col-lg-10">
                             <c:choose>
                                 <c:when test="${not empty authentication }">
-                                    <input class="form-control" name="author" type="text" placeholder="Author"
+                                    <input id="author" class="form-control" name="author" type="text"
+                                           placeholder="Author"
                                            value="${authentication.userInfo.screenName }" required>
                                 </c:when>
                                 <c:otherwise>
-                                    <input class="form-control" name="author" type="text" placeholder="Author" autofocus
+                                    <input id="author" class="form-control" name="author" type="text"
+                                           placeholder="Author" autofocus
                                            required>
                                 </c:otherwise>
                             </c:choose>
@@ -186,11 +180,12 @@
                         <div class="col-lg-10">
                             <c:choose>
                                 <c:when test="${not empty authentication }">
-                                    <input class="form-control" name="email" type="text" placeholder="Email"
+                                    <input id="email" class="form-control" name="email" type="text" placeholder="Email"
                                            value="${authentication.userInfo.email}" required>
                                 </c:when>
                                 <c:otherwise>
-                                    <input class="form-control" name="email" type="text" placeholder="Email" required>
+                                    <input id="email" class="form-control" name="email" type="text" placeholder="Email"
+                                           required>
                                 </c:otherwise>
                             </c:choose>
 
@@ -200,7 +195,7 @@
                         <label for="site" class="col-lg-2 control-label"><span>Site</span></label>
 
                         <div class="col-lg-10">
-                            <input class="form-control" name="site" type="text" placeholder="Site (Optional)">
+                            <input id="site" class="form-control" name="site" type="text" placeholder="Site (Optional)">
                         </div>
                     </div>
 
@@ -208,17 +203,11 @@
                         <label class="col-lg-2 control-label" for="sectionContent">Content</label>
 
                         <div class="col-lg-10">
-                            <textarea class="form-control" name="commentContent" placeholder="Comment Content" rows="10"
+                            <textarea id="sectionContent" class="form-control" name="commentContent"
+                                      placeholder="Comment Content" rows="6"
                                       required></textarea>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-                            <div class="col-lg-offset-2 col-lg-10">
-                                <input type="submit" class="btn btn-primary" value="Comment">
-                            </div>
-                        </div> -->
-
-
                 </div>
                 <div class="modal-footer">
                     <input type="submit" value="Comment" class="btn btn-primary">

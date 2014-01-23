@@ -8,18 +8,17 @@
 <html>
 <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
     <link href="<c:url value="/resources/css/bootstrap.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap-responsive.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap-theme.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/css/default.css"/>" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <div class="row row-offcanvas row-offcanvas-right">
-        <div class="col-sm-12">
-            <tiles:insertAttribute name="content"/>
-        </div>
-    </div>
-    <hr>
-</div>
+    <tiles:insertAttribute name="content"/>
 </body>
 </html>

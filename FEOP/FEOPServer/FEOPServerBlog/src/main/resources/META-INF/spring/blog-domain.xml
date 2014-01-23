@@ -8,7 +8,6 @@
     <context:property-placeholder
             location="classpath:META-INF/spring/*.properties"/>
 
-    <context:component-scan base-package="org.personal.mason.feop.server.blog.domain"/>
     <tx:annotation-driven/>
 
     <import resource="blog-infra.xml"/>

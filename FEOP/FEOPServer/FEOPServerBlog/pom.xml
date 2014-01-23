@@ -13,7 +13,6 @@
         <encoding>UTF-8</encoding>
         <java-version>1.7</java-version>
 
-        <commons-dbcp.version>1.2.2</commons-dbcp.version>
         <commons-pool.version>1.6</commons-pool.version>
         <commons-io.version>2.4</commons-io.version>
 
@@ -258,11 +257,6 @@
             <version>${pom.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
-        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search</artifactId>

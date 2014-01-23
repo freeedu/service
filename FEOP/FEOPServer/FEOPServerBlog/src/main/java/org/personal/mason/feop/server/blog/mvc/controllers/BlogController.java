@@ -181,7 +181,7 @@ public class BlogController {
         return ViewMapper.Blog_Edit.getViewName();
     }
 
-    @RequestMapping(value = "/my/blog/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/my/blog/update", method = RequestMethod.POST)
     public String updateBlog(@Validated BlogModel blogModel, BindingResult result, HttpServletRequest request, Model model) {
         String uid = AuthenticationUtils.getUid(request);
         if (uid == null) {
@@ -202,7 +202,7 @@ public class BlogController {
         return "redirect:/blog/view?id=" + blog.getId();
     }
 
-    @RequestMapping(value = "/my/blog/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/my/blog/delete", method = RequestMethod.GET)
     public void deleteBlog(HttpServletRequest request, @RequestParam("id") Long id) {
         String uid = AuthenticationUtils.getUid(request);
         if (uid != null)

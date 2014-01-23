@@ -11,22 +11,22 @@
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.0.0.RC1</spring.version>
+        <spring.version>4.0.0.RELEASE</spring.version>
         <!--<spring.version>3.2.5.RELEASE</spring.version>-->
         <!--<spring.security.version>3.1.4.RELEASE</spring.security.version>-->
-        <spring.security.version>3.2.0.RC2</spring.security.version>
+        <spring.security.version>3.2.0.RELEASE</spring.security.version>
         <spring.security.oauth2.version>1.0.5.RELEASE</spring.security.oauth2.version>
         <cglib.version>2.2.2</cglib.version>
         <aspectj.version>1.7.4</aspectj.version>
         <jackson.version>1.9.13</jackson.version>
         <jaxb-api.version>2.2.7</jaxb-api.version>
-        <spring-data-jpa.version>1.4.1.RELEASE</spring-data-jpa.version>
+        <spring-data-jpa.version>1.4.3.RELEASE</spring-data-jpa.version>
         <hibernate.jpa.2.0.api.version>1.0.1.Final</hibernate.jpa.2.0.api.version>
         <hibernate.entitymanager.version>4.2.7.Final</hibernate.entitymanager.version>
         <hibernate.search.version>4.4.0.Final</hibernate.search.version>
         <hibernate-validator.version>5.0.1.Final</hibernate-validator.version>
         <mysql.connector.java.version>5.1.26</mysql.connector.java.version>
-        <tomcat.jdbc.version>7.0.47</tomcat.jdbc.version>
+        <commons-dbcp.version>1.4</commons-dbcp.version>
         <junit.version>4.11</junit.version>
         <mockito.version>1.9.5</mockito.version>
         <cloudfoundry-runtime.version>0.8.4</cloudfoundry-runtime.version>
@@ -49,6 +49,15 @@
         <guava.version>15.0</guava.version>
     </properties>
     <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>spring-release</id>
+            <name>spring-release</name>
+            <url>http://repo.spring.io/release</url>
+        </repository>
+
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>

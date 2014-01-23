@@ -27,7 +27,7 @@
 
     <logger name="org.springframework.web.servlet.mvc.method">
 
-        <level value="debug"/>
+        <level value="info"/>
     </logger>
 
     <!-- for all other loggers log only warn and above log messages -->

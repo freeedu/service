@@ -40,7 +40,7 @@
     </bean>
 
     <bean id="userDetailsService"
-          class="org.personal.mason.feop.oauth.service.common.oauth2.OAuth2UserDetailsServiceImpl"/>
+          class="org.personal.mason.feop.oauth.service.common.oauth2.extention.FOEPUserDetailsService"/>
 
     <bean id="clientDetailsUserService"
           class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService"

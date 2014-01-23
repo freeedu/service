@@ -76,8 +76,9 @@
     <!--</security:global-method-security>-->
 
     <security:http pattern="/resources/**" security="none"/>
-    <security:http pattern="/account/findpassword" security="none"/>
-    <security:http pattern="/account/resetpassword" security="none"/>
+    <security:http pattern="/resetpassword**" security="none"/>
+    <security:http pattern="/findpassword**" security="none"/>
+    <security:http pattern="/signup/**" security="none"/>
 
 
     <security:http pattern="/oauth/token" create-session="stateless"
@@ -92,7 +93,7 @@
 
     <security:http pattern="/userinfo" entry-point-ref="oauthAuthenticationEntryPoint"
                    access-denied-page="/login">
-        <security:intercept-url pattern="/userinfo" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/userinfo" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>
     </security:http>
 
@@ -114,8 +115,8 @@
                          success-handler-ref="logoutSuccessHandler"/>
         <security:csrf />
 
-        <security:session-management>
-            <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
+        <security:session-management session-fixation-protection="migrateSession">
+            <security:concurrency-control max-sessions="1" expired-url="/login?expired" />
         </security:session-management>
 
         <security:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER"/>

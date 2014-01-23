@@ -132,6 +132,14 @@
             <version>${jersey.version}</version>
         </dependency>
 
+
+        <!-- Cloud -->
+        <dependency>
+            <groupId>org.cloudfoundry</groupId>
+            <artifactId>cloudfoundry-runtime</artifactId>
+            <version>${cloudfoundry-runtime.version}</version>
+        </dependency>
+        
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

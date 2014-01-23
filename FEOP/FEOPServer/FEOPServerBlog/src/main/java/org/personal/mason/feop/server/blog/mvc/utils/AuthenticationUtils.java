@@ -18,7 +18,7 @@ public class AuthenticationUtils {
 
     private static FOEPAuthentication getAuthentication(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        FOEPAuthentication authentication = (FOEPAuthentication) session.getAttribute(Constrains.AUTHENTICATIOIN);
+        FOEPAuthentication authentication = (FOEPAuthentication) session.getAttribute(FOEPAuthentication.SESSION_AUTHENTICATION);
         return authentication;
     }
 

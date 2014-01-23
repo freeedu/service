@@ -3,6 +3,7 @@ package org.personal.mason.feop.oauth.common.client.oauth;
 import org.personal.mason.feop.oauth.common.model.UserInfo;
 
 public interface FOEPAuthentication {
+    public static String SESSION_AUTHENTICATION = "authentication";
 
     boolean hasValidToken();
 

@@ -50,7 +50,7 @@ public class CategoryController {
         return "";
     }
 
-    @RequestMapping(value = "/cat/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/cat/delete", method = RequestMethod.GET)
     public void deleteCategory(@RequestParam("id") Long id) {
         categoryService.delete(id);
     }

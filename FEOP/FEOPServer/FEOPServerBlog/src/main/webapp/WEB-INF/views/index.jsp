@@ -3,54 +3,57 @@
 <c:forEach items="${blogs }" var="blog">
     <c:if test="${blog != null }">
         <c:url value="/blog/view?id=${blog.id }" var="viewblog"/>
-        <div class="row-fluid">
-            <h3>
-                <a href="${viewblog }" class="page-header"><c:out value="${blog.blogTitle }"/></a>
-            </h3>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="page-header">
+                    <h3>
+                        <a href="${viewblog }">${blog.blogTitle }</a>
+                    </h3>
 
-            <div>
-                <c:choose>
-                    <c:when test="${not empty blog.tags }">
-                        <c:forEach items="${blog.tags }" var="tag">
-                            <span class="label label-default"><c:out value="${tag.tagName }"/></span>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <span class="label "> </span>
-                    </c:otherwise>
-                </c:choose>
-                <div class="pull-right">
+                    <div>
                     <span class="label label-primary"><i class="glyphicon glyphicon-user"></i> <c:out
                             value="${blog.authorName }"/></span> <span
-                        class="label label-primary"><i class="glyphicon glyphicon-calendar"></i> <c:out
-                        value="${blog.createDate }"/></span>
+                            class="label label-primary"><i class="glyphicon glyphicon-calendar"></i> <c:out
+                            value="${blog.createDate }"/></span>
 
-                    <c:if test="${blog.category != null}">
-                        <c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog"/>
-                        <a href="${viewCategoryBlog }" class="label label-primary"><i
-                                class="glyphicon glyphicon-list"></i> <c:out
-                                value="${blog.category.categoryName }"/></a>
-                    </c:if>
+                        <c:if test="${blog.category != null}">
+                            <c:url value="/blog/list?c=${blog.category.id }" var="viewCategoryBlog"/>
+                            <a href="${viewCategoryBlog }" class="label label-primary"><i
+                                    class="glyphicon glyphicon-list"></i> <c:out
+                                    value="${blog.category.categoryName }"/></a>
+                        </c:if>
 
-                    <c:if test="${blog.sery != null}">
-                        <c:url value="/blog/list?s=${blog.sery.id }" var="viewSeryBlog"/>
+                        <c:if test="${blog.sery != null}">
+                            <c:url value="/blog/list?s=${blog.sery.id }" var="viewSeryBlog"/>
 						<span><a href="${viewSeryBlog }" class="label label-primary"><i
                                 class="glyphicon glyphicon-book"></i> <c:out
                                 value="${blog.sery.seriesName }"/></a></span>
-                    </c:if>
+                        </c:if>
                     <span class="label label-primary"><i class="glyphicon glyphicon-comment"></i> <c:out
                             value="${blog.comments }"/> Commons</span>
+                    </div>
+
                 </div>
-            </div>
-            <hr>
+                <p>
+                    <c:choose>
+                        <c:when test="${not empty blog.tags }">
+                            <c:forEach items="${blog.tags }" var="tag">
+                                <span class="label label-default">${tag.tagName }</span>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="label "> </span>
+                        </c:otherwise>
+                    </c:choose>
 
-            <p>${blog.blogDesc }</p>
+                </p>
+                <div class="content">${blog.blogDesc }</div>
 
-            <div>
-                <a href="${viewblog }" class="btn btn-link btn-sm">Read More</a>
+                <p>
+                    <a href="${viewblog }" class="btn btn-link btn-sm">Read More</a>
+                </p>
             </div>
         </div>
-        <hr>
     </c:if>
 
 </c:forEach>

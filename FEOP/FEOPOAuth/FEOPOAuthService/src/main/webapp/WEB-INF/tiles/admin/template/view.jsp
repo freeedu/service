@@ -5,49 +5,62 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<div class=" col-md-8 col-md-offset-2">
-    <div class="row">
-        <div>
-            <h3>View Template</h3>
-        </div>
-        <hr>
-    </div>
-    <c:if test="${template != null}"></c:if>
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            ${template.name }
-            <c:url value="/admin/et/edit?id=${template.id }" var="update"/>
-            <a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-3">Template Id:</div>
-                <div class="col-md-9">
-                    <c:out value="${template.id }"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Name:</div>
-                <div class="col-md-9">
-                    <c:out value="${template.name }"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Subject:</div>
-                <div class="col-md-9">
-                    <c:out value="${template.subject }"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Version:</div>
-                <div class="col-md-9">
-                    <c:out value="${template.version }"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Content:</div>
-                <textarea rows="6" disabled="disabled" class="col-md-9">${template.content }</textarea>
+<div class=" col-sm-8 col-sm-offset-2">
 
+    <h4>View Template</h4>
+    <hr>
+    <c:if test="${template != null}"></c:if>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-12">
+                <b class="btn-link">${template.name }</b>
+
+                <div class="pull-right">
+                    <c:url value="/admin/et/edit?id=${template.id }" var="update"/>
+                    <a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3">Template Id:</label>
+
+            <div class="col-sm-9">
+                <div class="form-control">
+                    ${template.id } </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3">Name:</label>
+
+            <div class="col-sm-9">
+                <div class="form-control">
+                    ${template.name } </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3">Subject:</label>
+
+            <div class="col-sm-9">
+                <div class="form-control">${template.subject }
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3">Version:</label>
+
+            <div class="col-sm-9">
+                <div class="form-control">
+                    ${template.version }
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3">Content:</label>
+
+            <div class="col-sm-9">
+                <textarea rows="6" disabled="disabled" class="form-control">${template.content }</textarea>
             </div>
 
         </div>

@@ -68,9 +68,9 @@ public abstract class DefaultLoginProcessor implements FOEPLoginProcessor {
         if (authentication != null) {
             StringBuilder urlPattern = new StringBuilder(configuration.getUserInfoUri());
             if (urlPattern.indexOf("?") > 0) {
-                urlPattern.append("&access_token=%s");
+                urlPattern.append("&token=%s");
             } else {
-                urlPattern.append("?access_token=%s");
+                urlPattern.append("?token=%s");
             }
 
             String uri = String.format(urlPattern.toString(), authentication.getAccessToken());

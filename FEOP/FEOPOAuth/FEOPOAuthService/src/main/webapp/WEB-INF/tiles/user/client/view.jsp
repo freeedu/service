@@ -4,25 +4,27 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+
 <div class="col-md-8 col-md-offset-2">
-
-    <div class="row">
-        <div>
-            <h3>Your Application Information</h3>
-        </div>
-
+    <div class="form-horizontal">
+        <h4>Your Application Information</h4>
         <hr>
-    </div>
-    <div class="row">
+
         <div class="alert alert-info">Please remember the following information for using.</div>
 
-        <div class="col-md-3">Client Id:</div>
-        <div class="col-md-9">
-            <c:out value="${client.clientId }"/>
+        <div class="form-group">
+            <label class="col-sm-3">Client Id:</label>
+
+            <div class="col-sm-9">
+                ${client.clientId }
+            </div>
         </div>
-        <div class="col-md-3">Secret:</div>
-        <div class="col-md-9">
-            <c:out value="${client.clientSecret }"/>
+        <div class="form-group">
+            <label class="col-sm-3">Secret:</label>
+
+            <div class="col-sm-9">
+                ${client.clientSecret }
+            </div>
         </div>
     </div>
 </div>

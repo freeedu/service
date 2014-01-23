@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <context:annotation-config/>
+    <context:component-scan base-package="org.personal.mason.feop.oauth.contact"/>
+    <context:component-scan base-package="org.personal.mason.feop.oauth.common"/>
+    <context:property-placeholder location="classpath:*.properties"/>
+
+    <tx:annotation-driven/>
+    <jpa:repositories base-package="org.personal.mason.feop.oauth.contact.domain.repository"/>
+    <jpa:repositories base-package="org.personal.mason.feop.oauth.common.domain.repository"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="${mysql.jdbc.driver.class.name}" p:url="${contact.jdbc.url}"
+          p:username="${contact.jdbc.username}"
+          p:password="${contact.jdbc.password}"/>
+
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="${jpa.generate.ddl}"/>
+        <property name="showSql" value="${jpa.show.sql}"/>
+        <property name="database" value="${jpa.database}"/>
+    </bean>
+
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
+        <property name="packagesToScan" value="${contact.packages.to.scan}"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.search.default.directory_provider" value=""></entry>
+            </map>
+        </property>
+        <property name="persistenceUnitName" value="contact"/>
+    </bean>
+
+
+</beans>

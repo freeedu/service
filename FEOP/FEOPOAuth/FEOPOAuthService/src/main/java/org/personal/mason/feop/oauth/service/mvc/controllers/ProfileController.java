@@ -141,19 +141,6 @@ public class ProfileController {
         ouser.setPhone(userForm.getPhone());
         ouser.setUserName(userForm.getUserName());
 
-        /**
-         *
-         * @param id
-         * @param email
-         * @param phone
-         * @param authorities
-         * @param password
-         * @param username
-         * @param accountNonExpired
-         * @param accountNonLocked
-         * @param credentialsNonExpired
-         * @param enabled
-         */
         FoepUserDetails userDetails = new FoepBasicUser(ouser.getId(), ouser.getEmail(),
                 userForm.getPhone(), null, ouser.getPassword(), userForm.getUserName(),
                 ouser.getAccountNonExpired(), ouser.getAccountNonLocked(),

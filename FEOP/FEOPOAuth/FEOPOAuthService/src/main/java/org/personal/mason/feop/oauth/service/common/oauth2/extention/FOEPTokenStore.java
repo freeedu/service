@@ -85,6 +85,7 @@ public class FOEPTokenStore implements TokenStore {
     @Override
     public void storeAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
         OauthAccessToken accessToken = toOauthAccessToken(token, authentication);
+
         OauthAccessToken authenticationId = feopAccessTokenService.findAccessTokenWithAuthenticationId(accessToken.getAuthenticationId());
         OauthAccessToken tokenId = feopAccessTokenService.findAccessTokenWithTokenId(accessToken.getTokenId());
         if(authenticationId == null && tokenId == null){
@@ -316,14 +317,21 @@ public class FOEPTokenStore implements TokenStore {
     }
 
     private OauthAccessToken toOauthAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
-        OauthAccessToken accessToken = new OauthAccessToken();
-        accessToken.setTokenId(extractTokenKey(token.getValue()));
-        accessToken.setToken(SerializationUtils.serialize(token));
-        accessToken.setAuthenticationId(authenticationKeyGenerator.extractKey(authentication));
-        accessToken.setUserName(authentication.isClientOnly() ? null : authentication.getName());
-        accessToken.setClientId(authentication.getAuthorizationRequest().getClientId());
-        accessToken.setAuthentication(SerializationUtils.serialize(authentication));
-        accessToken.setRefreshToken(extractTokenKey(token.getRefreshToken().getValue()));
-        return accessToken;
+        String refreshToken = null;
+        if(token.getRefreshToken() != null){
+            refreshToken = token.getRefreshToken().getValue();
+        }
+
+        OauthAccessToken at = new OauthAccessToken();
+        at.setTokenId(extractTokenKey(token.getValue()));
+        at.setToken(SerializationUtils.serialize(token));
+
+        at.setAuthenticationId(authenticationKeyGenerator.extractKey(authentication));
+        at.setUserName(authentication.isClientOnly()? null : authentication.getName());
+        at.setClientId(authentication.getAuthorizationRequest().getClientId());
+        at.setAuthentication(SerializationUtils.serialize(authentication));
+        at.setRefreshToken(extractTokenKey(refreshToken));
+
+        return at;
     }
 }

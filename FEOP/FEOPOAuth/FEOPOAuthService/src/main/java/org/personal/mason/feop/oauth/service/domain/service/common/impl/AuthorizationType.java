@@ -4,27 +4,31 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum AuthorizationType {
-    AuthorizationCode("authorization_code", "ROLE_CLIENT", "read,write", 3600, 3600),
-    Implicit("implicit", "ROLE_CLIENT", "read,write", 3600, 3600),
-    ResourceOwnerPassword("password", "ROLE_CLIENT", "read,write", 3600, 3600),
-    ClientCrdentials("client_credentials", "ROLE_CLIENT", "read,write", 3600, 3600),
-    RefreshToken("refresh_token", "ROLE_CLIENT", "read,write", 3600, 3600);
+    AuthorizationCode("authorization_code", "ROLE_CLIENT", "read,write", true, 3600, 3600),
+    Implicit("implicit", "ROLE_CLIENT", "read,write", false, 3600, 3600),
+    ResourceOwnerPassword("password", "ROLE_CLIENT", "read,write", true, 3600, 3600),
+    ClientCrdentials("client_credentials", "ROLE_CLIENT", "read,write", false, 3600, 3600);
 
     private String grantType;
     private String authorities;
     private String scope;
+    private boolean supportRefresh;
     private int accessTokenValidity;
     private int refreshTokenValidity;
 
-    private AuthorizationType(String grantType, String authorities, String scope, int accessTokenValidity, int refreshTokenValidity) {
+    private AuthorizationType(String grantType, String authorities, String scope, boolean supportRefresh, int accessTokenValidity, int refreshTokenValidity) {
         this.grantType = grantType;
         this.authorities = authorities;
         this.scope = scope;
+        this.supportRefresh = supportRefresh;
         this.accessTokenValidity = accessTokenValidity;
         this.refreshTokenValidity = refreshTokenValidity;
     }
 
     public String getGrantType() {
+        if(supportRefresh){
+            return grantType + ",refresh_token";
+        }
         return grantType;
     }
 
@@ -45,7 +49,7 @@ public enum AuthorizationType {
     }
 
     public static List<String> getAllTypes() {
-        return Arrays.asList(AuthorizationCode.name(), Implicit.name(), ResourceOwnerPassword.name(), ClientCrdentials.name(), RefreshToken.name());
+        return Arrays.asList(AuthorizationCode.name(), Implicit.name(), ResourceOwnerPassword.name(), ClientCrdentials.name());
     }
 
     public static AuthorizationType getClientTypeWithName(String name) {

@@ -4,63 +4,77 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-<div class=" col-md-8 col-md-offset-2">
-    <div class="row">
-        <div>
-            <h3>Email Templates</h3>
-        </div>
-        <hr>
-    </div>
+<div class=" col-sm-8 col-sm-offset-2">
+    <h4>Email Templates</h4>
+    <hr>
     <c:choose>
-        <c:when  test="${not empty templates  }">
-    <c:forEach items="${templates}" var="template">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <c:url value="/admin/et/view?id=${template.id }" var="viewTarget"/>
-                <a href="${viewTarget }"><c:out value="${template.name }"/></a> <a
-                    href='<c:url value="/admin/et/delete?id=${template.id }"/>'
-                    class="btn btn-link btn-sm pull-right">Delete</a>
-                <c:url value="/admin/et/edit?id=${template.id }" var="update"/>
-                <a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
-            </div>
-            <div class="panel-body">
+        <c:when test="${not empty templates  }">
+            <div class="panel-group" id="templates">
 
-                <div class="row">
-                    <div class="col-md-3">Template Id:</div>
-                    <div class="col-md-9">
-                        <c:out value="${template.id }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Name:</div>
-                    <div class="col-md-9">
-                        <c:out value="${template.name }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Subject:</div>
-                    <div class="col-md-9">
-                        <c:out value="${template.subject }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Version:</div>
-                    <div class="col-md-9">
-                        <c:out value="${template.version }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Content:</div>
-                    <textarea rows="6" disabled="disabled" class="col-md-9">${template.content }</textarea>
-                </div>
+                <c:forEach items="${templates}" var="template">
+                    <table class="panel table table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <td class="left col-sm-3">
+                                <span class="glyphicon glyphicon-chevron-down btn-link btn-sm" data-toggle="collapse"
+                                      data-parent="#templates" href="#collapse${template.id }"></span>
+                            </td>
+                            <td class="right col-sm-9">
+                                <c:url value="/admin/et/view?id=${template.id }" var="viewTarget"/>
+                                <a href="${viewTarget }">${template.name }</a>
+
+                                <div class="btn-group btn-group-sm pull-right">
+                                    <c:url value="/admin/et/edit?id=${template.id }" var="update"/>
+                                    <a href="${update }" class="btn btn-link btn-sm">Edit</a>
+                                    <a href='<c:url value="/admin/et/delete?id=${template.id }"/>'
+                                       class="btn btn-link btn-sm">Delete</a>
+
+                                </div>
+                            </td>
+                        </tr>
+                        </thead>
+
+
+                        <tbody class="collapse" id="collapse${template.id }">
+                        <tr>
+                            <td class="right col-sm-3">Template Id:</td>
+                            <td class="left col-sm-9">
+                                <c:out value="${template.id }"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right col-sm-3">Name:</td>
+                            <td class="left col-sm-9">
+                                <c:out value="${template.name }"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right col-sm-3">Subject:</td>
+                            <td class="left col-sm-9">
+                                <c:out value="${template.subject }"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right col-sm-3">Version:</td>
+                            <td class="left col-sm-9">
+                                <c:out value="${template.version }"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right col-sm-3">Content:</td>
+                            <td class="left col-sm-9">
+                                <textarea rows="6" disabled="disabled" class="col-sm-12">${template.content }</textarea>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </c:forEach>
             </div>
-        </div>
-    </c:forEach>
-    </c:when>
-    <c:otherwise>
-        <div class="alert alert-warning">
-            There is no Setting now.. <a href="<c:url value="/admin/et/new"/>">Add</a> Template..
-        </div>
-    </c:otherwise>
+        </c:when>
+        <c:otherwise>
+            <div class="alert alert-warning">
+                There is no Setting now.. <a href="<c:url value="/admin/et/new"/>">Add</a> Template..
+            </div>
+        </c:otherwise>
     </c:choose>
 </div>

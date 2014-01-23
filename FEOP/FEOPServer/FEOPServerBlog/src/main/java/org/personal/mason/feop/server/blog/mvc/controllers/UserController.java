@@ -1,15 +1,17 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
 import org.personal.mason.feop.oauth.common.client.ClientConfiguration;
+import org.personal.mason.feop.oauth.common.client.TokenUtils;
 import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
-import org.personal.mason.feop.server.blog.utils.Constrains;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -17,19 +19,28 @@ public class UserController {
     private ClientConfiguration clientConfiguration;
 
     @Autowired
+    public TokenUtils tokenUtils;
+
+    @Autowired
     public void setClientConfiguration(ClientConfiguration clientConfiguration) {
         this.clientConfiguration = clientConfiguration;
     }
 
     @RequestMapping(value = {"/user/login"}, method = RequestMethod.GET)
-    public String login(HttpServletRequest request, HttpServletResponse response) {
-        FOEPAuthentication authentication = (FOEPAuthentication) request.getAttribute(Constrains.AUTHENTICATIOIN);
-        authentication.getUserInfo();
+    public String login(@RequestParam(required = true) String token, HttpServletRequest request) {
+        if (token != null) {
+            FOEPAuthentication authentication = tokenUtils.getAuthentication(token);
+            if (authentication != null) {
+                HttpSession session = request.getSession(true);
+                session.setAttribute(FOEPAuthentication.SESSION_AUTHENTICATION, authentication);
+            }
+        }
+
         return "app.homepage";
     }
 
     @RequestMapping(value = {"/user/logout"})
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request) {
         StringBuilder logoutUri = new StringBuilder(clientConfiguration.getOauthLogoutUri());
         if (logoutUri.indexOf("?") > 0) {
             logoutUri.append("&redirect_uri=%s");
@@ -37,7 +48,15 @@ public class UserController {
             logoutUri.append("?redirect_uri=%s");
         }
         String registerUrl = String.format(logoutUri.toString(), getSiteRoot(request));
-        request.getSession().removeAttribute(Constrains.AUTHENTICATIOIN);
+
+        String[] tokens = request.getParameterMap().get("token");
+        if (tokens != null) {
+            tokenUtils.removeAuthentication(tokens[0]);
+        }
+        HttpSession session = request.getSession();
+        session.removeAttribute(FOEPAuthentication.SESSION_AUTHENTICATION);
+        request.removeAttribute("token");
+
         return String.format("redirect:%s", registerUrl);
     }
 

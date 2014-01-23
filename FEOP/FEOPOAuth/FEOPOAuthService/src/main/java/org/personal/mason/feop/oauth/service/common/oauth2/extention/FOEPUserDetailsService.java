@@ -36,7 +36,6 @@ import java.util.*;
  * Time: 7:55 PM
  * To change this template use File | Settings | File Templates.
  */
-@Service
 public class FOEPUserDetailsService implements UserDetailsService, GroupManager, UserDetailsManager, FoepUserService {
     private static final Log LOG = LogFactory.getLog(FOEPUserDetailsService.class);
 
@@ -228,7 +227,7 @@ public class FOEPUserDetailsService implements UserDetailsService, GroupManager,
     public void createUser(UserDetails user) {
         FoepUser foepUser = new FoepUser();
         foepUser.setUserName(user.getUsername());
-        foepUser.setPassword(user.getPassword());
+        foepUser.setPassword(passwordEncoder.encode(user.getPassword()));
         foepUser.setAccountNonExpired(user.isAccountNonExpired());
         foepUser.setAccountNonLocked(user.isAccountNonLocked());
         foepUser.setCredentialsNonExpired(user.isCredentialsNonExpired());

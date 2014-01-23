@@ -5,47 +5,40 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <div class=" col-md-8 col-md-offset-2">
-    <div class="row">
-        <div>
-            <h3>
-                Inviting Codes
-                <small><a href='<c:url value="/admin/invite/generate"/>' class="btn btn-primary btn-sm pull-right">Generate
-                    10 more
-                    Codes</a></small>
-            </h3>
-        </div>
-        <hr>
-    </div>
+
+    <h4>
+        Inviting Codes
+        <small><a href='<c:url value="/admin/invite/generate"/>' class="btn btn-primary btn-sm pull-right">Generate
+            10 more
+            Codes</a></small>
+    </h4>
+    <hr>
     <c:choose>
-    <c:when  test="${not empty invites  }">
-    <c:forEach items="${invites}" var="invite">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <b><c:out value="${invite.inviteCode }"/></b> <a
-                    href='<c:url value="/admin/invite/delete?id=${invite.id }"/>'
-                    class="btn btn-link btn-sm pull-right">Delete</a>
+        <c:when test="${not empty invites  }">
+            <table class="table table-hover table-responsive">
+                <thead>
+                <tr class="text-center">
+                    <td>#</td>
+                    <td>Invide Code</td>
+                    <td>Used</td>
+                    <td>Action</td>
+                </tr>
+                </thead>
+                <c:forEach items="${invites}" var="invite">
+                    <tr class="text-center">
+                        <td><b><c:out value="${invite.id }"/></b></td>
+                        <td><c:out value="${invite.inviteCode }"/></td>
+                        <td><c:out value="${invite.used }"/></td>
+                        <td><a href='<c:url value="/admin/invite/delete?id=${invite.id }"/>'
+                               class="btn btn-link btn-sm ">Delete</a></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:when>
+        <c:otherwise>
+            <div class="alert alert-info">
+                There is no Inviting.
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-3">Invide Code:</div>
-                    <div class="col-md-9">
-                        <c:out value="${invite.inviteCode }"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">Used:</div>
-                    <div class="col-md-9">
-                        <c:out value="${invite.used }"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </c:forEach>
-    </c:when>
-    <c:otherwise>
-        <div class="alert alert-info">
-            There is no Inviting.
-        </div>
-    </c:otherwise>
+        </c:otherwise>
     </c:choose>
 </div>

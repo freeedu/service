@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="page-header"
-">
+<div class="page-header">
 <h3>New Comment</h3>
 </div>
 

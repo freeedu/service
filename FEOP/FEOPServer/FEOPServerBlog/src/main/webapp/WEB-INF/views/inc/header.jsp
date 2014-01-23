@@ -4,16 +4,18 @@
 <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+            <a class="navbar-brand" href="<c:url value="/"/>">Blog</a>
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".nav-header-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<c:url value="/"/>"><img src="<c:url value="/resources/images/logo.png"/>"
-                                                                   height="20"></a>
         </div>
-        <div class="navbar-collapse collapse">
+
+        <div class="navbar-collapse collapse nav-header-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="<c:url value="/blog/list"/>"><i class="glyphicon glyphicon-home"></i>
                     Home</a></li>
@@ -34,26 +36,14 @@
             </ul>
 
             <c:url value="/blog/search" var="search"/>
-            <form class="navbar-form navbar-left" action="${search }" method="get">
-                <div class="form-group">
-                    <input type="text" class="form-control input-sm" name="q" placeholder="Search Site..." required>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Go!" class="btn btn-default  btn-sm">
-                </div>
+            <form class="navbar-form navbar-search navbar-left" action="${search }" method="get">
+                <input type="search" class="form-control input-sm" name="q" placeholder="Search ..." required>
             </form>
-            <%-- <form action="${search }" method="get" class="navbar-form navbar-left" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="q" placeholder="Search Site..." required> <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit">Go!</button>
-                    </span>
-                </div>
-            </form> --%>
 
-            <div class="navbar-form navbar-right">
+            <div class="navbar-btn navbar-right">
                 <c:choose>
                     <c:when test="${empty authentication }">
-                        <div class="btn-group">
+                        <div class="btn-group btn-group-sm">
                             <a class="btn btn-default btn-sm" href='<c:url value="/user/login"/>'><i
                                     class="glyphicon glyphicon-log-in"></i> Login</a> <a
                                 type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -67,7 +57,7 @@
 
                     </c:when>
                     <c:otherwise>
-                        <div class="btn-group">
+                        <div class="btn-group btn-group-sm">
                             <a class="btn btn-default btn-sm"><c:out
                                     value="${authentication.userInfo.screenName }"/> </a> <a type="button"
                                                                                              class="btn btn-default btn-sm dropdown-toggle"

@@ -1,6 +1,7 @@
 package org.personal.mason.feop.oauth.contact.mvc.rest;
 
 import org.personal.mason.feop.oauth.common.client.ClientConfiguration;
+import org.personal.mason.feop.oauth.common.client.DBClientConfiguration;
 import org.personal.mason.feop.oauth.common.client.TokenUtils;
 import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.personal.mason.feop.oauth.common.model.UserInfo;
@@ -24,14 +25,25 @@ import java.io.IOException;
 @RequestMapping("/")
 public class UserApi {
 
-    @Autowired
-    public ClientConfiguration clientConfiguration;
 
-    @Autowired
+    private ClientConfiguration clientConfiguration;
     public TokenUtils tokenUtils;
 
+    @Autowired
+    public void setClientConfiguration(ClientConfiguration clientConfiguration){
+        this.clientConfiguration = clientConfiguration;
+    }
+    @Autowired
+    public void setTokenUtils(TokenUtils tokenUtils){
+        this.tokenUtils = tokenUtils;
+    }
+
     @RequestMapping(value = {"login"}, method = RequestMethod.GET)
-    public UserInfo login(@RequestParam String token) {
+    public UserInfo login(@RequestParam(required = false) String token) {
+
+        if(token == null){
+            return null;
+        }
 
         FOEPAuthentication authentication = tokenUtils.getAuthentication(token);
         if (authentication == null) {

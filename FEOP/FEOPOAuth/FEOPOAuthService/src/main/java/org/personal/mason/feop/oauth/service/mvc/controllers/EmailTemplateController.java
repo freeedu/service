@@ -88,11 +88,12 @@ public class EmailTemplateController {
     }
 
     @RequestMapping(value = {"/admin/et/delete"}, method = RequestMethod.GET)
-    public void deleteTemplate(@RequestParam("id") Long id) {
+    public String deleteTemplate(@RequestParam("id") Long id) {
         EmailTemplate template = emailTemplateService.findById(id);
         if (template != null) {
             emailTemplateService.delete(template);
         }
+        return "redirect:/admin/et/list";
     }
 
     @RequestMapping(value = {"/admin/et/view"}, method = RequestMethod.GET)

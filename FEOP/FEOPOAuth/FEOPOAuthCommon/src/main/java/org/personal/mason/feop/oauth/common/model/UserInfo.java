@@ -4,7 +4,6 @@ import org.codehaus.jackson.map.annotate.JsonRootName;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @JsonRootName(value = "uinfo")
@@ -12,17 +11,9 @@ import java.util.List;
 public class UserInfo {
     private String userId;
     private String screenName;
-    private String firstName;
-    private String lastName;
-    private String gender;
-    private Date birth;
-
-    private String profileImageUri;
 
     private String email;
     private String phone;
-
-    private String location;
 
     private List<UserRole> roles = new ArrayList<UserRole>();
 
@@ -42,46 +33,6 @@ public class UserInfo {
         this.screenName = screenName;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public String getProfileImageUri() {
-        return profileImageUri;
-    }
-
-    public void setProfileImageUri(String profileImageUri) {
-        this.profileImageUri = profileImageUri;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -96,14 +47,6 @@ public class UserInfo {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public List<UserRole> getRoles() {

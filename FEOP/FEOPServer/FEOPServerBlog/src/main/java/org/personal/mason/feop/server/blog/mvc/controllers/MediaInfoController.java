@@ -81,7 +81,7 @@ public class MediaInfoController {
         return "";
     }
 
-    @RequestMapping(value = "/media/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/media/delete", method = RequestMethod.GET)
     public void delete(@RequestParam("id") Long id) {
         mediaInfoService.delete(id);
     }

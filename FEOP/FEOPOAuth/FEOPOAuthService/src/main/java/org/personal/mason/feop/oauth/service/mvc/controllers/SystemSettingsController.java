@@ -3,6 +3,7 @@ package org.personal.mason.feop.oauth.service.mvc.controllers;
 import org.personal.mason.feop.oauth.common.domain.model.SystemSetting;
 import org.personal.mason.feop.oauth.common.spi.SystemSettingService;
 import org.personal.mason.feop.oauth.service.mvc.model.SystemSettingForm;
+import org.personal.mason.feop.oauth.service.utils.PageableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
@@ -92,7 +93,7 @@ public class SystemSettingsController {
         if (size == null) {
             size = 10;
         }
-        Page<SystemSetting> settings = systemSettingService.findAll(page, size);
+        Page<SystemSetting> settings = systemSettingService.findAll(PageableUtils.getPageable(page, size));
         if(settings != null){
             model.addAttribute("settings", settings.getContent());
         }

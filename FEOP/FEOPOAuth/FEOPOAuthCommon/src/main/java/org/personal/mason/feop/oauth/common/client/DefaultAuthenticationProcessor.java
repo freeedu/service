@@ -4,18 +4,16 @@ import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.personal.mason.feop.oauth.common.model.UserRole;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
 public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcessor {
     private final List<AuthorityInterceptor> interceptors;
-    private TokenUtils tokenUtils;
+    private final TokenUtils tokenUtils;
 
-    public DefaultAuthenticationProcessor(List<AuthorityInterceptor> interceptors) {
+    public DefaultAuthenticationProcessor(List<AuthorityInterceptor> interceptors, TokenUtils tokenUtils) {
         this.interceptors = interceptors;
-    }
-
-    public void setTokenUtils(TokenUtils tokenUtils) {
         this.tokenUtils = tokenUtils;
     }
 
@@ -38,14 +36,8 @@ public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcess
             if (!processor.hasRoleControl()) {
                 return AuthenticationStatus.ALLOW_ACCESS;
             }
-            Map<String, String[]> parms = request.getParameterMap();
-            if(!parms.containsKey("token")) {
-                return AuthenticationStatus.NOT_LOGIN;
-            }
 
-            String token = parms.get("token")[0];
-
-            FOEPAuthentication authentication = tokenUtils.getAuthentication(token);
+            FOEPAuthentication authentication = findAuthentication(request);
 
             if (authentication == null || !authentication.hasValidToken()) {
                 return AuthenticationStatus.NOT_LOGIN;
@@ -58,6 +50,29 @@ public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcess
             }
         }
         return AuthenticationStatus.DENIED;
+    }
+
+    private FOEPAuthentication findAuthentication(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            Object auth = session.getAttribute(FOEPAuthentication.SESSION_AUTHENTICATION);
+            if (auth != null && auth instanceof FOEPAuthentication) {
+                return (FOEPAuthentication) auth;
+            }
+        }
+
+        Map<String, String[]> parms = request.getParameterMap();
+        if (parms.containsKey("token")) {
+            String token = parms.get("token")[0];
+            return tokenUtils.getAuthentication(token);
+        }
+
+        String token = request.getHeader("token");
+        if (token != null) {
+            return tokenUtils.getAuthentication(token);
+        }
+
+        return null;
     }
 
     private static boolean checkRoles(List<UserRole> roles, List<String> checkRoles) {

@@ -52,15 +52,15 @@ public class Blog extends BlogPersistable {
     @ManyToOne
     private Category category;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
     private BlogSetting blogSetting;
 
     // bi-directional many-to-one association to BlogSection
-    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BlogSection> blogSections;
 
     // bi-directional many-to-one association to Comment
-    @OneToMany(mappedBy = "blog")
+    @OneToMany(mappedBy = "blog", orphanRemoval = true)
     private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY)

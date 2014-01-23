@@ -8,6 +8,7 @@
     <import resource="blog-env.xml"/>
 
     <jpa:repositories base-package="org.personal.mason.feop.server.blog.domain.repository"/>
+    <jpa:repositories base-package="org.personal.mason.feop.oauth.common.domain.repository"/>
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
@@ -16,24 +17,20 @@
     </bean>
 
     <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="generateDdl" value="${generate.ddl}"/>
-        <property name="showSql" value="${showsql}"/>
-        <property name="database" value="${database}"/>
+        <property name="generateDdl" value="${jpa.generate.ddl}"/>
+        <property name="showSql" value="${jpa.show.sql}"/>
+        <property name="database" value="${jpa.database}"/>
     </bean>
 
     <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
-        <property name="packagesToScan" value="org.personal.mason.feop.server.blog.domain.model"/>
+        <property name="packagesToScan" value="${blog.packages.to.scan}"/>
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-        <property name="jpaPropertyMap">
-            <map>
-                <entry key="hibernate.search.default.directory_provider" value=""></entry>
-            </map>
-        </property>
-        <!-- <property name="jpaPropertyMap"> <util:map> <entry key="hibernate.hbm2ddl.auto" value="true" /> <entry key="hibernate.ejb.naming_strategy"
-            value="org.hibernate.cfg.ImprovedNamingStrategy" /> <entry key="hibernate.connection.charSet" value="UTF-8" /> <entry key="hibernate.show_sql" value="${showsql}"
-            /> <entry key="hibernate.format_sql" value="false" /> <entry key="hibernate.use_sql_comments" value="true" /> <entry key="hibernate.jdbc.batch_size"
-            value="30" /> <entry key="hibernate.jdbc.fetch_size" value="100" /> </util:map> </property> -->
+        <!--<property name="jpaPropertyMap">-->
+            <!--<map>-->
+                <!--<entry key="hibernate.search.default.directory_provider" value=""></entry>-->
+            <!--</map>-->
+        <!--</property>-->
         <property name="persistenceUnitName" value="blog"/>
     </bean>
 

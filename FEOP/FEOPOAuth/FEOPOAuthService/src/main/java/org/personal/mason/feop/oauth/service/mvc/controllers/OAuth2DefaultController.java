@@ -36,7 +36,7 @@ public class OAuth2DefaultController {
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public String index() {
-        if(settingsHolder.findWithKey(SettingKeys.REDIRECT_LOGIN) != null){
+        if("true".equals(settingsHolder.findWithKey(SettingKeys.REDIRECT_LOGIN))){
             return "redirect:/login";
         }
 

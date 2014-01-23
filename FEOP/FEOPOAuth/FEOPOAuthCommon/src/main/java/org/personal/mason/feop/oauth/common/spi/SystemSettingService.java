@@ -2,6 +2,7 @@ package org.personal.mason.feop.oauth.common.spi;
 
 import org.personal.mason.feop.oauth.common.domain.model.SystemSetting;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface SystemSettingService {
 
     void delete(SystemSetting... settings);
 
-    Page<SystemSetting> findAll(int page, int size);
+    Page<SystemSetting> findAll(Pageable pageable);
 
     List<SystemSetting> findByProfile(String profile);
 

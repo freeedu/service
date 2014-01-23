@@ -5,22 +5,13 @@
         <c:url value="/blog/view?id=${blog.id }" var="viewblog"/>
 
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <a href="${viewblog }"><c:out value="${blog.blogTitle }"/></a>
-            </div>
-            <div class="row-fluid">
-                <div>
-                    <c:choose>
-                        <c:when test="${not empty blog.tags }">
-                            <c:forEach items="${blog.tags }" var="tag">
-                                <span class="label label-default"><c:out value="${tag.tagName }"/></span>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <span class="label "> </span>
-                        </c:otherwise>
-                    </c:choose>
-                    <div class="pull-right">
+            <div class="panel-body">
+                <div class="page-header">
+                    <h3>
+                        <a href="${viewblog }">${blog.blogTitle }</a>
+                    </h3>
+
+                    <div>
                         <span class="label label-primary"><i class="glyphicon glyphicon-user"></i> <c:out
                                 value="${blog.authorName }"/></span> <span
                             class="label label-primary"><i class="glyphicon glyphicon-calendar"></i> <c:out
@@ -42,15 +33,29 @@
                         <span class="label label-primary"><i class="glyphicon glyphicon-comment"></i> <c:out
                                 value="${blog.comments }"/> Commons</span>
                     </div>
-                </div>
-                <hr>
 
-                <p>${blog.blogDesc }</p>
-
-                <div>
-                    <a href="${viewblog }" class="btn btn-link btn-sm">Read More</a>
                 </div>
+                <p>
+                    <c:choose>
+                        <c:when test="${not empty blog.tags }">
+                            <c:forEach items="${blog.tags }" var="tag">
+                                <span class="label label-default">${tag.tagName }</span>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="label "> </span>
+                        </c:otherwise>
+                    </c:choose>
+
+                </p>
+                <div class="content">
+                    <p>${blog.blogDesc }</p>
+                </div>
+                <p>
+                    <a href="${viewblog }">Read More</a>
+                </p>
             </div>
+
         </div>
     </c:if>
 </c:forEach>

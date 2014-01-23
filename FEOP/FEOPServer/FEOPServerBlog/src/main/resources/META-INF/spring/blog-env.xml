@@ -18,9 +18,9 @@
             <property name="defaultAutoCommit" value="false" />
         </bean> -->
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          p:driverClassName="${database.driverClassName}" p:url="${database.url}"
-          p:username="${database.username}" p:password="${database.password}" destroy-method="close"/>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="${mysql.jdbc.driver.class.name}" p:url="${blog.database.url}"
+          p:username="${blog.database.username}" p:password="${blog.database.password}"/>
 
 
     <!-- <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> <constructor-arg name="realDataSource" ref="realDataSource" /> </bean> -->

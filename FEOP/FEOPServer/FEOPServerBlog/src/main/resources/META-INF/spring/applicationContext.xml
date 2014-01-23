@@ -6,13 +6,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-
-
-
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
     <context:annotation-config/>
     <context:component-scan base-package="org.personal.mason.feop.server.blog"/>
+    <context:component-scan base-package="org.personal.mason.feop.oauth.common"/>
+
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <import resource="blog-domain.xml"/>
@@ -36,20 +35,10 @@
 
     <mvc:default-servlet-handler/>
 
-    <!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**" /> <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-        <property name="paramName" value="locale"></property> </bean> </mvc:interceptor> </mvc:interceptors> -->
-
-
-    <context:property-placeholder location="classpath:META-INF/spring/*.properties"/>
-
-    <!-- <bean id="clientConfiguration" class="org.personal.mason.feop.server.blog.client.XmlClientConfiguration"
-        p:responseType="${response.type}" p:clientId="${client.id}" p:clientSecret="${client.secret}" p:authUrl="${user.authorization.uri}"
-        p:tokenAccessUrl="${access.token.uri}" p:userInfoUri="${user.info.uri}" p:oauthLogoutUri="${oauth.logout.uri}"
-        p:oauthRegisterUri="${oauth.register.uri}" p:loginSuccessUri="${login.success.uri}" /> -->
-
-
     <mvc:interceptors>
-        <bean class="org.personal.mason.feop.oauth.common.client.OAuthAuthenticationInterceptor"/>
+        <bean class="org.personal.mason.feop.oauth.common.client.OAuthAuthenticationInterceptor"
+              p:foepAuthenticationProcessor-ref="foepAuthenticationProcessor"
+              p:foepLoginProcessor-ref="loginProcessor"/>
     </mvc:interceptors>
 
     <bean id="clientConfiguration" class="org.personal.mason.feop.oauth.common.client.DBClientConfiguration"/>
@@ -57,9 +46,8 @@
     <bean id="loginProcessor"
           class="org.personal.mason.feop.oauth.common.client.oauth.code.AuthorizationCodeLoginProcessor">
         <constructor-arg name="configuration" ref="clientConfiguration"/>
+        <property name="tokenUtils" ref="tokenUtils"/>
     </bean>
-    <!-- <bean id="loginProcessor" class="org.personal.mason.feop.server.blog.client.oauth.implicit.ImplicitLoginInfoProvider"
-        p:configuration-ref="clientConfiguration" /> -->
 
     <bean id="foepAuthenticationProcessor"
           class="org.personal.mason.feop.oauth.common.client.DefaultAuthenticationProcessor">
@@ -91,5 +79,8 @@
                       p:access="allow"/>
             </list>
         </constructor-arg>
+        <constructor-arg name="tokenUtils" ref="tokenUtils"/>
     </bean>
+
+    <bean id="tokenUtils" class="org.personal.mason.feop.oauth.common.client.DefaultTokenUtils"/>
 </beans>

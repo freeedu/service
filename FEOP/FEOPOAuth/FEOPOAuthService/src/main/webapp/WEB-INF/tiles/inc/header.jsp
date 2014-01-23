@@ -5,44 +5,18 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<%-- <header>
-	<div id="header-left">
-		<sec:authorize ifAllGranted="ROLE_USER">
-			<c:url value="/home" var="targetUrl"/>
-		</sec:authorize>
-		<sec:authorize ifNotGranted="ROLE_USER">
-			<c:url value="/index" var="targetUrl"/>
-		</sec:authorize>
-		<div id="logo-icon">
-			<a href="${targetUrl }">
-			<img src="<c:url value="/resources/images/logo.png"/>" width="224" height="98" />
-			</a>
-		</div>
-		<div id="logo-desc">
-			<span>Free Online Education Platform</span>
-		</div>
-	</div>
 
-	<div id="header-right">
-		<sec:authorize ifAllGranted="ROLE_USER">
-			<a class="darkgray" href="<c:url value="/oauth/logout.do"/>">Logout</a>
-		</sec:authorize>
-		<sec:authorize ifNotGranted="ROLE_USER">
-			<a class="gray" href="<c:url value="/signup/"/>">Signup</a>
-		</sec:authorize>
-	</div>
-</header> --%>
-
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+            <a class="navbar-brand" href="<c:url value="/"/>">FOEP Oauth2</a>
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".nav-header-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<c:url value="/"/>"><img src="<c:url value="/resources/images/logo.png"/>"
-                                                                   height="20"></a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse nav-header-collapse">
             <sec:authorize ifAllGranted="ROLE_USER">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="<c:url value="/home"/>"><i class="glyphicon glyphicon-home"></i>
@@ -88,7 +62,7 @@
                 </ul>
             </sec:authorize>
 
-            <div class="navbar-form navbar-right">
+            <div class="navbar-btn navbar-right">
                 <sec:authorize ifAllGranted="ROLE_USER">
                     <a class="btn btn-primary btn-sm" href="<c:url value="/oauth/logout.do"/>">Logout</a>
                 </sec:authorize>

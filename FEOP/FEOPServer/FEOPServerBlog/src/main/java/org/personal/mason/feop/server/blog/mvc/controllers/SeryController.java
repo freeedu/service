@@ -52,7 +52,7 @@ public class SeryController {
         return "";
     }
 
-    @RequestMapping(value = "/sery/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/sery/delete", method = RequestMethod.GET)
     public void deleteSery(@RequestParam("id") Long id) {
         seryService.delete(id);
     }

@@ -39,7 +39,7 @@ public class BlogSettingController {
         return "blog.setting.update";
     }
 
-    @RequestMapping(value = "/setting/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/setting/update", method = RequestMethod.POST)
     public String update(@Validated BlogSettingModel blogSettingModel, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return null;

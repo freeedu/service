@@ -7,47 +7,52 @@
 
 <c:url value="/account/edit" var="update"/>
 <c:if test="${userForm != null}">
-    <div class="col-md-8 col-md-offset-2">
-
-        <div class="row">
-            <div>
-                <h3>
-                    User Profile <a href="${update }" class="pull-right btn btn-link btn-sm">Edit Profile</a>
-                </h3>
-            </div>
+    <div class="col-sm-8 col-sm-offset-2">
+        <div class="form-horizontal">
+            <h4>
+                User Profile <a href="${update }" class="pull-right btn btn-link btn-sm">Edit Profile</a>
+            </h4>
 
             <hr>
-        </div>
 
-        <div class="row">
-            <div class="col-md-3">User Id:</div>
-            <div class="col-md-9">
-                <c:out value="${userForm.userId }"/>
-            </div>
-        </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">User Id:</label>
 
-        <div class="row">
-            <div class="col-md-3">User Name:</div>
-            <div class="col-md-9">
-                <c:out value="${userForm.userName }"/>
+                <div class="col-sm-9">
+                        ${userForm.userId }
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">Email:</div>
-            <div class="col-md-9">
-                <c:out value="${userForm.email }"/>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">User Name:</label>
+
+                <div class="col-sm-9">
+                        ${userForm.userName }
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">Phone:</div>
-            <div class="col-md-9">
-                <c:out value="${userForm.phone }"/>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Email:</label>
+
+                <div class="col-sm-9">
+                    <p>
+                            ${userForm.email }
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">Status:</div>
-            <div class="col-md-9">
-                <c:out value="${userForm.enabled }"/>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Phone:</label>
+
+                <div class="col-sm-9">
+                        ${userForm.phone }
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Status:</label>
+
+                <div class="col-sm-9">
+                        ${userForm.enabled }
+
+                </div>
             </div>
         </div>
     </div>

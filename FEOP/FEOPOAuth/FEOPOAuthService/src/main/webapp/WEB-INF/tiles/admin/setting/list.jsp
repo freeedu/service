@@ -5,60 +5,68 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<div class=" col-md-8 col-md-offset-2">
-    <div class="row">
-        <div>
-            <h3>System Settings</h3>
-        </div>
+<div class=" col-sm-8 col-sm-offset-2">
+    <h4>System Settings</h4>
 
-        <hr>
-    </div>
+    <hr>
     <c:choose>
         <c:when test="${not empty settings  }">
-            <c:forEach items="${settings}" var="setting">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <c:url value="/admin/settings/view?id=${setting.id }" var="viewTarget"/>
-                        <a href="${viewTarget }" class="btn btn-link btn-sm"><c:out value="${setting.key }"/></a> <a
-                            href='<c:url value="/admin/settings/delete?id=${setting.id }"/>'
-                            class="btn btn-link btn-sm pull-right">Delete</a>
-                        <c:url value="/admin/settings/update?id=${setting.id }" var="update"/>
-                        <a href="${update }" class="btn btn-link btn-sm pull-right">Edit</a>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-3">Setting Key:</div>
-                            <div class="col-md-9">
-                                <c:out value="${setting.key }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Setting Value:</div>
-                            <div class="col-md-9">
-                                <c:out value="${setting.value }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Effect Start Date:</div>
-                            <div class="col-md-9">
-                                <c:out value="${setting.startDate }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Effect End Date:</div>
-                            <div class="col-md-9">
-                                <c:out value="${setting.endDate }"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">Diabled:</div>
-                            <div class="col-md-9">
-                                <c:out value="${setting.disabled }"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
+            <div class="panel-group" id="settings">
+                <c:forEach items="${settings}" var="setting">
+                    <table class="panel table table-responsive table-hover">
+                        <thead>
+                        <tr>
+                            <td class="col-sm-3">
+                                <span class="glyphicon glyphicon-chevron-down btn-link btn-sm" data-toggle="collapse"
+                                      data-parent="#settings" href="#collapse${setting.id }"></span>
+                            </td>
+                            <td class="col-sm-9">
+                                <c:url value="/admin/settings/view?id=${setting.id }" var="viewTarget"/>
+                                <a href="${viewTarget }" class="btn-link btn btn-sm">${setting.key }</a>
+
+                                <div class="btn-group-sm pull-right">
+                                    <c:url value="/admin/settings/edit?id=${setting.id }" var="update"/>
+                                    <a href="${update }" class="btn btn-link btn-sm">Edit</a>
+                                    <a href='<c:url value="/admin/settings/delete?id=${setting.id }"/>'
+                                       class="btn btn-link btn-sm">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody class="collapse" id="collapse${setting.id }">
+                        <tr>
+                            <td class="col-sm-3">Setting Key:</td>
+                            <td class="col-sm-9">${setting.key }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-sm-3">Setting Value:</td>
+                            <td class="col-sm-9">
+                                    ${setting.value }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-sm-3">Effect Start Date:</td>
+                            <td class="col-sm-9">
+                                    ${setting.startDate }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-sm-3">Effect End Date:</td>
+                            <td class="col-sm-9">
+                                    ${setting.endDate }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-sm-3">Diabled:</td>
+                            <td class="col-sm-9">
+                                    ${setting.disabled }
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </c:forEach>
+            </div>
         </c:when>
         <c:otherwise>
             <div class="alert alert-warning">

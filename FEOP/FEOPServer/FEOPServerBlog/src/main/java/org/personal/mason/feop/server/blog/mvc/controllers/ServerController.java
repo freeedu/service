@@ -1,5 +1,7 @@
 package org.personal.mason.feop.server.blog.mvc.controllers;
 
+import org.personal.mason.feop.oauth.common.client.TokenUtils;
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.personal.mason.feop.server.blog.domain.model.Blog;
 import org.personal.mason.feop.server.blog.domain.service.BlogService;
 import org.personal.mason.feop.server.blog.mvc.model.BlogModel;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +27,23 @@ public class ServerController {
     private BlogService blogService;
 
     @Autowired
+    public TokenUtils tokenUtils;
+
+    @Autowired
     public void setBlogService(BlogService blogService) {
         this.blogService = blogService;
     }
 
     @RequestMapping(value = {"/", "index"}, method = RequestMethod.GET)
-    public String index(Model model) {
+    public String index(@RequestParam(required = false) String token, HttpServletRequest request, Model model) {
+        if (token != null && !token.isEmpty()) {
+            FOEPAuthentication authentication = tokenUtils.getAuthentication(token);
+            if (authentication != null) {
+                HttpSession session = request.getSession(true);
+                session.setAttribute(FOEPAuthentication.SESSION_AUTHENTICATION, authentication);
+            }
+        }
+
         Page<Blog> blogs = blogService.findAll(DEFAULT_PAGEABLE);
 
         List<BlogModel> models = new ArrayList<>();
