@@ -108,6 +108,8 @@ public abstract class DefaultLoginProcessor implements FOEPLoginProcessor {
         }
     }
 
+
+
     static String appendToken(String original, String token){
         if(original.contains("?")){
             return original.concat("&token=").concat(token);

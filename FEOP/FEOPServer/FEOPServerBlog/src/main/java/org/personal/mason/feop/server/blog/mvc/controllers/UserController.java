@@ -47,7 +47,7 @@ public class UserController {
         } else {
             logoutUri.append("?redirect_uri=%s");
         }
-        String registerUrl = String.format(logoutUri.toString(), getSiteRoot(request));
+        String logoutUrl = String.format(logoutUri.toString(), getSiteRoot(request));
 
         String[] tokens = request.getParameterMap().get("token");
         if (tokens != null) {
@@ -57,7 +57,7 @@ public class UserController {
         session.removeAttribute(FOEPAuthentication.SESSION_AUTHENTICATION);
         request.removeAttribute("token");
 
-        return String.format("redirect:%s", registerUrl);
+        return String.format("redirect:%s", logoutUrl);
     }
 
     @RequestMapping(value = {"/signup"})

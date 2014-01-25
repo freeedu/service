@@ -1,6 +1,9 @@
 package org.personal.mason.feop.oauth.common.client;
 
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,4 +19,8 @@ public interface FOEPAuthenticationProcessor {
      * @return
      */
     public AuthenticationStatus checkStatus(HttpServletRequest request);
+
+    FOEPAuthentication findAuthentication(HttpServletRequest request);
+
+    void updateRequest(HttpServletRequest request, HttpServletResponse response, FOEPAuthentication authentication);
 }

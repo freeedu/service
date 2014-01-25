@@ -189,13 +189,29 @@ public class BlogController {
         }
 
         if (result.hasErrors()) {
-            return null;
+            return ViewMapper.Blog_Edit.getViewName();
         }
 
-        Blog blog = new Blog();
+        Blog blog = blogService.findById(blogModel.getId());
         BlogModel.merge(blog, blogModel);
         blog.setAuthorName(AuthenticationUtils.getUserName(request));
         blog.setAuthorUid(AuthenticationUtils.getUid(request));
+        if (blogModel.getCategory() != null && blogModel.getCategory().getId() != null) {
+            Category category = categoryService.findById(blogModel.getCategory().getId());
+            blog.setCategory(category);
+        }
+
+        if (blogModel.getSery() != null && blogModel.getSery().getId() != null) {
+            Sery sery = seryService.findById(blogModel.getSery().getId());
+            blog.setSery(sery);
+        }
+        if (blogModel.getTagNames() != null) {
+            String tagNames = blogModel.getTagNames().trim();
+            String[] names = tagNames.split(",\\s*");
+            List<Tag> tags = tagService.findOrCreateWithNames(names);
+            blog.setTags(tags);
+        }
+
         Blog updatedBlog = blogService.update(blog);
         BlogModel updatedBlogModel = BlogModel.revert(updatedBlog);
         model.addAttribute("blog", updatedBlogModel);
@@ -203,10 +219,12 @@ public class BlogController {
     }
 
     @RequestMapping(value = "/my/blog/delete", method = RequestMethod.GET)
-    public void deleteBlog(HttpServletRequest request, @RequestParam("id") Long id) {
+    public String deleteBlog(HttpServletRequest request, @RequestParam("id") Long id) {
         String uid = AuthenticationUtils.getUid(request);
         if (uid != null)
             blogService.delete(id);
+
+        return "redirect:/my/blog/list";
     }
 
     @RequestMapping(value = {"/my/blog/list"}, method = RequestMethod.GET)

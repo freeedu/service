@@ -86,11 +86,11 @@ public class FOEPTokenStore implements TokenStore {
     public void storeAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
         OauthAccessToken accessToken = toOauthAccessToken(token, authentication);
 
-        OauthAccessToken authenticationId = feopAccessTokenService.findAccessTokenWithAuthenticationId(accessToken.getAuthenticationId());
-        OauthAccessToken tokenId = feopAccessTokenService.findAccessTokenWithTokenId(accessToken.getTokenId());
-        if(authenticationId == null && tokenId == null){
-            feopAccessTokenService.saveAccessToken(accessToken);
-        }
+        feopAccessTokenService.deleteWithAuthenticationId(accessToken.getAuthenticationId());
+        feopAccessTokenService.deleteWithTokenId(accessToken.getTokenId());
+
+        feopAccessTokenService.saveAccessToken(accessToken);
+
     }
 
     @Override
@@ -256,6 +256,7 @@ public class FOEPTokenStore implements TokenStore {
             removeAccessToken(accessToken.getValue());
             storeAccessToken(accessToken, authentication);
         }
+
         return accessToken;
     }
 

@@ -30,4 +30,6 @@ public interface FOEPLoginProcessor {
     String getErrorRedirectPage();
 
     void redirectToSuccessPage(HttpServletRequest request, HttpServletResponse response, FOEPAuthentication authentication) throws IOException;
+
+    boolean refreshToken(FOEPAuthentication authentication);
 }

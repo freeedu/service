@@ -3,18 +3,23 @@ package org.personal.mason.feop.oauth.common.client;
 import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.personal.mason.feop.oauth.common.model.UserRole;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.util.List;
 import java.util.Map;
 
 public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcessor {
     private final List<AuthorityInterceptor> interceptors;
     private final TokenUtils tokenUtils;
+    private final HoldAuthenticationType holdAuthenticationType;
 
     public DefaultAuthenticationProcessor(List<AuthorityInterceptor> interceptors, TokenUtils tokenUtils) {
+        this(interceptors, tokenUtils, HoldAuthenticationType.IN_SESSION);
+    }
+
+    public DefaultAuthenticationProcessor(List<AuthorityInterceptor> interceptors, TokenUtils tokenUtils, HoldAuthenticationType holdAuthenticationType) {
         this.interceptors = interceptors;
         this.tokenUtils = tokenUtils;
+        this.holdAuthenticationType = holdAuthenticationType;
     }
 
     private AuthorityInterceptor findProcessUrl(String uri) {
@@ -28,6 +33,7 @@ public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcess
         return AuthorityInterceptor.defaultInterceptor;
     }
 
+    @Override
     public AuthenticationStatus checkStatus(HttpServletRequest request) {
         assert (tokenUtils != null);
         String requestURI = request.getRequestURI();
@@ -39,7 +45,15 @@ public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcess
 
             FOEPAuthentication authentication = findAuthentication(request);
 
-            if (authentication == null || !authentication.hasValidToken()) {
+            if (authentication == null){
+                return AuthenticationStatus.NOT_LOGIN;
+            }
+
+            if(!authentication.hasValidToken()) {
+                if(authentication.isTokenExpired()){
+                    return AuthenticationStatus.EXPIRED;
+                }
+
                 return AuthenticationStatus.NOT_LOGIN;
             }
 
@@ -52,27 +66,71 @@ public class DefaultAuthenticationProcessor implements FOEPAuthenticationProcess
         return AuthenticationStatus.DENIED;
     }
 
-    private FOEPAuthentication findAuthentication(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            Object auth = session.getAttribute(FOEPAuthentication.SESSION_AUTHENTICATION);
-            if (auth != null && auth instanceof FOEPAuthentication) {
-                return (FOEPAuthentication) auth;
+    public FOEPAuthentication findAuthentication(HttpServletRequest request) {
+        switch (holdAuthenticationType){
+            case IN_SESSION:{
+                HttpSession session = request.getSession(false);
+
+                if (session == null) {
+                    return null;
+                }
+
+                Object auth = session.getAttribute(FOEPAuthentication.SESSION_AUTHENTICATION);
+                if (auth != null && auth instanceof FOEPAuthentication) {
+                    return (FOEPAuthentication) auth;
+                }
+
+                return null;
+            }
+            case IN_COOKIES:{
+                Cookie[] cookies = request.getCookies();
+                if(cookies == null){
+                    return null;
+                }
+
+                for(Cookie cookie : cookies){
+                    if(cookie.getName().equalsIgnoreCase(FOEPAuthentication.COOKIE_AUTHENTICATION)){
+                        String token = cookie.getValue();
+                        return tokenUtils.getAuthentication(token);
+                    }
+                }
+                return null;
+            }
+            case IN_HEADER:{
+                String token = request.getHeader(FOEPAuthentication.HEADER_AUTHENTICATION);
+                if(token != null){
+                    return tokenUtils.getAuthentication(token);
+                }
+                return null;
+            }
+
+        }
+        return null;
+    }
+
+    @Override
+    public void updateRequest(HttpServletRequest request, HttpServletResponse response, FOEPAuthentication authentication) {
+        switch (holdAuthenticationType){
+            case IN_SESSION: {
+                HttpSession session = request.getSession(true);
+                session.setAttribute(FOEPAuthentication.SESSION_AUTHENTICATION, authentication);
+                break;
+            }
+            case IN_COOKIES:{
+                Cookie cookie = new Cookie(FOEPAuthentication.COOKIE_AUTHENTICATION, authentication.getAccessToken());
+                response.addCookie(cookie);
+                break;
+            }
+            case IN_HEADER:{
+                response.setHeader(FOEPAuthentication.HEADER_AUTHENTICATION, authentication.getAccessToken());
+                break;
+            }
+            default:{
+                HttpSession session = request.getSession(true);
+                session.setAttribute(FOEPAuthentication.SESSION_AUTHENTICATION, authentication);
+                break;
             }
         }
-
-        Map<String, String[]> parms = request.getParameterMap();
-        if (parms.containsKey("token")) {
-            String token = parms.get("token")[0];
-            return tokenUtils.getAuthentication(token);
-        }
-
-        String token = request.getHeader("token");
-        if (token != null) {
-            return tokenUtils.getAuthentication(token);
-        }
-
-        return null;
     }
 
     private static boolean checkRoles(List<UserRole> roles, List<String> checkRoles) {

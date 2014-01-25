@@ -1,5 +1,7 @@
 package org.personal.mason.feop.oauth.common.client.oauth.code;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.personal.mason.feop.oauth.common.client.ClientConfiguration;
 import org.personal.mason.feop.oauth.common.client.DefaultLoginProcessor;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.LinkedList;
@@ -102,6 +105,27 @@ public class AuthorizationCodeLoginProcessor extends DefaultLoginProcessor {
         String errorDesc = request.getParameter("error_description");
 
         response.sendRedirect(String.format(getErrorRedirectPage().contains("?") ? "%s&error=%s&desc=%s" : "%s?error=%s&desc=%s", getErrorRedirectPage(), error, errorDesc));
+    }
+
+    @Override
+    public boolean refreshToken(FOEPAuthentication authentication) {
+        if(authentication == null){
+            return false;
+        }
+        StringBuilder builder = new StringBuilder(getConfiguration().getTokenAccessUrl());
+        builder.append("?grant_type=refresh_token&client_id=%s&client_secret=%s&refresh_token=%s");
+
+        String url = String.format(builder.toString(),getConfiguration().getClientId(), getConfiguration().getClientSecret(), authentication.getRefreshToken());
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> properties = mapper.readValue(new URL(url), Map.class);
+            return authentication.updateProperties(properties);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     private void requestAccessToken(HttpServletRequest request, HttpServletResponse response) {

@@ -8,6 +8,8 @@ import org.personal.mason.feop.oauth.service.domain.model.common.FoepAuthority;
 import org.personal.mason.feop.oauth.service.domain.model.common.FoepUser;
 import org.personal.mason.feop.oauth.service.domain.service.oauth.FeopAccessTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.constraints.Null;
+import javax.xml.ws.Response;
 
 @Controller
 public class AccountService {
@@ -40,14 +45,18 @@ public class AccountService {
 
     @RequestMapping(value = {"/userinfo"}, method = RequestMethod.GET)
     @ResponseBody
-    public UserInfo retrieveUserInfo(@RequestParam("token") String token) {
+    public ResponseEntity retrieveUserInfo(@RequestParam("token") String token) {
 
         OAuth2AccessToken auth2AccessToken = foepTokenStore.readAccessToken(token);
 
         OAuth2Authentication authentication = foepTokenStore.readAuthentication(token);
 
-        if (auth2AccessToken == null || auth2AccessToken.isExpired() || authentication == null) {
+        if (auth2AccessToken == null || authentication == null) {
             return null;
+        }
+
+        if( auth2AccessToken.isExpired()){
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
 
@@ -81,7 +90,7 @@ public class AccountService {
                 }
             }
         }
-        return userInfo;
+        return new ResponseEntity(userInfo, HttpStatus.OK);
     }
 
 }

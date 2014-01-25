@@ -2,8 +2,12 @@ package org.personal.mason.feop.oauth.common.client.oauth;
 
 import org.personal.mason.feop.oauth.common.model.UserInfo;
 
+import java.util.Map;
+
 public interface FOEPAuthentication {
     public static String SESSION_AUTHENTICATION = "authentication";
+    public static String COOKIE_AUTHENTICATION = "cookie-token";
+    public static String HEADER_AUTHENTICATION = "header-token";
 
     boolean hasValidToken();
 
@@ -22,4 +26,7 @@ public interface FOEPAuthentication {
     public void setUserInfo(UserInfo userInfo);
 
     public UserInfo getUserInfo();
+
+    boolean updateProperties(Map<String, Object> properties);
+
 }

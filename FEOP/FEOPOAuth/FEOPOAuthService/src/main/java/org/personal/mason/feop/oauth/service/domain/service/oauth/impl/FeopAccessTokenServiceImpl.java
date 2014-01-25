@@ -65,18 +65,29 @@ public class FeopAccessTokenServiceImpl implements FeopAccessTokenService {
     }
 
     @Override
+    @Transactional
     public void deleteWithTokenId(String tokenId) {
         List<OauthAccessToken> oauthAccessTokens = oauthAccessTokenRepository.findByTokenId(tokenId);
         if(oauthAccessTokens != null && !oauthAccessTokens.isEmpty()){
-            oauthAccessTokens.removeAll(oauthAccessTokens);
+            oauthAccessTokenRepository.delete(oauthAccessTokens);
         }
     }
 
     @Override
+    @Transactional
     public void deleteWithRefreshToken(String refreshTokenId) {
         List<OauthAccessToken> oauthAccessTokens = oauthAccessTokenRepository.findByRefreshToken(refreshTokenId);
         if(oauthAccessTokens != null && !oauthAccessTokens.isEmpty()){
-            oauthAccessTokens.removeAll(oauthAccessTokens);
+            oauthAccessTokenRepository.delete(oauthAccessTokens);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteWithAuthenticationId(String authenticationId) {
+        List<OauthAccessToken> oauthAccessTokens = oauthAccessTokenRepository.findByAuthenticationId(authenticationId);
+        if(oauthAccessTokens != null && !oauthAccessTokens.isEmpty()){
+            oauthAccessTokenRepository.delete(oauthAccessTokens);
         }
     }
 

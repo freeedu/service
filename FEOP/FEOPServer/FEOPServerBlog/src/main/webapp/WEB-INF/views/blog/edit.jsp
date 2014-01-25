@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:url var="categoriesUrl" value="/api/cat/top"/>
 <c:url var="autocompleteUrl" value="/api/tag/list"/>
 <c:url var="catSeriesUrl" value="/api/sery/list"/>
@@ -52,6 +53,37 @@
 </script>
 
 <div class="panel panel-default">
+    <select class="form-control" style="padding-left: 20px;">
+        <option value="Internet Explorer" style="padding-left: 20px;">De</option>
+        <option value="Firefox" style="padding-left: 20px;">De</option>
+        <option value="Chrome" style="padding-left: 20px;">De</option>
+        <option value="Opera" style="padding-left: 20px;">De</option>
+        <option value="Safari" style="padding-left: 20px;">De</option>
+        <optgroup label="test" class="close" style="padding-left: 20px;">
+            <option value="Internet Explorer" style="padding-left: 20px;">De</option>
+            <option value="Firefox">De</option>
+            <option value="Chrome">De</option>
+            <option value="Opera">De</option>
+            <option value="Safari">De</option>
+            <optgroup label="subtext" class="close">
+                <option value="Internet Explorer">De</option>
+                <option value="Firefox">De</option>
+                <option value="Chrome">De</option>
+                <option value="Opera">De</option>
+                <option value="Safari">De</option>
+            </optgroup>
+        </optgroup>
+        <optgroup label="test2" class="close">
+            <option value="Internet Explorer">De</option>
+            <option value="Firefox">De</option>
+            <option value="Chrome">De</option>
+            <option value="Opera">De</option>
+            <option value="Safari">De</option>
+        </optgroup>
+    </select>
+</div>
+
+<div class="panel panel-default">
     <div class="panel-body">
         <div class="page-header">
             <h3>
@@ -63,7 +95,7 @@
         <c:if test="${blog != null }">
         <c:url value="/blog/view?id=${blog.id }" var="viewblog"/>
 
-        <form role="form" class="form-horizontal" action='<c:url value="/my/blog/create"/>' method="post">
+        <form role="form" class="form-horizontal" action='<c:url value="/my/blog/update"/>' method="post">
             <div class="form-group">
                 <input class="form-control" name="id" type="hidden" value="${blog.id }">
             </div>

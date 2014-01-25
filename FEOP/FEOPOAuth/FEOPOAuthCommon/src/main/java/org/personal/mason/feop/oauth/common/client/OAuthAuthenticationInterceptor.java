@@ -1,5 +1,6 @@
 package org.personal.mason.feop.oauth.common.client;
 
+import org.personal.mason.feop.oauth.common.client.oauth.FOEPAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -31,6 +32,18 @@ public class OAuthAuthenticationInterceptor extends HandlerInterceptorAdapter {
             case DENIED:
                 response.sendRedirect(foepLoginProcessor.getErrorRedirectPage());
                 break;
+            case EXPIRED: {
+                FOEPAuthentication authentication = foepAuthenticationProcessor.findAuthentication(request);
+                boolean result = foepLoginProcessor.refreshToken(authentication);
+
+                if(!result){
+                    response.sendRedirect(foepLoginProcessor.getErrorRedirectPage());
+                    return false;
+                } else {
+                    foepAuthenticationProcessor.updateRequest(request, response, authentication);
+                    return true;
+                }
+            }
             case NOT_LOGIN:
                 processLogin(request, response, handler);
                 break;

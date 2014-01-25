@@ -23,4 +23,6 @@ public interface FeopAccessTokenService {
     void deleteWithTokenId(String tokenId);
 
     void deleteWithRefreshToken(String refreshTokenId);
+
+    void deleteWithAuthenticationId(String authenticationId);
 }
