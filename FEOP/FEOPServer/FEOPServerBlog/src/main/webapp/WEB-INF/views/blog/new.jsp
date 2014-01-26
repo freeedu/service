@@ -17,7 +17,7 @@
                     autoFocus: false,
                     source: function (request, response) {
                         $.getJSON("${autocompleteUrl}", {
-                            q: extractLast(request.term),
+                            q: extractLast(request.term)
                         }, response);
                     },
                     search: function () {
@@ -30,6 +30,7 @@
                     select: function (event, ui) {
                         var terms = split(this.value);
                         // remove the current input
+
                         terms.pop();
                         // add the selected item
                         terms.push(ui.item.tagName);
@@ -118,15 +119,14 @@
                 <label for="blogDesc" class="col-lg-2 control-label">Description</label>
 
                 <div class="col-lg-10">
-                    <textarea class="form-control richeditor" name="blogDesc" placeholder="Description"
+                    <textarea id="blogDesc" class="form-control rich-text-editor" name="blogDesc" placeholder="Description"
                               rows="6"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
-                    <input type="submit" class="btn btn-primary" value="Create"> <input type="submit"
-                                                                                        class="btn btn-default"
-                                                                                        value="Create & New Section">
+                    <input type="submit" class="btn btn-primary" value="Create" onclick="onPostForm();">
+                    <input type="submit" class="btn btn-default" value="Create & New Section">
                 </div>
             </div>
         </form>

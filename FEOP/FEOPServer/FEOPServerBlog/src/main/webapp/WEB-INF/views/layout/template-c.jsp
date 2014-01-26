@@ -14,7 +14,6 @@
     <meta name="author" content="">
 
     <link href="<c:url value="/resources/css/bootstrap.css"/>" rel="stylesheet">
-    <link href="<c:url value="/resources/css/bootstrap-responsive.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap-theme.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/default.css"/>" rel="stylesheet">
 </head>

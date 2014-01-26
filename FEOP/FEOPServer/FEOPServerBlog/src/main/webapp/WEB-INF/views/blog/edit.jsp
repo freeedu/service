@@ -167,15 +167,14 @@
                 <label for="blogDesc" class="col-lg-2 control-label">Description</label>
 
                 <div class="col-lg-10">
-                    <textarea id="blogDesc" class="form-control richeditor" name="blogDesc" placeholder="Description"
+                    <textarea id="blogDesc" class="form-control rich-text-editor" name="blogDesc" placeholder="Description"
                               rows="6">${blog.blogDesc }</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
-                    <input type="submit" class="btn btn-primary" value="Update"> <a class="btn btn-link btn-sm"
-                                                                                    href="#new-section"
-                                                                                    data-toggle="modal">Create
+                    <input type="submit" class="btn btn-primary" value="Update" onclick="onPostForm();">
+                    <a class="btn btn-link btn-sm" href="#new-section" data-toggle="modal">Create
                     Section</a>
                 </div>
             </div>
@@ -234,7 +233,7 @@
                                 <label class="col-lg-2 control-label" for="sectionContent">Content</label>
 
                                 <div class="col-lg-10">
-                                    <textarea id="sectionContent" class="form-control richeditor"
+                                    <textarea id="sectionContent" class="form-control rich-text-editor"
                                               name="sectionContent"
                                               placeholder="Subtitle"
                                               rows="18"></textarea>

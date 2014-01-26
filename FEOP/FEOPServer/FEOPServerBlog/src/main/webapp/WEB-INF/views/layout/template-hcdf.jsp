@@ -15,27 +15,42 @@
     <link href="<c:url value="/resources/css/bootstrap-theme.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/jquery-ui-1.9.2.custom.css"/>" rel="stylesheet">
     <link href="<c:url value="/resources/css/default.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/css/summernote.css"/> " rel="stylesheet">
 
-    <script src="<c:url value="/resources/js/jquery-1.8.2.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-1.10.2.min.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
     <script src="<c:url value="/resources/js/jquery-ui-1.9.2.custom.js" />"></script>
-    <script src="<c:url value="/resources/js/default.js" />" type="text/javascript" lang="javascript"></script>
+    <script src="<c:url value="/resources/js/default.js" />"></script>
+    <script src="<c:url value="/resources/js/summernote.js"/>"></script>
 
-    <script type="text/javascript" src="<c:url value="/resources/plugins/tinymce/tinymce.min.js"/>"></script>
     <script type="text/javascript">
-        tinymce
-                .init({
-                    selector: 'textarea.richeditor',
-                    theme: 'modern',
-                    plugins: [
-                        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-                        "searchreplace wordcount visualblocks visualchars code fullscreen",
-                        "insertdatetime media nonbreaking save table contextmenu directionality",
-                        "emoticons template paste textcolor autosave fupload" ],
-                    toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
-                    toolbar2: "preview media | forecolor backcolor emoticons | fupload"
-                });
+         $(document).ready(function(){
+             $('.rich-text-editor').summernote({
+                 height: 150
+             });
+         }) ;
+
+         var onPostForm = function () {
+             $('textarea.rich-text-editor').val($('.note-editor .note-editable').code());
+         }
     </script>
+
+
+    <%--<script type="text/javascript" src="<c:url value="/resources/plugins/tinymce/tinymce.min.js"/>"></script>--%>
+    <%--<script type="text/javascript">--%>
+        <%--tinymce--%>
+                <%--.init({--%>
+                    <%--selector: 'textarea.richeditor',--%>
+                    <%--theme: 'modern',--%>
+                    <%--plugins: [--%>
+                        <%--"advlist autolink lists link image charmap print preview hr anchor pagebreak",--%>
+                        <%--"searchreplace wordcount visualblocks visualchars code fullscreen",--%>
+                        <%--"insertdatetime media nonbreaking save table contextmenu directionality",--%>
+                        <%--"emoticons template paste textcolor autosave fupload" ],--%>
+                    <%--toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",--%>
+                    <%--toolbar2: "preview media | forecolor backcolor emoticons | fupload"--%>
+                <%--});--%>
+    <%--</script>--%>
 </head>
 <body>
 <tiles:insertAttribute name="head"/>
